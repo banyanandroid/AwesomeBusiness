@@ -69,6 +69,7 @@
             android:weightSum="2">
 
             <Button
+                android:id="@+id/frag_btn_filter"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -78,7 +79,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btn_sort"
+                android:id="@+id/frag_btn_sort"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

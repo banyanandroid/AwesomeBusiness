@@ -4,6 +4,7 @@ package banyan.com.awesomebusiness.activity;
  * Created by Jo on 19/07/17.
  */
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -37,12 +38,21 @@ public class Fragment_Home extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button button = (Button) rootView.findViewById(R.id.btn_sort);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button_sort = (Button) rootView.findViewById(R.id.frag_btn_sort);
+        button_sort.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 showActionSheet(view);
             }
         });
+        Button button_filter = (Button) rootView.findViewById(R.id.frag_btn_filter);
+        button_filter.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent i = new Intent(getActivity(),Activity_Filter.class);
+                startActivity(i);
+
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return rootView;
