@@ -5,6 +5,7 @@ package banyan.com.awesomebusiness.activity;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,8 @@ import banyan.com.awesomebusiness.model.NavDrawerItem;
 public class FragmentDrawer extends Fragment {
 
     private static String TAG = FragmentDrawer.class.getSimpleName();
+
+    Button btn_login;
 
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -73,6 +77,7 @@ public class FragmentDrawer extends Fragment {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+        btn_login = (Button) layout.findViewById(R.id.nav_draw_btn_login);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -89,6 +94,18 @@ public class FragmentDrawer extends Fragment {
 
             }
         }));
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("CAMEEEEE");
+                Intent i = new Intent(getActivity(), Activity_Login.class);
+                System.out.println("CAMEEEEE1111111111");
+                startActivity(i);
+                System.out.println("CAMEEEEE222222222");
+            }
+        });
 
         return layout;
     }

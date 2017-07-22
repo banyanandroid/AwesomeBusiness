@@ -9,11 +9,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_message"
-        android:title="@string/action_message"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_add_user"
         android:icon="@drawable/ic_action_add_user"
         android:orderInCategory="100"

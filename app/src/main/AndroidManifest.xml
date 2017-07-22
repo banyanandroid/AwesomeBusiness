@@ -53,12 +53,12 @@
         <activity
             android:name=".Activity_Register"
             android:configChanges="orientation|keyboardHidden|screenSize">
-
         </activity>
 
-        <activity android:name=".activity.Activity_Filter">
+        <activity android:name=".activity.Activity_Filter"></activity>
 
-        </activity>
+        <activity android:name=".activity.Activity_Notifications"></activity>
+        <activity android:name=".activity.Activity_Login"></activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

@@ -18,7 +18,7 @@ public class Activity_Filter extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    Button btn_trans_type , btn_location , btn_industry , btn_done;
+    Button btn_trans_type, btn_location, btn_industry, btn_done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,24 +27,27 @@ public class Activity_Filter extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_close));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
                 startActivity(i);
+                finish();
             }
         });
 
-        btn_trans_type=(Button)findViewById(R.id.btn_filter_transtype);
-        btn_location=(Button)findViewById(R.id.btn_filter_location);
-        btn_industry=(Button)findViewById(R.id.btn_filter_industry);
-        btn_done=(Button)findViewById(R.id.btn_filter_done);
+        btn_done = (Button) findViewById(R.id.btn_filter_done);
         btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                Intent i = new Intent(Activity_Filter.this,MainActivity.class);
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Activity_Filter.this, MainActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
+                finish();
+
 
             }
         });

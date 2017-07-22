@@ -7,10 +7,13 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <string name="font_awesome">&#xf1fe;</string>
+
     <string name="nav_item_home">Home</string>
     <string name="nav_item_business_sale">Business for Sale</string>
     <string name="nav_item_investors_buyer">Inverstors &amp; Buyers</string>
     <string name="nav_item_franchies">Franchies</string>
+    <string name="nav_item_message">Messages</string>
     <string name="nav_item_howto">How To</string>
     <string name="nav_item_qa">Q &amp; A</string>
     <string name="nav_item_company">Company</string>
@@ -21,6 +24,7 @@
         <item>@string/nav_item_business_sale</item>
         <item>@string/nav_item_investors_buyer</item>
         <item>@string/nav_item_franchies</item>
+        <item>@string/nav_item_message</item>
         <item>@string/nav_item_howto</item>
         <item>@string/nav_item_qa</item>
         <item>@string/nav_item_company</item>
@@ -30,6 +34,7 @@
     <string name="title_bus_sale">Business for Sale</string>
     <string name="title_investors">Investors and Buyers</string>
     <string name="title_franchies">Franchies</string>
+    <string name="title_message">Message</string>
     <string name="title_howto">How To</string>
     <string name="title_qa">Q &amp; A</string>
     <string name="title_company">Company</string>
@@ -55,5 +60,32 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
 
+
+    <string-array name="planets">
+        <item>All Transactions</item>
+        <item>Businesses For Sale</item>
+        <item>Investment Opportunities</item>
+        <item>Business Loan</item>
+        <item>Assets for sale</item>
+        <item>Franchise Opportunities</item>
+    </string-array>
+
+    <string-array name="location">
+        <item>Coimbatore</item>
+        <item>Chennai</item>
+        <item>Bangalore</item>
+        <item>Delhi</item>
+        <item>Mumbai</item>
+        <item>Kolkata</item>
+    </string-array>
+
+    <string-array name="industry">
+        <item>Building, Construction and Maintenance</item>
+        <item>Business Services</item>
+        <item>Education</item>
+        <item>Energy &amp; Utilities</item>
+        <item>Financials</item>
+        <item>Food &amp; Beverage</item>
+    </string-array>
 
 </resources>
