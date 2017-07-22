@@ -5,17 +5,42 @@
 
     <item
         android:id="@+id/action_notification"
-        android:title="Notifications"
+        android:title="@string/action_notification"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_message"
-        android:title="Messages"
+        android:title="@string/action_message"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_add_user"
+        android:icon="@drawable/ic_action_add_user"
+        android:orderInCategory="100"
+        android:title="@string/action_add_user"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/action_add_business_profile"
+                android:title="Business Profile" />
+            <item
+                android:id="@+id/action_add_investor_profile"
+                android:title="Investor Profile" />
+            <item
+                android:id="@+id/action_add_franchise_profile"
+                android:title="Franchise Profile" />
+            <item
+                android:id="@+id/action_add_advisor_profile"
+                android:title="Advisor Profile" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_setting"
+        android:icon="@drawable/ic_action_setting"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="always"></item>
+
 </menu>
