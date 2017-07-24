@@ -1,0 +1,581 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground2"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/windowBackground"
+        android:gravity="center"
+        android:text="BUSINESS PROFILE"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/windowBackground2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/windowBackground2">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+
+                        android:text="Confidential Information"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="Information entered here will not be publicly displayed"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="YourName"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/edt_company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Company Name"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+                    <EditText
+                        android:id="@+id/edt_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Your Mobile Number"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/edt_official_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Official Email"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:orientation="horizontal"
+                        android:weightSum="6">
+
+                        <CheckBox
+                            android:id="@+id/chbx_display_contact_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="5"
+                            android:text="Display contact details to introduced members so that they can contact me directly"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:orientation="horizontal"
+                        android:weightSum="6">
+
+                        <CheckBox
+                            android:id="@+id/chbx_display_company_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="5"
+                            android:text="Display company details to introduced members so that they can know about my company"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@color/windowBackground2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Business Information"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:text="Information entered here will not be publicly displayed"
+                        android:textSize="14dp" />
+
+                    <Spinner
+                        android:id="@+id/spn_i_am"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_i_am">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_interested"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_interested">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_when_established"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_when_established">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_select_industry"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_select_industry">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_where_located"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_where_located">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_permanent_employees"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_permanent_employees">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:id="@+id/spn_business_legel_entity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_business_legel_entity">
+
+                    </Spinner>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="Describe the business in a single line"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_business_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Mention highlights of the business including number of clients, growth rate, promoter experience, business relationships, awards, etc"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_business_highlights"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="List all products and services of the business"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_list_product_services"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Describe your facility such as built-up area, number of floors, rental/lease details"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_facility_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="At present, what is your average monthly sales?"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/txt_change_currency"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:text="Change Currency"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/txt_currency_monthly_sales"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingRight="20dp"
+                            android:text="INR"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/red"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_avg_mnthly_sales"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="What was your latest reported yearly sales?"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/txt_yearly_sales_why"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:text="Why is this needed?"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14dp"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/txt_currency_yearly_sales"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingRight="20dp"
+                            android:text="INR"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/red"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_latest_yearly_sales"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="What is the EBITDA / Operating Profit Margin Percentage?"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="6">
+
+                        <TextView
+                            android:id="@+id/txt_ebitda_why"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="3"
+                            android:text="Why is this needed?"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14dp"
+                            android:textStyle="italic" />
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.5" />
+
+                        <TextView
+                            android:id="@+id/txt_currency_ebitda"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="2"
+                            android:paddingLeft="5dp"
+                            android:text="Display as Range"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edt_operating_profit_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="What is the value of physical assets owned by the business?"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/edt_phy_assests_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Add business and product photos \nProfiles with photos get higher rating and visibility"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:id="@+id/btn_add_photos"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:text="Add Photos"
+                        android:textSize="12dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Add business documents \nProfiles with documents get higher rating and visibility."
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:id="@+id/btn_add_documents"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:text="Add Document"
+                        android:textSize="12dp"
+                        android:textColor="@color/black" />
+
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:background="@color/colorPrimaryDark"
+                        android:text="SUBMIT"
+                        android:textColor="@color/textColorlight" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

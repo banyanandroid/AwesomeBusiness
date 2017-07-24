@@ -174,20 +174,25 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             return true;
         }
         if (id == R.id.action_add_business_profile) {
-            Toast.makeText(getApplicationContext(), "Business Profile", Toast.LENGTH_LONG).show();
-            return true;
+            /*Toast.makeText(getApplicationContext(), "Business Profile", Toast.LENGTH_LONG).show();
+            return true;*/
+            Intent i = new Intent(getApplicationContext(),Activity_BusinessProfile.class);
+            startActivity(i);
         }
         if (id == R.id.action_add_advisor_profile) {
             Toast.makeText(getApplicationContext(), "Advisor Profile", Toast.LENGTH_LONG).show();
             return true;
         }
         if (id == R.id.action_add_investor_profile) {
-            Toast.makeText(getApplicationContext(), "Investor Profile", Toast.LENGTH_LONG).show();
-            return true;
+            /*Toast.makeText(getApplicationContext(), "Investor Profile", Toast.LENGTH_LONG).show();
+            return true;*/
+            Intent i = new Intent(getApplicationContext(),Activity_InvestorProfile.class);
+            startActivity(i);
         }
         if (id == R.id.action_add_franchise_profile) {
-            Toast.makeText(getApplicationContext(), "Franchise Profile", Toast.LENGTH_LONG).show();
-            return true;
+
+            Intent i = new Intent(getApplicationContext(),Activity_FranchiseProfile.class);
+            startActivity(i);
         }
         if (id == R.id.action_setting) {
 
