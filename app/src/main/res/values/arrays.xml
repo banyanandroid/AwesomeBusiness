@@ -52,14 +52,14 @@
     </string-array>
 
     <string-array name="spinner_interested">
-        <item>I am interested in</item>
+        <item>Interested in</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
 
     <string-array name="spinner_when_established">
-        <item>When was the business established?</item>
+        <item>Business established In</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -72,44 +72,44 @@
         <item>3</item>
     </string-array>
     <string-array name="spinner_where_located">
-        <item>Where is the business located?</item>
+        <item>Business located at</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
     <string-array name="spinner_permanent_employees">
-        <item>How many permanent employees in business?</item>
+        <item>No.of permanent employees</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
     <string-array name="spinner_business_legel_entity">
-        <item>Select business legal entity type</item>
+        <item>Business legal entity type</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
     <string-array name="spinner_investor_industries_interested">
-        <item>Select industries you are interested in</item>
+        <item>Industries Interested</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
 
     <string-array name="spinner_investor_locations_interested">
-        <item>Select locations you are interested in</item>
+        <item>Locations Interested</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
     <string-array name="spinner_investor_investment_range">
-        <item>Provide your investment range</item>
+        <item>Investment Range</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
     <string-array name="spinner_investor_location">
-        <item>Your Current City/Location</item>
+        <item>Current Location</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>

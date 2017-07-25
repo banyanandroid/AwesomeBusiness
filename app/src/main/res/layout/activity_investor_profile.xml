@@ -10,6 +10,16 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/windowBackground"
+        android:gravity="center"
+        android:text="INVESTOR PROFILE"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+         />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +28,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/windowBackground2"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -48,55 +58,61 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Confidential Information"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
-                    <TextView
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                        android:text="Information entered here will not be publicly displayed"
-                        android:textSize="14dp" />
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:hint="Your Name"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
 
-                    <EditText
-                        android:id="@+id/edt_name"
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="YourName"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_mobile_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Mobile Number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_mobile_number"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Your Mobile Number"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_office_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Office Email Address"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_office_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Official Email"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </LinearLayout>
@@ -127,123 +143,148 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:text="Your Requirements"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:text="I am interested in"
+                        android:text="Interests"
                         android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:textSize="18dp"/>
 
                     <LinearLayout
-
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:orientation="horizontal"
-                        android:weightSum="6">
+                        android:weightSum="2">
 
-                        <CheckBox
-                            android:id="@+id/chbx_acq_buying_business"
+                        <LinearLayout
+
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="6">
 
-                        <TextView
+
+                            <CheckBox
+                                android:id="@+id/chbx_acq_buying_business"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="5"
+                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
+                                android:text="Acquiring / Buying a Business "
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="5"
-                            android:text="Acquiring / Buying a Business "
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="6">
 
+                            <CheckBox
+                                android:id="@+id/chbx_investing_business"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="5"
+                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
+                                android:text="Investing in a Business "
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:orientation="horizontal"
-                        android:weightSum="6">
+                        android:weightSum="2">
 
-                        <CheckBox
-                            android:id="@+id/chbx_investing_business"
+                        <LinearLayout
+
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="6">
 
-                        <TextView
+                            <CheckBox
+                                android:id="@+id/chbx_lending_business"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="5"
+                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
+                                android:text="Lending to a Business"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="5"
-                            android:text="Investing in a Business "
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="6">
 
+                            <CheckBox
+                                android:id="@+id/chbx_buying_property"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="5"
+                                android:paddingLeft="10dp"
+                                android:paddingStart="10dp"
+                                android:text="Buying Property / Plant / Machinery "
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="horizontal"
-                        android:weightSum="6">
-
-                        <CheckBox
-                            android:id="@+id/chbx_lending_business"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="5"
-                            android:text="Lending to a Business"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="horizontal"
-                        android:weightSum="6">
-
-                        <CheckBox
-                            android:id="@+id/chbx_buying_property"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="5"
-                            android:text="Buying Property / Plant / Machinery "
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-
-                    </LinearLayout>
-
 
                     <LinearLayout
 
@@ -258,13 +299,15 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.5" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="5"
+                            android:layout_weight="5.5"
+                            android:paddingLeft="10dp"
+                            android:paddingStart="10dp"
                             android:text="Taking up a Franchise / Distributorship / Sales Agency"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
@@ -376,85 +419,69 @@
                     </Spinner>
 
 
-                    <TextView
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Your Designation  "
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_designation"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_designation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Your Designation"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <TextView
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_linkedin_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Your Linkedin Profile"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Your Linkedin Profile "
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_linkedin_profile"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_company_sector"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Your Company's sector"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Your Company's sector"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_kind_of_business"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Businesses Interested In"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
 
-                    <EditText
-                        android:id="@+id/edt_company_sector"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="What kind of businesses are you interested in"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <EditText
-                        android:id="@+id/edt_kind_of_business"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="About Yourself"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                    </android.support.design.widget.TextInputLayout>
 
                     <EditText
                         android:id="@+id/edt_about_yourself"
@@ -462,7 +489,7 @@
                         android:layout_height="80dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Several businesses are interested in connecting with \nmembers who have specific skill-sets. Please write \n about your background and how you can help a\n business grow."
+                        android:hint="Write about your background &amp; how you can help \na business grow."
                         android:inputType="text"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         android:textColor="@color/black"
@@ -474,8 +501,9 @@
                         android:layout_height="30dp"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:text="Add Profile Photo"
-                        android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:layout_gravity="end"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10dp" />
 
 
                     <Button
@@ -500,12 +528,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="INVESTOR PROFILE"
-        android:textColor="@color/colorPrimary"
         android:background="@color/windowBackground"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:text="INVESTOR PROFILE"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 </LinearLayout>
 
