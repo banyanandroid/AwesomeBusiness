@@ -74,6 +74,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Authorised Person Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -91,6 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Official Email"
+                            android:inputType="textEmailAddress"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -107,6 +109,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Mobile Number"
+                            android:inputType="phone"
+                            android:maxLength="10"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -357,6 +361,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Your Industry"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -501,7 +506,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:text="FORMAT 1"
+                        android:text="Format - 1"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
@@ -517,6 +522,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Format Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -542,6 +548,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="Minimum Sq Ft"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
 
@@ -552,6 +559,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="Minimum Sq Ft"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
                             android:textStyle="bold" />
@@ -610,6 +618,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="INR"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
 
@@ -620,6 +629,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="INR"
+                            android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
                             android:textStyle="bold" />

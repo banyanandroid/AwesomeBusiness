@@ -58,8 +58,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:text="Confidential Information"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:text="Confidential Information"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
@@ -75,6 +75,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -92,6 +93,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Company Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -110,6 +112,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Mobile Number"
+                            android:inputType="phone"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -127,11 +130,11 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Official Email"
+                            android:inputType="textEmailAddress"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
-
 
 
                     <LinearLayout
@@ -216,9 +219,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:text="Business Information"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
@@ -299,9 +302,9 @@
                         android:layout_height="50dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Describe the business in a single line"
                         android:inputType="text"
                         android:paddingLeft="5dp"
-                        android:hint="Describe the business in a single line"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -312,9 +315,9 @@
                         android:layout_height="80dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Highlights of the business including no.of\nclients, growth rate, promoter experience,\nbusiness relationships, awards, etc"
                         android:inputType="text"
                         android:paddingLeft="5dp"
-                        android:hint="Highlights of the business including no.of\nclients, growth rate, promoter experience,\nbusiness relationships, awards, etc"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -325,9 +328,9 @@
                         android:layout_height="80dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="List all products &amp; services of the business"
                         android:inputType="text"
                         android:paddingLeft="5dp"
-                        android:hint="List all products &amp; services of the business"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -338,18 +341,12 @@
                         android:layout_height="80dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Describe your facility such as built-up area,\nnumber of floors, rental/lease details"
                         android:inputType="text"
                         android:paddingLeft="5dp"
-                        android:hint="Describe your facility such as built-up area,\nnumber of floors, rental/lease details"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Average monthly sales at present"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -387,17 +384,12 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Average monthly sales at present"
                         android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="5dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Latest reported yearly sales?"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -406,20 +398,19 @@
                         android:weightSum="2">
 
                         <TextView
-                            android:id="@+id/txt_yearly_sales_why"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="20dp"
-                            android:layout_weight="1"
-                            android:text="Why is this needed?"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_weight="1.5"
+                            android:text="Latest reported yearly sales?"
+                            android:textColor="@color/black"
                             android:textSize="14dp"
                             android:textStyle="italic" />
 
                         <TextView
                             android:id="@+id/txt_currency_yearly_sales"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="20dp"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:gravity="end"
                             android:paddingRight="20dp"
                             android:text="INR"
@@ -441,21 +432,26 @@
                         android:textSize="18dp" />
 
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/edt_operating_profit_margin"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="What is the EBITDA / Operating Profit Margin Percentage?"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
+                        android:hint="Enter the EBITDA / Operating Profit Margin %"
+                        android:paddingLeft="5dp"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:weightSum="6">
 
-                        <TextView
-                            android:id="@+id/txt_ebitda_why"
+                        <View
                             android:layout_width="0dp"
                             android:layout_height="20dp"
                             android:layout_weight="3"
@@ -482,26 +478,14 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/edt_operating_profit_margin"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
-
-
-                    <EditText
                         android:id="@+id/edt_phy_assests_value"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Value of physical assets owned by\nthe business?"
                         android:inputType="text"
                         android:paddingLeft="5dp"
-                        android:hint="Value of physical assets owned by\nthe business?"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
