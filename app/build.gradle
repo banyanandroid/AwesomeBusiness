@@ -35,6 +35,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.3.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    /**************** For Retrofit  *********************/
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     /****************    For  Signin singnup  ********************/
     compile 'com.android.support:percent:25.3.1'
     /*******************************************************/
