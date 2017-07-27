@@ -43,4 +43,90 @@
         <item>SQL</item>
         <item>Beagle</item>
     </string-array>
+
+    <string-array name="spinner_i_am">
+        <item>I am a(n)</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_interested">
+        <item>Interested in</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_when_established">
+        <item>Business established In</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_select_industry">
+        <item>Select business industry</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_where_located">
+        <item>Business located at</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_permanent_employees">
+        <item>No.of permanent employees</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_business_legel_entity">
+        <item>Business legal entity type</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_investor_industries_interested">
+        <item>Industries Interested</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_investor_locations_interested">
+        <item>Locations Interested</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_investor_investment_range">
+        <item>Investment Range</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="spinner_investor_location">
+        <item>Current Location</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_investor_company_work_at">
+        <item>Company You Work At  </item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="spinner_sales_partner_formats">
+        <item>No of Sales Partner Formats</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>
