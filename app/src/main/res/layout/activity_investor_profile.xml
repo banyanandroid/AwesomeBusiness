@@ -10,15 +10,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/windowBackground"
-        android:gravity="center"
-        android:text="INVESTOR PROFILE"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20dp"
-         />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -76,6 +67,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Your Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -93,6 +85,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Mobile Number"
+                            android:inputType="number"
+                            android:maxLength="10"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -109,6 +103,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Official Email"
+                            android:inputType="textEmailAddress"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 

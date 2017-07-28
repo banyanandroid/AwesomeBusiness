@@ -70,17 +70,10 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <Button
-            android:id="@+id/btnSignin_gplus"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="#dd4b39"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:text="Google"
-            android:textColor="#FFF"
-            android:textSize="16sp" />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btnSignin_fb"
