@@ -74,7 +74,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private Button btnSignup;
     private Button btnSignin;
     LoginButton loginButton;
-    EditText edt_email , edt_password , edt_singup_email , edt_signup_pass , edt_signup_repeat_pass ;
+    EditText edt_singin_email , edt_signin_pass , edt_singup_email , edt_signup_pass , edt_signup_repeat_pass ;
 
     private static final String TAG = Activity_Login.class.getSimpleName();
     private static final String TAG_login = "Login";
@@ -88,7 +88,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     public static RequestQueue queue;
 
-    String str_signup_email , str_signup_pass , str_signup_repeat_pass;
+    String str_signin_email , str_signin_pass ,str_signup_email , str_signup_pass , str_signup_repeat_pass;
 
     SpotsDialog dialog;
 
@@ -113,12 +113,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         btnSignup = (Button) findViewById(R.id.btnSignup);
         btnSignin = (Button) findViewById(R.id.btnSignin);
 
-
-
        // btn_fb = (Button) findViewById(R.id.btnSignin_fb);
 
-        edt_email = (EditText) findViewById(R.id.edt_email);
-        edt_password = (EditText) findViewById(R.id.edt_password);
+        edt_singin_email = (EditText) findViewById(R.id.edt_email);
+        edt_signin_pass = (EditText) findViewById(R.id.edt_password);
         edt_singup_email = (EditText) findViewById(R.id.edt_signup_email);
         edt_signup_pass = (EditText) findViewById(R.id.edt_signup_password);
         edt_signup_repeat_pass = (EditText) findViewById(R.id.edt_signup_repeat_pass);
@@ -207,34 +205,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         });
         showSigninForm();
 
-/*
-
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                user_email = edt_email.getText().toString();
-                user_password = edt_password.getText().toString();
-
-                if (user_email.equals("")) {
-                    TastyToast.makeText(getApplicationContext(), "Please Enter User ID", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_email.setError("Please Enter Email ID");
-                } else if (user_password.equals("")) {
-                    TastyToast.makeText(getApplicationContext(), "Please Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_password.setError("Please Enter Password");
-                } else {
-
-                    dialog = new SpotsDialog(Activity_Login.this);
-                    dialog.show();
-                    queue = Volley.newRequestQueue(Activity_Login.this);
-                    Function_Login();
-                }
-
-            }
-        });
-
-
-*/
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -268,35 +238,26 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-
-
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_right_to_left);
-                btnSignup.startAnimation(clockwise);
-                str_signup_email = edt_singup_email.getText().toString();
-                str_signup_pass = edt_signup_pass.getText().toString();
-                str_signup_repeat_pass = edt_signup_repeat_pass.getText().toString();
 
-                if (str_signup_email.equals("")) {
+                str_signin_email = edt_singin_email.getText().toString();
+                str_signin_pass = edt_signin_pass.getText().toString();
+
+
+                if (str_signin_email.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Email ID", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_singup_email.setError("Please Enter Email ID");
-                } else if (str_signup_pass.equals("")) {
+                    edt_singin_email.setError("Please Enter Email ID");
+                } else if (str_signin_pass.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_signup_pass.setError("Please Enter Password");
-                } else if (str_signup_repeat_pass.equals("")) {
-                    TastyToast.makeText(getApplicationContext(), "Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_signup_repeat_pass.setError("Please Enter Password");
-                } else if (!(str_signup_pass.equals(str_signup_repeat_pass))) {
-                    TastyToast.makeText(getApplicationContext(), "Passwords Do Not Match", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
-                    edt_signup_repeat_pass.setError("Please Repeat same Password");
-                } else {
+                    edt_signin_pass.setError("Please Enter Password");
+                }else {
 
                     dialog = new SpotsDialog(Activity_Login.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(Activity_Login.this);
-                    Function_Register();
+
                 }
 
 
