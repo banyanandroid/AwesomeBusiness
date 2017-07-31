@@ -90,5 +90,6 @@
 
     <item name="visible" type="id"/>
     <item name="masked" type="id"/>
+    <string name="facebook_app_id">361100467641279</string>
 
 </resources>
