@@ -74,7 +74,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private Button btnSignup;
     private Button btnSignin;
     LoginButton loginButton;
-    EditText edt_singin_email , edt_signin_pass , edt_singup_email , edt_signup_pass , edt_signup_repeat_pass ;
+    EditText edt_singin_email, edt_signin_pass, edt_singup_email, edt_signup_pass, edt_signup_repeat_pass;
 
     private static final String TAG = Activity_Login.class.getSimpleName();
     private static final String TAG_login = "Login";
@@ -88,16 +88,17 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     public static RequestQueue queue;
 
-    String signin_email , signin_pass ;
+    String signin_email, signin_pass;
 
-    String str_signin_email , str_signin_pass ,str_signup_email , str_signup_pass , str_signup_repeat_pass;
+    String str_signin_email, str_signin_pass, str_signup_email, str_signup_pass, str_signup_repeat_pass;
+    String str_user_email, str_user_id;
 
     SpotsDialog dialog;
 
     private static final String TAG_EMAIL = "user_email";
-    private static final String TAG_PASSWORD = "password";
+    private static final String TAG_ID = "id";
 
-    Button  btn_fb;
+    Button btn_fb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +116,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         btnSignup = (Button) findViewById(R.id.btnSignup);
         btnSignin = (Button) findViewById(R.id.btnSignin);
 
-       // btn_fb = (Button) findViewById(R.id.btnSignin_fb);
-
         edt_singin_email = (EditText) findViewById(R.id.edt_email);
         edt_signin_pass = (EditText) findViewById(R.id.edt_password);
         edt_singup_email = (EditText) findViewById(R.id.edt_signup_email);
@@ -126,40 +125,40 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         llSignup = (LinearLayout) findViewById(R.id.llSignup);
         llSignin = (LinearLayout) findViewById(R.id.llSignin);
 
-        loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-               String facebook_id ,f_name , m_name , l_name , gender ,profile_image , full_name , email_id = "";
+                String facebook_id, f_name, m_name, l_name, gender, profile_image, full_name, email_id = "";
 
-                if(AccessToken.getCurrentAccessToken() != null){
+                if (AccessToken.getCurrentAccessToken() != null) {
                     RequestData();
                     Profile profile = Profile.getCurrentProfile();
                     if (profile != null) {
-                        facebook_id=profile.getId();
+                        facebook_id = profile.getId();
                         Log.e("facebook_id", facebook_id);
-                        f_name=profile.getFirstName();
+                        f_name = profile.getFirstName();
                         Log.e("f_name", f_name);
-                        m_name=profile.getMiddleName();
+                        m_name = profile.getMiddleName();
                         Log.e("m_name", m_name);
-                        l_name=profile.getLastName();
+                        l_name = profile.getLastName();
                         Log.e("l_name", l_name);
-                        full_name=profile.getName();
+                        full_name = profile.getName();
                         Log.e("full_name", full_name);
-                        profile_image=profile.getProfilePictureUri(400, 400).toString();
+                        profile_image = profile.getProfilePictureUri(400, 400).toString();
                         Log.e("profile_image", profile_image);
 
 
                         Toast.makeText(getApplicationContext(), "Successs" + "Fb_id" + facebook_id
-                                + "FullName" + full_name , Toast.LENGTH_LONG).show();
+                                + "FullName" + full_name, Toast.LENGTH_LONG).show();
                     }
 
                 }
 
-                Toast.makeText(getApplicationContext(), "Successs" ,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Successs", Toast.LENGTH_LONG).show();
 
             }
 
@@ -177,8 +176,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
             }
         });
-
-
 
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -247,14 +244,13 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 signin_email = edt_singin_email.getText().toString();
                 signin_pass = edt_signin_pass.getText().toString();
 
-
                 if (signin_email.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Email ID", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_singin_email.setError("Please Enter Email ID");
                 } else if (signin_pass.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_signin_pass.setError("Please Enter Password");
-                }else {
+                } else {
 
                     dialog = new SpotsDialog(Activity_Login.this);
                     dialog.show();
@@ -268,19 +264,18 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         });
 
 
-
     }
 
-    public void RequestData(){
+    public void RequestData() {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
 
                 JSONObject json = response.getJSONObject();
-                System.out.println("Json data :"+json);
+                System.out.println("Json data :" + json);
                 try {
-                    if(json != null){
-                        String text = "<b>Name :</b> "+json.getString("name")+"<br><br><b>Email :</b> "+json.getString("email")+"<br><br><b>Profile link :</b> "+json.getString("link");
+                    if (json != null) {
+                        String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + "<br><br><b>Profile link :</b> " + json.getString("link");
                        /* details_txt.setText(Html.fromHtml(text));
                         profile.setProfileId(json.getString("id"));*/
                     }
@@ -302,7 +297,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -314,10 +308,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             String personName = acct.getDisplayName();
             try {
                 String personPhotoUrl = acct.getPhotoUrl().toString();
-            }catch (Exception e) {
+            } catch (Exception e) {
             }
             String email = acct.getEmail();
-            Toast.makeText(getApplicationContext(), "Name : " +personName + "Email : "+ email , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Name : " + personName + "Email : " + email, Toast.LENGTH_LONG).show();
             Log.e(TAG, "Name: " + personName + ", email: " + email
                     + ", Image: ");
 
@@ -399,6 +393,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 Log.d("USER_LOGIN", response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
+                    System.out.println("REG 00" + obj);
+
                     int success = obj.getInt("status");
 
                     System.out.println("REG" + success);
@@ -407,18 +403,14 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         dialog.dismiss();
 
-                        str_signin_email = obj.getString(TAG_EMAIL);
-                        str_signin_pass = obj.getString(TAG_PASSWORD);
+                        str_user_email = obj.getString(TAG_EMAIL);
+                        str_user_id = obj.getString(TAG_ID);
 
-                        System.out.println("USER_NAME" + str_signin_email);
-                        System.out.println("PASSWORD" + str_signin_email);
-
-                       // session.createLoginSession(str_user_name, str_reg_id);
+                        // session.createLoginSession(str_user_name, str_reg_id);
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
                         finish();
-                        TastyToast.makeText(getApplicationContext(), "Login Success", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
                     } else {
                         TastyToast.makeText(getApplicationContext(), "Oops...! Login Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -531,8 +523,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         Animation clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_left_to_right);
         btnSignin.startAnimation(clockwise);
     }
-
-
 
 
 }

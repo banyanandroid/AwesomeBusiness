@@ -8,7 +8,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorPrimary"></LinearLayout>
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Awesome Business"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/nav_header_container"
