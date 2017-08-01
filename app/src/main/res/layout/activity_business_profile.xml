@@ -57,7 +57,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:textColorHint="@color/textColorPrimary"
+                        android:theme="@style/TextLabel">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edt_name"
@@ -75,7 +76,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:textColorHint="@color/textColorPrimary"
+                        android:theme="@style/TextLabel">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edt_company_name"
@@ -94,7 +96,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:textColorHint="@color/textColorPrimary"
+                        android:theme="@style/TextLabel">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edt_mobile_number"
@@ -113,7 +116,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:textColorHint="@color/textColorPrimary"
+                        android:theme="@style/TextLabel">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/edt_official_email"
@@ -428,8 +432,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
                         android:hint="Enter the EBITDA / Operating Profit Margin %"
+                        android:inputType="text"
                         android:paddingLeft="5dp"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
@@ -437,9 +441,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
                         android:weightSum="6">
 
                         <View

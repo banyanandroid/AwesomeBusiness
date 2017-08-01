@@ -153,6 +153,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         Log.e("profile_image", profile_image);
 
 
+                        str_social_name = full_name;
+                        str_social_image = profile_image;
+                        str_social_type = "2";
+
                         Toast.makeText(getApplicationContext(), "Successs" + "Fb_id" + facebook_id
                                 + "FullName" + full_name, Toast.LENGTH_LONG).show();
                     }
@@ -160,6 +164,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 }
 
                 Toast.makeText(getApplicationContext(), "Successs", Toast.LENGTH_LONG).show();
+
 
             }
 
@@ -279,6 +284,16 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + "<br><br><b>Profile link :</b> " + json.getString("link");
                        /* details_txt.setText(Html.fromHtml(text));
                         profile.setProfileId(json.getString("id"));*/
+                        str_social_email = json.getString("email");
+                    }
+
+                    try {
+                        dialog = new SpotsDialog(Activity_Login.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_Login.this);
+                        Function_Social_Login();
+                    }catch (Exception e){
+
                     }
 
                 } catch (JSONException e) {
