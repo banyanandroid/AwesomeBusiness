@@ -88,6 +88,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     public static RequestQueue queue;
 
+    String signin_email , signin_pass ;
+
     String str_signin_email , str_signin_pass ,str_signup_email , str_signup_pass , str_signup_repeat_pass;
 
     SpotsDialog dialog;
@@ -242,14 +244,14 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 
-                str_signin_email = edt_singin_email.getText().toString();
-                str_signin_pass = edt_signin_pass.getText().toString();
+                signin_email = edt_singin_email.getText().toString();
+                signin_pass = edt_signin_pass.getText().toString();
 
 
-                if (str_signin_email.equals("")) {
+                if (signin_email.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Email ID", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_singin_email.setError("Please Enter Email ID");
-                } else if (str_signin_pass.equals("")) {
+                } else if (signin_pass.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_signin_pass.setError("Please Enter Password");
                 }else {
@@ -257,6 +259,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                     dialog = new SpotsDialog(Activity_Login.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(Activity_Login.this);
+                    Function_Login();
 
                 }
 
@@ -382,6 +385,76 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 return params;
             }
         };
+        queue.add(request);
+    }
+
+    private void Function_Login() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_login, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG_login, response.toString());
+                Log.d("USER_LOGIN", response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    System.out.println("REG" + success);
+
+                    if (success == 1) {
+
+                        dialog.dismiss();
+
+                        str_signin_email = obj.getString(TAG_EMAIL);
+                        str_signin_pass = obj.getString(TAG_PASSWORD);
+
+                        System.out.println("USER_NAME" + str_signin_email);
+                        System.out.println("PASSWORD" + str_signin_email);
+
+                       // session.createLoginSession(str_user_name, str_reg_id);
+
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+                        TastyToast.makeText(getApplicationContext(), "Login Success", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+
+                    } else {
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Login Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_email", signin_email);
+                params.put("password", signin_pass);
+
+                System.out.println("User_Email" + signin_email);
+                System.out.println("Password" + signin_pass);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
         queue.add(request);
     }
 
