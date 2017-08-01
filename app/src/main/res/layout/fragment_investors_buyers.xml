@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="45dp"
-        android:text="MESSAGES"
+        android:text="Investors Buyers"
         android:textStyle="bold"/>
 
     <TextView

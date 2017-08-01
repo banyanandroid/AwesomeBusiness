@@ -91,6 +91,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     String signin_email, signin_pass;
 
     String str_signin_email, str_signin_pass, str_signup_email, str_signup_pass, str_signup_repeat_pass;
+    String str_social_email, str_social_name, str_social_image, str_social_type;
     String str_user_email, str_user_id;
 
     SpotsDialog dialog;
@@ -307,7 +308,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
             String personName = acct.getDisplayName();
             try {
-                String personPhotoUrl = acct.getPhotoUrl().toString();
+                str_social_image = acct.getPhotoUrl().toString();
             } catch (Exception e) {
             }
             String email = acct.getEmail();
@@ -316,12 +317,30 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                     + ", Image: ");
 
 
+            try {
+                str_social_name = personName;
+                str_social_email = email;
+                str_social_type = "1";
+
+                dialog = new SpotsDialog(Activity_Login.this);
+                dialog.show();
+                queue = Volley.newRequestQueue(Activity_Login.this);
+                Function_Social_Login();
+            }catch (Exception e){
+
+            }
+
+
         } else {
 
             Toast.makeText(getApplicationContext(), "Oops..! Something Wrong....", Toast.LENGTH_LONG).show();
 
         }
     }
+
+    /******************************************
+     *    User Registration
+     * *******************************************/
 
     private void Function_Register() {
 
@@ -382,6 +401,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         queue.add(request);
     }
 
+    /******************************************
+     *    User Login
+     * *******************************************/
+
     private void Function_Login() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
@@ -440,6 +463,82 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                 System.out.println("User_Email" + signin_email);
                 System.out.println("Password" + signin_pass);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /******************************************
+     *    User Social Login
+     * *******************************************/
+
+    private void Function_Social_Login() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_social_login, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG_login, response.toString());
+                Log.d("USER_LOGIN", response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("REG 00" + obj);
+
+                    int success = obj.getInt("status");
+
+                    System.out.println("REG" + success);
+
+                    if (success == 1) {
+
+                        dialog.dismiss();
+
+                        str_user_email = obj.getString(TAG_EMAIL);
+                        str_user_id = obj.getString(TAG_ID);
+
+                        // session.createLoginSession(str_user_name, str_reg_id);
+
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    } else {
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Login Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_email", str_social_email);
+                params.put("user_photo", str_social_image);
+                params.put("user_name", str_social_name);
+                params.put("sociallogin", str_social_type);
+
+                System.out.println("User_Email" + str_social_email);
+                System.out.println("user_photo" + str_social_image);
+                System.out.println("user_name" + str_social_name);
+                System.out.println("sociallogin" + str_social_type);
 
                 return params;
             }
