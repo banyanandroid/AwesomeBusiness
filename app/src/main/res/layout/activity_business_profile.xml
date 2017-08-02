@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="@color/windowBackground2"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
@@ -220,25 +221,31 @@
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
-                    <Spinner
-                        android:id="@+id/spn_i_am"
+
+                    <AutoCompleteTextView
+                        android:id="@+id/business_profile_autocomp_i_am"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:hint=" I am an"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_i_am">
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/textColorPrimary"
+                        android:textColorHint="@android:color/darker_gray" />
 
-                    </Spinner>
-
-                    <Spinner
-                        android:id="@+id/spn_interested"
+                    <AutoCompleteTextView
+                        android:id="@+id/business_profile_autocomp_intersted"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:hint=" Interested in"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_interested">
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textColor="@color/textColorPrimary"
+                        android:textColorHint="@android:color/darker_gray" />
 
-                    </Spinner>
 
                     <Spinner
                         android:id="@+id/spn_when_established"
@@ -250,25 +257,39 @@
 
                     </Spinner>
 
-                    <Spinner
-                        android:id="@+id/spn_select_industry"
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/business_profile_chipText_busi_industry"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        custom:textSize_="10dp"
+                        custom:hint_="Select Business Industry"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:textColor_="@android:color/black"
+                        custom:hintColor_="@android:color/darker_gray"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_select_industry">
+                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
+                        custom:labelPosition_="left">
+                    </com.libaml.android.view.chip.ChipLayout>
 
-                    </Spinner>
-
-                    <Spinner
-                        android:id="@+id/spn_where_located"
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/business_profile_chipText_busi_loca_at"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        custom:textSize_="10dp"
+                        custom:hint_="Business Located At"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:textColor_="@android:color/black"
+                        custom:hintColor_="@android:color/darker_gray"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_where_located">
-
-                    </Spinner>
+                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
+                        custom:labelPosition_="left">
+                    </com.libaml.android.view.chip.ChipLayout>
 
                     <Spinner
                         android:id="@+id/spn_permanent_employees"
