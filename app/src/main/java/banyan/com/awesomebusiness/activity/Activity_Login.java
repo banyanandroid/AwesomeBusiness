@@ -20,9 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -52,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -135,10 +138,15 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                 String facebook_id, f_name, m_name, l_name, gender, profile_image, full_name, email_id = "";
 
+                System.out.println("STEP 1");
                 if (AccessToken.getCurrentAccessToken() != null) {
+                    System.out.println("STEP 2");
                     RequestData();
+                    System.out.println("STEP 3");
                     Profile profile = Profile.getCurrentProfile();
+                    System.out.println("STEP 4");
                     if (profile != null) {
+                        System.out.println("STEP 5");
                         facebook_id = profile.getId();
                         Log.e("facebook_id", facebook_id);
                         f_name = profile.getFirstName();
@@ -157,15 +165,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_social_image = profile_image;
                         str_social_type = "2";
 
-                        Toast.makeText(getApplicationContext(), "Successs" + "Fb_id" + facebook_id
-                                + "FullName" + full_name, Toast.LENGTH_LONG).show();
                     }
 
                 }
-
-                Toast.makeText(getApplicationContext(), "Successs", Toast.LENGTH_LONG).show();
-
-
             }
 
             @Override
@@ -281,20 +283,30 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 System.out.println("Json data :" + json);
                 try {
                     if (json != null) {
-                        String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + "<br><br><b>Profile link :</b> " + json.getString("link");
+                        String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") +
+                                "<br><br><b>Profile link :</b> " + json.getString("link");
                        /* details_txt.setText(Html.fromHtml(text));
                         profile.setProfileId(json.getString("id"));*/
                         str_social_email = json.getString("email");
+
+                        Toast.makeText(getApplicationContext(), "11111111Successs" +
+                                str_social_email + json.getString("name"), Toast.LENGTH_LONG).show();
+
+                        System.out.println("Mail ::: :" + str_social_email + "Name ::: :" + str_social_name +
+                                "Image url " + str_social_image + "type" + str_social_type);
                     }
 
+
                     try {
+                        str_social_type = "2";
                         dialog = new SpotsDialog(Activity_Login.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(Activity_Login.this);
                         Function_Social_Login();
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -341,7 +353,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 dialog.show();
                 queue = Volley.newRequestQueue(Activity_Login.this);
                 Function_Social_Login();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -555,11 +567,25 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 System.out.println("user_name" + str_social_name);
                 System.out.println("sociallogin" + str_social_type);
 
-                return params;
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
             }
 
         };
 
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
         // Adding request to request queue
         queue.add(request);
     }
