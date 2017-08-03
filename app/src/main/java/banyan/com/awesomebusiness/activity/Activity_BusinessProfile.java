@@ -71,10 +71,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     ArrayList<String> stringArray_interested = null;
 
     String str_selected_role_id, str_selected_role_name = "";
-    String str_selected_interest_key, str_selected_interest_name = "";
+
+    String str_selected_interest_id, str_selected_interest_name = "";
 
 
-    TextView t1, t2;
+    TextView t1;
     AutoCompleteTextView auto_i_am, auto_interested_in;
 
     @Override
@@ -143,8 +144,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
         System.out.println("STEP  1111111111111");
-        StringRequest request = new StringRequest(Request.Method.GET,
-                AppConfig.url_iam,new Response.Listener<String>(){
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_iam, new Response.Listener<String>() {
 
 
             @Override
@@ -238,7 +239,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
         System.out.println("SsssTEEEPPP  1111");
-        StringRequest request = new StringRequest(Request.Method.GET,
+        StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
             @Override
@@ -265,17 +266,17 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         }
                         try {
                             adapter_interested = new ArrayAdapter<String>(Activity_BusinessProfile.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_business_role_name);
+                                    android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
                             auto_interested_in.setAdapter(adapter_interested);
                             auto_interested_in.setThreshold(1);
 
                             auto_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
-                                    t2 = (TextView) arg1;
-                                    str_selected_interest_name = t2.getText().toString();
+                                    t1 = (TextView) arg1;
+                                    str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
-                                    str_selected_interest_key = Arraylist_business_interest_id.get(arg2 + 1);
+                                    str_selected_interest_id = Arraylist_business_interest_id.get(arg2 + 1);
                                 }
                             });
 
