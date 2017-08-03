@@ -45,23 +45,23 @@ import dmax.dialog.SpotsDialog;
 public class Activity_BusinessProfile extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    Button btn_submit;
+
     SpotsDialog dialog;
     public static RequestQueue queue;
-    Button btn_submit;
-    String TAG = "I_am";
-    TextView t1 , t2;
-    AutoCompleteTextView auto_i_am, auto_interested_in;
 
-    public static final String TAG_ROLE_KEY = "business_role_key";
+    String TAG = "Auto";
+
+    public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
 
-    public static final String TAG_INTEREST_KEY ="business_interest_key";
+    public static final String TAG_INTEREST_ID = "business_interest_id";
     public static final String TAG_INTEREST_NAME = "business_interest_name";
 
-    ArrayList<String> Arraylist_business_role_key = null;
+    ArrayList<String> Arraylist_business_role_id = null;
     ArrayList<String> Arraylist_business_role_name = null;
 
-    ArrayList<String> Arraylist_business_interest_key = null;
+    ArrayList<String> Arraylist_business_interest_id = null;
     ArrayList<String> Arraylist_business_interest_name = null;
 
     private ArrayAdapter<String> adapter_i_am;
@@ -70,9 +70,12 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     private ArrayAdapter<String> adapter_interested;
     ArrayList<String> stringArray_interested = null;
 
-
-    String str_selected_role_key, str_selected_role_name = "";
+    String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_key, str_selected_interest_name = "";
+
+
+    TextView t1, t2;
+    AutoCompleteTextView auto_i_am, auto_interested_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +99,14 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         });
 
         auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
+
+
         auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
 
-        Arraylist_business_role_key = new ArrayList<String>();
+        Arraylist_business_role_id = new ArrayList<String>();
         Arraylist_business_role_name = new ArrayList<String>();
 
-        Arraylist_business_interest_key = new ArrayList<String>();
+        Arraylist_business_interest_id = new ArrayList<String>();
         Arraylist_business_interest_name = new ArrayList<String>();
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -137,45 +142,53 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("SSSTTTTEEEPPP  1111");
+        System.out.println("STEP  1111111111111");
         StringRequest request = new StringRequest(Request.Method.GET,
-                AppConfig.url_i_am_an, new Response.Listener<String>() {
+                AppConfig.url_iam,new Response.Listener<String>(){
+
 
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
+
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
+                    System.out.println("STEP  22222222222");
 
                     if (success == 1) {
 
                         JSONArray arr;
 
                         arr = obj.getJSONArray("data");
+                        System.out.println("STEP  33333333");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String role_key = obj1.getString(TAG_ROLE_KEY);
+                            String role_key = obj1.getString(TAG_ROLE_ID);
                             String role_name = obj1.getString(TAG_ROLE_NAME);
 
-                            Arraylist_business_role_key.add(role_key);
+                            Arraylist_business_role_id.add(role_key);
                             Arraylist_business_role_name.add(role_name);
                         }
                         try {
+
+                            System.out.println("STEP 4444444444");
+
                             adapter_i_am = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_role_name);
                             auto_i_am.setAdapter(adapter_i_am);
                             auto_i_am.setThreshold(1);
+
 
                             auto_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
                                     t1 = (TextView) arg1;
                                     str_selected_role_name = t1.getText().toString();
-                                    System.out.println("Argument " + arg2);
-                                    str_selected_role_key = Arraylist_business_role_key.get(arg2 + 1);
+                                    System.out.println("Argument :::::::::::::::" + arg2);
+                                    str_selected_role_id = Arraylist_business_role_id.get(arg2 + 1);
                                 }
                             });
 
@@ -224,7 +237,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("SSSTTTTEEEPPP  1111");
+        System.out.println("SsssTEEEPPP  1111");
         StringRequest request = new StringRequest(Request.Method.GET,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
@@ -244,10 +257,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String interest_key = obj1.getString(TAG_INTEREST_KEY);
+                            String interest_key = obj1.getString(TAG_INTEREST_ID);
                             String interest_name = obj1.getString(TAG_INTEREST_NAME);
 
-                            Arraylist_business_interest_key.add(interest_key);
+                            Arraylist_business_interest_id.add(interest_key);
                             Arraylist_business_interest_name.add(interest_name);
                         }
                         try {
@@ -262,7 +275,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     t2 = (TextView) arg1;
                                     str_selected_interest_name = t2.getText().toString();
                                     System.out.println("Argument " + arg2);
-                                    str_selected_interest_key = Arraylist_business_interest_key.get(arg2 + 1);
+                                    str_selected_interest_key = Arraylist_business_interest_id.get(arg2 + 1);
                                 }
                             });
 

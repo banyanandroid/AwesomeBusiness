@@ -8,7 +8,7 @@ public class AppConfig {
     public static String url_social_login = BASE_URL + "/index.php/apicontroller/sociallogin";
 
     //Autocomplete
-    public static String url_i_am_an = BASE_URL + "/index.php/apicontroller/listallbusinessrole";
+    public static String url_iam = BASE_URL + "/index.php/apicontroller/listallbusinessrole";
     public static String url_interested_in = BASE_URL + "/index.php/Apicontroller/getalltransaction";
 
 
