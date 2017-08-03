@@ -271,12 +271,14 @@
                         custom:hintColor_="@android:color/darker_gray"
                         custom:hint_="Select Business Industry"
                         custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black"></com.libaml.android.view.chip.ChipLayout>
+                        custom:textColor_="@android:color/black">
+                    </com.libaml.android.view.chip.ChipLayout>
+
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_busi_loca_at"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         custom:chipDrawable_="@drawable/round_corner_drawable"
@@ -287,7 +289,8 @@
                         custom:hintColor_="@android:color/darker_gray"
                         custom:hint_="Business Located At"
                         custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black"></com.libaml.android.view.chip.ChipLayout>
+                        custom:textColor_="@android:color/black">
+                    </com.libaml.android.view.chip.ChipLayout>
 
                     <Spinner
                         android:id="@+id/spn_permanent_employees"

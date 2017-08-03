@@ -44,6 +44,18 @@
         <item>Beagle</item>
     </string-array>
 
+    <string-array name="spinner_business_legel_entity">
+        <item>Select Business legal entity type</item>
+        <item>Sole Proprietorship/Sole Trader</item>
+        <item>General Partnership</item>
+        <item>Limited Liability Partnership (LLP)</item>
+        <item>Limited Liability Company (LLC)</item>
+        <item>Private Limited Company</item>
+        <item>Public Limited Company</item>
+        <item>S Corporation</item>
+        <item>C Corporation</item>
+    </string-array>
+
     <string-array name="spinner_i_am">
         <item>I am a(n)</item>
         <item>1</item>
@@ -83,12 +95,7 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    <string-array name="spinner_business_legel_entity">
-        <item>Business legal entity type</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+
     <string-array name="spinner_investor_industries_interested">
         <item>Industries Interested</item>
         <item>1</item>

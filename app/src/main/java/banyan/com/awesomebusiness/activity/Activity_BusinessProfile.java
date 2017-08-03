@@ -46,26 +46,27 @@ import dmax.dialog.SpotsDialog;
 public class Activity_BusinessProfile extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    SpotsDialog dialog;
+    public static RequestQueue queue;
     Button btn_submit;
+    String TAG = "Auto";
 
     TextView t1;
     AutoCompleteTextView auto_i_am, auto_interested_in;
-
-    ChipLayout chip_busineeslist;
-
-    SpotsDialog dialog;
-    public static RequestQueue queue;
-
-    String TAG = "Auto";
-
+    ChipLayout chip_busineeslist , chip_business_location ;
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
 
     public static final String TAG_INTEREST_ID = "business_interest_id";
     public static final String TAG_INTEREST_NAME = "business_interest_name";
 
-    public static final String TAG_SECTOR_ID = "sector_id";
-    public static final String TAG_SECTOR_NAME = "sector_name";
+    public static final String TAG_SECTOR_NAME = "name";
+    public static final String TAG_SECTOR_KEY = "key";
+    public static final String TAG_SECTOR_TYPE = "type";
+
+    public static final String TAG_LOC_PLACE = "place";
+    public static final String TAG_LOC_KEY = "key";
+    public static final String TAG_LOC_TYPE = "type";
 
     ArrayList<String> Arraylist_business_role_id = null;
     ArrayList<String> Arraylist_business_role_name = null;
@@ -73,8 +74,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_business_interest_id = null;
     ArrayList<String> Arraylist_business_interest_name = null;
 
-    ArrayList<String> Arraylist_sector_id = null;
     ArrayList<String> Arraylist_sector_name = null;
+    ArrayList<String> Arraylist_sector_key = null;
+    ArrayList<String> Arraylist_sector_type = null;
+
+    ArrayList<String> Arraylist_location_place = null;
+    ArrayList<String> Arraylist_location_key = null;
+    ArrayList<String> Arraylist_location_type = null;
 
     private ArrayAdapter<String> adapter_i_am;
 
@@ -83,6 +89,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     String str_selected_role_id, str_selected_role_name = "";
 
     String str_selected_interest_id, str_selected_interest_name = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +118,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
+        chip_business_location  = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_loca_at);
 
         Arraylist_business_role_id = new ArrayList<String>();
         Arraylist_business_role_name = new ArrayList<String>();
@@ -117,8 +126,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_business_interest_id = new ArrayList<String>();
         Arraylist_business_interest_name = new ArrayList<String>();
 
-        Arraylist_sector_id = new ArrayList<String>();
         Arraylist_sector_name = new ArrayList<String>();
+        Arraylist_sector_key = new ArrayList<String>();
+        Arraylist_sector_type = new ArrayList<String>();
+
+        Arraylist_location_place  = new ArrayList<String>();
+        Arraylist_location_key   = new ArrayList<String>();
+        Arraylist_location_type   = new ArrayList<String>();
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
@@ -204,6 +218,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Location();
+                        }catch (Exception e) {
+
+                        }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -282,7 +303,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     t1 = (TextView) arg1;
                                     str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
-                                    str_selected_interest_id = Arraylist_business_interest_id.get(arg2 + 1);
+                                    str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
                                 }
                             });
 
@@ -352,16 +373,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                         JSONArray arr;
 
-                        arr = obj.getJSONArray("data");
+                        arr = obj.getJSONArray("datas");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_key = obj1.getString(TAG_SECTOR_ID);
                             String sector_name = obj1.getString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
 
-                            Arraylist_sector_id.add(sector_key);
                             Arraylist_sector_name.add(sector_name);
+                            Arraylist_sector_key.add(sector_key);
+                            Arraylist_sector_type.add(sector_type);
+
                         }
                         try {
 
@@ -418,5 +442,92 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         queue.add(request);
     }
 
+    /*****************************
+     * To get  Business List
+     ***************************/
 
+    public void Get_Business_Location() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business_location, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("datas");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String location_place = obj1.getString(TAG_LOC_PLACE);
+                            String location_key = obj1.getString(TAG_LOC_KEY);
+                            String location_type = obj1.getString(TAG_LOC_TYPE);
+
+                            Arraylist_location_place.add(location_place);
+                            Arraylist_location_key.add(location_key);
+                            Arraylist_location_type.add(location_type);
+                        }
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_location_place);
+
+                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile.this,
+                                    android.R.layout.simple_list_item_1,Arraylist_location_place);
+                            chip_business_location.setAdapter(adapter_sector);
+
+                            System.out.println("ARAAAAY :: " + 222222);
+                            chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
 }
