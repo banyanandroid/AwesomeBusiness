@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import org.json.JSONArray;
@@ -47,6 +48,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     private Toolbar mToolbar;
     Button btn_submit;
 
+    TextView t1;
+    AutoCompleteTextView auto_i_am, auto_interested_in;
+
+    ChipLayout chip_busineeslist;
+
     SpotsDialog dialog;
     public static RequestQueue queue;
 
@@ -58,25 +64,25 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public static final String TAG_INTEREST_ID = "business_interest_id";
     public static final String TAG_INTEREST_NAME = "business_interest_name";
 
+    public static final String TAG_SECTOR_ID = "sector_id";
+    public static final String TAG_SECTOR_NAME = "sector_name";
+
     ArrayList<String> Arraylist_business_role_id = null;
     ArrayList<String> Arraylist_business_role_name = null;
 
     ArrayList<String> Arraylist_business_interest_id = null;
     ArrayList<String> Arraylist_business_interest_name = null;
 
+    ArrayList<String> Arraylist_sector_id = null;
+    ArrayList<String> Arraylist_sector_name = null;
+
     private ArrayAdapter<String> adapter_i_am;
-    ArrayList<String> stringArray_i_am = null;
 
     private ArrayAdapter<String> adapter_interested;
-    ArrayList<String> stringArray_interested = null;
 
     String str_selected_role_id, str_selected_role_name = "";
 
     String str_selected_interest_id, str_selected_interest_name = "";
-
-
-    TextView t1;
-    AutoCompleteTextView auto_i_am, auto_interested_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +106,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         });
 
         auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
-
-
         auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
+
+        ChipLayout.MAX_CHARACTER_COUNT = 20;
+        chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
 
         Arraylist_business_role_id = new ArrayList<String>();
         Arraylist_business_role_name = new ArrayList<String>();
 
         Arraylist_business_interest_id = new ArrayList<String>();
         Arraylist_business_interest_name = new ArrayList<String>();
+
+        Arraylist_sector_id = new ArrayList<String>();
+        Arraylist_sector_name = new ArrayList<String>();
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
@@ -175,8 +185,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         }
                         try {
 
-                            System.out.println("STEP 4444444444");
-
                             adapter_i_am = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_role_name);
                             auto_i_am.setAdapter(adapter_i_am);
@@ -188,8 +196,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                                         long arg3) {
                                     t1 = (TextView) arg1;
                                     str_selected_role_name = t1.getText().toString();
-                                    System.out.println("Argument :::::::::::::::" + arg2);
-                                    str_selected_role_id = Arraylist_business_role_id.get(arg2 + 1);
+                                    str_selected_role_id = Arraylist_business_role_id.get(arg2);
                                 }
                             });
 
@@ -238,7 +245,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("SsssTEEEPPP  1111");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
@@ -277,6 +283,100 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
                                     str_selected_interest_id = Arraylist_business_interest_id.get(arg2 + 1);
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Sector_List();
+                        }catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * To get  Business List
+     ***************************/
+
+    public void Get_Sector_List() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String sector_key = obj1.getString(TAG_SECTOR_ID);
+                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
+
+                            Arraylist_sector_id.add(sector_key);
+                            Arraylist_sector_name.add(sector_name);
+                        }
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_sector_name);
+
+                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile.this,
+                                    android.R.layout.simple_list_item_1,Arraylist_sector_name);
+                            chip_busineeslist.setAdapter(adapter_sector);
+
+                            System.out.println("ARAAAAY :: " + 222222);
+                            chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
                                 }
                             });
 

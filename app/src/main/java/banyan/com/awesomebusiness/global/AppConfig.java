@@ -10,6 +10,8 @@ public class AppConfig {
     //Autocomplete
     public static String url_iam = BASE_URL + "/index.php/apicontroller/listallbusinessrole";
     public static String url_interested_in = BASE_URL + "/index.php/Apicontroller/getalltransaction";
+    public static String url_business = BASE_URL + "/index.php/Apicontroller/listallsector";
+
 
 
 }
