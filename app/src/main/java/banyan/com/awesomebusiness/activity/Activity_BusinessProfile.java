@@ -49,7 +49,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     SpotsDialog dialog;
     public static RequestQueue queue;
     Button btn_submit;
-    String TAG = "Auto";
+    String TAG = "Auto_Res";
 
     TextView t1;
     AutoCompleteTextView auto_i_am, auto_interested_in;
@@ -77,6 +77,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_sector_name = null;
     ArrayList<String> Arraylist_sector_key = null;
     ArrayList<String> Arraylist_sector_type = null;
+
+    /*Multi Select*/
+
+    ArrayList<String> Arraylist_selected_sectorkey = null;
 
     ArrayList<String> Arraylist_location_place = null;
     ArrayList<String> Arraylist_location_key = null;
@@ -129,6 +133,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
+
+        Arraylist_selected_sectorkey = new ArrayList<String>();
 
         Arraylist_location_place  = new ArrayList<String>();
         Arraylist_location_key   = new ArrayList<String>();
@@ -217,14 +223,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         } catch (Exception e) {
 
                         }
-
-                        try {
-                            queue = Volley.newRequestQueue(getApplicationContext());
-                            Get_Business_Location();
-                        }catch (Exception e) {
-
-                        }
-
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -401,10 +399,36 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     System.out.println("Position :::::::: " + position);
+
+                                    t1 = (TextView) view;
+                                    String str_sector_key  = t1.getText().toString();
+                                    System.out.println("SECTOR KEY :::::::: " + str_sector_key);
+
+                                    Arraylist_selected_sectorkey.add(str_sector_key);
+
+                                    System.out.println("SECTOR KEY ARRAY:::::::: " + Arraylist_selected_sectorkey);
+
+                                    String listString = "";
+
+                                    for (String s : Arraylist_selected_sectorkey)
+                                    {
+                                        listString += s + ",";
+                                    }
+
+                                    System.out.println(listString);
+
+
                                 }
                             });
 
                         } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Location();
+                        }catch (Exception e) {
 
                         }
 
