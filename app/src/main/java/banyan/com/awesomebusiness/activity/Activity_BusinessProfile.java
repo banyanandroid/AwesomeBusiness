@@ -393,7 +393,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1,Arraylist_sector_name);
                             chip_busineeslist.setAdapter(adapter_sector);
 
-                            System.out.println("ARAAAAY :: " + 222222);
                             chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -402,20 +401,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                                     t1 = (TextView) view;
                                     String str_sector_key  = t1.getText().toString();
-                                    System.out.println("SECTOR KEY :::::::: " + str_sector_key);
+                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
 
-                                    Arraylist_selected_sectorkey.add(str_sector_key);
-
-                                    System.out.println("SECTOR KEY ARRAY:::::::: " + Arraylist_selected_sectorkey);
-
+                                    String str_select_sector_key = Arraylist_sector_key.get(i);
+                                    String str_select_sector_type = Arraylist_sector_type.get(i);
+                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
+                                    Arraylist_selected_sectorkey.add(str_select_item);
                                     String listString = "";
-
                                     for (String s : Arraylist_selected_sectorkey)
                                     {
                                         listString += s + ",";
                                     }
 
-                                    System.out.println(listString);
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + listString);
 
 
                                 }

@@ -260,7 +260,7 @@
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_busi_industry"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         custom:chipDrawable_="@drawable/round_corner_drawable"
