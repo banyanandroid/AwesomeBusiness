@@ -246,16 +246,17 @@
                         android:textColor="@color/textColorPrimary"
                         android:textColorHint="@android:color/darker_gray" />
 
-
-                    <Spinner
-                        android:id="@+id/spn_when_established"
+                    <EditText
+                        android:id="@+id/edt_when_established"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_when_established">
-
-                    </Spinner>
+                        android:hint="Year Business Established / Assests Purchased"
+                        android:inputType="number"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_busi_industry"
@@ -272,6 +273,7 @@
                         custom:hint_="Select Business Industry"
                         custom:labelPosition_="left"
                         custom:textColor_="@android:color/black">
+
                     </com.libaml.android.view.chip.ChipLayout>
 
 
@@ -290,17 +292,20 @@
                         custom:hint_="Business Located At"
                         custom:labelPosition_="left"
                         custom:textColor_="@android:color/black">
+
                     </com.libaml.android.view.chip.ChipLayout>
 
-                    <Spinner
-                        android:id="@+id/spn_permanent_employees"
+                    <EditText
+                        android:id="@+id/edt_permanant_employees"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_permanent_employees">
-
-                    </Spinner>
+                        android:hint="No Of Permanent Employees"
+                        android:inputType="number"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
 
                     <Spinner
                         android:id="@+id/spn_business_legel_entity"
@@ -322,6 +327,7 @@
                         android:hint="Describe the business in a single line"
                         android:inputType="text"
                         android:paddingLeft="5dp"
+                        android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -365,35 +371,35 @@
                         android:textSize="16dp" />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                    <!-- <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:orientation="horizontal"
+                         android:weightSum="2">
 
-                        <TextView
-                            android:id="@+id/txt_change_currency"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:layout_weight="1"
-                            android:text="Change Currency"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="14dp" />
+                         <TextView
+                             android:id="@+id/txt_change_currency"
+                             android:layout_width="match_parent"
+                             android:layout_height="20dp"
+                             android:layout_weight="1"
+                             android:text="Change Currency"
+                             android:textColor="@color/colorPrimaryDark"
+                             android:textSize="14dp" />
 
-                        <TextView
-                            android:id="@+id/txt_currency_monthly_sales"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:paddingRight="20dp"
-                            android:text="INR"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/red"
-                            android:textSize="14dp"
-                            android:textStyle="bold" />
+                         <TextView
+                             android:id="@+id/txt_currency_monthly_sales"
+                             android:layout_width="match_parent"
+                             android:layout_height="20dp"
+                             android:layout_weight="1"
+                             android:gravity="end"
+                             android:paddingRight="20dp"
+                             android:text="INR"
+                             android:textAlignment="textEnd"
+                             android:textColor="@color/red"
+                             android:textSize="14dp"
+                             android:textStyle="bold" />
 
-                    </LinearLayout>
+                     </LinearLayout>-->
 
                     <EditText
                         android:id="@+id/edt_avg_mnthly_sales"
@@ -408,49 +414,82 @@
                         android:textSize="16dp" />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                    <!-- <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:orientation="horizontal"
+                         android:weightSum="2">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="1.5"
-                            android:text="Latest reported yearly sales?"
-                            android:textColor="@color/black"
-                            android:textSize="14dp"
-                            android:textStyle="italic" />
+                         <TextView
+                             android:layout_width="0dp"
+                             android:layout_height="20dp"
+                             android:layout_weight="1.5"
+                             android:text="Latest reported yearly sales?"
+                             android:textColor="@color/black"
+                             android:textSize="14dp"
+                             android:textStyle="italic" />
 
-                        <TextView
-                            android:id="@+id/txt_currency_yearly_sales"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="0.5"
-                            android:gravity="end"
-                            android:paddingRight="20dp"
-                            android:text="INR"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/red"
-                            android:textSize="14dp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                         <TextView
+                             android:id="@+id/txt_currency_yearly_sales"
+                             android:layout_width="0dp"
+                             android:layout_height="20dp"
+                             android:layout_weight="0.5"
+                             android:gravity="end"
+                             android:paddingRight="20dp"
+                             android:text="INR"
+                             android:textAlignment="textEnd"
+                             android:textColor="@color/red"
+                             android:textSize="14dp"
+                             android:textStyle="bold" />
+                     </LinearLayout>-->
 
                     <EditText
                         android:id="@+id/edt_latest_yearly_sales"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Enter Latest reported yearly sales"
                         android:inputType="text"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingLeft="5dp"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:weightSum="6">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="3"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="italic" />
+
+                        <CheckBox
+                            android:id="@+id/chb_yearly_sales_range"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.5" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Display as Range"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+                    </LinearLayout>
 
 
                     <EditText
-                        android:id="@+id/edt_operating_profit_margin"
+                        android:id="@+id/edt_EBITDA_operating_profit_margin"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/bg_parent_rounded_corner"
@@ -464,7 +503,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="horizontal"
                         android:weightSum="6">
 
@@ -472,22 +511,21 @@
                             android:layout_width="0dp"
                             android:layout_height="20dp"
                             android:layout_weight="3"
-                            android:text="Why is this needed?"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="14dp"
                             android:textStyle="italic" />
 
                         <CheckBox
+                            android:id="@+id/chb_editba_range"
                             android:layout_width="0dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_weight="0.5" />
 
                         <TextView
-                            android:id="@+id/txt_currency_ebitda"
                             android:layout_width="0dp"
                             android:layout_height="20dp"
                             android:layout_weight="2"
+                            android:gravity="center"
                             android:paddingLeft="5dp"
                             android:text="Display as Range"
                             android:textColor="@color/black"
@@ -500,44 +538,90 @@
                         android:layout_height="60dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Value of physical assets owned by\nthe business?"
+                        android:hint="Enter value of physical assets owned by\nbusiness"
                         android:inputType="text"
                         android:paddingLeft="5dp"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/edt_tentative_selling_price"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Add business &amp; product photos"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-                    <Button
-                        android:id="@+id/btn_add_photos"
-                        android:layout_width="100dp"
-                        android:layout_height="20dp"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:text="Add Photos"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="12dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="Add business documents"
+                        android:hint="Enter the tentative selling price for the business"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="16dp" />
 
-                    <Button
-                        android:id="@+id/btn_add_documents"
-                        android:layout_width="100dp"
-                        android:layout_height="20dp"
+                    <EditText
+                        android:id="@+id/edt_reason_for_sale"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:text="Add Document"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="12dp" />
+                        android:hint="Enter the reason for sale"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1.5"
+                            android:text="Add business &amp; product photos"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <Button
+                            android:id="@+id/btn_add_photos"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:text="Add"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1.5"
+                            android:text="Add business documents"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <Button
+                            android:id="@+id/btn_add_documents"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:text="Add"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btn_submit"

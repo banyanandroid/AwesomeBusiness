@@ -14,7 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +82,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_sector_type = null;
 
     /*Multi Select*/
-
     ArrayList<String> Arraylist_selected_sectorkey = null;
+    ArrayList<String> Arraylist_selected_location = null;
 
     ArrayList<String> Arraylist_location_place = null;
     ArrayList<String> Arraylist_location_key = null;
@@ -93,6 +96,24 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     String str_selected_role_id, str_selected_role_name = "";
 
     String str_selected_interest_id, str_selected_interest_name = "";
+
+    // Strings To Post For JSON
+    String str_name, str_company_name, str_mobile, str_official_email,
+            str_business_established_year, str_no_of_permanent_employees, str_business_desc,
+            str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales,
+            str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
+            str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type, str_ch_companydetails,
+            str_ch_contactdetails, str_ch_yearly_sales_range,
+            str_ch_display_EBITDA_range, str_user_id, str_user_currency = "";
+
+    EditText edt_name, edt_mobile, edt_company_name, edt_official_email, edt_business_established_year,
+            edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
+            edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
+            edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
+
+    CheckBox chb_companydetails, chb_contatdetails, chb_display_EBITDA_as_range, chb_yearly_sales_range;
+
+    Spinner spn_business_legal_type;
 
 
 
@@ -117,6 +138,32 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             }
         });
 
+        edt_name = (EditText) findViewById(R.id.edt_name);
+        edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
+        edt_company_name = (EditText) findViewById(R.id.edt_company_name);
+        edt_official_email = (EditText) findViewById(R.id.edt_official_email);
+        edt_business_established_year = (EditText) findViewById(R.id.edt_when_established);
+
+        edt_no_of_permanent_employees = (EditText) findViewById(R.id.edt_permanant_employees);
+        edt_business_des = (EditText) findViewById(R.id.edt_business_desc);
+        edt_business_highlights = (EditText) findViewById(R.id.edt_business_highlights);
+        edt_business_all_prod_serv = (EditText) findViewById(R.id.edt_list_product_services);
+        edt_business_facility_desc = (EditText) findViewById(R.id.edt_facility_desc);
+        edt_avg_monthly_sales = (EditText) findViewById(R.id.edt_avg_mnthly_sales);
+        edt_latest_yearly_sales = (EditText) findViewById(R.id.edt_latest_yearly_sales);
+        edt_EBITDA = (EditText) findViewById(R.id.edt_EBITDA_operating_profit_margin);
+        edt_physical_assests_value = (EditText) findViewById(R.id.edt_phy_assests_value);
+        edt_tentative_selling_price = (EditText) findViewById(R.id.edt_tentative_selling_price);
+        edt_reason_for_sale = (EditText) findViewById(R.id.edt_reason_for_sale);
+
+
+        chb_companydetails = (CheckBox) findViewById(R.id.chbx_display_company_details);
+        chb_contatdetails = (CheckBox) findViewById(R.id.chbx_display_contact_details);
+        chb_yearly_sales_range = (CheckBox) findViewById(R.id.chb_yearly_sales_range);
+        chb_display_EBITDA_as_range = (CheckBox) findViewById(R.id.chb_editba_range);
+
+        spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
+
         auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
         auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
 
@@ -135,6 +182,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_sector_type = new ArrayList<String>();
 
         Arraylist_selected_sectorkey = new ArrayList<String>();
+        Arraylist_selected_location = new ArrayList<String>();
 
         Arraylist_location_place  = new ArrayList<String>();
         Arraylist_location_key   = new ArrayList<String>();
@@ -145,7 +193,23 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Business Profile Created", Toast.LENGTH_LONG).show();
+
+                str_name = edt_name.getText().toString();
+                str_company_name = edt_company_name.getText().toString();
+                str_mobile = edt_mobile.getText().toString();
+                str_official_email = edt_official_email.getText().toString();
+                str_business_established_year = edt_business_established_year.getText().toString();
+                str_no_of_permanent_employees = edt_no_of_permanent_employees.getText().toString();
+                str_business_desc = edt_business_des.getText().toString();
+                str_business_highlights = edt_business_highlights.getText().toString();
+                str_business_all_prod_serv = edt_business_all_prod_serv.getText().toString();
+                str_business_facility_desc = edt_business_facility_desc.getText().toString();
+                str_avg_monthly_sales = edt_avg_monthly_sales.getText().toString();
+                str_latest_yearly_sales = edt_latest_yearly_sales.getText().toString();
+                str_EBITDA = edt_EBITDA.getText().toString();
+                str_physical_assests_value = edt_physical_assests_value.getText().toString();
+                str_tentative_selling_price = edt_tentative_selling_price.getText().toString();
+                str_reason_for_sale = edt_reason_for_sale.getText().toString();
 
 
             }
@@ -259,7 +323,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
 
     /*****************************
-     * To get  I am/an  Details
+     * To get  Interested in  Details
      ***************************/
 
     public void Get_Interested() {
@@ -351,7 +415,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     }
 
     /*****************************
-     * To get  Business List
+     * To get  Business sector List
      ***************************/
 
     public void Get_Sector_List() {
@@ -465,7 +529,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     }
 
     /*****************************
-     * To get  Business List
+     * To get  Business Location List
      ***************************/
 
     public void Get_Business_Location() {
@@ -512,6 +576,25 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                                     System.out.println("Position :::::::: " + position);
+
+
+                                    t1 = (TextView) view;
+                                    String str_location_key  = t1.getText().toString();
+                                    int i = Arraylist_location_place.indexOf(str_location_key);
+
+                                    String str_select_location_key = Arraylist_location_key.get(i);
+                                    String str_select_location_type = Arraylist_location_type.get(i);
+                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
+                                    Arraylist_selected_location.add(str_select_item);
+                                    String str_Business_Location = "";
+                                    for (String s : Arraylist_selected_location)
+                                    {
+                                        str_Business_Location += s + ",";
+                                    }
+
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_Business_Location);
+
+
                                 }
                             });
 
