@@ -12,7 +12,7 @@ public class   AppConfig {
     public static String url_interested_in = BASE_URL + "/index.php/Apicontroller/getalltransaction";
     public static String url_business = BASE_URL + "/index.php/Apicontroller/getallbusiness";
     public static String url_business_location = BASE_URL + "/index.php/Apicontroller/alllocation";
-
+    public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
 
 
 }
