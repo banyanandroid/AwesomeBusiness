@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -114,6 +115,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     String str_final_business_sector, str_final_Business_Location = "";
 
+    TextInputLayout txt_inp_name, txt_inp_mobile, txt_inp_company_name, txt_inp_email;
+
 
     EditText edt_name, edt_mobile, edt_company_name, edt_official_email, edt_business_established_year,
             edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
@@ -145,6 +148,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 finish();
             }
         });
+
+        txt_inp_name = (TextInputLayout) findViewById(R.id.edt_textinput_name);
 
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
@@ -241,18 +246,21 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
                 if (str_name.equals("")) {
-                    edt_name.setError("Enter Your Name");
+                    // txt_inp_name.setError("Enter Name");
+                    //  txt_inp_name.setErrorEnabled(true);
                     edt_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_company_name.equals("")) {
-                    edt_company_name.setError("Enter Company Name");
+                    // edt_company_name.setError("Enter Company Name");
                     edt_company_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_mobile.equals("")) {
-                    edt_mobile.setError("Enter Mobile Number");
+                    // edt_mobile.setError("Enter Mobile Number");
+                    edt_mobile.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_official_email.equals("")) {
-                    edt_official_email.setError("Enter Official Email");
+                    // edt_official_email.setError("Enter Official Email");
+                    edt_official_email.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_business_established_year.equals("")) {
                     edt_business_established_year.setError("Enter Year");
@@ -262,10 +270,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "Permanent Employees Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_business_desc.equals("")) {
                     edt_business_des.setError("Enter Business Description");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_highlights.equals("")) {
-                    edt_business_highlights.setError("Please Enter Date");
                     TastyToast.makeText(getApplicationContext(), "Business Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_business_highlights.equals("")) {
+                    edt_business_highlights.setError("Enter Business Highlights");
+                    TastyToast.makeText(getApplicationContext(), "Business Highlights Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_business_all_prod_serv.equals("")) {
                     edt_business_all_prod_serv.setError("Enter Products & Services");
                     TastyToast.makeText(getApplicationContext(), "Products & Services Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -276,10 +284,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
                     TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_latest_yearly_sales.equals("")) {
-                    edt_latest_yearly_sales.setError("Please Enter Date");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
+                    TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_EBITDA.equals("")) {
-                    edt_EBITDA.setError("Please Enter Date");
+                    edt_EBITDA.setError("Enter EBITDA");
                     TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_physical_assests_value.equals("")) {
                     edt_physical_assests_value.setError("Please Enter Date");
