@@ -72,7 +72,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_selected_location = null;
     String str_final_Business_Location = "";
 
-    ChipLayout chip_industry, chip_headquaters;
+    ArrayList<String> Arraylist_expand_location_place = null;
+    ArrayList<String> Arraylist_expand_location_key = null;
+    ArrayList<String> Arraylist_expand_location_type = null;
+
+    ArrayList<String> Arraylist_selected_expand_location = null;
+    String str_final_expand__Location = "";
+
+    ChipLayout chip_industry, chip_headquaters , chip_expand_locations ;
 
     EditText edt_name, edt_email, edt_mobile_num, edt_designation, edt_brand_name,
             edt_about_company, edt_all_prod, edt_opertions_start, et_no_of_sales_partners,
@@ -122,10 +129,16 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
         Arraylist_selected_location = new ArrayList<String>();
 
+        Arraylist_expand_location_place = new ArrayList<String>();
+        Arraylist_expand_location_key = new ArrayList<String>();
+        Arraylist_expand_location_type = new ArrayList<String>();
+
+        Arraylist_selected_expand_location = new ArrayList<String>();
+
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_industry = (ChipLayout) findViewById(R.id.Franchise_chipset_industry);
-
         chip_headquaters = (ChipLayout) findViewById(R.id.Franchise_chipset_company_headquaters);
+        chip_expand_locations = (ChipLayout) findViewById(R.id.Franchise_chipset_locations_expand);
 
         cv_format_one = (CardView) findViewById(R.id.card_view_format_one);
         cv_format_one.setVisibility(View.GONE);
@@ -274,8 +287,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
             Get_Business_industry();
-            queue = Volley.newRequestQueue(getApplicationContext());
-            Get_Business_Headquaters();
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -357,6 +368,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Headquaters();
+
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -424,14 +443,16 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                             Arraylist_location_place.add(headquaters_place);
                             Arraylist_location_key.add(headquaters_key);
                             Arraylist_location_type.add(headquaters_type);
+
                         }
+
                         try {
 
                             System.out.println("ARAAAAY :: " + Arraylist_location_place);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
-                            chip_headquaters.setAdapter(adapter_sector);
+                            chip_headquaters.setAdapter(adapter_location);
 
 
                             System.out.println("ARAAAAY :: " + 222222);
@@ -456,7 +477,126 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                         str_final_Business_Location += s + ",";
                                     }
 
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
+                                    System.out.println("FINAL Business Location :: " + str_final_Business_Location);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Expand_Location();
+
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * To get  Business Expand Location
+     ***************************/
+
+    public void Get_Business_Expand_Location() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business_location, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("datas");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String expand_location_place = obj1.getString(TAG_HEADQUATERS_PLACE);
+                            String expand_location_key = obj1.getString(TAG_HEADQUATERS_KEY);
+                            String expand_location_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+
+                            Arraylist_expand_location_place.add(expand_location_place);
+                            Arraylist_expand_location_key.add(expand_location_key);
+                            Arraylist_expand_location_type.add(expand_location_type);
+                        }
+
+
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_expand_location_place);
+
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_expand_location_place);
+                            chip_expand_locations.setAdapter(adapter_location);
+
+
+                            System.out.println("ARAAAAY :: " + 222222);
+                            chip_expand_locations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                                    System.out.println("Position :::::::: " + position);
+
+                                    t1 = (TextView) view;
+                                    String str_expand_location_key = t1.getText().toString();
+                                    int i = Arraylist_expand_location_place.indexOf(str_expand_location_key);
+
+                                    String str_select_expand_location_key = Arraylist_expand_location_key.get(i);
+                                    String str_select_expand_location_type = Arraylist_expand_location_type.get(i);
+                                    String str_select_expand_item = str_select_expand_location_key + "-" + str_select_expand_location_type;
+                                    Arraylist_selected_expand_location.add(str_select_expand_item);
+
+                                    for (String s : Arraylist_selected_expand_location) {
+                                        str_final_expand__Location += s + ",";
+                                    }
+
+                                    System.out.println("FINAL Expand Location :: " + str_final_expand__Location);
 
 
                                 }
@@ -499,6 +639,5 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
 }

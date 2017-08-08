@@ -98,7 +98,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     private ArrayAdapter<String> adapter_interested;
 
     String str_selected_role_id, str_selected_role_name = "";
-
     String str_selected_interest_id, str_selected_interest_name = "";
 
     // Strings To Post For JSON
@@ -106,16 +105,14 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             str_business_established_year, str_no_of_permanent_employees, str_business_desc,
             str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales,
             str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
-            str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type, str_user_id = "";
+            str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
-    String str_user_currency = "ATS";
+    String str_user_currency, str_user_id = "";
 
     String str_ch_companydetails, str_ch_contactdetails, str_ch_yearly_sales_range,
             str_ch_display_EBITDA_range = "0";
 
     String str_final_business_sector, str_final_Business_Location = "";
-
-    TextInputLayout txt_inp_name, txt_inp_mobile, txt_inp_company_name, txt_inp_email;
 
 
     EditText edt_name, edt_mobile, edt_company_name, edt_official_email, edt_business_established_year,
@@ -149,7 +146,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             }
         });
 
-        txt_inp_name = (TextInputLayout) findViewById(R.id.edt_textinput_name);
 
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
@@ -186,6 +182,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+
+        System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         Arraylist_business_role_id = new ArrayList<String>();
         Arraylist_business_role_name = new ArrayList<String>();
