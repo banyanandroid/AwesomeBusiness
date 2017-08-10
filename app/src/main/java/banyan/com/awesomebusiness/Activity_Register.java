@@ -150,6 +150,7 @@ public class Activity_Register extends AppCompatActivity {
         queue.add(request);
     }
 
+    // Need To update this
     @Override
     public void onDestroy() {
         super.onDestroy();
