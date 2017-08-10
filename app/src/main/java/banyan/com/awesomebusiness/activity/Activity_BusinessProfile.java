@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +48,7 @@ import banyan.com.awesomebusiness.global.AppConfig;
 import dmax.dialog.SpotsDialog;
 
 /**
- * Created by Schan on 24-Jul-17.
+ * Created by CHANDRU on 24-Jul-17.
  */
 
 public class Activity_BusinessProfile extends AppCompatActivity {
@@ -59,8 +60,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     String TAG = "Auto_Res";
 
     TextView t1;
-    AutoCompleteTextView auto_i_am, auto_interested_in;
-    ChipLayout chip_busineeslist, chip_business_location;
+
+    CardView Cardview_spn_others, Cardview_spn_selling_leasing;
+
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
 
@@ -97,6 +99,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter_interested;
 
+    AutoCompleteTextView auto_i_am, auto_interested_in;
+
+    ChipLayout chip_busineeslist, chip_business_location;
+
     String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_id, str_selected_interest_name = "";
 
@@ -114,8 +120,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     String str_final_business_sector, str_final_Business_Location = "";
 
+    //Common
+    EditText edt_name, edt_mobile, edt_company_name, edt_official_email,
 
-    EditText edt_name, edt_mobile, edt_company_name, edt_official_email, edt_business_established_year,
+    edt_business_established_year,
             edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
             edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
             edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
@@ -124,6 +132,15 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     Spinner spn_business_legal_type;
 
+    //Selling or Leasing out business
+    EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_eason;
+
+    ChipLayout chip_industries_use_asset, chip_asset_loation;
+
+    Spinner spn_amount_fixed_for;
+
+    String str_asset_originally_purchased , str_industries_use_asset , str_asset_located_at ,
+            str_asset_seeking_sell , str_asset_features , str_asset_selling_leasing_price ,str_amount_fixed_for , str_asset_selling_reason ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,13 +163,24 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             }
         });
 
+// These two cardview's wil be gone until interested in is selected
+        Cardview_spn_others = (CardView) findViewById(R.id.card_view_three);
+        Cardview_spn_selling_leasing = (CardView) findViewById(R.id.card_view_interested_leasing_business);
 
+        Cardview_spn_others.setVisibility(View.GONE);
+        Cardview_spn_selling_leasing.setVisibility(View.GONE);
+
+// AutoCompleteTextView
+        auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
+        auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
+
+// Common Edittext
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
         edt_company_name = (EditText) findViewById(R.id.edt_company_name);
         edt_official_email = (EditText) findViewById(R.id.edt_official_email);
-        edt_business_established_year = (EditText) findViewById(R.id.edt_when_established);
 
+        edt_business_established_year = (EditText) findViewById(R.id.edt_when_established);
         edt_no_of_permanent_employees = (EditText) findViewById(R.id.edt_permanant_employees);
         edt_business_des = (EditText) findViewById(R.id.edt_business_desc);
         edt_business_highlights = (EditText) findViewById(R.id.edt_business_highlights);
@@ -165,7 +193,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_tentative_selling_price = (EditText) findViewById(R.id.edt_tentative_selling_price);
         edt_reason_for_sale = (EditText) findViewById(R.id.edt_reason_for_sale);
 
-
         chb_companydetails = (CheckBox) findViewById(R.id.chbx_display_company_details);
         chb_contatdetails = (CheckBox) findViewById(R.id.chbx_display_contact_details);
         chb_yearly_sales_range = (CheckBox) findViewById(R.id.chb_yearly_sales_range);
@@ -173,12 +200,22 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
 
-        auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
-        auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
-
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
         chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_loca_at);
+
+//Selling or Leasing out business
+        edt_year_asset_purchased = (EditText) findViewById(R.id.edt_loan_when_asset_purchased);
+        edt_asset_seeking_to_sell = (EditText) findViewById(R.id.edt_wt_asset_sell);
+        edt_asset_features = (EditText) findViewById(R.id.edt_asset_features);
+        edt_asset_selling_leasing_price = (EditText) findViewById(R.id.edt_price_selling_leasing);
+        edt_asset_selling_eason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
+
+        chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
+        chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
+
+        spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
+
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
@@ -481,6 +518,16 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
                                     str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
+
+                                    if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+                                        Cardview_spn_others.setVisibility(View.GONE);
+                                        Cardview_spn_selling_leasing.setVisibility(View.VISIBLE);
+                                    } else {
+                                        Cardview_spn_others.setVisibility(View.VISIBLE);
+                                        Cardview_spn_selling_leasing.setVisibility(View.GONE);
+                                    }
+
+
                                 }
                             });
 

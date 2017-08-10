@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     Switch switch_notification;
     TextView popup_txt_notification;
 
-    String str_previous_selected_country_name,  str_previous_selected_currency;
+    String str_previous_selected_country_name, str_previous_selected_currency;
 
     // CART
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
@@ -229,6 +229,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
         if (id == R.id.action_setting) {
 
+            try {
+                spinner_country.setTitle(str_previous_selected_country_name);
+                spinner_currency.setTitle(str_previous_selected_currency);
+            } catch (Exception e) {
+            }
+
             Function_AlertDialog();
 
             return true;
@@ -305,7 +311,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         alertDialogBuilder.setView(promptsView);
 
         spinner_country = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_country);
+        // spinner_country.setTitle(str_previous_selected_country_name);
         spinner_currency = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_currency);
+        // spinner_currency.setTitle(str_previous_selected_currency);
+
         switch_notification = (Switch) promptsView.findViewById(R.id.popup_switvh_notification);
         popup_txt_notification = (TextView) promptsView.findViewById(R.id.popup_txt_notification);
 
@@ -327,14 +336,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_name);
                     System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_id);
 
-                    try {
+                   /* try {
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("str_selected_country_name", str_selected_country_name);
                         editor.putString("str_selected_country_id", str_selected_country_id);
                         editor.commit();
                     } catch (Exception e) {
-                    }
+                    }*/
 
                 }
 
@@ -358,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                     System.out.println("Currencyyyyyyyyyyyyy ::::::::::::::: " + str_selected_currency);
 
-                    try {
+                   /* try {
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("str_selected_currency", str_selected_currency);
@@ -366,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     } catch (Exception e) {
 
                     }
-
+*/
 
                 }
 
@@ -375,8 +384,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                 }
             });
-
-
 
 
         } catch (Exception e) {
@@ -406,6 +413,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
                                 // edit text
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("str_selected_country_name", str_selected_country_name);
+                                editor.putString("str_selected_country_id", str_selected_country_id);
+                                editor.putString("str_selected_currency", str_selected_currency);
+                                editor.commit();
+
                             }
                         })
                 .setNegativeButton("Cancel",

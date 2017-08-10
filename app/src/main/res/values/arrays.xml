@@ -56,6 +56,15 @@
         <item>C Corporation</item>
     </string-array>
 
+    <string-array name="spinner_sale_type">
+        <item>Above Amount Is Fixed For</item>
+        <item>Asset Sale</item>
+        <item>Monthly Rent</item>
+        <item>Yearly Lease Amount</item>
+
+
+    </string-array>
+
     <string-array name="spinner_i_am">
         <item>I am a(n)</item>
         <item>1</item>
