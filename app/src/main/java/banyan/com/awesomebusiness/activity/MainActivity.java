@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,10 +15,12 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -24,12 +28,27 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import banyan.com.awesomebusiness.Activity_Register;
 import banyan.com.awesomebusiness.R;
+import banyan.com.awesomebusiness.global.AppConfig;
+import dmax.dialog.SpotsDialog;
 
 
 /**
@@ -41,18 +60,30 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private static String TAG = MainActivity.class.getSimpleName();
 
     private Toolbar mToolbar;
+    SpotsDialog dialog;
+    public static RequestQueue queue;
     private FragmentDrawer drawerFragment;
+    TextView t1;
     TextView popup_country, popup_currency;
+
+    public static final String TAG_COUNTRY_ID = "country_id";
+    public static final String TAG_COUNTRY_NAME = "country_name";
+    public static final String TAG_COUNTRY_CURRENCY = "country_currency";
+
     // Popup
     final Context context = this;
-    ArrayList<String> Arraylist_country = null;
-    ArrayList<String> Arraylist_currency = null;
+    ArrayList<String> Arraylist_country_id = null;
+    ArrayList<String> Arraylist_country_name = null;
+    ArrayList<String> Arraylist_country_currency = null;
 
+    private ArrayAdapter<String> adapter_country_currency;
 
-    String str_selected_country, str_selected_courrency;
+    String str_selected_country_name, str_selected_country_id, str_selected_currency;
     SearchableSpinner spinner_country, spinner_currency;
     Switch switch_notification;
     TextView popup_txt_notification;
+
+    String str_previous_selected_country_name, str_previous_selected_currency;
 
     // CART
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
@@ -69,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Arraylist_country = new ArrayList<String>();
-        Arraylist_currency = new ArrayList<String>();
+        Arraylist_country_id = new ArrayList<String>();
+        Arraylist_country_name = new ArrayList<String>();
+        Arraylist_country_currency = new ArrayList<String>();
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -80,20 +112,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // display the first navigation drawer view on app launch
         displayView(0);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_previous_selected_country_name = sharedPreferences.getString("str_selected_country_name", "str_selected_country_name");
+        str_previous_selected_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
 
-        Arraylist_country.add("Austria");
-        Arraylist_country.add("Australia");
-        Arraylist_country.add("America");
-        Arraylist_country.add("Pakistan");
-        Arraylist_country.add("Mexico");
-        Arraylist_country.add("India");
+        try {
+            dialog = new SpotsDialog(MainActivity.this);
+            dialog.show();
+            queue = Volley.newRequestQueue(getApplicationContext());
+            Get_Currency_Country();
 
-        Arraylist_currency.add("ATS");
-        Arraylist_currency.add("AUD");
-        Arraylist_currency.add("BEF");
-        Arraylist_currency.add("BRL");
-        Arraylist_currency.add("INR");
-        Arraylist_currency.add("USD");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
 
     }
 
@@ -176,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         if (id == R.id.action_add_business_profile) {
             /*Toast.makeText(getApplicationContext(), "Business Profile", Toast.LENGTH_LONG).show();
             return true;*/
-            Intent i = new Intent(getApplicationContext(),Activity_BusinessProfile.class);
+            Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile.class);
             startActivity(i);
         }
         if (id == R.id.action_add_advisor_profile) {
@@ -186,15 +219,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         if (id == R.id.action_add_investor_profile) {
             /*Toast.makeText(getApplicationContext(), "Investor Profile", Toast.LENGTH_LONG).show();
             return true;*/
-            Intent i = new Intent(getApplicationContext(),Activity_InvestorProfile.class);
+            Intent i = new Intent(getApplicationContext(), Activity_InvestorProfile.class);
             startActivity(i);
         }
         if (id == R.id.action_add_franchise_profile) {
 
-            Intent i = new Intent(getApplicationContext(),Activity_FranchiseProfile.class);
+            Intent i = new Intent(getApplicationContext(), Activity_FranchiseProfile.class);
             startActivity(i);
         }
         if (id == R.id.action_setting) {
+
+            try {
+                spinner_country.setTitle(str_previous_selected_country_name);
+                spinner_currency.setTitle(str_previous_selected_currency);
+            } catch (Exception e) {
+            }
 
             Function_AlertDialog();
 
@@ -272,7 +311,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         alertDialogBuilder.setView(promptsView);
 
         spinner_country = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_country);
+        // spinner_country.setTitle(str_previous_selected_country_name);
         spinner_currency = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_currency);
+        // spinner_currency.setTitle(str_previous_selected_currency);
+
         switch_notification = (Switch) promptsView.findViewById(R.id.popup_switvh_notification);
         popup_txt_notification = (TextView) promptsView.findViewById(R.id.popup_txt_notification);
 
@@ -281,14 +323,70 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             spinner_country
                     .setAdapter(new ArrayAdapter<String>(MainActivity.this,
                             android.R.layout.simple_spinner_dropdown_item,
-                            Arraylist_country));
+                            Arraylist_country_name));
+
+            spinner_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    t1 = (TextView) view;
+                    str_selected_country_name = t1.getText().toString();
+                    str_selected_country_id = Arraylist_country_id.get(position);
+
+                    System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_name);
+                    System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_id);
+
+                   /* try {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_selected_country_name", str_selected_country_name);
+                        editor.putString("str_selected_country_id", str_selected_country_id);
+                        editor.commit();
+                    } catch (Exception e) {
+                    }*/
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
             spinner_currency
                     .setAdapter(new ArrayAdapter<String>(MainActivity.this,
                             android.R.layout.simple_spinner_dropdown_item,
-                            Arraylist_currency));
+                            Arraylist_country_currency));
 
-        }catch (Exception e) {
+            spinner_currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    t1 = (TextView) view;
+                    str_selected_currency = t1.getText().toString();
+
+                    System.out.println("Currencyyyyyyyyyyyyy ::::::::::::::: " + str_selected_currency);
+
+                   /* try {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_selected_currency", str_selected_currency);
+                        editor.commit();
+                    } catch (Exception e) {
+
+                    }
+*/
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+        } catch (Exception e) {
 
         }
 
@@ -315,6 +413,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
                                 // edit text
+
+                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("str_selected_country_name", str_selected_country_name);
+                                editor.putString("str_selected_country_id", str_selected_country_id);
+                                editor.putString("str_selected_currency", str_selected_currency);
+                                editor.commit();
+
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -329,6 +435,75 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // show it
         alertDialog.show();
+    }
+
+    /*****************************
+     * To get  Currency and Country
+     ***************************/
+
+    public void Get_Currency_Country() {
+        String tag_json_obj = "json_obj_req";
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_country, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String country_id = obj1.getString(TAG_COUNTRY_ID);
+                            String country_name = obj1.getString(TAG_COUNTRY_NAME);
+                            String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
+
+                            Arraylist_country_id.add(country_id);
+                            Arraylist_country_name.add(country_name);
+                            Arraylist_country_currency.add(country_currency);
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
     }
 
 }

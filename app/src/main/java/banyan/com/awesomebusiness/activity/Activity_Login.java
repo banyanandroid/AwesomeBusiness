@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
@@ -147,6 +149,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
+
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -481,6 +484,12 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_user_id = obj.getString(TAG_ID);
 
                         // session.createLoginSession(str_user_name, str_reg_id);
+
+                        //To give User_Id for other Activities
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_user_id", str_user_id);
+                        editor.commit();
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
