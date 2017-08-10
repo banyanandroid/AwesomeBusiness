@@ -1,6 +1,9 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -11,12 +14,16 @@ import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +55,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,6 +86,12 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private Button btnSignin;
     LoginButton loginButton;
     EditText edt_singin_email, edt_signin_pass, edt_singup_email, edt_signup_pass, edt_signup_repeat_pass;
+    TextView txt_forgot_pwd;
+
+    // POPUP
+    final Context context = this;
+    EditText edt_pwd;
+    String str_forgot_pwd = "";
 
     private static final String TAG = Activity_Login.class.getSimpleName();
     private static final String TAG_login = "Login";
@@ -97,7 +111,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     String str_social_email, str_social_name, str_social_image, str_social_type;
     String str_user_email, str_user_id;
 
-    SpotsDialog dialog;
+    SpotsDialog dialog,dialog_popup;
 
     private static final String TAG_EMAIL = "user_email";
     private static final String TAG_ID = "id";
@@ -113,6 +127,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
         tvSignupInvoker = (TextView) findViewById(R.id.tvSignupInvoker);
         tvSigninInvoker = (TextView) findViewById(R.id.tvSigninInvoker);
+
+        txt_forgot_pwd = (TextView) findViewById(R.id.login_txt_forgot_pwd);
 
         btn_GoogleSignIn = (SignInButton) findViewById(R.id.sign_in_button);
         btn_GoogleSignIn.setSize(SignInButton.SIZE_STANDARD);
@@ -185,6 +201,14 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+        txt_forgot_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Function_AlertDialog();
+
+            }
+        });
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
@@ -590,6 +614,70 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         queue.add(request);
     }
 
+
+    /******************************************
+     *    Forgot Password
+     * *******************************************/
+
+    private void Function_Forgot_Password() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_login, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG_login, response.toString());
+                Log.d("USER_LOGIN", response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("REG 00" + obj);
+
+                    int success = obj.getInt("status");
+
+                    System.out.println("REG" + success);
+
+                    if (success == 1) {
+
+                        dialog_popup.dismiss();
+
+
+
+                    } else {
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Failed to Retrive:(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog_popup.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_email", str_forgot_pwd);
+
+                System.out.println("User_Email" + str_forgot_pwd);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -600,6 +688,63 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
             // ...
         }
     }
+
+
+    /******************************************
+     *    Forgot Pwd Aleter
+     * *******************************************/
+
+    public void Function_AlertDialog() {
+
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.popup_forgot_pwd, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+        alertDialogBuilder.setView(promptsView);
+
+        edt_pwd  = (EditText) promptsView.findViewById(R.id.edt_forgot_pwd_email);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Save",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                str_forgot_pwd = edt_pwd.getText().toString();
+
+                                if (str_forgot_pwd.equals("")){
+                                    edt_pwd.setError("Please Enter Email ID");
+                                    TastyToast.makeText(getApplicationContext(), "Please Enter Email ID", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                                }else {
+                                    try {
+                                        dialog_popup = new SpotsDialog(Activity_Login.this);
+                                        dialog_popup.show();
+                                        queue = Volley.newRequestQueue(Activity_Login.this);
+                                        Function_Forgot_Password();
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
