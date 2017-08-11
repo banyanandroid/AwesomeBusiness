@@ -19,13 +19,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.adapter.NavigationDrawerAdapter;
+import banyan.com.awesomebusiness.global.SessionManager;
 import banyan.com.awesomebusiness.model.NavDrawerItem;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.facebook.FacebookSdk.isDebugEnabled;
 
 
 public class FragmentDrawer extends Fragment {
@@ -33,6 +39,11 @@ public class FragmentDrawer extends Fragment {
     private static String TAG = FragmentDrawer.class.getSimpleName();
 
     Button btn_login;
+    TextView txt_user_name, txt_user_email_id;
+    String str_name, str_id;
+
+    // Session Manager Class
+    SessionManager session;
 
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -77,7 +88,32 @@ public class FragmentDrawer extends Fragment {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+
+        txt_user_name = (TextView) layout.findViewById(R.id.nav_draw_txt_name);
+        txt_user_email_id = (TextView) layout.findViewById(R.id.nav_draw_txt_email);
         btn_login = (Button) layout.findViewById(R.id.nav_draw_btn_login);
+
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        HashMap<String, String> user = session.getUserDetails();
+
+
+        // name
+        str_name = user.get(SessionManager.KEY_USER);
+        str_id = user.get(SessionManager.KEY_USER_ID);
+
+        System.out.println("USER ID : " + str_id);
+
+        if (str_id.equals("")) {
+
+            btn_login.setVisibility(View.VISIBLE);
+        }else {
+
+            txt_user_name.setVisibility(View.VISIBLE);
+            txt_user_email_id.setVisibility(View.VISIBLE);
+            btn_login.setVisibility(View.GONE);
+        }
+
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -99,11 +135,8 @@ public class FragmentDrawer extends Fragment {
             @Override
             public void onClick(View v) {
 
-                System.out.println("CAMEEEEE");
                 Intent i = new Intent(getActivity(), Activity_Login.class);
-                System.out.println("CAMEEEEE1111111111");
                 startActivity(i);
-                System.out.println("CAMEEEEE222222222");
             }
         });
 

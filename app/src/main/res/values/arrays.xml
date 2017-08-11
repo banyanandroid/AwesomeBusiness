@@ -61,8 +61,14 @@
         <item>Asset Sale</item>
         <item>Monthly Rent</item>
         <item>Yearly Lease Amount</item>
+    </string-array>
 
-
+    <string-array name="user_email_frequency">
+        <item>Real Time</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Fortnightly</item>
+        <item>No Email</item>
     </string-array>
 
     <string-array name="spinner_i_am">

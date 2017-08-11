@@ -60,6 +60,8 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
 
+    <string name="user_activity_description">Global acquisitions by Indian IT firms rising with a majority of the transactions happening in Europe and North America. Primary reasons driving these acquisitions are increasing local presence in the US and Europe</string>
+
 
     <string-array name="planets">
         <item>All Transactions</item>

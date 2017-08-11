@@ -60,6 +60,7 @@
         <activity android:name=".activity.Activity_BusinessProfile"></activity>
         <activity android:name=".activity.Activity_InvestorProfile"></activity>
         <activity android:name=".activity.Activity_FranchiseProfile"></activity>
+        <activity android:name=".activity.Activity_UserProfile_Update"></activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

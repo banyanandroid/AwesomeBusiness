@@ -70,6 +70,7 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
 
 
@@ -101,11 +102,12 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     CallbackManager callbackManager;
 
+    // Google API for Login
     private GoogleApiClient mGoogleApiClient;
-
     private SignInButton btn_GoogleSignIn;
 
     public static RequestQueue queue;
+    SessionManager session;
 
     String signin_email, signin_pass;
 
@@ -126,6 +128,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_login);
 
         callbackManager = CallbackManager.Factory.create();
+
+        // Session Manager
+        session = new SessionManager(getApplicationContext());
 
         tvSignupInvoker = (TextView) findViewById(R.id.tvSignupInvoker);
         tvSigninInvoker = (TextView) findViewById(R.id.tvSigninInvoker);
@@ -483,13 +488,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_user_email = obj.getString(TAG_EMAIL);
                         str_user_id = obj.getString(TAG_ID);
 
-                        // session.createLoginSession(str_user_name, str_reg_id);
-
-                        //To give User_Id for other Activities
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("str_user_id", str_user_id);
-                        editor.commit();
+                        session.createLoginSession(str_user_email, str_user_id);
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
@@ -561,7 +560,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_user_email = obj.getString(TAG_EMAIL);
                         str_user_id = obj.getString(TAG_ID);
 
-                        // session.createLoginSession(str_user_name, str_reg_id);
+                        session.createLoginSession(str_user_email, str_user_id);
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);

@@ -6,6 +6,7 @@ public class   AppConfig {
     public static String url_registration = BASE_URL + "/index.php/apicontroller/createUsers";
     public static String url_login = BASE_URL + "/index.php/apicontroller/loginusers";
     public static String url_social_login = BASE_URL + "/index.php/apicontroller/sociallogin";
+    public static String url_user_profile = BASE_URL + "/index.php/apicontroller/sociallogin";
 
     //Country & Currency
     public static String url_country = BASE_URL + "/index.php/Apicontroller/allcountry";

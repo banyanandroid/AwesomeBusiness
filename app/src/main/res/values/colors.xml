@@ -12,6 +12,8 @@
     <color name="colorAccent1">#5c8247</color>
     <color name="colorAccent2">#FFC107</color>
     <color name="txt_black">#000000</color>
+    <color name="txt_grey">#808080</color>
+
 
     <color name="colorPrimaryTrans">#aa0574c6</color>
     <color name="colorAccentTrans">#aa5c8247</color>

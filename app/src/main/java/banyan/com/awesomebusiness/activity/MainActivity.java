@@ -213,6 +213,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             startActivity(i);
         }
         if (id == R.id.action_add_advisor_profile) {
+
+  //FOR TEST PURPOSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE DELETE THIS INTENT LATER
+            Intent i = new Intent(getApplicationContext(), Activity_UserProfile_Update.class);
+            startActivity(i);
+            finish();
+  ///////////////////////////////////////
+
             Toast.makeText(getApplicationContext(), "Advisor Profile", Toast.LENGTH_LONG).show();
             return true;
         }
