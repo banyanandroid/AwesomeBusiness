@@ -2,13 +2,10 @@ package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tapadoo.alerter.Alerter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,18 +26,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.activity.MainActivity;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 
 
 public class Activity_UserProfile extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    TextView txt_username, txt_user_email, txt_user_location,
-            txt_user_current_role, txt_user_timezone;
+    TextView txt_username, txt_user_email, txt_user_mobile,
+            txt_user_current_role, txt_user_company;
 
     TextView txt_edit;
 
@@ -51,7 +47,8 @@ public class Activity_UserProfile extends AppCompatActivity {
 
     // Session Manager Class
     SessionManager session;
-    public static String str_user_id, str_user_name;
+    SpotsDialog dialog;
+    public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
 
     String str_profile_user_id, str_profile_user_key, str_profile_user_name, str_profile_user_email, str_user_mobile,
             str_user_gst_num, str_user_location, str_user_timezone, str_user_company_name, str_user_address,
@@ -63,8 +60,6 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static RequestQueue queue;
 
     String TAG = "";
-
-
 
     public static final String TAG_USER_ID = "user_id";
     public static final String TAG_USER_KEY = "user_key";
@@ -90,7 +85,6 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static final String TAG_USER_PHOTO = "user_photo";
     public static final String TAG_USER_CREATEDON = "user_createdon";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +99,8 @@ public class Activity_UserProfile extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         // name
         str_user_name = user.get(SessionManager.KEY_USER);
+        str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
+        str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
 
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
@@ -125,9 +121,9 @@ public class Activity_UserProfile extends AppCompatActivity {
 
         txt_username = (TextView) findViewById(R.id.userprofile_txt_username);
         txt_user_email = (TextView) findViewById(R.id.userprofile_txt_user_email);
-        txt_user_location = (TextView) findViewById(R.id.userprofile_txt_user_location);
+        txt_user_mobile = (TextView) findViewById(R.id.userprofile_txt_user_mobile);
         txt_user_current_role = (TextView) findViewById(R.id.userprofile_txt_user_role);
-        txt_user_timezone = (TextView) findViewById(R.id.userprofile_txt_user_timezone);
+        txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
 
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +140,8 @@ public class Activity_UserProfile extends AppCompatActivity {
 
 
         try {
+            dialog = new SpotsDialog(Activity_UserProfile.this);
+            dialog.show();
             queue = Volley.newRequestQueue(Activity_UserProfile.this);
             Get_User_Profile();
 
@@ -154,7 +152,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
     }
 
-    public void Function_Edit_profile(){
+    public void Function_Edit_profile() {
 
         Intent i = new Intent(getApplicationContext(), Activity_UserProfile_Update.class);
         startActivity(i);
@@ -175,63 +173,62 @@ public class Activity_UserProfile extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
                 System.out.println("CAME RESPONSE ::: " + response.toString());
+
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
 
                     if (success == 1) {
+                        String str_obj = obj.getString("data");
+                        JSONObject obj_data = new JSONObject(str_obj);
 
-                        JSONArray arr;
-
-                        arr = obj.getJSONArray("data");
-
-                        for (int i = 0; arr.length() > i; i++) {
-
-                            JSONObject obj1 = arr.getJSONObject(i);
-
-                            str_profile_user_id = obj1.getString(TAG_USER_ID);
-                            str_profile_user_key = obj1.getString(TAG_USER_KEY);
-                            str_profile_user_name = obj1.getString(TAG_USER_NAME);
-                            str_profile_user_email = obj1.getString(TAG_USER_EMAIL);
-                            str_user_mobile = obj1.getString(TAG_USER_MOBILE);
-                            str_user_gst_num = obj1.getString(TAG_USER_GST_NUMBER);
-                            str_user_location = obj1.getString(TAG_USER_LOCATION);
-                            str_user_timezone = obj1.getString(TAG_USER_TIME_ZONE);
-                            str_user_company_name = obj1.getString(TAG_USER_COMPANY_NAME);
-                            str_user_address = obj1.getString(TAG_USER_ADDRESS);
-                            str_user_designation = obj1.getString(TAG_USER_DESIGINATION);
-                            str_user_business_proposalEmail = obj1.getString(TAG_USER_BUSINESS_PROPOSAL_EMAIL);
-                            str_user_dealsize = obj1.getString(TAG_USER_DEALSIZE);
-                            str_user_business_proposalNotify = obj1.getString(TAG_USER_BUSINESS_PROPOSAL_NOTIFY);
-                            str_user_facebook = obj1.getString(TAG_USER_FACEBOOK);
-                            str_user_google = obj1.getString(TAG_USER_GOOGLE);
-                            str_user_linkedin = obj1.getString(TAG_USER_LINKEDIN);
-                            str_user_facebook_id = obj1.getString(TAG_USER_FACEBOOK_ID);
-                            str_user_google_id = obj1.getString(TAG_USER_GOOGLE_ID);
-                            str_user_linkedin_id = obj1.getString(TAG_USER_LINKEDIN_ID);
-                            str_user_ip = obj1.getString(TAG_USER_IP);
-                            str_user_photo = obj1.getString(TAG_USER_PHOTO);
-                            str_user_created_on = obj1.getString(TAG_USER_CREATEDON);
-
-
-                        }
+                        str_profile_user_id = obj_data.getString(TAG_USER_ID);
+                        str_profile_user_key = obj_data.getString(TAG_USER_KEY);
+                        str_profile_user_name = obj_data.getString(TAG_USER_NAME);
+                        str_profile_user_email = obj_data.getString(TAG_USER_EMAIL);
+                        str_user_mobile = obj_data.getString(TAG_USER_MOBILE);
+                        str_user_gst_num = obj_data.getString(TAG_USER_GST_NUMBER);
+                        str_user_location = obj_data.getString(TAG_USER_LOCATION);
+                        str_user_timezone = obj_data.getString(TAG_USER_TIME_ZONE);
+                        str_user_company_name = obj_data.getString(TAG_USER_COMPANY_NAME);
+                        str_user_address = obj_data.getString(TAG_USER_ADDRESS);
+                        str_user_designation = obj_data.getString(TAG_USER_DESIGINATION);
+                        str_user_business_proposalEmail = obj_data.getString(TAG_USER_BUSINESS_PROPOSAL_EMAIL);
+                        str_user_dealsize = obj_data.getString(TAG_USER_DEALSIZE);
+                        str_user_business_proposalNotify = obj_data.getString(TAG_USER_BUSINESS_PROPOSAL_NOTIFY);
+                        str_user_facebook = obj_data.getString(TAG_USER_FACEBOOK);
+                        str_user_google = obj_data.getString(TAG_USER_GOOGLE);
+                        str_user_linkedin = obj_data.getString(TAG_USER_LINKEDIN);
+                        str_user_facebook_id = obj_data.getString(TAG_USER_FACEBOOK_ID);
+                        str_user_google_id = obj_data.getString(TAG_USER_GOOGLE_ID);
+                        str_user_linkedin_id = obj_data.getString(TAG_USER_LINKEDIN_ID);
+                        str_user_ip = obj_data.getString(TAG_USER_IP);
+                        str_user_photo = obj_data.getString(TAG_USER_PHOTO);
+                        str_user_created_on = obj_data.getString(TAG_USER_CREATEDON);
 
                         try {
 
+                            Glide.with(getApplicationContext()).load(str_user_photo)
+                                    .thumbnail(0.5f)
+                                    .crossFade()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(img_profile_picture);
+
                             txt_username.setText("" + str_profile_user_name);
                             txt_user_email.setText("" + str_profile_user_email);
-                            txt_user_location.setText("" + str_user_location);
+                            txt_user_mobile.setText("" + str_user_mobile);
                             txt_user_current_role.setText("" + str_user_designation);
-                            txt_user_timezone.setText("" + str_user_timezone);
+                            txt_user_company.setText("" + str_user_company_name);
 
 
                         } catch (Exception e) {
 
                         }
 
-
+                        dialog.dismiss();
                     } else if (success == 0) {
 
+                        dialog.dismiss();
 
                         Alerter.create(Activity_UserProfile.this)
                                 .setTitle("AWESOME BUSINESSES")
@@ -252,6 +249,7 @@ public class Activity_UserProfile extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                dialog.dismiss();
                 Alerter.create(Activity_UserProfile.this)
                         .setTitle("AWESOME BUSINESSES")
                         .setText("Internal Error :(\n" + error.getMessage())

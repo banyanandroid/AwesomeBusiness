@@ -55,13 +55,19 @@
 
         <activity android:name=".activity.Activity_Filter"></activity>
 
-        <activity android:name=".activity.Activity_Notifications"></activity>
+        <activity
+            android:name=".activity.Activity_Notifications"
+            android:label="Notifications"></activity>
         <activity android:name=".activity.Activity_Login"></activity>
         <activity android:name=".activity.Activity_BusinessProfile"></activity>
         <activity android:name=".activity.Activity_InvestorProfile"></activity>
         <activity android:name=".activity.Activity_FranchiseProfile"></activity>
-        <activity android:name=".activity.Activity_UserProfile_Update"></activity>
-        <activity android:name=".activity.Activity_UserProfile"></activity>
+        <activity
+            android:name=".activity.Activity_UserProfile_Update"
+            android:label="Update Profile"></activity>
+        <activity
+            android:name=".activity.Activity_UserProfile"
+            android:label="Profile"></activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -79,7 +85,9 @@
 
         <service android:name=".GCMIntentService" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
     </application>
 

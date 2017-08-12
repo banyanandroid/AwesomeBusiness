@@ -113,11 +113,13 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     String str_signin_email, str_signin_pass, str_signup_email, str_signup_pass, str_signup_repeat_pass;
     String str_social_email, str_social_name, str_social_image, str_social_type;
-    String str_user_email, str_user_id;
+    String str_user_name,str_user_email, str_user_id,str_user_photo;
 
     SpotsDialog dialog,dialog_popup;
 
     private static final String TAG_EMAIL = "user_email";
+    private static final String TAG_NAME = "user_name";
+    private static final String TAG_PHOTO = "user_photo";
     private static final String TAG_ID = "id";
 
     Button btn_fb;
@@ -485,10 +487,20 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         dialog.dismiss();
 
+                        str_user_name = obj.getString(TAG_NAME);
                         str_user_email = obj.getString(TAG_EMAIL);
                         str_user_id = obj.getString(TAG_ID);
+                        str_user_photo = obj.getString(TAG_PHOTO);
 
-                        session.createLoginSession(str_user_email, str_user_id);
+                        session.createLoginSession(str_user_name,str_user_id, str_user_email,str_user_photo);
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_user_name", str_user_name);
+                        editor.putString("str_user_photo", str_user_photo);
+                        editor.putString("str_user_email", str_user_email);
+                        editor.putString("str_user_id", str_user_id);
+                        editor.commit();
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
@@ -557,13 +569,17 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         dialog.dismiss();
 
+                        str_user_name = obj.getString(TAG_NAME);
                         str_user_email = obj.getString(TAG_EMAIL);
                         str_user_id = obj.getString(TAG_ID);
+                        str_user_photo = obj.getString(TAG_PHOTO);
 
-                        session.createLoginSession(str_user_email, str_user_id);
+                        session.createLoginSession(str_user_name,str_user_id, str_user_email,str_user_photo);
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_user_name", str_user_name);
+                        editor.putString("str_user_photo", str_user_photo);
                         editor.putString("str_user_email", str_user_email);
                         editor.putString("str_user_id", str_user_id);
                         editor.commit();

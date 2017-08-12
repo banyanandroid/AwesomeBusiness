@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.adapter.NavigationDrawerAdapter;
 import banyan.com.awesomebusiness.global.SessionManager;
 import banyan.com.awesomebusiness.model.NavDrawerItem;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.facebook.FacebookSdk.isDebugEnabled;
@@ -45,8 +48,8 @@ public class FragmentDrawer extends Fragment {
 
     Button btn_login;
     TextView txt_user_name, txt_user_email_id;
-    ImageView img_profile;
-    String str_name, str_id = "empty";
+    CircleImageView img_profile;
+    String str_name, str_id,str_email,str_photo = "empty";
 
     // Session Manager Class
     SessionManager session;
@@ -97,12 +100,14 @@ public class FragmentDrawer extends Fragment {
 
         txt_user_name = (TextView) layout.findViewById(R.id.nav_draw_txt_name);
         txt_user_email_id = (TextView) layout.findViewById(R.id.nav_draw_txt_email);
-        img_profile = (ImageView) layout.findViewById(R.id.nav_draw_img_profile);
+        img_profile = (CircleImageView) layout.findViewById(R.id.nav_draw_img_profile);
 
         btn_login = (Button) layout.findViewById(R.id.nav_draw_btn_login);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_name = sharedPreferences.getString("str_user_email", "str_user_email");
+        str_name = sharedPreferences.getString("str_user_name", "str_user_name");
+        str_email = sharedPreferences.getString("str_user_email", "str_user_email");
+        str_photo = sharedPreferences.getString("str_user_photo", "str_user_photo");
         str_id = sharedPreferences.getString("str_user_id", "str_user_id");
 
         System.out.println("USER ID : " + str_id);
@@ -110,13 +115,38 @@ public class FragmentDrawer extends Fragment {
         if (str_id.equals("str_user_id")) {
 
             btn_login.setVisibility(View.VISIBLE);
-        } else {
+        } else if (str_name.equals("str_user_name")){
+
+            txt_user_name.setVisibility(View.GONE);
+
+        } else if (str_name.equals("str_user_email")){
+
+            txt_user_email_id.setVisibility(View.GONE);
+
+        }else {
             txt_user_name.setVisibility(View.VISIBLE);
             txt_user_email_id.setVisibility(View.VISIBLE);
             btn_login.setVisibility(View.GONE);
 
             txt_user_name.setText("" + str_name);
-            // txt_user_email_id.setText(""+ str_name);
+            txt_user_email_id.setText(""+ str_email);
+        }
+
+        if (str_photo.equals("str_user_photo")){
+
+        }else {
+
+            try {
+                String str_img_path = str_photo;
+                Glide.with(getActivity()).load(str_img_path)
+                        .thumbnail(0.5f)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(img_profile);
+
+            } catch (Exception e) {
+
+            }
         }
 
 

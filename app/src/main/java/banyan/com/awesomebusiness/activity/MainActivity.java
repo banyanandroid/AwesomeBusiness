@@ -165,32 +165,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 startActivity(i);
             }
         });
-/*
-        // Messager Counter
-        MenuItem item2 = menu.findItem(R.id.action_message);
-        MenuItemCompat.setActionView(item2, R.layout.toolbar_message_update_count_layout);
-        message_Count = (RelativeLayout) MenuItemCompat.getActionView(item2);
-        message_batch = (RelativeLayout) MenuItemCompat.getActionView(item2);
-        tv_message = (TextView) message_batch.findViewById(R.id.badge_message);
-        tv_message.setText("0");
-
-        message_batch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(getApplicationContext(), Activity_Register.class);
-                startActivity(i);
-            }
-        });
-        tv_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(getApplicationContext(), Activity_Register.class);
-                startActivity(i);
-            }
-        });
-*/
 
         return true;
     }
@@ -213,12 +187,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             startActivity(i);
         }
         if (id == R.id.action_add_advisor_profile) {
-
-  //FOR TEST PURPOSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE DELETE THIS INTENT LATER
-            Intent i = new Intent(getApplicationContext(), Activity_UserProfile_Update.class);
-            startActivity(i);
-            finish();
-  ///////////////////////////////////////
 
             Toast.makeText(getApplicationContext(), "Advisor Profile", Toast.LENGTH_LONG).show();
             return true;
@@ -343,14 +311,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_name);
                     System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_id);
 
-                   /* try {
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("str_selected_country_name", str_selected_country_name);
-                        editor.putString("str_selected_country_id", str_selected_country_id);
-                        editor.commit();
-                    } catch (Exception e) {
-                    }*/
 
                 }
 
