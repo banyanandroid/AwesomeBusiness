@@ -135,7 +135,7 @@
                     <EditText
                         android:id="@+id/edit_profile_edt_user_address"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:gravity="top|left"
@@ -276,44 +276,47 @@
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Business Proposals"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/edit_profile_spn_businessproposals"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/user_email_frequency">
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:weightSum="12">
 
-                    </Spinner>
+                        <CheckBox
+                            android:id="@+id/chbx_emailfreq_businessproposals"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="5"
+                            android:text="Business Proposals"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <CheckBox
+                            android:id="@+id/chbx_emailfreq_newOpportunities"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="5"
+                            android:text="New Opportunities"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="New Opportunity Notifications"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <Spinner
-                        android:id="@+id/edit_profile_spn_opportunitynotifications"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/user_email_frequency">
-
-                    </Spinner>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/edit_profile_btn_changepassword"

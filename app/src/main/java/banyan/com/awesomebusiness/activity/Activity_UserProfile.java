@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +20,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tapadoo.alerter.Alerter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,9 +56,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     String str_profile_user_id, str_profile_user_key, str_profile_user_name, str_profile_user_email, str_user_mobile,
             str_user_gst_num, str_user_location, str_user_timezone, str_user_company_name, str_user_address,
             str_user_designation, str_user_business_proposalEmail, str_user_dealsize,
-            str_user_business_proposalNotify, str_user_facebook, str_user_google, str_user_linkedin,
-            str_user_facebook_id, str_user_google_id, str_user_linkedin_id, str_user_ip,
-            str_user_photo, str_user_created_on = "";
+            str_user_business_proposalNotify,str_user_photo, str_user_created_on = "";
 
     public static RequestQueue queue;
 
@@ -75,15 +76,24 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static final String TAG_USER_BUSINESS_PROPOSAL_EMAIL = "user_business_proposals_email";
     public static final String TAG_USER_DEALSIZE = "user_dealsize";
     public static final String TAG_USER_BUSINESS_PROPOSAL_NOTIFY = "user_business_proposals_notify";
-    public static final String TAG_USER_FACEBOOK = "user_facebook";
-    public static final String TAG_USER_LINKEDIN = "user_linkedin";
-    public static final String TAG_USER_GOOGLE = "user_google";
-    public static final String TAG_USER_FACEBOOK_ID = "user_facebook_id";
-    public static final String TAG_USER_GOOGLE_ID = "user_google_id";
-    public static final String TAG_USER_LINKEDIN_ID = "user_linkedin_id";
-    public static final String TAG_USER_IP = "user_ip_address";
     public static final String TAG_USER_PHOTO = "user_photo";
     public static final String TAG_USER_CREATEDON = "user_createdon";
+
+    public static final String TAG_PREF_LOCATION_ID = "prefer_location_id";
+    public static final String TAG_PREF_LOCATION_TYPE = "prefer_location_type";
+    public static final String TAG_PREF_USER_ID = "prefer_user_id";
+    public static final String TAG_PREF_LOCATION_CREATEON = "preferences_location_createdon";
+    public static final String TAG_PREF_LOCATION_ACT = "preferences_location_act";
+
+    public static final String TAG_PREF_INDUSTRIES_ID = "preferences_industries_id";
+    public static final String TAG_PREF_INDUSTRIES_TYPE = "preferences_industry_type";
+    public static final String TAG_PREF_ID = "preferences_user_id";
+    public static final String TAG_PREF_CREATEON = "preferences_createdon";
+    public static final String TAG_PREF_ACT = "preferences_act";
+
+
+    ArrayList<String> Arraylist_sector = null;
+    ArrayList<String> Arraylist_location = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +112,9 @@ public class Activity_UserProfile extends AppCompatActivity {
         str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
         str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
+
+        Arraylist_sector = new ArrayList<String>();
+        Arraylist_location = new ArrayList<String>();
 
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -124,6 +137,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_user_mobile = (TextView) findViewById(R.id.userprofile_txt_user_mobile);
         txt_user_current_role = (TextView) findViewById(R.id.userprofile_txt_user_role);
         txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
+
 
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,13 +210,6 @@ public class Activity_UserProfile extends AppCompatActivity {
                         str_user_business_proposalEmail = obj_data.getString(TAG_USER_BUSINESS_PROPOSAL_EMAIL);
                         str_user_dealsize = obj_data.getString(TAG_USER_DEALSIZE);
                         str_user_business_proposalNotify = obj_data.getString(TAG_USER_BUSINESS_PROPOSAL_NOTIFY);
-                        str_user_facebook = obj_data.getString(TAG_USER_FACEBOOK);
-                        str_user_google = obj_data.getString(TAG_USER_GOOGLE);
-                        str_user_linkedin = obj_data.getString(TAG_USER_LINKEDIN);
-                        str_user_facebook_id = obj_data.getString(TAG_USER_FACEBOOK_ID);
-                        str_user_google_id = obj_data.getString(TAG_USER_GOOGLE_ID);
-                        str_user_linkedin_id = obj_data.getString(TAG_USER_LINKEDIN_ID);
-                        str_user_ip = obj_data.getString(TAG_USER_IP);
                         str_user_photo = obj_data.getString(TAG_USER_PHOTO);
                         str_user_created_on = obj_data.getString(TAG_USER_CREATEDON);
 
@@ -220,11 +227,9 @@ public class Activity_UserProfile extends AppCompatActivity {
                             txt_user_current_role.setText("" + str_user_designation);
                             txt_user_company.setText("" + str_user_company_name);
 
-
                         } catch (Exception e) {
 
                         }
-
                         dialog.dismiss();
                     } else if (success == 0) {
 
