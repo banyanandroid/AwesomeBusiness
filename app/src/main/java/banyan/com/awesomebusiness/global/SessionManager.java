@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 import banyan.com.awesomebusiness.activity.Activity_Login;
 
-
 public class SessionManager {
 	// Shared Preferences
 	SharedPreferences pref;
@@ -78,8 +77,6 @@ public class SessionManager {
 		}
 
 	}
-
-
 
 	/**
 	 * Get stored session data

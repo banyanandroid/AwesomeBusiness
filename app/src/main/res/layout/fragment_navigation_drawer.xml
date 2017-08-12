@@ -13,11 +13,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Awesome Business"
             android:gravity="center"
+            android:text="Awesome Business"
             android:textColor="@color/colorAccent"
             android:textSize="18dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -49,21 +49,21 @@
                     android:elevation="40dp"
                     android:src="@mipmap/ic_user" />
 
-                <TextView
+               <!-- <TextView
                     android:id="@+id/nav_draw_txt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Username"
-                    android:visibility="gone"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/nav_draw_txt_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="email@gmail.com" />
+                    android:text="email@gmail.com"
+                    android:visibility="gone" />-->
 
             </LinearLayout>
 
@@ -72,7 +72,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nav_draw_txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/nav_draw_txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email@gmail.com"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/nav_draw_btn_login"
