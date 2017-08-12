@@ -42,7 +42,7 @@
                 android:padding="@dimen/activity_horizontal_margin">
 
                 <ImageView
-                    android:id="@+id/img_profile"
+                    android:id="@+id/nav_draw_img_profile"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:src="@mipmap/ic_user" />

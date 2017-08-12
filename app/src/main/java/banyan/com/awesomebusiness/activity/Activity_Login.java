@@ -562,6 +562,12 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         session.createLoginSession(str_user_email, str_user_id);
 
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_user_email", str_user_email);
+                        editor.putString("str_user_id", str_user_id);
+                        editor.commit();
+
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
                         finish();
@@ -797,11 +803,11 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     }
 
     private void showSigninForm() {
+
         PercentRelativeLayout.LayoutParams paramsLogin = (PercentRelativeLayout.LayoutParams) llSignin.getLayoutParams();
         PercentLayoutHelper.PercentLayoutInfo infoLogin = paramsLogin.getPercentLayoutInfo();
         infoLogin.widthPercent = 0.85f;
         llSignin.requestLayout();
-
 
         PercentRelativeLayout.LayoutParams paramsSignup = (PercentRelativeLayout.LayoutParams) llSignup.getLayoutParams();
         PercentLayoutHelper.PercentLayoutInfo infoSignup = paramsSignup.getPercentLayoutInfo();

@@ -6,7 +6,9 @@ package banyan.com.awesomebusiness.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,7 +21,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +45,8 @@ public class FragmentDrawer extends Fragment {
 
     Button btn_login;
     TextView txt_user_name, txt_user_email_id;
-    String str_name, str_id;
+    ImageView img_profile;
+    String str_name, str_id = "empty";
 
     // Session Manager Class
     SessionManager session;
@@ -91,27 +97,26 @@ public class FragmentDrawer extends Fragment {
 
         txt_user_name = (TextView) layout.findViewById(R.id.nav_draw_txt_name);
         txt_user_email_id = (TextView) layout.findViewById(R.id.nav_draw_txt_email);
+        img_profile = (ImageView) layout.findViewById(R.id.nav_draw_img_profile);
+
         btn_login = (Button) layout.findViewById(R.id.nav_draw_btn_login);
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
-        HashMap<String, String> user = session.getUserDetails();
-
-
-        // name
-        str_name = user.get(SessionManager.KEY_USER);
-        str_id = user.get(SessionManager.KEY_USER_ID);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_name = sharedPreferences.getString("str_user_email", "str_user_email");
+        str_id = sharedPreferences.getString("str_user_id", "str_user_id");
 
         System.out.println("USER ID : " + str_id);
 
-        if (str_id.equals("")) {
+        if (str_id.equals("str_user_id")) {
 
             btn_login.setVisibility(View.VISIBLE);
-        }else {
-
+        } else {
             txt_user_name.setVisibility(View.VISIBLE);
             txt_user_email_id.setVisibility(View.VISIBLE);
             btn_login.setVisibility(View.GONE);
+
+            txt_user_name.setText("" + str_name);
+            // txt_user_email_id.setText(""+ str_name);
         }
 
 
@@ -137,6 +142,40 @@ public class FragmentDrawer extends Fragment {
 
                 Intent i = new Intent(getActivity(), Activity_Login.class);
                 startActivity(i);
+            }
+        });
+
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (str_id.equals("str_user_id")) {
+
+                    TastyToast.makeText(getActivity(), "Please Login", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
+                } else {
+
+                    Intent i = new Intent(getActivity(), Activity_UserProfile.class);
+                    startActivity(i);
+
+                }
+
+            }
+        });
+
+        txt_user_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (str_id.equals("str_user_id")) {
+
+                    TastyToast.makeText(getActivity(), "Please Login", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+
+                } else {
+
+                    Intent i = new Intent(getActivity(), Activity_UserProfile.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -224,8 +263,6 @@ public class FragmentDrawer extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
-
     }
 
     public interface FragmentDrawerListener {
