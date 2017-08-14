@@ -105,6 +105,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_sector_key = null;
     ArrayList<String> Arraylist_sector_type = null;
 
+    ArrayList<String> Arraylist_sector_name_industry = null;
+
     /*Multi Select*/
     ArrayList<String> Arraylist_selected_sectorkey = null;
     ArrayList<String> Arraylist_selected_location = null;
@@ -128,11 +130,13 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_pref_location_id = null;
     ArrayList<String> Arraylist_pref_location_type = null;
 
+    //To get the previously entered parameters and set it in the edit text
     String str_prev_profile_user_name, str_prev_user_mobile,
             str_prev_user_gst_num, str_prev_user_company_name, str_prev_user_address,
             str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities = "";
 
-    String str_up_profile_user_name, str_up_user_mobile,
+    //To Post the newly entered parameters and update it to JSON
+    String str_up_profile_user_name, str_up_country_code , str_up_user_mobile,
             str_up_user_gst_num, str_up__user_company_name, str_up_user_address,
             str_up_user_designation, str_up_user_location = "";
 
@@ -167,6 +171,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
+
+        Arraylist_sector_name_industry = new ArrayList<String>();
 
         Arraylist_selected_sectorkey = new ArrayList<String>();
         Arraylist_selected_location = new ArrayList<String>();
@@ -212,6 +218,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         edt_designation = (EditText) findViewById(R.id.edit_profile_edt_user_designation);
         edt_address = (EditText) findViewById(R.id.edit_profile_edt_user_address);
         edt_GST_number = (EditText) findViewById(R.id.edit_profile_edt_user_GSTnumber);
+
 
         try {
             dialog = new SpotsDialog(Activity_UserProfile_Update.this);
@@ -461,6 +468,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             String sector_key = obj1.getString(TAG_SECTOR_KEY);
                             String sector_type = obj1.getString(TAG_SECTOR_TYPE);
 
+                            if(sector_type.equals("sector")){
+                                Arraylist_sector_name_industry.add(sector_name);
+                            }
+
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
                             Arraylist_sector_type.add(sector_type);
@@ -627,7 +638,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         }
 
-                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
+    //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
 
                         System.out.println(" Arraylist_pref_location_id :: " + Arraylist_pref_location_id);
                         System.out.println("Arraylist_location_place_country" + Arraylist_location_place_country);
@@ -664,20 +675,22 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         chip_preferred_loation.setText(Arraylist_chipset_location);
 
-                        //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
+
+     //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
 
                         ArrayList<String> Arraylist_chipset_industries = new ArrayList<>();
 
                         for (int i = 0; i < Arraylist_pref_sector_id.size(); i++) {
 
-                            String str_id = Arraylist_pref_location_id.get(i);
-                            int position = Arraylist_pref_location_id.indexOf(str_id);
+                            String str_sector_id = Arraylist_pref_sector_id.get(i);
+                            int id_position = Arraylist_pref_sector_id.indexOf(str_sector_id);
+                            String str_sector_type = Arraylist_pref_sector_type.get(i);
 
-                            String str_industry_name = Arraylist_pref_location_id.get(position);
+                            if(str_sector_type.equals("sector")){
+                                String str_industry_name = Arraylist_sector_name_industry.get(id_position);
+                                Arraylist_chipset_industries.add(str_industry_name);
+                            }
 
-
-
-                            Arraylist_chipset_industries.add(str_industry_name);
                             chip_preferred_industries.setText(Arraylist_chipset_industries);
 
                             System.out.println("PREVIOUSLY SELECTED INDUSTRIESSSSSSSSSS :: " + str_final_Business_Location);
@@ -811,6 +824,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
 
 }
+
 /*
 
      $user_name = $_POST['user_name'];
