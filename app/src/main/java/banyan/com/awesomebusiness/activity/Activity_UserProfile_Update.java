@@ -110,6 +110,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_selected_location = null;
 
     ArrayList<String> Arraylist_location_place = null;
+    ArrayList<String> Arraylist_location_place_continent = null;
+    ArrayList<String> Arraylist_location_place_country = null;
+    ArrayList<String> Arraylist_location_place_state = null;
+    ArrayList<String> Arraylist_location_place_city = null;
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
 
@@ -127,6 +131,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     String str_prev_profile_user_name, str_prev_user_mobile,
             str_prev_user_gst_num, str_prev_user_company_name, str_prev_user_address,
             str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities = "";
+
+    String str_up_profile_user_name, str_up_user_mobile,
+            str_up_user_gst_num, str_up__user_company_name, str_up_user_address,
+            str_up_user_designation, str_up_user_location = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +172,12 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         Arraylist_selected_location = new ArrayList<String>();
 
         Arraylist_location_place = new ArrayList<String>();
+
+        Arraylist_location_place_continent = new ArrayList<String>();
+        Arraylist_location_place_country = new ArrayList<String>();
+        Arraylist_location_place_state = new ArrayList<String>();
+        Arraylist_location_place_city = new ArrayList<String>();
+
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
@@ -190,7 +205,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         chb_BusinessProposals = (CheckBox) findViewById(R.id.chbx_emailfreq_businessproposals);
         chb_NewOpportunitis = (CheckBox) findViewById(R.id.chbx_emailfreq_newOpportunities);
 
-        edt_name  = (EditText) findViewById(R.id.edit_profile_edt_user_name);
+        edt_name = (EditText) findViewById(R.id.edit_profile_edt_user_name);
         edt_mobilenumber = (EditText) findViewById(R.id.edit_profile_edt_user_number);
         edt_companyname = (EditText) findViewById(R.id.edit_profile_edt_user_companyname);
         edt_location = (EditText) findViewById(R.id.edit_profile_edt_user_location);
@@ -212,12 +227,48 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                str_up_profile_user_name = edt_name.getText().toString();
+                str_up_user_mobile = edt_mobilenumber.getText().toString();
+                str_up_user_gst_num = edt_GST_number.getText().toString();
+                str_up__user_company_name = edt_companyname.getText().toString();
+                str_up_user_address = edt_address.getText().toString();
+                str_up_user_designation = edt_designation.getText().toString();
+                str_up_user_location = edt_location.getText().toString();
+
 // String Values According to checkbox state
                 if (chb_BusinessProposals.isChecked()) {
                     str_chb_businessproposals = "1";
                 } else if (chb_NewOpportunitis.isChecked()) {
                     str_chb_newopportunities = "1";
+                } else if (str_up_profile_user_name.equals("")) {
+                    edt_name.setError("Enter Name");
+                    TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up_user_mobile.equals("")) {
+                    edt_mobilenumber.setError("Enter Mobile Number");
+                    TastyToast.makeText(getApplicationContext(), " Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up_user_gst_num.equals("")) {
+                    edt_GST_number.setError("Please Enter GST Number");
+                    TastyToast.makeText(getApplicationContext(), "GST Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up__user_company_name.equals("")) {
+                    edt_companyname.setError("Please Enter Company Name");
+                    TastyToast.makeText(getApplicationContext(), "Company Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up_user_address.equals("")) {
+                    edt_address.setError("Please Enter Address");
+                    TastyToast.makeText(getApplicationContext(), "Address Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up_user_designation.equals("")) {
+                    edt_designation.setError("Please Enter Designation");
+                    TastyToast.makeText(getApplicationContext(), " Designation Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_up_user_location.equals("")) {
+                    edt_location.setError("Please Enter Location");
+                    TastyToast.makeText(getApplicationContext(), "Location Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    dialog = new SpotsDialog(Activity_UserProfile_Update.this);
+                    dialog.show();
+                    queue = Volley.newRequestQueue(Activity_UserProfile_Update.this);
+                    Update_Profile();
+
                 }
+
 
             }
         });
@@ -294,12 +345,16 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                             String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
                             String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
-                            String prefer_user_id = obj1.getString(TAG_PREF_USER_ID);
-                            String preferences_location_createdon = obj1.getString(TAG_PREF_LOCATION_CREATEON);
-                            String preferences_location_act = obj1.getString(TAG_PREF_LOCATION_ACT);
 
                             Arraylist_pref_location_id.add(prefer_location_id);
-                            Arraylist_pref_location_id.add(prefer_location_type);
+                            Arraylist_pref_location_type.add(prefer_location_type);
+                        }
+
+                        try {
+
+
+                        } catch (Exception e) {
+
                         }
 
 
@@ -308,14 +363,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         arr1 = obj.getJSONArray("results");
                         System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
 
-                        for (int j = 0; arr.length() > j; j++) {
-                            JSONObject obj_sec = arr.getJSONObject(j);
+                        for (int j = 0; arr1.length() > j; j++) {
+                            JSONObject obj_sec = arr1.getJSONObject(j);
 
                             String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
                             String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
-                            String preferences_user_id = obj_sec.getString(TAG_PREF_USER_ID);
-                            String preferences_createdon = obj_sec.getString(TAG_PREF_CREATEON);
-                            String preferences_act = obj_sec.getString(TAG_PREF_ACT);
 
                             Arraylist_pref_sector_id.add(preferences_industries_id);
                             Arraylist_pref_sector_type.add(preferences_industry_type);
@@ -365,9 +417,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("user_id", str_user_id);
+                params.put("user_id", "3");
 
-                System.out.println("USER_ID ::: " + str_user_id);
+                System.out.println("USER_ID ::: " + "3");
 
 
                 return params;
@@ -522,7 +574,17 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             String location_key = obj1.getString(TAG_LOC_KEY);
                             String location_type = obj1.getString(TAG_LOC_TYPE);
 
-                            Arraylist_location_place.add(location_place);
+                            if (location_type.equals("continent")){
+                                Arraylist_location_place_continent.add(location_place);
+                            }else if (location_type.equals("country")){
+                                Arraylist_location_place_country.add(location_place);
+                            }else if (location_type.equals("state")){
+                                Arraylist_location_place_state.add(location_place);
+                            }else if (location_type.equals("city")){
+                                Arraylist_location_place_city.add(location_place);
+                            }
+
+
                             Arraylist_location_key.add(location_key);
                             Arraylist_location_type.add(location_type);
                         }
@@ -565,9 +627,68 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         }
 
+                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
+
+                        System.out.println(" Arraylist_pref_location_id :: " + Arraylist_pref_location_id);
+                        System.out.println("Arraylist_location_place_country" + Arraylist_location_place_country);
+                        System.out.println(" Arraylist_location_place_continent :: " + Arraylist_location_place_continent);
+                        System.out.println(" Arraylist_location_place_state :: " + Arraylist_location_place_state);
+                        System.out.println(" Arraylist_location_place_city :: " + Arraylist_location_place_city);
+
+                        ArrayList<String> Arraylist_chipset_location = new ArrayList<>();
+
+                        for (int i = 0; i < Arraylist_pref_location_id.size(); i++) {
+
+                            String str_id = Arraylist_pref_location_id.get(i);
+                            int position = Arraylist_pref_location_id.indexOf(str_id);
+                            String str_type = Arraylist_pref_location_type.get(i);
+
+                            if (str_type.equals("continent")){
+                                String str_location_name = Arraylist_location_place_continent.get(position);
+                                Arraylist_chipset_location.add(str_location_name);
+                            }else if (str_type.equals("country")){
+                                String str_location_name = Arraylist_location_place_country.get(position);
+                                Arraylist_chipset_location.add(str_location_name);
+                            }else if (str_type.equals("state")){
+                                String str_location_name = Arraylist_location_place_state.get(position);
+                                Arraylist_chipset_location.add(str_location_name);
+                            }else if (str_type.equals("city")){
+
+                                String str_location_name = Arraylist_location_place_city.get(position);
+                                Arraylist_chipset_location.add(str_location_name);
+                            }
+
+                        }
+
+                        System.out.println("SELECTED :::: " + Arraylist_chipset_location);
+
+                        chip_preferred_loation.setText(Arraylist_chipset_location);
+
+                        //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
+
+                        ArrayList<String> Arraylist_chipset_industries = new ArrayList<>();
+
+                        for (int i = 0; i < Arraylist_pref_sector_id.size(); i++) {
+
+                            String str_id = Arraylist_pref_location_id.get(i);
+                            int position = Arraylist_pref_location_id.indexOf(str_id);
+
+                            String str_industry_name = Arraylist_pref_location_id.get(position);
+
+
+
+                            Arraylist_chipset_industries.add(str_industry_name);
+                            chip_preferred_industries.setText(Arraylist_chipset_industries);
+
+                            System.out.println("PREVIOUSLY SELECTED INDUSTRIESSSSSSSSSS :: " + str_final_Business_Location);
+
+
+                        }
+
                         dialog.dismiss();
 
                     } else if (success == 0) {
+                        dialog.dismiss();
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
@@ -601,4 +722,110 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     }
 
 
+    /*****************************
+     * To UPDATE PROFILE
+     ***************************/
+
+
+    private void Update_Profile() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_add_business_profile, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE : " + response);
+                    int success = obj.getInt("status");
+                    if (success == 1) {
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_UserProfile_Update.this)
+                                .setTitle("Success")
+                                .setText("Bussiness Profile Added Successfully")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+                    } else {
+                        dialog.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Registration Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                //FROM EDIT TEXT
+                params.put("user_name", str_up_profile_user_name);
+
+                params.put("ph_no", str_up_user_mobile);
+
+                params.put("location", str_up_user_location);
+
+                params.put("company_name", str_up__user_company_name);
+
+                params.put("designation", str_up_user_designation);
+
+                params.put("gst_number", str_up_user_gst_num);
+
+                params.put("address", str_up_user_address);
+
+                params.put("industries", str_final_business_sector);
+
+                params.put("cities", str_final_Business_Location);
+
+                params.put("emailfrequency", str_chb_businessproposals);
+
+                params.put("notify", str_chb_newopportunities);
+
+                params.put("userid", str_user_id);
+
+
+                System.out.println("User_Name" + str_up_profile_user_name);
+
+
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
 }
+/*
+
+     $user_name = $_POST['user_name'];
+               $mobile_code = $_POST['mobile_code'];
+               $ph_no = $_POST['ph_no'];
+         $location = $_POST['location'];
+
+               $company_name = $_POST['company_name'];
+               $designation = $_POST['designation'];
+               $gst_number = $_POST['gst_number'];
+               $address = $_POST['address'];
+               $industries = $_POST['industries'];
+               $cities = $_POST['cities'];
+               $emailfrequency = $_POST['emailfrequency'];
+               $notify = $_POST['notify'];
+               $userid = $_POST['userid'];
+
+        */

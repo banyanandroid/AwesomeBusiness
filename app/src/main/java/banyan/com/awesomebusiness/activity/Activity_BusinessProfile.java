@@ -324,16 +324,16 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_EBITDA.equals("")) {
                     edt_EBITDA.setError("Enter EBITDA");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    TastyToast.makeText(getApplicationContext(), "EBITDA Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_physical_assests_value.equals("")) {
-                    edt_physical_assests_value.setError("Please Enter Date");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    edt_physical_assests_value.setError("Please Enter Assets Value");
+                    TastyToast.makeText(getApplicationContext(), " Assets Value Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_tentative_selling_price.equals("")) {
-                    edt_tentative_selling_price.setError("Please Enter Date");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    edt_tentative_selling_price.setError("Please Enter Tentative Selling Price");
+                    TastyToast.makeText(getApplicationContext(), " Tentative Selling Price Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_reason_for_sale.equals("")) {
-                    edt_reason_for_sale.setError("Please Enter Date");
-                    TastyToast.makeText(getApplicationContext(), "Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    edt_reason_for_sale.setError("Please Enter Reason For Sale");
+                    TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_spn_business_legal_type.equals("Select Business legal entity type")) {
                     spn_business_legal_type.setFocusable(true);
                     spn_business_legal_type.setFocusableInTouchMode(true);
