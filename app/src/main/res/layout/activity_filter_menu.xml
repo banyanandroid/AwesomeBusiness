@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -121,19 +122,23 @@
 
                     </LinearLayout>
 
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_location"
+
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/business_profile_chipText_business_location"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/location"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary"
-                        app:hintText="Select Location" />
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
+                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:labelPosition_="left"
+                        custom:textColor_="@android:color/black">
+
+                    </com.libaml.android.view.chip.ChipLayout>
+
 
                 </LinearLayout>
 
@@ -176,19 +181,21 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_industry"
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/business_profile_chipText_business_industry"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/industry"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary"
-                        app:hintText="Select Industry type" />
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
+                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:labelPosition_="left"
+                        custom:textColor_="@android:color/black">
+
+                    </com.libaml.android.view.chip.ChipLayout>
 
                 </LinearLayout>
 

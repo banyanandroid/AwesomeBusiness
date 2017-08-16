@@ -34,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,7 +100,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter_interested;
 
-    AutoCompleteTextView auto_i_am, auto_interested_in;
+    SearchableSpinner spn_i_am, spn_interested_in;
 
     ChipLayout chip_busineeslist, chip_business_location;
 
@@ -139,8 +140,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     Spinner spn_amount_fixed_for;
 
-    String str_asset_originally_purchased , str_industries_use_asset , str_asset_located_at ,
-            str_asset_seeking_sell , str_asset_features , str_asset_selling_leasing_price ,str_amount_fixed_for , str_asset_selling_reason ;
+    String str_asset_originally_purchased, str_industries_use_asset, str_asset_located_at,
+            str_asset_seeking_sell, str_asset_features, str_asset_selling_leasing_price, str_amount_fixed_for, str_asset_selling_reason;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +172,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Cardview_spn_selling_leasing.setVisibility(View.GONE);
 
 // AutoCompleteTextView
-        auto_i_am = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_i_am);
-        auto_interested_in = (AutoCompleteTextView) findViewById(R.id.business_profile_autocomp_intersted);
-
+        spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
+        spn_i_am.setTitle("Select Your Role");
+        spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_intersted);
+        spn_interested_in.setTitle("Select Your Interest");
 // Common Edittext
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
@@ -351,10 +353,16 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     chip_business_location.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_selected_role_id.equals("")) {
-                    auto_i_am.setError("Enter Your Role");
+                    spn_i_am.setFocusable(true);
+                    spn_i_am.setFocusableInTouchMode(true);
+                    spn_i_am.requestFocus();
+                    spn_i_am.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_selected_interest_id.equals("")) {
-                    auto_interested_in.setError("Enter Your Interest");
+                    spn_interested_in.setFocusable(true);
+                    spn_interested_in.setFocusableInTouchMode(true);
+                    spn_interested_in.requestFocus();
+                    spn_interested_in.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
                     dialog = new SpotsDialog(Activity_BusinessProfile.this);
@@ -423,11 +431,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                             adapter_i_am = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_role_name);
-                            auto_i_am.setAdapter(adapter_i_am);
-                            auto_i_am.setThreshold(1);
+                            spn_i_am.setAdapter(adapter_i_am);
 
 
-                            auto_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            spn_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
                                     t1 = (TextView) arg1;
@@ -508,10 +515,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         try {
                             adapter_interested = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
-                            auto_interested_in.setAdapter(adapter_interested);
-                            auto_interested_in.setThreshold(1);
+                            spn_interested_in.setAdapter(adapter_interested);
 
-                            auto_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            spn_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
                                     t1 = (TextView) arg1;
@@ -519,12 +526,16 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     System.out.println("Argument " + arg2);
                                     str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
 
-                                    if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
-                                        Cardview_spn_others.setVisibility(View.GONE);
-                                        Cardview_spn_selling_leasing.setVisibility(View.VISIBLE);
-                                    } else {
-                                        Cardview_spn_others.setVisibility(View.VISIBLE);
-                                        Cardview_spn_selling_leasing.setVisibility(View.GONE);
+                                    try {
+                                        if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+                                            Cardview_spn_others.setVisibility(View.GONE);
+                                            Cardview_spn_selling_leasing.setVisibility(View.VISIBLE);
+                                        } else if (!str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+                                            Cardview_spn_others.setVisibility(View.VISIBLE);
+                                            Cardview_spn_selling_leasing.setVisibility(View.GONE);
+                                        }
+                                    } catch (Exception e) {
+
                                     }
 
 

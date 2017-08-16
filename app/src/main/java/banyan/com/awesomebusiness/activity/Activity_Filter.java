@@ -2,12 +2,17 @@ package banyan.com.awesomebusiness.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,12 +22,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
+import com.libaml.android.view.chip.ChipLayout;
+import com.sdsmdg.tastytoast.TastyToast;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +40,7 @@ import banyan.com.awesomebusiness.Activity_Register;
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.api.RetroFitApi;
 import banyan.com.awesomebusiness.global.AppConfig;
+import dmax.dialog.SpotsDialog;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -43,12 +54,47 @@ public class Activity_Filter extends AppCompatActivity {
 
     private Toolbar mToolbar;
     ProgressDialog pDialog;
+    SpotsDialog dialog;
     public static RequestQueue queue;
     String TAG = "reg";
-    static String url_register = "http://epictech.in/apiawesome/index.php/transaction";
-    static String url_register1 = "http://epictech.in/apiawesome/index.php/transaction/createtransaction";
+    TextView t1;
 
-    Button btn_trans_type, btn_location, btn_industry, btn_done;
+    Button btn_done;
+
+    public static final String TAG_TRANSACTION_ID = "business_interest_id";
+    public static final String TAG_TRANSACTION_NAME = "business_interest_name";
+
+    public static final String TAG_SECTOR_NAME = "name";
+    public static final String TAG_SECTOR_KEY = "key";
+    public static final String TAG_SECTOR_TYPE = "type";
+
+    public static final String TAG_LOC_PLACE = "place";
+    public static final String TAG_LOC_KEY = "key";
+    public static final String TAG_LOC_TYPE = "type";
+
+    ArrayList<String> Arraylist_sector_name = null;
+    ArrayList<String> Arraylist_sector_key = null;
+    ArrayList<String> Arraylist_sector_type = null;
+
+    /*Multi Select*/
+    ArrayList<String> Arraylist_selected_sectorkey = null;
+    ArrayList<String> Arraylist_selected_location = null;
+
+    ArrayList<String> Arraylist_location_place = null;
+    ArrayList<String> Arraylist_location_key = null;
+    ArrayList<String> Arraylist_location_type = null;
+
+
+    ArrayList<String> Arraylist_business_transaction_id = null;
+    ArrayList<String> Arraylist_business_transaction_name = null;
+    private ArrayAdapter<String> adapter_transaction;
+
+    SearchableSpinner spn_transaction_type;
+    String str_selected_transaction_id, str_selected_transaction_type_name = "";
+
+    ChipLayout chip_busineeslist, chip_business_location;
+
+    String str_final_business_sector, str_final_Business_Location = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +115,39 @@ public class Activity_Filter extends AppCompatActivity {
             }
         });
 
+        Arraylist_sector_name = new ArrayList<String>();
+        Arraylist_sector_key = new ArrayList<String>();
+        Arraylist_sector_type = new ArrayList<String>();
+
+        Arraylist_selected_sectorkey = new ArrayList<String>();
+        Arraylist_selected_location = new ArrayList<String>();
+
+        Arraylist_location_place = new ArrayList<String>();
+        Arraylist_location_key = new ArrayList<String>();
+        Arraylist_location_type = new ArrayList<String>();
+
+        Arraylist_business_transaction_id = new ArrayList<String>();
+        Arraylist_business_transaction_name = new ArrayList<String>();
+
+        ChipLayout.MAX_CHARACTER_COUNT = 20;
+        chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_business_industry);
+        chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_business_location);
+
+        spn_transaction_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
+
         btn_done = (Button) findViewById(R.id.btn_filter_done);
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("str_filter_final_Business_Location", str_final_Business_Location);
+                editor.putString("str_filter_final_business_sector", str_final_business_sector);
+                editor.putString("str_filter_selected_transaction_type_name", str_selected_transaction_type_name);
+
+                editor.commit();
+
                 Intent i = new Intent(Activity_Filter.this, MainActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
@@ -84,15 +159,341 @@ public class Activity_Filter extends AppCompatActivity {
 
         //logging();
 
-        pDialog = new ProgressDialog(Activity_Filter.this);
+      /*  pDialog = new ProgressDialog(Activity_Filter.this);
         pDialog.setMessage("Please wait...");
         pDialog.show();
         pDialog.setCancelable(false);
         System.out.println("CALLED 00000");
-        queue = Volley.newRequestQueue(Activity_Filter.this);
-        Function_Register();
+        queue = Volley.newRequestQueue(Activity_Filter.this);*/
+        // Function_Register();
 
+        try {
+
+            dialog = new SpotsDialog(Activity_Filter.this);
+            dialog.show();
+            queue = Volley.newRequestQueue(Activity_Filter.this);
+            Get_Transaction_type();
+
+        } catch (Exception e) {
+
+        }
     }
+
+
+    /*****************************
+     * To get  Transaction Type
+     ***************************/
+
+    public void Get_Transaction_type() {
+        String tag_json_obj = "json_obj_req";
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_interested_in, new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String interest_key = obj1.getString(TAG_TRANSACTION_ID);
+                            String interest_name = obj1.getString(TAG_TRANSACTION_NAME);
+
+                            Arraylist_business_transaction_id.add(interest_key);
+                            Arraylist_business_transaction_name.add(interest_name);
+                        }
+                        try {
+                            adapter_transaction = new ArrayAdapter<String>(Activity_Filter.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_business_transaction_name);
+                            spn_transaction_type.setAdapter(adapter_transaction);
+                            //  spn_transaction_type.setThreshold(1);
+
+                            spn_transaction_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                                        long arg3) {
+                                    t1 = (TextView) arg1;
+                                    str_selected_transaction_type_name = t1.getText().toString();
+                                    System.out.println("Argument " + arg2);
+                                    str_selected_transaction_id = Arraylist_business_transaction_id.get(arg2);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Sector_List();
+                        } catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * To get  Business sector List
+     ***************************/
+
+    public void Get_Sector_List() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business, new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("datas");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+
+                            Arraylist_sector_name.add(sector_name);
+                            Arraylist_sector_key.add(sector_key);
+                            Arraylist_sector_type.add(sector_type);
+
+                        }
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_sector_name);
+
+                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_Filter.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_sector_name);
+                            chip_busineeslist.setAdapter(adapter_sector);
+
+                            chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
+
+                                    t1 = (TextView) view;
+                                    String str_sector_key = t1.getText().toString();
+                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
+
+                                    String str_select_sector_key = Arraylist_sector_key.get(i);
+                                    String str_select_sector_type = Arraylist_sector_type.get(i);
+                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
+                                    Arraylist_selected_sectorkey.add(str_select_item);
+
+                                    for (String s : Arraylist_selected_sectorkey) {
+                                        str_final_business_sector += s + ",";
+                                    }
+
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Location();
+                        } catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * To get  Business Location List
+     ***************************/
+
+    public void Get_Business_Location() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business_location, new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("datas");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String location_place = obj1.getString(TAG_LOC_PLACE);
+                            String location_key = obj1.getString(TAG_LOC_KEY);
+                            String location_type = obj1.getString(TAG_LOC_TYPE);
+
+                            Arraylist_location_place.add(location_place);
+                            Arraylist_location_key.add(location_key);
+                            Arraylist_location_type.add(location_type);
+                        }
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_location_place);
+
+                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_Filter.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_location_place);
+                            chip_business_location.setAdapter(adapter_sector);
+
+                            System.out.println("ARAAAAY :: " + 222222);
+                            chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
+
+
+                                    t1 = (TextView) view;
+                                    String str_location_key = t1.getText().toString();
+                                    int i = Arraylist_location_place.indexOf(str_location_key);
+
+                                    String str_select_location_key = Arraylist_location_key.get(i);
+                                    String str_select_location_type = Arraylist_location_type.get(i);
+                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
+                                    Arraylist_selected_location.add(str_select_item);
+
+                                    for (String s : Arraylist_selected_location) {
+                                        str_final_Business_Location += s + ",";
+                                    }
+
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
 
     public void logging() {
         int flag = 1;
@@ -100,7 +501,7 @@ public class Activity_Filter extends AppCompatActivity {
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(AppConfig.BASE_URL) //Setting the Root URL
                 .build();
-       JsonObject obj = new JsonObject();
+        JsonObject obj = new JsonObject();
        /*  obj.addProperty("action_type", flag);
         obj.addProperty("email", email);
         obj.addProperty("password", password);
@@ -216,7 +617,7 @@ public class Activity_Filter extends AppCompatActivity {
         queue.add(request);
     }*/
 
-    private void Function_Register() {
+   /* private void Function_Register() {
 
         System.out.println("CALLED 1111111111");
         System.out.println("CALLED " + url_register);
@@ -280,7 +681,7 @@ public class Activity_Filter extends AppCompatActivity {
 
         // Adding request to request queue
         queue.add(request);
-    }
+    }*/
 
     @Override
     public void onDestroy() {

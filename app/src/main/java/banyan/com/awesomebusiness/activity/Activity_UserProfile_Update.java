@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import com.hbb20.CountryCodePicker;
 import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,9 +55,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     String TAG = "";
     TextView t1;
 
-    //CountryCodePicker
-    CountryCodePicker CountryCodePicker;
-
     // Session Manager Class
     SessionManager session;
     public static String str_user_id, str_user_name;
@@ -68,6 +67,16 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ChipLayout chip_preferred_industries, chip_preferred_loation;
 
     Button btn_change_password, btn_update;
+
+    // Searchable Spinner and String For Country Phone Code
+    SearchableSpinner spn_country_code;
+    String str_selected_country_id, str_selected_phone_code;
+
+
+    public static final String TAG_COUNTRY_ID = "country_id";
+    public static final String TAG_COUNTRY_PHONE_CODE = "country_phone_code";
+    public static final String TAG_COUNTRY_NAME = "country_name";
+
 
     public static final String TAG_SECTOR_NAME = "name";
     public static final String TAG_SECTOR_KEY = "key";
@@ -100,6 +109,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     public static final String TAG_PREF_CREATEON = "preferences_createdon";
     public static final String TAG_PREF_ACT = "preferences_act";
 
+    ArrayList<String> Arraylist_country_id = null;
+    ArrayList<String> Arraylist_country_phone_code = null;
+
+    private ArrayAdapter<String> adapter_country_code;
 
     ArrayList<String> Arraylist_sector_name = null;
     ArrayList<String> Arraylist_sector_key = null;
@@ -136,7 +149,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities = "";
 
     //To Post the newly entered parameters and update it to JSON
-    String str_up_profile_user_name, str_up_country_code , str_up_user_mobile,
+    String str_up_profile_user_name, str_up_country_code, str_up_user_mobile,
             str_up_user_gst_num, str_up__user_company_name, str_up_user_address,
             str_up_user_designation, str_up_user_location = "";
 
@@ -168,6 +181,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             }
         });
 
+        Arraylist_country_id = new ArrayList<String>();
+        Arraylist_country_phone_code = new ArrayList<String>();
+
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
@@ -192,18 +208,13 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         Arraylist_pref_location_id = new ArrayList<String>();
         Arraylist_pref_location_type = new ArrayList<String>();
 
-        //CountryCodePicker
-        CountryCodePicker = (CountryCodePicker) findViewById(R.id.CountryCodePicker);
-        CountryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-            @Override
-            public void onCountrySelected() {
-                Toast.makeText(getApplicationContext(), "Changed To " + CountryCodePicker.getSelectedCountryName(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_preferred_industries = (ChipLayout) findViewById(R.id.business_profile_chipText_business_industry);
         chip_preferred_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_business_location);
+
+        // AutoCompleteTextView
+        spn_country_code = (SearchableSpinner) findViewById(R.id.updatebusiness_profile_spinner_country);
+        spn_country_code.setTitle("Country Code");
 
         btn_change_password = (Button) findViewById(R.id.edit_profile_btn_changepassword);
         btn_update = (Button) findViewById(R.id.user_profile_btn_submit);
@@ -224,7 +235,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             dialog = new SpotsDialog(Activity_UserProfile_Update.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
-            Get_User_Profile();
+            Get_CountryCode();
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -280,6 +291,108 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    /*****************************
+     * To get  Country Code
+     ***************************/
+
+    public void Get_CountryCode() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("STEP  1111111111111");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_country, new Response.Listener<String>() {
+
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+                    System.out.println("STEP  22222222222");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+                        System.out.println("STEP  33333333");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String Country_id = obj1.getString(TAG_COUNTRY_ID);
+                            String Country_PhoneCode = obj1.getString(TAG_COUNTRY_PHONE_CODE);
+                            String Country_Name = obj1.getString(TAG_COUNTRY_NAME);
+
+                            Arraylist_country_id.add(Country_id);
+                            Arraylist_country_phone_code.add(Country_PhoneCode);
+                        }
+                        try {
+
+                            adapter_country_code = new ArrayAdapter<String>(Activity_UserProfile_Update.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_country_phone_code);
+                            spn_country_code.setAdapter(adapter_country_code);
+
+                            spn_country_code.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                                        long arg3) {
+                                    t1 = (TextView) arg1;
+                                    str_selected_phone_code = t1.getText().toString();
+                                    str_selected_country_id = Arraylist_country_id.get(arg2);
+
+                                    System.out.println("Countryyyyyyyyyyyyy CODEEEEEEE ::::::::::::::: " + str_selected_phone_code);
+                                    System.out.println("Countryyyyyyyyyyyyy IIDDDDDDDD ::::::::::::::: " + str_selected_country_id);
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_User_Profile();
+
+                        } catch (Exception e) {
+
+                        }
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
     }
 
 
@@ -468,7 +581,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             String sector_key = obj1.getString(TAG_SECTOR_KEY);
                             String sector_type = obj1.getString(TAG_SECTOR_TYPE);
 
-                            if(sector_type.equals("sector")){
+                            if (sector_type.equals("sector")) {
                                 Arraylist_sector_name_industry.add(sector_name);
                             }
 
@@ -585,13 +698,13 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             String location_key = obj1.getString(TAG_LOC_KEY);
                             String location_type = obj1.getString(TAG_LOC_TYPE);
 
-                            if (location_type.equals("continent")){
+                            if (location_type.equals("continent")) {
                                 Arraylist_location_place_continent.add(location_place);
-                            }else if (location_type.equals("country")){
+                            } else if (location_type.equals("country")) {
                                 Arraylist_location_place_country.add(location_place);
-                            }else if (location_type.equals("state")){
+                            } else if (location_type.equals("state")) {
                                 Arraylist_location_place_state.add(location_place);
-                            }else if (location_type.equals("city")){
+                            } else if (location_type.equals("city")) {
                                 Arraylist_location_place_city.add(location_place);
                             }
 
@@ -638,7 +751,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         }
 
-    //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
+                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
 
                         System.out.println(" Arraylist_pref_location_id :: " + Arraylist_pref_location_id);
                         System.out.println("Arraylist_location_place_country" + Arraylist_location_place_country);
@@ -654,16 +767,16 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             int position = Arraylist_pref_location_id.indexOf(str_id);
                             String str_type = Arraylist_pref_location_type.get(i);
 
-                            if (str_type.equals("continent")){
+                            if (str_type.equals("continent")) {
                                 String str_location_name = Arraylist_location_place_continent.get(position);
                                 Arraylist_chipset_location.add(str_location_name);
-                            }else if (str_type.equals("country")){
+                            } else if (str_type.equals("country")) {
                                 String str_location_name = Arraylist_location_place_country.get(position);
                                 Arraylist_chipset_location.add(str_location_name);
-                            }else if (str_type.equals("state")){
+                            } else if (str_type.equals("state")) {
                                 String str_location_name = Arraylist_location_place_state.get(position);
                                 Arraylist_chipset_location.add(str_location_name);
-                            }else if (str_type.equals("city")){
+                            } else if (str_type.equals("city")) {
 
                                 String str_location_name = Arraylist_location_place_city.get(position);
                                 Arraylist_chipset_location.add(str_location_name);
@@ -676,7 +789,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         chip_preferred_loation.setText(Arraylist_chipset_location);
 
 
-     //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
+                        //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
 
                         ArrayList<String> Arraylist_chipset_industries = new ArrayList<>();
 
@@ -686,7 +799,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             int id_position = Arraylist_pref_sector_id.indexOf(str_sector_id);
                             String str_sector_type = Arraylist_pref_sector_type.get(i);
 
-                            if(str_sector_type.equals("sector")){
+                            if (str_sector_type.equals("sector")) {
                                 String str_industry_name = Arraylist_sector_name_industry.get(id_position);
                                 Arraylist_chipset_industries.add(str_industry_name);
                             }
@@ -738,7 +851,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     /*****************************
      * To UPDATE PROFILE
      ***************************/
-
 
     private void Update_Profile() {
 
