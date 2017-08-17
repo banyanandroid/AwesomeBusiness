@@ -120,6 +120,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
     ArrayList<String> Arraylist_sector_name_industry = null;
 
+    ArrayList<String> Arraylist_selected_final_sector = null;
+
     /*Multi Select*/
     ArrayList<String> Arraylist_selected_sectorkey = null;
     ArrayList<String> Arraylist_selected_location = null;
@@ -193,6 +195,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         Arraylist_selected_sectorkey = new ArrayList<String>();
         Arraylist_selected_location = new ArrayList<String>();
 
+        Arraylist_selected_final_sector = new ArrayList<String>();
+
         Arraylist_location_place = new ArrayList<String>();
 
         Arraylist_location_place_continent = new ArrayList<String>();
@@ -245,20 +249,90 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                str_up_profile_user_name = edt_name.getText().toString();
-                str_up_user_mobile = edt_mobilenumber.getText().toString();
-                str_up_user_gst_num = edt_GST_number.getText().toString();
-                str_up__user_company_name = edt_companyname.getText().toString();
-                str_up_user_address = edt_address.getText().toString();
-                str_up_user_designation = edt_designation.getText().toString();
-                str_up_user_location = edt_location.getText().toString();
+                String str_sector_from_chip = chip_preferred_industries.getText().toString();
 
+                // String[] myStrings = new String[]{chip_preferred_industries.getText().toString()};
+
+                String[] myStrings = str_sector_from_chip.split(",");
+
+                System.out.println("Previous Values Array " + myStrings);
+
+                for (int i = 0; i < myStrings.length; i++) {
+
+                    StringBuilder builder = new StringBuilder();
+                    for (String s : myStrings) {
+                        builder.append(s);
+                    }
+
+                    String str_sector_name = builder.toString();
+
+                    System.out.println("  Actual Array  " + Arraylist_sector_name);
+                    System.out.println("Size of the array  " + Arraylist_sector_name.size());
+
+                    int id_temp = Arraylist_sector_name.indexOf(str_sector_name);
+
+                    System.out.println("Sector Name " + str_sector_name);
+
+                    System.out.println(" TEMP IDDD " + id_temp);
+
+                    //   String str_sector_key_ArraySize = Arraylist_sector_key.size();
+
+                    String sector_id = Arraylist_sector_key.get(id_temp);
+
+                    int retval = Arraylist_sector_key.size();
+
+                    System.out.println("Array Length " + retval);
+
+                    int id_sector_id = Integer.parseInt(sector_id);
+
+                    System.out.println(" After Parse " + id_sector_id);
+
+                    String sector_type = Arraylist_sector_type.get(id_sector_id);
+
+                    String str_select_item = sector_id + "-" + sector_type;
+                    Arraylist_selected_final_sector.add(str_select_item);
+
+                    for (String s : Arraylist_selected_final_sector) {
+                        str_final_business_sector += s + ",";
+                    }
+
+                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
+
+                }
+
+                System.out.println("New Values LOCATION :::::::::::------------- " + myStrings);
+                Toast.makeText(getApplicationContext(), "LOCATION" + myStrings, Toast.LENGTH_LONG).show();
+
+                String sampleindustries = chip_preferred_industries.getText().toString();
+                System.out.println("New Values LOCATION :::::::::::------------- " + sampleindustries);
+                Toast.makeText(getApplicationContext(), "SECTOR" + sampleindustries, Toast.LENGTH_LONG).show();
+
+
+/*
+                System.out.println("New Values LOCATION :::::::::::------------- " + str_final_Business_Location);
+                System.out.println("New Values SECTOR ::::::::::::::------------" + str_final_business_sector);
+                Toast.makeText(getApplicationContext(), "LOCATION" + str_final_Business_Location, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "SECTOR" + str_final_business_sector, Toast.LENGTH_LONG).show();*/
+
+
+/*
 // String Values According to checkbox state
                 if (chb_BusinessProposals.isChecked()) {
                     str_chb_businessproposals = "1";
                 } else if (chb_NewOpportunitis.isChecked()) {
                     str_chb_newopportunities = "1";
-                } else if (str_up_profile_user_name.equals("")) {
+                }
+
+                str_up_profile_user_name = edt_name.getText().toString();
+                str_up_user_mobile = edt_mobilenumber.getText().toString();
+                str_up_user_location = edt_location.getText().toString();
+                str_up__user_company_name = edt_companyname.getText().toString();
+                str_up_user_designation = edt_designation.getText().toString();
+                str_up_user_gst_num = edt_GST_number.getText().toString();
+                str_up_user_address = edt_address.getText().toString();
+
+
+                if (str_up_profile_user_name.equals("")) {
                     edt_name.setError("Enter Name");
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_up_user_mobile.equals("")) {
@@ -287,6 +361,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                 }
 
+*/
 
             }
         });
@@ -630,6 +705,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         try {
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Business_Location();
+
                         } catch (Exception e) {
 
                         }
@@ -698,6 +774,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             String location_key = obj1.getString(TAG_LOC_KEY);
                             String location_type = obj1.getString(TAG_LOC_TYPE);
 
+                            Arraylist_location_place.add(location_place);
+
                             if (location_type.equals("continent")) {
                                 Arraylist_location_place_continent.add(location_place);
                             } else if (location_type.equals("country")) {
@@ -751,7 +829,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         }
 
-                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
+                        //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
 
                         System.out.println(" Arraylist_pref_location_id :: " + Arraylist_pref_location_id);
                         System.out.println("Arraylist_location_place_country" + Arraylist_location_place_country);
@@ -789,7 +867,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         chip_preferred_loation.setText(Arraylist_chipset_location);
 
 
-                        //TO SET PREVIOUSLY SELECTED LOCATION IN CHIPLAYOUT
+                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
 
                         ArrayList<String> Arraylist_chipset_industries = new ArrayList<>();
 
@@ -855,7 +933,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     private void Update_Profile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_business_profile, new Response.Listener<String>() {
+                AppConfig.url_user_profile_update, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -869,13 +947,26 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         dialog.dismiss();
 
                         Alerter.create(Activity_UserProfile_Update.this)
-                                .setTitle("Success")
-                                .setText("Bussiness Profile Added Successfully")
+                                .setTitle("Success.......!")
+                                .setText("Bussiness Profile Updated Successfully")
                                 .setBackgroundColor(R.color.colorAccent)
                                 .show();
                     } else {
                         dialog.dismiss();
-                        TastyToast.makeText(getApplicationContext(), "Oops...! Registration Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                        System.out.println("User_Name" + str_up_profile_user_name);
+                        System.out.println("Mobile Code" + str_selected_country_id);
+                        System.out.println("Phone Number" + str_up_user_mobile);
+                        System.out.println("Location" + str_up_user_location);
+                        System.out.println("Company Name" + str_up__user_company_name);
+                        System.out.println("Designation" + str_up_user_designation);
+                        System.out.println("GST Number" + str_up_user_gst_num);
+                        System.out.println("Address" + str_up_user_address);
+                        System.out.println("Industries" + str_final_business_sector);
+                        System.out.println("Cities" + str_final_Business_Location);
+                        System.out.println("Email Frequency" + str_chb_businessproposals);
+                        System.out.println("Notify" + str_chb_newopportunities);
+                        System.out.println("User Id" + str_user_id);
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Update Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
                     dialog.dismiss();
@@ -902,6 +993,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 //FROM EDIT TEXT
                 params.put("user_name", str_up_profile_user_name);
 
+                params.put("mobile_code", str_selected_country_id);
+
                 params.put("ph_no", str_up_user_mobile);
 
                 params.put("location", str_up_user_location);
@@ -926,6 +1019,18 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
 
                 System.out.println("User_Name" + str_up_profile_user_name);
+                System.out.println("Mobile Code" + str_selected_country_id);
+                System.out.println("Phone Number" + str_up_user_mobile);
+                System.out.println("Location" + str_up_user_location);
+                System.out.println("Company Name" + str_up__user_company_name);
+                System.out.println("Designation" + str_up_user_designation);
+                System.out.println("GST Number" + str_up_user_gst_num);
+                System.out.println("Address" + str_up_user_address);
+                System.out.println("Industries" + str_final_business_sector);
+                System.out.println("Cities" + str_final_Business_Location);
+                System.out.println("Email Frequency" + str_chb_businessproposals);
+                System.out.println("Notify" + str_chb_newopportunities);
+                System.out.println("User Id" + str_user_id);
 
 
                 return params;
