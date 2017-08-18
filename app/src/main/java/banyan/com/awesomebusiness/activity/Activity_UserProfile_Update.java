@@ -35,9 +35,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
@@ -126,6 +130,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_selected_sectorkey = null;
     ArrayList<String> Arraylist_selected_location = null;
 
+    /* Arralist fetched indestries list */
+
+    ArrayList<String> Arraylist_fetched_industries = null;
+
+    /* Arralist fetched Location list */
+
+    ArrayList<String> Arraylist_fetched_location = null;
+
     ArrayList<String> Arraylist_location_place = null;
     ArrayList<String> Arraylist_location_place_continent = null;
     ArrayList<String> Arraylist_location_place_country = null;
@@ -133,6 +145,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_location_place_city = null;
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
+
+    ArrayList<String> Arraylist_selected_final_location = null;
 
     String str_final_business_sector, str_final_Business_Location = "";
 
@@ -155,6 +169,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             str_up_user_gst_num, str_up__user_company_name, str_up_user_address,
             str_up_user_designation, str_up_user_location = "";
 
+
+    String str_final_sector_update = "";
+
+    String str_final_location_update = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +215,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
         Arraylist_selected_final_sector = new ArrayList<String>();
 
+        Arraylist_fetched_industries = new ArrayList<String>();
+
+        Arraylist_fetched_location = new ArrayList<String>();
+
         Arraylist_location_place = new ArrayList<String>();
 
         Arraylist_location_place_continent = new ArrayList<String>();
@@ -206,6 +228,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
+
+        Arraylist_selected_final_location = new ArrayList<String>();
 
         Arraylist_pref_sector_id = new ArrayList<String>();
         Arraylist_pref_sector_type = new ArrayList<String>();
@@ -251,13 +275,148 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                 String str_sector_from_chip = chip_preferred_industries.getText().toString();
 
-                // String[] myStrings = new String[]{chip_preferred_industries.getText().toString()};
+                String str_location_from_chip = chip_preferred_loation.getText().toString();
 
-                String[] myStrings = str_sector_from_chip.split(",");
+                System.out.println("INDUSTRY FROM CHIPSETTTTTTTTT" + str_sector_from_chip);
+                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
 
+                ///////  FOR GETTING PREVIOUSLY ENTERED SECTOR TYPE AND ID
+
+                String[] items_comma = str_sector_from_chip.split(",");
+                for (String item_comma : items_comma) {
+                    String[] items_left = item_comma.split("\\[");
+                    for (String item_left : items_left) {
+                        if (item_left.equals("")) {
+
+                        } else {
+                            Character last_letter = item_left.charAt(item_left.length() - 1);
+                            if (last_letter.equals(']')) {
+                            } else {
+                                System.out.println("right filter" + item_left);
+                                Arraylist_fetched_industries.add(item_left);
+                            }
+                        }
+                    }
+
+                    String[] items_right = item_comma.split("\\]");
+                    for (String item_right : items_right) {
+
+                        if (item_right.equals("")) {
+
+                        } else {
+                            Character first_letter = item_right.charAt(0);
+                            if (first_letter.equals('[')) {
+                            } else {
+                                System.out.println("left filter" + item_right);
+                                Arraylist_fetched_industries.add(item_right);
+                            }
+                        }
+
+                        // Arraylist_fetched_industries.add(item_right);
+                    }
+                }
+
+                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                    String get_indestry = Arraylist_fetched_industries.get(i);
+                    System.out.println("INDUSTRY STRING :::::::" + get_indestry);
+
+                    System.out.println("Array :::::::0000" + Arraylist_sector_name.get(0));
+                    System.out.println("Array :::::::1111" + Arraylist_sector_name.get(1));
+                    System.out.println("Array :::::::2222" + Arraylist_sector_name.get(2));
+                    System.out.println("Array :::::::3333" + Arraylist_sector_name.get(3));
+
+                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+
+                    String select_sect_id = Arraylist_sector_key.get(indus_position + 1);
+                    String select_sect_type = Arraylist_sector_type.get(indus_position + 1);
+
+                    String sector = select_sect_id + "-" + select_sect_type;
+                    Arraylist_selected_final_sector.add(sector);
+
+                    for (String s : Arraylist_selected_final_sector) {
+                        str_final_sector_update += s + ",";
+                    }
+
+                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_sector_update);
+
+                }
+
+                ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
+
+                String[] items_loc_comma = str_location_from_chip.split(",");
+                for (String item_loc_comma : items_loc_comma) {
+                    String[] items_loc_left = item_loc_comma.split("\\[");
+                    for (String item_loc_left : items_loc_left) {
+                        if (item_loc_left.equals("")) {
+
+                        } else {
+                            Character last_letter = item_loc_left.charAt(item_loc_left.length() - 1);
+                            if (last_letter.equals(']')) {
+                            } else {
+                                System.out.println("right filter" + item_loc_left);
+                                Arraylist_fetched_location.add(item_loc_left);
+                            }
+                        }
+                    }
+
+                    String[] items_loc_right = item_loc_comma.split("\\]");
+                    for (String item_loc_right : items_loc_right) {
+
+                        if (item_loc_right.equals("")) {
+
+                        } else {
+                            Character first_letter = item_loc_right.charAt(0);
+                            if (first_letter.equals('[')) {
+                            } else {
+                                System.out.println("left filter" + item_loc_right);
+                                Arraylist_fetched_location.add(item_loc_right);
+                            }
+                        }
+
+                        // Arraylist_fetched_industries.add(item_right);
+                    }
+                }
+
+
+                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                    String get_Location = Arraylist_fetched_location.get(i);
+                    System.out.println("LOCATION STRING :::::::" + get_Location);
+
+                    int location_position = Arraylist_location_place.indexOf(get_Location);
+
+                    String select_location_id = Arraylist_location_key.get(location_position + 1 );
+                    String select_location_type = Arraylist_location_type.get(location_position + 1);
+
+                    String location = select_location_id + "-" + select_location_type;
+                    Arraylist_selected_final_location.add(location);
+
+                    for (String L : Arraylist_selected_final_location) {
+                        str_final_location_update += L + ",";
+                    }
+
+                    System.out.println("FINAL LOCATION :: " + str_final_location_update);
+
+                }
+
+
+                //  String[] myStrings = new String[]{chip_preferred_industries.getText().toString()};
+
+
+              /*  StringBuffer sbf = new StringBuffer();
                 System.out.println("Previous Values Array " + myStrings);
 
-                for (int i = 0; i < myStrings.length; i++) {
+                if (myStrings.length > 0) {
+                    sbf.append(myStrings[0]);
+                    for (int i = 1; i < myStrings.length; i++) {
+                        sbf.append(" ").append(myStrings[i]);
+                    }
+                }*/
+
+
+
+                /*for (int i = 0; i < myStrings.length; i++) {
 
                     StringBuilder builder = new StringBuilder();
                     for (String s : myStrings) {
@@ -298,14 +457,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                     System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
 
-                }
+                }*/
 
-                System.out.println("New Values LOCATION :::::::::::------------- " + myStrings);
+                /*System.out.println("New Values LOCATION :::::::::::------------- " + myStrings);
                 Toast.makeText(getApplicationContext(), "LOCATION" + myStrings, Toast.LENGTH_LONG).show();
 
                 String sampleindustries = chip_preferred_industries.getText().toString();
                 System.out.println("New Values LOCATION :::::::::::------------- " + sampleindustries);
-                Toast.makeText(getApplicationContext(), "SECTOR" + sampleindustries, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "SECTOR" + sampleindustries, Toast.LENGTH_LONG).show();*/
 
 
 /*

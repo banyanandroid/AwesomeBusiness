@@ -756,6 +756,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                                     String str_select_location_key = Arraylist_location_key.get(i);
                                     String str_select_location_type = Arraylist_location_type.get(i);
+
                                     String str_select_item = str_select_location_key + "-" + str_select_location_type;
                                     Arraylist_selected_location.add(str_select_item);
 
@@ -934,35 +935,3 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 }
 
 
-/*
-
-PARAMETERS
-                $user_name=$_POST['user_name'];
-                $company_name=$_POST['company_name'];
-                $mobile_no=$_POST['mobile_no'];
-                $email=$_POST['email'];
-                $user_contact=$_POST['user_contact'];
-                $user_company=$_POST['user_company'];
-                $role=$_POST['role'];
-                $interest_in=$_POST['interest_in'];
-                $year=$_POST['year'];
-                $locations='locations';
-                $industry='industry';
-                $employee=$_POST['employee'];
-                $entitys=$_POST['entitys'];
-                $business_description=$_POST['business_description'];
-                $highlights=$_POST['highlights'];
-                $services=$_POST['services'];
-                $business_facility=$_POST['business_facility'];
-                $monthly_expected_sales=$_POST['monthly_expected_sales'];
-                $yearly_expected_sales=$_POST['yearly_expected_sales'];
-                $yearly_sales_range=$_POST['yearly_sales_range'];
-                $ebitda=$_POST['ebitda'];
-                $display=$_POST['display'];
-                $physical_assets=$_POST['physical_assets'];
-                $currency=$_POST['tentative_price'];
-                $reason=$_POST['reason'];
-                $user_id=$_POST['user_id'];
-                $user_currency=$_POST['user_currency'];
-
-                */
