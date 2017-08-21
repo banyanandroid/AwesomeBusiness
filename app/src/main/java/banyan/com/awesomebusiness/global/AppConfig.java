@@ -8,6 +8,7 @@ public class AppConfig {
     public static String url_social_login = BASE_URL + "/index.php/apicontroller/sociallogin";
     public static String url_user_profile = BASE_URL + "/index.php/apicontroller/detailusers";
     public static String url_user_profile_update = BASE_URL + "/index.php/Apicontroller/updateprofile";
+    public static String url_change_password = BASE_URL + "/index.php/apicontroller/userchangepassword";
 
     //Country & Currency
     public static String url_country = BASE_URL + "/index.php/Apicontroller/allcountry";

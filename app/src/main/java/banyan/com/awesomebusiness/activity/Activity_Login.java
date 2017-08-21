@@ -123,7 +123,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private static final String TAG_ID = "id";
 
     Button btn_fb;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

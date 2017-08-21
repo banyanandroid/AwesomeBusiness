@@ -1,11 +1,15 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
@@ -42,11 +47,16 @@ public class Activity_UserProfile extends AppCompatActivity {
     TextView txt_username, txt_user_email, txt_user_mobile,
             txt_user_current_role, txt_user_company;
 
-    TextView txt_edit;
+    TextView txt_edit, txt_change_password;
 
-    ImageView img_edit;
+    ImageView img_edit, img_change_password;
 
     CircleImageView img_profile_picture;
+
+    // For Changing Password
+    EditText edt_new_password, edt_repeat_new_password;
+    String str_new_password, str_repeat_new_password = "";
+
 
     // Session Manager Class
     SessionManager session;
@@ -56,7 +66,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     String str_profile_user_id, str_profile_user_key, str_profile_user_name, str_profile_user_email, str_user_mobile,
             str_user_gst_num, str_user_location, str_user_timezone, str_user_company_name, str_user_address,
             str_user_designation, str_user_business_proposalEmail, str_user_dealsize,
-            str_user_business_proposalNotify,str_user_photo, str_user_created_on = "";
+            str_user_business_proposalNotify, str_user_photo, str_user_created_on = "";
 
     public static RequestQueue queue;
 
@@ -78,6 +88,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static final String TAG_USER_BUSINESS_PROPOSAL_NOTIFY = "user_business_proposals_notify";
     public static final String TAG_USER_PHOTO = "user_photo";
     public static final String TAG_USER_CREATEDON = "user_createdon";
+
 
     public static final String TAG_PREF_LOCATION_ID = "prefer_location_id";
     public static final String TAG_PREF_LOCATION_TYPE = "prefer_location_type";
@@ -138,6 +149,9 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_user_current_role = (TextView) findViewById(R.id.userprofile_txt_user_role);
         txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
 
+        txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
+        img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
+
 
         img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +166,18 @@ public class Activity_UserProfile extends AppCompatActivity {
             }
         });
 
+        txt_change_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Function_AlertDialog();
+            }
+        });
+        img_change_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Function_AlertDialog();
+            }
+        });
 
         try {
             dialog = new SpotsDialog(Activity_UserProfile.this);
@@ -278,6 +304,163 @@ public class Activity_UserProfile extends AppCompatActivity {
         };
 
         // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * Alert Dialog To Chande Password
+     ***************************/
+
+
+    public void Function_AlertDialog() {
+
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_change_user_password, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setView(promptsView);
+
+
+        edt_new_password = (EditText) promptsView.findViewById(R.id.popup_edt_newpassword);
+        edt_repeat_new_password = (EditText) promptsView.findViewById(R.id.popup_edt_repeat_newpassword);
+
+       /* str_new_password = edt_new_password.getText().toString();
+        str_repeat_new_password = edt_repeat_new_password.getText().toString();
+*/
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("Change Your Account Password")
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                str_new_password = edt_new_password.getText().toString();
+                str_repeat_new_password = edt_repeat_new_password.getText().toString();
+
+
+                if (str_new_password.equals("")) {
+                    edt_new_password.setError("Cannot Be Empty");
+                    TastyToast.makeText(getApplicationContext(), "This Field Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    return;
+                } else if (str_repeat_new_password.equals("")) {
+                    edt_repeat_new_password.setError("Cannot Be Empty");
+                    TastyToast.makeText(getApplicationContext(), "This Field Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    return;
+                } else if (str_new_password.length() < 6) {
+                    edt_new_password.setError("Minimum 6 characters");
+                    TastyToast.makeText(getApplicationContext(), "Password Should Containt Atleast 6 Characters", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    return;
+                } else if (!str_repeat_new_password.equals(str_new_password)) {
+                    edt_repeat_new_password.setError("Passwords Do Not Match ");
+                    TastyToast.makeText(getApplicationContext(), "Repeat your new password here", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    return;
+                } else {
+                    TastyToast.makeText(getApplicationContext(), "New Password" + str_new_password, TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                    dialog = new SpotsDialog(Activity_UserProfile.this);
+                    dialog.show();
+                    queue = Volley.newRequestQueue(Activity_UserProfile.this);
+                    Function_Change_Password();
+                }
+
+            }
+        });
+
+    }
+
+
+    /******************************************
+     *    Change User Password
+     * *******************************************/
+
+    private void Function_Change_Password() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_change_password, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE : " + response);
+                    int success = obj.getInt("status");
+                    if (success == 1) {
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_UserProfile.this)
+                                .setTitle("Success")
+                                .setText("Your password was changed successfully....!")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+
+                        Intent i = new Intent(getApplicationContext(), Activity_UserProfile.class);
+                        startActivity(i);
+                        finish();
+
+
+                    } else {
+                        dialog.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Cant Change Password Now :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("email_id", str_user_email);
+                params.put("password", str_new_password);
+
+                ////////////////
+
+
+                System.out.println("Email IDDDDDD" + str_user_email);
+                System.out.println("New PassworDDDDD" + str_new_password);
+
+
+                return params;
+            }
+        };
         queue.add(request);
     }
 

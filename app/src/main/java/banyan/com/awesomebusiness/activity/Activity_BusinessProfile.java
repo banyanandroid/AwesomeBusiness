@@ -168,8 +168,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Cardview_spn_others = (CardView) findViewById(R.id.card_view_three);
         Cardview_spn_selling_leasing = (CardView) findViewById(R.id.card_view_interested_leasing_business);
 
-        Cardview_spn_others.setVisibility(View.GONE);
-        Cardview_spn_selling_leasing.setVisibility(View.GONE);
+       // Cardview_spn_others.setVisibility(View.GONE);
+      //   Cardview_spn_selling_leasing.setVisibility(View.GONE);
 
 // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);

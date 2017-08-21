@@ -244,9 +244,9 @@
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:inputType="text"
                         android:singleLine="true"
-                        app:hintText="Interested In"
                         android:textColor="@color/textColorPrimary"
-                        android:textColorHint="@android:color/darker_gray" />
+                        android:textColorHint="@android:color/darker_gray"
+                        app:hintText="Interested In" />
 
                 </LinearLayout>
 
