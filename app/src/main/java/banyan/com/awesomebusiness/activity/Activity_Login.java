@@ -421,7 +421,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         Alerter.create(Activity_Login.this)
                                 .setTitle("Registration Success")
-                                .setText("WELCOME to Awesome Business")
+                                .setText("Plese Check Your Email and Verify Your Account")
                                 .setBackgroundColor(R.color.colorAccent)
                                 .show();
                     } else {
