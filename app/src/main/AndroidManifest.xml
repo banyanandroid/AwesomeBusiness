@@ -22,8 +22,6 @@
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <!-- Network State Permissions to detect Internet status -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- Permission to vibrate -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -34,7 +32,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/MyMaterialTheme">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"

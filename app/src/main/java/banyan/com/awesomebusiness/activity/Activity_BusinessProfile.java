@@ -2,6 +2,8 @@ package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -10,6 +12,7 @@ import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -32,6 +35,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.libaml.android.view.chip.ChipLayout;
+import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
+import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
+import com.nguyenhoanglam.imagepicker.model.Image;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -40,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,8 +64,20 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     private Toolbar mToolbar;
     SpotsDialog dialog;
     public static RequestQueue queue;
-    Button btn_submit;
+    Button btn_add_pic, btn_submit;
     String TAG = "Auto_Res";
+
+    // PIC Upload
+
+    String listString = "";
+    String encodedstring = "";
+
+    private ArrayList<Image> images = new ArrayList<>();
+
+    ArrayList<String> Arraylist_image_encode = null;
+    ArrayList<String> Arraylist_dummy = null;
+
+    private int REQUEST_CODE_PICKER = 2000;
 
     TextView t1;
 
@@ -164,19 +183,18 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             }
         });
 
-// These two cardview's wil be gone until interested in is selected
+        btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
+
         Cardview_spn_others = (CardView) findViewById(R.id.card_view_three);
         Cardview_spn_selling_leasing = (CardView) findViewById(R.id.card_view_interested_leasing_business);
 
-       // Cardview_spn_others.setVisibility(View.GONE);
-      //   Cardview_spn_selling_leasing.setVisibility(View.GONE);
-
-// AutoCompleteTextView
+        // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
         spn_i_am.setTitle("Select Your Role");
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_intersted);
         spn_interested_in.setTitle("Select Your Interest");
-// Common Edittext
+        // Common Edittext
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
         edt_company_name = (EditText) findViewById(R.id.edt_company_name);
@@ -206,7 +224,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
         chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_loca_at);
 
-//Selling or Leasing out business
+        //Selling or Leasing out business
         edt_year_asset_purchased = (EditText) findViewById(R.id.edt_loan_when_asset_purchased);
         edt_asset_seeking_to_sell = (EditText) findViewById(R.id.edt_wt_asset_sell);
         edt_asset_features = (EditText) findViewById(R.id.edt_asset_features);
@@ -217,7 +235,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
 
         spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
-
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
@@ -242,8 +259,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
+        // IMG PIC
 
-        btn_submit = (Button) findViewById(R.id.btn_submit);
+        Arraylist_image_encode = new ArrayList<String>();
+        Arraylist_dummy = new ArrayList<String>();
+
+        btn_add_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ImagePicker();
+            }
+        });
+
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,20 +312,15 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
                 if (str_name.equals("")) {
-                    // txt_inp_name.setError("Enter Name");
-                    //  txt_inp_name.setErrorEnabled(true);
                     edt_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_company_name.equals("")) {
-                    // edt_company_name.setError("Enter Company Name");
                     edt_company_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_mobile.equals("")) {
-                    // edt_mobile.setError("Enter Mobile Number");
                     edt_mobile.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_official_email.equals("")) {
-                    // edt_official_email.setError("Enter Official Email");
                     edt_official_email.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_business_established_year.equals("")) {
@@ -369,7 +392,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     dialog.show();
                     queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
                     Function_Submit_BusinessProfile();
-
                 }
 
             }
@@ -390,6 +412,138 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     }
 
+    /*******************************
+     *  PIC UPLOADER
+     * ***************************/
+
+    // Recomended builder
+    public void ImagePicker() {
+        ImagePicker.create(this)
+                .folderMode(true) // set folder mode (false by default)
+                .folderTitle("Folder") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(10) // max images can be selected (999 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
+                .origin(images) // original selected images, used in multi mode
+                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+    }
+
+    // Traditional intent
+    public void startWithIntent() {
+        Intent intent = new Intent(this, ImagePickerActivity.class);
+
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_MODE, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_MODE, ImagePickerActivity.MODE_MULTIPLE);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_LIMIT, 10);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SHOW_CAMERA, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES, images);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_TITLE, "Album");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_TITLE, "Tap to select images");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_DIRECTORY, "Camera");
+        startActivityForResult(intent, REQUEST_CODE_PICKER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0, l = images.size(); i < l; i++) {
+
+                String str_img_path = images.get(i).getPath();
+
+                Bitmap bmBitmap = BitmapFactory.decodeFile(str_img_path);
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                bmBitmap.compress(Bitmap.CompressFormat.JPEG, 25, bao);
+                byte[] ba = bao.toByteArray();
+                encodedstring = Base64.encodeToString(ba, 0);
+                Log.e("base64", "-----" + encodedstring);
+
+                Arraylist_image_encode.add(encodedstring);
+            }
+
+            Encode_Image1();
+            // textView.setText(sb.toString());
+        }
+    }
+
+    public void Encode_Image1() {
+
+        for (String s : Arraylist_image_encode)
+        {
+            listString += s + "IMAGE:";
+        }
+
+        queue = Volley.newRequestQueue(Activity_BusinessProfile .this);
+        Function_Login();
+
+        //System.out.println("ENCODE :: " + listString);
+
+        //Log.d(":STRING:", listString);
+    }
+
+
+
+    /*********************************
+     *  POST
+     * *********************************/
+
+    private void Function_Login() {
+
+        String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                url_login, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG_LOC_KEY, response.toString());
+                Log.d("USER_LOGIN", response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("REG 00" + obj);
+
+                    int success = obj.getInt("status");
+
+                    System.out.println("REG" + success);
+
+                    if (success == 1) {
+
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("image", listString);
+                System.out.println("IMG :: " + listString );
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
 
     /*****************************
      * To get  I am/an  Details
@@ -894,6 +1048,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // Strings got by shared prefrences
                 params.put("user_id", str_user_id);
                 params.put("user_currency", str_user_currency);
+                params.put("image", listString);
 
                 ////////////////
 

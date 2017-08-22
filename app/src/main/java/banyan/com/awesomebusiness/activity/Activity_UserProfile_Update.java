@@ -316,15 +316,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             public void onClick(View v) {
 
                 Arraylist_fetched_industries.clear();
-                //   Arraylist_sector_name.clear();
-                //   Arraylist_sector_key.clear();
-                //   Arraylist_sector_type.clear();
                 Arraylist_selected_final_sector.clear();
 
                 String str_sector_from_chip = chip_preferred_industries.getText().toString();
                 String str_location_from_chip = chip_preferred_loation.getText().toString();
 
-                System.out.println("INDUSTRY FROM CHIPSETTTTTTTTT" + str_sector_from_chip);
                 System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
 
                 ///////  FOR GETTING PREVIOUSLY ENTERED SECTOR TYPE AND ID
@@ -339,7 +335,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             Character last_letter = item_left.charAt(item_left.length() - 1);
                             if (last_letter.equals(']')) {
                             } else {
-                                System.out.println("right filter" + item_left);
                                 Arraylist_fetched_industries.add(item_left);
                             }
                         }
@@ -354,7 +349,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             Character first_letter = item_right.charAt(0);
                             if (first_letter.equals('[')) {
                             } else {
-                                System.out.println("left filter" + item_right);
                                 Arraylist_fetched_industries.add(item_right);
                             }
                         }
@@ -366,8 +360,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
                     String get_indestry = Arraylist_fetched_industries.get(i);
-                    System.out.println("INDUSTRY STRING :::::::" + get_indestry);
-
                     int indus_position = Arraylist_sector_name.indexOf(get_indestry);
 
                     String select_sect_id = Arraylist_sector_key.get(indus_position + 1);
@@ -379,15 +371,13 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     for (String s : Arraylist_selected_final_sector) {
                         str_final_sector_update += s + ",";
                     }
-
-                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_sector_update);
-
                 }
 
 
-         /*
 
                 ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
+
+                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
 
                 String[] items_loc_comma = str_location_from_chip.split(",");
                 for (String item_loc_comma : items_loc_comma) {
@@ -423,21 +413,22 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     }
                 }
 
+                System.out.println("ARRAY :: " + Arraylist_fetched_location);
+                System.out.println("ARRAY :: " + Arraylist_fetched_location.size());
+
+                int location_position1 = Arraylist_location_place.indexOf("Karnataka");
+                System.out.println("LOCATION POSITION :::::::" + location_position1);
+
+                int location_position2 = Arraylist_location_place.indexOf("Kerala");
+                System.out.println("LOCATION POSITION Kerala :::::::" + location_position2);
 
                 for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
 
+                    Arraylist_selected_final_location.clear();
                     String get_Location = Arraylist_fetched_location.get(i);
-                    System.out.println("LOCATION STRING :::::::" + get_Location);
-
+                    get_Location = get_Location.trim();
                     int location_position = Arraylist_location_place.indexOf(get_Location);
-
-                    System.out.println("LOCATION POSITION" + location_position);
-
                     String str_location_type = Arraylist_location_type.get(location_position);
-
-                    System.out.println("LOCATION TYPE" + str_location_type);
-
-
                     String select_location_id = Arraylist_location_key.get(location_position + 1);
                     String select_location_type = Arraylist_location_type.get(location_position + 1);
 
@@ -451,10 +442,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
 
                 }
-
-*/
-
-                str_final_location_update = "2-state,1-state";
 
                 str_selected_country_id = "1";
 
@@ -1156,6 +1143,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                                 .setText("Your Profile Updated Successfully")
                                 .setBackgroundColor(R.color.colorAccent)
                                 .show();
+
+                        Intent i = new Intent(getApplicationContext(), Activity_UserProfile.class);
+                        startActivity(i);
+                        finish();
+
                     } else {
                         dialog.dismiss();
                         System.out.println("User_Name" + str_up_profile_user_name);
@@ -1197,31 +1189,18 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                 //FROM EDIT TEXT
                 params.put("user_name", str_up_profile_user_name);
-
                 params.put("mobile_code", str_selected_country_id);
-
                 params.put("ph_no", str_up_user_mobile);
-
                 params.put("location", str_up_user_location);
-
                 params.put("company_name", str_up_user_company_name);
-
                 params.put("designation", str_up_user_designation);
-
                 params.put("gst_number", str_up_user_gst_num);
-
                 params.put("address", str_up_user_address);
-
                 params.put("industries", str_final_sector_update);
-
                 params.put("cities", str_final_location_update);
-
                 params.put("emailfrequency", str_chb_businessproposals);
-
                 params.put("notify", str_chb_newopportunities);
-
                 params.put("userid", str_user_id);
-
 
                 System.out.println("User_Name" + str_up_profile_user_name);
                 System.out.println("Mobile Code" + str_selected_country_id);
@@ -1237,7 +1216,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 System.out.println("Notify" + str_chb_newopportunities);
                 System.out.println("User Id" + str_user_id);
 
-
                 return params;
             }
         };
@@ -1246,22 +1224,3 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
 
 }
-
-/*
-
-     $user_name = $_POST['user_name'];
-               $mobile_code = $_POST['mobile_code'];
-               $ph_no = $_POST['ph_no'];
-         $location = $_POST['location'];
-
-               $company_name = $_POST['company_name'];
-               $designation = $_POST['designation'];
-               $gst_number = $_POST['gst_number'];
-               $address = $_POST['address'];
-               $industries = $_POST['industries'];
-               $cities = $_POST['cities'];
-               $emailfrequency = $_POST['emailfrequency'];
-               $notify = $_POST['notify'];
-               $userid = $_POST['userid'];
-
-        */
