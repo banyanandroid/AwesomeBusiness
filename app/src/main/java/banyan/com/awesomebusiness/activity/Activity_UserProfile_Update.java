@@ -374,7 +374,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 }
 
 
-
                 ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
 
                 System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);

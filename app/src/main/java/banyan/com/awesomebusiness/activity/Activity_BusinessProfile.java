@@ -472,19 +472,17 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Encode_Image1() {
 
-        for (String s : Arraylist_image_encode)
-        {
+        for (String s : Arraylist_image_encode) {
             listString += s + "IMAGE:";
         }
 
-        queue = Volley.newRequestQueue(Activity_BusinessProfile .this);
+        queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
         Function_Login();
 
         //System.out.println("ENCODE :: " + listString);
 
         //Log.d(":STRING:", listString);
     }
-
 
 
     /*********************************
@@ -534,7 +532,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("image", listString);
-                System.out.println("IMG :: " + listString );
+                System.out.println("IMG :: " + listString);
 
                 return params;
             }
@@ -544,6 +542,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
+
+
 
     /*****************************
      * To get  I am/an  Details

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -69,7 +70,10 @@
                             android:hint="Authorised Person Name"
                             android:inputType="text"
                             android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp" />
+                            android:textSize="16dp"
+                            />
+
+                        <requestFocus />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -91,23 +95,50 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Mobile Number"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_weight="6"
+                        android:orientation="horizontal">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/franchise_profile_spinner_country"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="CountryCode"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                        <EditText
                             android:id="@+id/edt_mobile_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:hint="Mobile Number"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="right"
+                            android:layout_toLeftOf="@+id/franchise_profile_spinner_country"
+                            android:layout_weight="4"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="MOBILE NUMBER"
                             android:inputType="phone"
-                            android:maxLength="10"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp" />
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
 
-                    </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -120,6 +151,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Designation"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -172,6 +204,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Brand Name"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -183,6 +216,9 @@
                         android:text="Opportunities You Offer"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
+
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -348,6 +384,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:completionThreshold="1"
                         android:textSize="16dp"
                         custom:chipDrawable_="@drawable/round_corner_drawable"
                         custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
@@ -357,8 +394,7 @@
                         custom:hintColor_="@android:color/darker_gray"
                         custom:hint_="Select Your Business Industry"
                         custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black"
-                        android:completionThreshold="1">
+                        custom:textColor_="@android:color/black">
 
                     </com.libaml.android.view.chip.ChipLayout>
 
@@ -388,42 +424,58 @@
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_weight="5"
+                        android:orientation="horizontal">
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edt_when_operations_start"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:hint="When did your company's operations start?"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="4"
+                            android:gravity="center|left"
+                            android:singleLine="true"
+                            android:text="Year your company's operations start"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
 
-                    </android.support.design.widget.TextInputLayout>
+                        <Spinner
+                            android:id="@+id/franchise_profile_spinner_years"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="CountryCode"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
 
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/Franchise_chipset_company_headquaters"
+                    </LinearLayout>
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Company's headquarters located at"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edit_Franchise_profile_company_headquaters"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16dp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Company's headquarters located at"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black"
-                        android:completionThreshold="1">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:hint="Location"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -435,6 +487,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:inputType="number"
                             android:hint="Enter no.of sales partners you already have?"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
@@ -486,6 +539,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:completionThreshold="1"
                         custom:chipDrawable_="@drawable/round_corner_drawable"
                         custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
                         custom:chipPadding_="4dp"
@@ -494,11 +548,9 @@
                         custom:hintColor_="@android:color/darker_gray"
                         custom:hint_="Cities/states/countries you want to expand in"
                         custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black"
-                        android:completionThreshold="1">
+                        custom:textColor_="@android:color/black">
 
                     </com.libaml.android.view.chip.ChipLayout>
-
 
 
                     <Spinner
@@ -1766,6 +1818,7 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:weightSum="2">
 
                         <TextView

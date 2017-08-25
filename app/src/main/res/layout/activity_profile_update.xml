@@ -79,9 +79,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="50dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_weight="5"
+                        android:layout_weight="6"
                         android:orientation="horizontal">
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -101,6 +101,8 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="4"
+                            android:layout_gravity="right"
+                            android:layout_toLeftOf="@+id/updatebusiness_profile_spinner_country"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="MOBILE NUMBER"
                             android:inputType="phone"
@@ -125,7 +127,7 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="LOCATION"
+                        android:hint="Headquaters Location"
                         android:inputType="text"
                         android:paddingLeft="10dp"
                         android:textColor="@color/black"
@@ -264,7 +266,7 @@
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_business_industry"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:textSize="16sp"
@@ -290,7 +292,7 @@
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_business_location"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:textSize="16sp"
