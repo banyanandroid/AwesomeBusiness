@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -141,10 +142,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             str_brand_name, str_about_company, str_all_prod_serv,
             str_no_of_salespartner, str_lookfor_in_salespartner, str_kindof_support, str_procedure_salespartner = "";
 
-    // CHECKBOX AND STRINGS FOR OPPORTUNITIES OFFERED
-    CheckBox chb_franchise, chb_dealership, chb_reseller, chb_distributor, chb_salspartner;
-    String str_opportunity_franchise, str_opportunity_dealership, str_opportunity_reseller,
-            str_opportunity_distributor, str_opportunity_salespartner = "0";
+    // Spinner AND STRINGS FOR OPPORTUNITIES OFFERED
+    Spinner spn_opportunities_offered;
+    String str_selected_opportunity, str_opportunity_offered = "";
 
     // CARDVIEW FOR NO.OF SALES PARTNER FORMATS & ITS REQUIRED WIDGETS
     CardView cv_format_one, cv_format_two, cv_format_three, cv_format_four, cv_format_five, cv_format_six;
@@ -413,12 +413,8 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         edt_procedure_salespartner = (EditText) findViewById(R.id.edt_wt_procedure);
 
         spn_no_of_salespartner_formats = (Spinner) findViewById(R.id.spn_sales_partners_format);
+        spn_opportunities_offered = (Spinner) findViewById(R.id.spn_opportunities_offered);
 
-        chb_franchise = (CheckBox) findViewById(R.id.chbx_franchise);
-        chb_dealership = (CheckBox) findViewById(R.id.chbx_dealership);
-        chb_reseller = (CheckBox) findViewById(R.id.chbx_reseller_opportunity);
-        chb_distributor = (CheckBox) findViewById(R.id.chbx_distributor);
-        chb_salspartner = (CheckBox) findViewById(R.id.chbx_salespartner);
 
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
@@ -649,6 +645,29 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                 ///////// TO GET THE SPINNER VALUE TO THE STRING
                 str_no_of_formats = spn_no_of_salespartner_formats.getSelectedItem().toString();
+                str_selected_opportunity = spn_opportunities_offered.getSelectedItem().toString();
+                switch (str_selected_opportunity) {
+                    case "":
+                        spn_opportunities_offered.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select One", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
+                    case "Franchise":
+                        str_opportunity_offered = "1";
+                        break;
+                    case "Dealership":
+                        str_opportunity_offered = "2";
+                        break;
+                    case "Reseller":
+                        str_opportunity_offered = "3";
+                        break;
+                    case "Distributor":
+                        str_opportunity_offered = "4";
+                        break;
+                    case "Sales Partner":
+                        str_opportunity_offered = "5";
+                        break;
+                }
+
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED EDIT TEXT'S
                 str_auth_person_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
@@ -730,32 +749,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 str_format_salespartner_monthly_revenue_6 = edt_format_salespartner_monthly_revenue_6.getText().toString();
                 str_format_operating_profitmargin_6 = edt_format_operating_profitmargin_6.getText().toString();
 
-                // STRING VALUES ACCORDING TO CHECKBOX STATE
-                if (chb_franchise.isChecked()) {
-                    str_opportunity_franchise = "1";
-                } else {
-                    str_opportunity_franchise = "0";
-                }
-                if (chb_dealership.isChecked()) {
-                    str_opportunity_dealership = "1";
-                } else {
-                    str_opportunity_dealership = "0";
-                }
-                if (chb_reseller.isChecked()) {
-                    str_opportunity_reseller = "1";
-                } else {
-                    str_opportunity_reseller = "0";
-                }
-                if (chb_distributor.isChecked()) {
-                    str_opportunity_distributor = "1";
-                } else {
-                    str_opportunity_distributor = "0";
-                }
-                if (chb_salspartner.isChecked()) {
-                    str_opportunity_salespartner = "1";
-                } else {
-                    str_opportunity_salespartner = "0";
-                }
 
                 if (str_auth_person_name.equals("")) {
                     edt_name.setError("Enter authorized person Name");
@@ -1330,6 +1323,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                             // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 6)
                             if (str_format_name_1.equals("")) {
                                 edt_format_name_1.setError("Enter Format Name");
+
                                 TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                             } else if (str_format_spaceneeded_minimum_1.equals("")) {
                                 edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
@@ -1525,11 +1519,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                 }
 
-                System.out.println(" CHECKBOX FRANCHISE     :::::::::::" + str_opportunity_franchise);
-                System.out.println(" CHECKBOX DEALERSHIP    :::::::::::" + str_opportunity_dealership);
-                System.out.println(" CHECKBOX RESELLER      :::::::::::" + str_opportunity_reseller);
-                System.out.println(" CHECKBOX DISTRIBUTOR   :::::::::::" + str_opportunity_distributor);
-                System.out.println(" CHECKBOX SALES PARTNER :::::::::::" + str_opportunity_salespartner);
 
                 System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
                 System.out.println("EMAIL :::::::::::" + str_email);
@@ -1552,7 +1541,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     dialog = new SpotsDialog(Activity_FranchiseProfile.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(getApplicationContext());
-                    Function_Submit_FranchiseProfile();
+                   // Function_Submit_FranchiseProfile();
 
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -2205,8 +2194,35 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("email", str_email);
                 params.put("mobile_no", str_mobile_num);
                 params.put("designation", str_designation);
-                params.put("offering", str_all_prod_serv);
-               
+
+                params.put("brand_name", str_opportunity_offered);
+                params.put("offering", str_opportunity_offered);
+                params.put("industry", str_opportunity_offered);
+                params.put("about_company", str_opportunity_offered);
+                params.put("products_services", str_opportunity_offered);
+                params.put("years", str_opportunity_offered);
+                params.put("headquarters", str_opportunity_offered);
+                params.put("sales_partners", str_opportunity_offered);
+                params.put("salespartner_looking", str_opportunity_offered);
+                params.put("salespartner_expectation", str_opportunity_offered);
+                params.put("location", str_opportunity_offered);
+
+                params.put("franchise_format_count", str_opportunity_offered);
+                params.put("currency_change", str_opportunity_offered);
+
+                //FORMAT 1
+                params.put("format_name", str_opportunity_offered);
+                params.put("min_sq", str_opportunity_offered);
+                params.put("max_sq2", str_opportunity_offered);
+                params.put("min_invest", str_opportunity_offered);
+                params.put("max_invest", str_opportunity_offered);
+                params.put("brand_fee", str_opportunity_offered);
+                params.put("staff_require", str_opportunity_offered);
+                params.put("currency_change", str_opportunity_offered);
+                params.put("currency_change", str_opportunity_offered);
+                params.put("currency_change", str_opportunity_offered);
+
+
 
                 return params;
             }
@@ -2239,6 +2255,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['location'])) &&
                         (isset($_POST['franchise_format_count'])) &&
                         (isset($_POST['currency_change'])) &&
+
+
                         (isset($_POST['format_name'])) &&
                         (isset($_POST['min_sq'])) &&
                         (isset($_POST['max_sq'])) &&
@@ -2249,6 +2267,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission'])) &&
                         (isset($_POST['monthly_revenue'])) &&
                         (isset($_POST['profit_margin'])) &&
+
+
                         (isset($_POST['format_name2'])) &&
                         (isset($_POST['min_sq2'])) &&
                         (isset($_POST['max_sq2'])) &&
@@ -2259,6 +2279,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission2'])) &&
                         (isset($_POST['monthly_revenue2'])) &&
                         (isset($_POST['profit_margin2'])) &&
+
+
                         (isset($_POST['format_name3'])) &&
                         (isset($_POST['min_sq3'])) &&
                         (isset($_POST['max_sq3'])) &&
@@ -2269,6 +2291,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission3'])) &&
                         (isset($_POST['monthly_revenue3'])) &&
                         (isset($_POST['profit_margin3'])) &&
+
+
                         (isset($_POST['format_name4'])) &&
                         (isset($_POST['min_sq4'])) &&
                         (isset($_POST['max_sq4'])) &&
@@ -2279,6 +2303,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission4'])) &&
                         (isset($_POST['monthly_revenue4'])) &&
                         (isset($_POST['profit_margin4'])) &&
+
+
                         (isset($_POST['format_name5'])) &&
                         (isset($_POST['min_sq5'])) &&
                         (isset($_POST['max_sq5'])) &&
@@ -2289,6 +2315,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission5'])) &&
                         (isset($_POST['monthly_revenue5'])) &&
                         (isset($_POST['profit_margin5'])) &&
+
+
                         (isset($_POST['format_name6'])) &&
                         (isset($_POST['min_sq6'])) &&
                         (isset($_POST['max_sq6'])) &&
@@ -2299,6 +2327,8 @@ if ((isset($_POST['name'])) &&
                         (isset($_POST['royalty_commission6'])) &&
                         (isset($_POST['monthly_revenue6'])) &&
                         (isset($_POST['profit_margin6'])) &&
+
+
                         (isset($_POST['logo'])) &&
                         (isset($_POST['images'])) &&
                         (isset($_POST['doc_name'])) &&
