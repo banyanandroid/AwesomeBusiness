@@ -517,7 +517,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+/*
                 //CLEARING THE ARRAYLIST TO REMOVE PREVIOUS VALUES
                 Arraylist_fetched_industries.clear();
                 Arraylist_selected_final_industry.clear();
@@ -641,7 +641,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         str_final_location_update += L + ",";
                     }
                     System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
-                }
+                }*/
 
                 ///////// TO GET THE SPINNER VALUE TO THE STRING
                 str_no_of_formats = spn_no_of_salespartner_formats.getSelectedItem().toString();
@@ -668,6 +668,8 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         break;
                 }
 
+
+            /*
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED EDIT TEXT'S
                 str_auth_person_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
@@ -796,7 +798,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
                 //Unfortunately Stopped during this checking process
-               /* else if (str_final_headquaters.equals("")) {
+               *//* else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Headquaters");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Headquaters Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -808,7 +810,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     chip_industry.setFocusable(true);
                     chip_industry.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Enter Your Industry", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/
+                }*//*
 
 
                 // THIS ELSE IF STATEMENT IS TO CHECK WHETHER THE  NO OF SALES PARTNER FORMATS IS SELECTED OR NOT
@@ -1519,7 +1521,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                 }
 
-
+*/
                 System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
                 System.out.println("EMAIL :::::::::::" + str_email);
                 System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
@@ -1537,11 +1539,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 System.out.println("FORMAT 2222222222 NAME :::::::::::" + str_format_name_2);
 
 
+                System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
+
+
                 try {
                     dialog = new SpotsDialog(Activity_FranchiseProfile.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(getApplicationContext());
-                   // Function_Submit_FranchiseProfile();
+                    // Function_Submit_FranchiseProfile();
 
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -2213,14 +2218,77 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 //FORMAT 1
                 params.put("format_name", str_opportunity_offered);
                 params.put("min_sq", str_opportunity_offered);
-                params.put("max_sq2", str_opportunity_offered);
+                params.put("max_sq", str_opportunity_offered);
                 params.put("min_invest", str_opportunity_offered);
                 params.put("max_invest", str_opportunity_offered);
                 params.put("brand_fee", str_opportunity_offered);
                 params.put("staff_require", str_opportunity_offered);
-                params.put("currency_change", str_opportunity_offered);
-                params.put("currency_change", str_opportunity_offered);
-                params.put("currency_change", str_opportunity_offered);
+                params.put("royalty_commission", str_opportunity_offered);
+                params.put("monthly_revenue", str_opportunity_offered);
+                params.put("profit_margin", str_opportunity_offered);
+
+
+                //FORMAT 2
+                params.put("format_name2", str_opportunity_offered);
+                params.put("min_sq2", str_opportunity_offered);
+                params.put("max_sq2", str_opportunity_offered);
+                params.put("min_invest2", str_opportunity_offered);
+                params.put("max_invest2", str_opportunity_offered);
+                params.put("brand_fee2", str_opportunity_offered);
+                params.put("staff_require2", str_opportunity_offered);
+                params.put("royalty_commission2", str_opportunity_offered);
+                params.put("monthly_revenue2", str_opportunity_offered);
+                params.put("profit_margin2", str_opportunity_offered);
+
+                //FORMAT 3
+                params.put("format_name3", str_opportunity_offered);
+                params.put("min_sq3", str_opportunity_offered);
+                params.put("max_sq3", str_opportunity_offered);
+                params.put("min_invest3", str_opportunity_offered);
+                params.put("max_invest3", str_opportunity_offered);
+                params.put("brand_fee3", str_opportunity_offered);
+                params.put("staff_require3", str_opportunity_offered);
+                params.put("royalty_commission3", str_opportunity_offered);
+                params.put("monthly_revenue3", str_opportunity_offered);
+                params.put("profit_margin3", str_opportunity_offered);
+
+
+                //FORMAT 4
+                params.put("format_name4", str_opportunity_offered);
+                params.put("min_sq4", str_opportunity_offered);
+                params.put("max_sq4", str_opportunity_offered);
+                params.put("min_invest4", str_opportunity_offered);
+                params.put("max_invest4", str_opportunity_offered);
+                params.put("brand_fee4", str_opportunity_offered);
+                params.put("staff_require4", str_opportunity_offered);
+                params.put("royalty_commission4", str_opportunity_offered);
+                params.put("monthly_revenue4", str_opportunity_offered);
+                params.put("profit_margin4", str_opportunity_offered);
+
+
+                //FORMAT 5
+                params.put("format_name5", str_opportunity_offered);
+                params.put("min_sq5", str_opportunity_offered);
+                params.put("max_sq5", str_opportunity_offered);
+                params.put("min_invest5", str_opportunity_offered);
+                params.put("max_invest5", str_opportunity_offered);
+                params.put("brand_fee5", str_opportunity_offered);
+                params.put("staff_require5", str_opportunity_offered);
+                params.put("royalty_commission5", str_opportunity_offered);
+                params.put("monthly_revenue5", str_opportunity_offered);
+                params.put("profit_margin5", str_opportunity_offered);
+
+                //FORMAT 6
+                params.put("format_name6", str_opportunity_offered);
+                params.put("min_sq6", str_opportunity_offered);
+                params.put("max_sq6", str_opportunity_offered);
+                params.put("min_invest6", str_opportunity_offered);
+                params.put("max_invest6", str_opportunity_offered);
+                params.put("brand_fee6", str_opportunity_offered);
+                params.put("staff_require6", str_opportunity_offered);
+                params.put("royalty_commission6", str_opportunity_offered);
+                params.put("monthly_revenue6", str_opportunity_offered);
+                params.put("profit_margin6", str_opportunity_offered);
 
 
 

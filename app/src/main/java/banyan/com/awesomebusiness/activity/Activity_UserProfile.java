@@ -140,7 +140,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
 
         img_profile_picture = (CircleImageView) findViewById(R.id.user_profile_picture);
-        img_edit = (ImageView) findViewById(R.id.profile_img_edit);
+       // img_edit = (ImageView) findViewById(R.id.profile_img_edit);
         txt_edit = (TextView) findViewById(R.id.profile_txt_edit);
 
         txt_username = (TextView) findViewById(R.id.userprofile_txt_username);
@@ -150,15 +150,16 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
 
         txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
-        img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
+       // img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
 
 
-        img_edit.setOnClickListener(new View.OnClickListener() {
+        /*img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Function_Edit_profile();
             }
-        });
+        });*/
+
         txt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,12 +173,12 @@ public class Activity_UserProfile extends AppCompatActivity {
                 Function_AlertDialog();
             }
         });
-        img_change_password.setOnClickListener(new View.OnClickListener() {
+        /*img_change_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Function_AlertDialog();
             }
-        });
+        });*/
 
         try {
             dialog = new SpotsDialog(Activity_UserProfile.this);
