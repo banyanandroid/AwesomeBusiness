@@ -82,7 +82,7 @@
                         android:textColorHint="@color/textColorPrimary">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edt_mobile_number"
+                            android:id="@+id/v"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -138,183 +138,8 @@
                     android:orientation="vertical">
 
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:text="Interests"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="6">
-
-
-                            <CheckBox
-                                android:id="@+id/chbx_acq_buying_business"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="5"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:text="Acquiring / Buying a Business "
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="6">
-
-                            <CheckBox
-                                android:id="@+id/chbx_investing_business"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="5"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:text="Investing in a Business "
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="6">
-
-                            <CheckBox
-                                android:id="@+id/chbx_lending_business"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="5"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:text="Lending to a Business"
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:weightSum="6">
-
-                            <CheckBox
-                                android:id="@+id/chbx_buying_property"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_weight="5"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:text="Buying Property / Plant / Machinery "
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="6">
-
-                        <CheckBox
-                            android:id="@+id/chbx_taking_franchise"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.5" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="5.5"
-                            android:paddingLeft="10dp"
-                            android:paddingStart="10dp"
-                            android:text="Taking up a Franchise / Distributorship / Sales Agency"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-
-                    </LinearLayout>
-
-
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/business_profile_autocomp_i_am"
+                        android:id="@+id/business_profile_spn_i_am"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -326,7 +151,7 @@
                         app:hintText="I am a(n)" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/business_profile_autocomp_intersted"
+                        android:id="@+id/business_profile_spn_intersted"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -347,7 +172,7 @@
                         android:textStyle="bold" />
 
                     <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_business_location"
+                        android:id="@+id/investor_profile_chipText_business_location"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -363,26 +188,74 @@
 
                     </com.libaml.android.view.chip.ChipLayout>
 
-                    <Spinner
-                        android:id="@+id/spn_investment_range"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Industries Interested"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/investor_profile_chipText_industries_interested"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:textSize="16sp"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
+                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:labelPosition_="left"
+                        custom:textColor_="@android:color/black">
+
+                    </com.libaml.android.view.chip.ChipLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Your Deal Size Range"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_when_established">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                    </Spinner>
+                        <EditText
+                            android:id="@+id/edt_dealsize_minimum"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="Minimum"
+                            android:inputType="number"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp" />
 
+                        <EditText
+                            android:id="@+id/edt_dealsize_maximum"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="Maximum"
+                            android:inputType="number"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spn_select_industry"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_investor_investment_range">
-
-                    </Spinner>
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -457,31 +330,21 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Your company's Sector"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/investor_profile_chipText_company_sector"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16sp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    </com.libaml.android.view.chip.ChipLayout>
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_company_sector"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Your Company's Sector"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -504,6 +367,17 @@
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:text="About Your Company"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/edt_about_yourself"

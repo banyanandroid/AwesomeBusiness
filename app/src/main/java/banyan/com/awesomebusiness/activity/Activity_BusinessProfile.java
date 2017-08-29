@@ -468,7 +468,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             Encode_Image1();
             // textView.setText(sb.toString());
         }
-    }
+    }   
 
     public void Encode_Image1() {
 
