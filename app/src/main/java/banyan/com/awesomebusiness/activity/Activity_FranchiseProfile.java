@@ -370,7 +370,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         edt_format_operating_profitmargin_6 = (EditText) findViewById(R.id.edt_format_six_avg_profit_margin);
 
 
-        // AUTOCOMPLETETEXTVIEW
+        // SEARCHABLESPINNER
         spn_country_code = (SearchableSpinner) findViewById(R.id.franchise_profile_spinner_country);
         spn_country_code.setTitle("Country Code");
 

@@ -990,7 +990,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                 .show();
                     } else {
                         dialog.dismiss();
-                        TastyToast.makeText(getApplicationContext(), "Oops...! Registration Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Profile Submission Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
                     dialog.dismiss();

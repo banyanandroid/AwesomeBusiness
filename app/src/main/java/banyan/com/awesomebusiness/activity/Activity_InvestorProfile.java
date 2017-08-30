@@ -1,13 +1,16 @@
 package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
+import com.tapadoo.alerter.Alerter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
@@ -47,20 +51,30 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "TAG";
     TextView t1;
-    Button btn_submit;
-    EditText edt_name, edt_mobile_number, edt_email;
+    String str_user_currency, str_user_id = "";
 
+    Button btn_submit;
+    EditText edt_name, edt_mobile_number, edt_email, edt_dealsize_minimum, edt_dealsize_maximum,
+            edt_company_name, edt_designation, edt_wed_linkedin,
+            edt_company_sector, edt_kind_business_interested, edt_company_about;
+
+    //AUTOCOMPLETETEXTVIEW
+    AutoCompleteTextView auto_headquaters;
+    String str_select_item, str_final_headquaters = "";
 
     SearchableSpinner spn_i_am, spn_interested_in;
     ChipLayout chip_busineeslist, chip_business_location;
     String str_final_business_sector, str_final_Business_Location = "";
 
+    String str_name, str_mobile, str_email, str_deal_minimum, str_deal_maximum, str_company_name,
+            str_designation, str_web_linkedin, str_company_sector, str_kindof_business_interested, str_company_about = "";
 
-    public static final String TAG_ROLE_ID = "business_role_id";
-    public static final String TAG_ROLE_NAME = "business_role_name";
 
-    public static final String TAG_INTEREST_ID = "business_interest_id";
-    public static final String TAG_INTEREST_NAME = "business_interest_name";
+    public static final String TAG_ROLE_ID = "investor_an_id";
+    public static final String TAG_ROLE_NAME = "investor_an_name";
+
+    public static final String TAG_INTEREST_ID = "investor_interest_id";
+    public static final String TAG_INTEREST_NAME = "investor_interest_name";
 
     public static final String TAG_SECTOR_NAME = "name";
     public static final String TAG_SECTOR_KEY = "key";
@@ -70,15 +84,24 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
 
-    ArrayList<String> Arraylist_business_role_id = null;
-    ArrayList<String> Arraylist_business_role_name = null;
+    public static final String TAG_HEADQUATERS_PLACE = "place";
+    public static final String TAG_HEADQUATERS_KEY = "key";
+    public static final String TAG_HEADQUATERS_TYPE = "type";
 
-    ArrayList<String> Arraylist_business_interest_id = null;
-    ArrayList<String> Arraylist_business_interest_name = null;
+
+    ArrayList<String> Arraylist_investor_role_id = null;
+    ArrayList<String> Arraylist_investor_role_name = null;
+
+    ArrayList<String> Arraylist_investor_interest_id = null;
+    ArrayList<String> Arraylist_investor_interest_name = null;
 
     ArrayList<String> Arraylist_sector_name = null;
     ArrayList<String> Arraylist_sector_key = null;
     ArrayList<String> Arraylist_sector_type = null;
+
+    /* Arralist fetched indestries list */
+    ArrayList<String> Arraylist_fetched_industries = null;
+    ArrayList<String> Arraylist_selected_final_industry = null;
 
     /*Multi Select*/
     ArrayList<String> Arraylist_selected_sectorkey = null;
@@ -88,11 +111,17 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
 
+    /* Arralist fetched Location list */
+    ArrayList<String> Arraylist_fetched_location = null;
+    ArrayList<String> Arraylist_selected_final_location = null;
+
     private ArrayAdapter<String> adapter_i_am;
     private ArrayAdapter<String> adapter_interested;
 
     String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_id, str_selected_interest_name = "";
+
+    String str_final_industry_update, str_final_location_update = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,15 +144,18 @@ public class Activity_InvestorProfile extends AppCompatActivity {
             }
         });
 
-        Arraylist_business_role_id = new ArrayList<String>();
-        Arraylist_business_role_name = new ArrayList<String>();
+        Arraylist_investor_role_id = new ArrayList<String>();
+        Arraylist_investor_role_name = new ArrayList<String>();
 
-        Arraylist_business_interest_id = new ArrayList<String>();
-        Arraylist_business_interest_name = new ArrayList<String>();
+        Arraylist_investor_interest_id = new ArrayList<String>();
+        Arraylist_investor_interest_name = new ArrayList<String>();
 
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
+
+        Arraylist_fetched_industries = new ArrayList<String>();
+        Arraylist_selected_final_industry = new ArrayList<String>();
 
         Arraylist_selected_sectorkey = new ArrayList<String>();
         Arraylist_selected_location = new ArrayList<String>();
@@ -131,6 +163,15 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         Arraylist_location_place = new ArrayList<String>();
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
+
+        Arraylist_fetched_location = new ArrayList<String>();
+        Arraylist_selected_final_location = new ArrayList<String>();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+
+        System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_busineeslist = (ChipLayout) findViewById(R.id.investor_profile_chipText_industries_interested);
@@ -140,8 +181,19 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         edt_mobile_number = (EditText) findViewById(R.id.edt_mobile_number);
         edt_email = (EditText) findViewById(R.id.edt_office_email);
 
+        edt_dealsize_minimum = (EditText) findViewById(R.id.edt_dealsize_minimum);
+        edt_dealsize_maximum = (EditText) findViewById(R.id.edt_dealsize_maximum);
+        edt_company_name = (EditText) findViewById(R.id.edt_company_work_at);
+        edt_designation = (EditText) findViewById(R.id.edt_designation);
+        edt_wed_linkedin = (EditText) findViewById(R.id.edt_linkedin_profile);
+        edt_company_sector = (EditText) findViewById(R.id.edt_company_sector);
+        edt_kind_business_interested = (EditText) findViewById(R.id.edt_investor_profile_business_interested);
+        edt_company_about = (EditText) findViewById(R.id.edt_about_yourself);
 
-        // AutoCompleteTextView
+
+        auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_profile_edt_user_location);
+
+        // Searchable Spinner
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_spn_i_am);
         spn_i_am.setTitle("Select Your Role");
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_spn_intersted);
@@ -152,7 +204,192 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Investor Profile Created Successfully", Toast.LENGTH_LONG).show();
+
+                //CLEARING THE ARRAYLIST TO REMOVE PREVIOUS VALUES
+                Arraylist_fetched_industries.clear();
+                Arraylist_selected_final_industry.clear();
+
+
+                ///////////////////////
+                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
+                ///////////////////////
+                String str_Headquaters = auto_headquaters.getText().toString();
+                int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
+                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
+                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
+                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
+                System.out.println("FINAL SELECTED HEADQUATERS :: " + str_final_headquaters);
+
+
+                ///////////////////////
+                ///////  FOR GETTING ENTERED SECTOR TYPE AND ID
+                ///////////////////////
+                String str_industry_from_chip = chip_busineeslist.getText().toString();
+                System.out.println("FETCHED INDUSTRIES FROMCHIPLAYOUTTTTTTTT :: " + str_industry_from_chip);
+                String[] items_comma = str_industry_from_chip.split(",");
+                for (String item_comma : items_comma) {
+                    String[] items_left = item_comma.split("\\[");
+                    for (String item_left : items_left) {
+                        if (item_left.equals("")) {
+
+                        } else {
+                            Character last_letter = item_left.charAt(item_left.length() - 1);
+                            if (last_letter.equals(']')) {
+                            } else {
+                                Arraylist_fetched_industries.add(item_left);
+                            }
+                        }
+                    }
+                    String[] items_right = item_comma.split("\\]");
+                    for (String item_right : items_right) {
+
+                        if (item_right.equals("")) {
+
+                        } else {
+                            Character first_letter = item_right.charAt(0);
+                            if (first_letter.equals('[')) {
+                            } else {
+                                Arraylist_fetched_industries.add(item_right);
+                            }
+                        }
+
+                    }
+                }
+                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                    String get_indestry = Arraylist_fetched_industries.get(i);
+                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+
+                    String select_sect_id = Arraylist_sector_key.get(indus_position + 1);
+                    String select_sect_type = Arraylist_sector_type.get(indus_position + 1);
+
+                    String sector = select_sect_id + "-" + select_sect_type;
+                    Arraylist_selected_final_industry.add(sector);
+
+                    for (String s : Arraylist_selected_final_industry) {
+                        str_final_industry_update += s + ",";
+                    }
+
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+                }
+
+                ///////////////////////
+                ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
+                ///////////////////////
+                String str_location_from_chip = chip_business_location.getText().toString();
+                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
+
+                String[] items_loc_comma = str_location_from_chip.split(",");
+                for (String item_loc_comma : items_loc_comma) {
+                    String[] items_loc_left = item_loc_comma.split("\\[");
+                    for (String item_loc_left : items_loc_left) {
+                        if (item_loc_left.equals("")) {
+
+                        } else {
+                            Character last_letter = item_loc_left.charAt(item_loc_left.length() - 1);
+                            if (last_letter.equals(']')) {
+                            } else {
+                                System.out.println("right filter" + item_loc_left);
+                                Arraylist_fetched_location.add(item_loc_left);
+                            }
+                        }
+                    }
+
+                    String[] items_loc_right = item_loc_comma.split("\\]");
+                    for (String item_loc_right : items_loc_right) {
+
+                        if (item_loc_right.equals("")) {
+
+                        } else {
+                            Character first_letter = item_loc_right.charAt(0);
+                            if (first_letter.equals('[')) {
+                            } else {
+                                System.out.println("left filter" + item_loc_right);
+                                Arraylist_fetched_location.add(item_loc_right);
+                            }
+                        }
+
+                    }
+                }
+                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                    Arraylist_selected_final_location.clear();
+                    String get_Location = Arraylist_fetched_location.get(i);
+                    get_Location = get_Location.trim();
+                    int location_position = Arraylist_location_place.indexOf(get_Location);
+                    String str_location_type = Arraylist_location_type.get(location_position);
+                    String select_location_id = Arraylist_location_key.get(location_position + 1);
+                    String select_location_type = Arraylist_location_type.get(location_position + 1);
+
+                    String location = select_location_id + "-" + select_location_type;
+                    Arraylist_selected_final_location.add(location);
+
+                    for (String L : Arraylist_selected_final_location) {
+                        str_final_location_update += L + ",";
+                    }
+                    System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
+                }
+
+
+                str_name = edt_name.getText().toString();
+                str_email = edt_email.getText().toString();
+                str_mobile = edt_mobile_number.getText().toString();
+                str_deal_minimum = edt_dealsize_minimum.getText().toString();
+                str_deal_maximum = edt_dealsize_maximum.getText().toString();
+
+                str_company_name = edt_company_name.getText().toString();
+                str_designation = edt_designation.getText().toString();
+                str_web_linkedin = edt_wed_linkedin.getText().toString();
+                str_company_sector = edt_company_sector.getText().toString();
+                str_kindof_business_interested = edt_kind_business_interested.getText().toString();
+                str_company_about = edt_company_about.getText().toString();
+
+
+                if (str_name.equals("")) {
+                    edt_name.setError("Enter  Name");
+                    edt_name.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_email.equals("")) {
+                    edt_email.setError("Enter Email");
+                    edt_email.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_mobile.equals("")) {
+                    edt_mobile_number.setError("Enter Mobile Number");
+                    edt_mobile_number.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_deal_minimum.equals("")) {
+                    edt_dealsize_minimum.setError("Enter Minimum Deal Size");
+                    edt_dealsize_minimum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_deal_maximum.equals("")) {
+                    edt_dealsize_maximum.setError("Enter Maximum Deal Size");
+                    edt_dealsize_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_name.equals("")) {
+                    edt_company_name.setError("Enter Company Name");
+                    edt_company_name.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Company Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_designation.equals("")) {
+                    edt_designation.setError("Enter Designation");
+                    edt_designation.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Designation Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_web_linkedin.equals("")) {
+                    edt_wed_linkedin.setError("Enter Link");
+                    edt_wed_linkedin.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_sector.equals("")) {
+                    edt_company_sector.setError("Enter Company's Sector");
+                    edt_company_sector.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Company's Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_kindof_business_interested.equals("")) {
+                    edt_kind_business_interested.setError("Enter the kind of business interested");
+                    edt_kind_business_interested.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_about.equals("")) {
+                    edt_company_about.setError("Enter About the Company");
+                    edt_company_about.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                }
 
 
             }
@@ -179,8 +416,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         String tag_json_obj = "json_obj_req";
         System.out.println("STEP  1111111111111");
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_iam, new Response.Listener<String>() {
-
+                AppConfig.url_investor_iam, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -204,13 +440,13 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                             String role_key = obj1.getString(TAG_ROLE_ID);
                             String role_name = obj1.getString(TAG_ROLE_NAME);
 
-                            Arraylist_business_role_id.add(role_key);
-                            Arraylist_business_role_name.add(role_name);
+                            Arraylist_investor_role_id.add(role_key);
+                            Arraylist_investor_role_name.add(role_name);
                         }
                         try {
 
                             adapter_i_am = new ArrayAdapter<String>(Activity_InvestorProfile.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_business_role_name);
+                                    android.R.layout.simple_list_item_1, Arraylist_investor_role_name);
                             spn_i_am.setAdapter(adapter_i_am);
 
 
@@ -219,7 +455,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                                                         long arg3) {
                                     t1 = (TextView) arg1;
                                     str_selected_role_name = t1.getText().toString();
-                                    str_selected_role_id = Arraylist_business_role_id.get(arg2);
+                                    str_selected_role_id = Arraylist_investor_role_id.get(arg2);
                                 }
                             });
 
@@ -276,7 +512,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_interested_in, new Response.Listener<String>() {
+                AppConfig.url_investor_interested, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -297,12 +533,12 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                             String interest_key = obj1.getString(TAG_INTEREST_ID);
                             String interest_name = obj1.getString(TAG_INTEREST_NAME);
 
-                            Arraylist_business_interest_id.add(interest_key);
-                            Arraylist_business_interest_name.add(interest_name);
+                            Arraylist_investor_interest_id.add(interest_key);
+                            Arraylist_investor_interest_name.add(interest_name);
                         }
                         try {
                             adapter_interested = new ArrayAdapter<String>(Activity_InvestorProfile.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
+                                    android.R.layout.simple_list_item_1, Arraylist_investor_interest_name);
                             spn_interested_in.setAdapter(adapter_interested);
 
 
@@ -312,7 +548,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                                     t1 = (TextView) arg1;
                                     str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
-                                    str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
+                                    str_selected_interest_id = Arraylist_investor_interest_id.get(arg2);
 
 
                                 }
@@ -393,7 +629,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
                             Arraylist_sector_type.add(sector_type);
-
                         }
                         try {
 
@@ -547,6 +782,120 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Headquaters();
+
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * To get  Business Location List
+     ***************************/
+
+    public void Get_Business_Headquaters() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 1");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_business_location, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("datas");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String headquaters_place = obj1.getString(TAG_HEADQUATERS_PLACE);
+                            String headquaters_key = obj1.getString(TAG_HEADQUATERS_KEY);
+                            String headquaters_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+
+                            Arraylist_location_place.add(headquaters_place);
+                            Arraylist_location_key.add(headquaters_key);
+                            Arraylist_location_type.add(headquaters_type);
+
+                        }
+
+                        try {
+
+                            System.out.println("ARAAAAY :: " + Arraylist_location_place);
+
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_InvestorProfile.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_location_place);
+                            auto_headquaters.setAdapter(adapter_location);
+
+
+                            System.out.println("ARAAAAY :: " + 222222);
+                            auto_headquaters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                                    System.out.println("Position :::::::: " + position);
+
+
+                                    t1 = (TextView) view;
+                                    String str_location_key = t1.getText().toString();
+                                    int i = Arraylist_location_place.indexOf(str_location_key);
+
+                                    String str_select_location_key = Arraylist_location_key.get(i);
+                                    String str_select_location_type = Arraylist_location_type.get(i);
+                                    str_select_item = str_select_location_key + "-" + str_select_location_type;
+
+                                    System.out.println("FINAL Business Location :: " + str_select_item);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -582,4 +931,83 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     }
 
 
+    /******************************************
+     *    SUBMIT BUSINESS PROFILE FORM
+     * *******************************************/
+
+    private void Function_Submit_InvestorProfile() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_investor_profile_add, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE : " + response);
+                    int success = obj.getInt("status");
+                    if (success == 1) {
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_InvestorProfile.this)
+                                .setTitle("Success")
+                                .setText("Investor Profile Added Successfully")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+                    } else {
+                        dialog.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Profile Creation Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("name_u", str_name);
+                params.put("mob_u", str_company_name);
+                params.put("email_u", str_name);
+
+                params.put("inter_u", str_company_name);
+                params.put("am_an", str_name);
+
+                params.put("indust", str_company_name);
+                params.put("location_u", str_name);
+
+
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
 }
+
+/*
+
+    ($_POST['name_u'])) && (isset($_POST['mob_u'])) && (isset($_POST['email_u'])) &&
+        (isset($_POST['inter_u'])) && (isset($_POST['am_an'])) && (isset($_POST['indust'])) && (isset($_POST['location_u'])) &&
+        (isset($_POST['user_currency'])) && (isset($_POST['invest_inr'])) && (isset($_POST['invest_to'])) &&
+        (isset($_POST['location'])) && (isset($_POST['com_y'])) && (isset($_POST['desig'])) &&
+        (isset($_POST['linked'])) && (isset($_POST['com_s'])) && (isset($_POST['busi_in'])) &&
+        (isset($_POST['abt_you'])) && (isset($_POST['profile_img'])) && (isset($_POST['profile_document'])) && (isset($_POST['logo_file']))&& (isset($_POST['user_id']))
+        --*/
