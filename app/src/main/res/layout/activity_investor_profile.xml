@@ -398,7 +398,7 @@
                         android:layout_gravity="end"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:text="Add Profile Photo"
+                        android:text="Add Company Logo"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="10dp" />
 

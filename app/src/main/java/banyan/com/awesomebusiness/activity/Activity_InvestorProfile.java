@@ -2,10 +2,13 @@ package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +27,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.libaml.android.view.chip.ChipLayout;
+import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
+import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
+import com.nguyenhoanglam.imagepicker.model.Image;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -32,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,18 +60,29 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     TextView t1;
     String str_user_currency, str_user_id = "";
 
-    Button btn_submit;
+    Button btn_add_logo, btn_submit;
     EditText edt_name, edt_mobile_number, edt_email, edt_dealsize_minimum, edt_dealsize_maximum,
             edt_company_name, edt_designation, edt_wed_linkedin,
             edt_company_sector, edt_kind_business_interested, edt_company_about;
 
+
+    // PIC Upload
+    String listString = "";
+    String encodedstring = "";
+    private ArrayList<Image> images = new ArrayList<>();
+    ArrayList<String> Arraylist_image_encode = null;
+    private int REQUEST_CODE_PICKER = 2000;
+
+
     //AUTOCOMPLETETEXTVIEW
     AutoCompleteTextView auto_headquaters;
-    String str_select_item, str_final_headquaters = "";
+    String str_select_item, str_company_current_location = "";
 
+    //SEARCHABLESPINNER
     SearchableSpinner spn_i_am, spn_interested_in;
+    String str_selected_role , str_selected_interest = "";
     ChipLayout chip_busineeslist, chip_business_location;
-    String str_final_business_sector, str_final_Business_Location = "";
+
 
     String str_name, str_mobile, str_email, str_deal_minimum, str_deal_maximum, str_company_name,
             str_designation, str_web_linkedin, str_company_sector, str_kindof_business_interested, str_company_about = "";
@@ -121,6 +139,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_id, str_selected_interest_name = "";
 
+    String str_final_business_sector, str_final_Business_Location = "";
     String str_final_industry_update, str_final_location_update = "";
 
     @Override
@@ -167,6 +186,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         Arraylist_fetched_location = new ArrayList<String>();
         Arraylist_selected_final_location = new ArrayList<String>();
 
+        // COMPANY LOGO PIC
+        Arraylist_image_encode = new ArrayList<String>();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
@@ -199,6 +221,15 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_spn_intersted);
         spn_interested_in.setTitle("Select Your Interest");
 
+        btn_add_logo = (Button) findViewById(R.id.btn_add_photos);
+        btn_add_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ImagePicker();
+            }
+        });
+
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -217,8 +248,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
                 String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
                 String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
-                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
-                System.out.println("FINAL SELECTED HEADQUATERS :: " + str_final_headquaters);
+                str_company_current_location = select_Headquaters_id + "-" + select_Headquaters_type;
+                System.out.println("FINAL SELECTED HEADQUATERS :: " + str_company_current_location);
 
 
                 ///////////////////////
@@ -344,6 +375,10 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 str_kindof_business_interested = edt_kind_business_interested.getText().toString();
                 str_company_about = edt_company_about.getText().toString();
 
+                str_selected_role = spn_i_am.getSelectedItem().toString();
+                str_selected_interest = spn_interested_in.getSelectedItem().toString();
+
+
 
                 if (str_name.equals("")) {
                     edt_name.setError("Enter  Name");
@@ -389,6 +424,11 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_company_about.setError("Enter About the Company");
                     edt_company_about.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    dialog = new SpotsDialog(Activity_InvestorProfile.this);
+                    dialog.show();
+                    queue = Volley.newRequestQueue(Activity_InvestorProfile.this);
+                    Function_Submit_InvestorProfile();
                 }
 
 
@@ -405,6 +445,138 @@ public class Activity_InvestorProfile extends AppCompatActivity {
             // TODO: handle exception
         }
 
+    }
+
+
+    /*******************************
+     *  PIC UPLOADER
+     * ***************************/
+
+    // Recomended builder
+    public void ImagePicker() {
+        ImagePicker.create(this)
+                .folderMode(true) // set folder mode (false by default)
+                .folderTitle("Folder") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(1) // max images can be selected (999 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
+                .origin(images) // original selected images, used in multi mode
+                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+    }
+
+    // Traditional intent
+    public void startWithIntent() {
+        Intent intent = new Intent(this, ImagePickerActivity.class);
+
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_MODE, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_MODE, ImagePickerActivity.MODE_MULTIPLE);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_LIMIT, 10);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SHOW_CAMERA, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES, images);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_TITLE, "Album");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_TITLE, "Tap to select images");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_DIRECTORY, "Camera");
+        startActivityForResult(intent, REQUEST_CODE_PICKER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0, l = images.size(); i < l; i++) {
+
+                String str_img_path = images.get(i).getPath();
+
+                Bitmap bmBitmap = BitmapFactory.decodeFile(str_img_path);
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                bmBitmap.compress(Bitmap.CompressFormat.JPEG, 25, bao);
+                byte[] ba = bao.toByteArray();
+                encodedstring = Base64.encodeToString(ba, 0);
+                Log.e("base64", "-----" + encodedstring);
+
+                Arraylist_image_encode.add(encodedstring);
+            }
+
+            Encode_Image1();
+            // textView.setText(sb.toString());
+        }
+    }
+
+    public void Encode_Image1() {
+
+        for (String s : Arraylist_image_encode) {
+            listString += s + "IMAGE:";
+        }
+
+        queue = Volley.newRequestQueue(Activity_InvestorProfile.this);
+        Function_Post();
+
+        //System.out.println("ENCODE :: " + listString);
+
+        //Log.d(":STRING:", listString);
+    }
+
+
+    /*********************************
+     *  To Post Company LOGO
+     * *********************************/
+
+    private void Function_Post() {
+
+        String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                url_login, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG_LOC_KEY, response.toString());
+                Log.d("USER_LOGIN", response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("REG 00" + obj);
+
+                    int success = obj.getInt("status");
+
+                    System.out.println("REG" + success);
+
+                    if (success == 1) {
+
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("image", listString);
+                System.out.println("IMG :: " + listString);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
     }
 
 
@@ -599,6 +771,10 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         queue.add(request);
     }
 
+
+    /*****************************
+     * To get  Business Industries List
+     ***************************/
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
@@ -982,15 +1158,46 @@ public class Activity_InvestorProfile extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
+
+
+                str_company_name = edt_company_name.getText().toString();
+                str_designation = edt_designation.getText().toString();
+                str_web_linkedin = edt_wed_linkedin.getText().toString();
+                str_company_sector = edt_company_sector.getText().toString();
+                str_kindof_business_interested = edt_kind_business_interested.getText().toString();
+                str_company_about = edt_company_about.getText().toString();
+
+                //From Edit Text
                 params.put("name_u", str_name);
-                params.put("mob_u", str_company_name);
-                params.put("email_u", str_name);
+                params.put("email_u", str_email);
+                params.put("mob_u", str_mobile);
 
-                params.put("inter_u", str_company_name);
-                params.put("am_an", str_name);
+                //Dynamic Values
+               params.put("inter_u", str_selected_interest);
+                params.put("am_an", str_selected_role);
+              //  params.put("indust", str_compandfhdy_name);
+              //  params.put("location_u", str_name);
 
-                params.put("indust", str_company_name);
-                params.put("location_u", str_name);
+                //From Shared Preferrences
+                params.put("user_currency", str_name);
+                params.put("user_id", str_name);
+
+                  //From Edit Text
+                params.put("invest_inr", str_deal_minimum);
+                params.put("invest_to", str_deal_maximum);
+                params.put("location", str_company_current_location  );
+                params.put("com_y", str_company_name);
+                params.put("desig", str_designation);
+                params.put("linked", str_web_linkedin);
+
+                params.put("com_s", str_company_sector);
+                params.put("busi_in", str_kindof_business_interested);
+                params.put("abt_you", str_company_about);
+
+             //   params.put("profile_img", str_name);
+             //   params.put("profile_document", str_name);
+              //  params.put("logo_file", str_name);
+
 
 
                 return params;
@@ -1003,11 +1210,14 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 }
 
 /*
-
     ($_POST['name_u'])) && (isset($_POST['mob_u'])) && (isset($_POST['email_u'])) &&
         (isset($_POST['inter_u'])) && (isset($_POST['am_an'])) && (isset($_POST['indust'])) && (isset($_POST['location_u'])) &&
+
+
         (isset($_POST['user_currency'])) && (isset($_POST['invest_inr'])) && (isset($_POST['invest_to'])) &&
         (isset($_POST['location'])) && (isset($_POST['com_y'])) && (isset($_POST['desig'])) &&
         (isset($_POST['linked'])) && (isset($_POST['com_s'])) && (isset($_POST['busi_in'])) &&
-        (isset($_POST['abt_you'])) && (isset($_POST['profile_img'])) && (isset($_POST['profile_document'])) && (isset($_POST['logo_file']))&& (isset($_POST['user_id']))
+
+        (isset($_POST['abt_you'])) && (isset($_POST['profile_img'])) && (isset($_POST['profile_document']))
+        && (isset($_POST['logo_file']))&& (isset($_POST['user_id']))
         --*/
