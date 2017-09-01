@@ -66,6 +66,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public static RequestQueue queue;
     Button btn_add_pic, btn_submit;
     String TAG = "Auto_Res";
+    String str_user_currency, str_user_id = "";
 
     // PIC Upload
 
@@ -133,7 +134,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
-    String str_user_currency, str_user_id = "";
+
 
     String str_ch_companydetails, str_ch_contactdetails, str_ch_yearly_sales_range,
             str_ch_display_EBITDA_range = "0";

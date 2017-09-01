@@ -75,7 +75,6 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -88,12 +87,10 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Mobile Number"
                             android:inputType="number"
-                            android:maxLength="10"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
-
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -110,7 +107,6 @@
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
-
 
                 </LinearLayout>
 
@@ -174,7 +170,7 @@
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/investor_profile_chipText_business_location"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:textSize="16sp"
@@ -200,7 +196,7 @@
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/investor_profile_chipText_industries_interested"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:textSize="16sp"
@@ -290,7 +286,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
-                            android:hint="Your Company / Company you work at"
+                            android:hint="Name of Your Company / Company you work"
                             android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
@@ -325,6 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Your/Company's Website or Linkedin Profile"
+                            android:inputType="textWebEmailAddress"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -341,6 +338,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Your Company's Sector"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -360,11 +358,13 @@
                     <EditText
                         android:id="@+id/edt_investor_profile_business_interested"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
+                        android:maxLines="4"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:scrollbars="vertical"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
 
@@ -386,8 +386,10 @@
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
                         android:hint="Write about your background &amp; how you can help \na business grow."
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
+                        android:maxLines="10"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:scrollbars="vertical"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
 
