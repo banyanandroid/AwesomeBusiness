@@ -261,7 +261,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_location_type = new ArrayList<String>();
 
         // IMG PIC
-
         Arraylist_image_encode = new ArrayList<String>();
         Arraylist_dummy = new ArrayList<String>();
 
