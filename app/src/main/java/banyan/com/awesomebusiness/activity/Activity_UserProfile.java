@@ -47,7 +47,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     TextView txt_username, txt_user_email, txt_user_mobile,
             txt_user_current_role, txt_user_company;
 
-    TextView txt_edit, txt_change_password;
+    TextView txt_edit, txt_change_password , txt_myprofile;
 
     ImageView img_edit, img_change_password;
 
@@ -148,6 +148,21 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_user_mobile = (TextView) findViewById(R.id.userprofile_txt_user_mobile);
         txt_user_current_role = (TextView) findViewById(R.id.userprofile_txt_user_role);
         txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
+
+        txt_myprofile = (TextView) findViewById(R.id.profile_txt_myprofile);
+
+        //ON CLICKING THIS WILL DIRECT TO TAB LAYOUT OF USER PROFILES
+       /* txt_myprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Fragment_MyProfiles.class);
+                startActivity(i);
+                finish();
+
+            }
+        });*/
+
 
         txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
        // img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
