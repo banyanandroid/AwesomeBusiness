@@ -152,16 +152,16 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_myprofile = (TextView) findViewById(R.id.profile_txt_myprofile);
 
         //ON CLICKING THIS WILL DIRECT TO TAB LAYOUT OF USER PROFILES
-       /* txt_myprofile.setOnClickListener(new View.OnClickListener() {
+        txt_myprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), Fragment_MyProfiles.class);
+                Intent i = new Intent(getApplicationContext(), Activity_User_Profiles.class);
                 startActivity(i);
                 finish();
 
             }
-        });*/
+        });
 
 
         txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);

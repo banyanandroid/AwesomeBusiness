@@ -15,6 +15,8 @@
     <color name="txt_grey">#808080</color>
     <color name="row_activated">#e0e0e0</color>
 
+    <color name="tab_select">#EDE7F6</color>
+
     <color name="colorPrimaryTrans">#aa0574c6</color>
     <color name="colorAccentTrans">#aa5c8247</color>
     <color name="colorBlackTrans">#a0000000</color>

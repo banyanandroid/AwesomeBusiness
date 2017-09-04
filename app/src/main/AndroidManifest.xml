@@ -66,6 +66,9 @@
         <activity
             android:name=".activity.Activity_UserProfile"
             android:label="Profile"></activity>
+        <activity
+            android:name=".activity.Activity_User_Profiles"
+            android:label="My Profiles"></activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
