@@ -151,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -167,7 +168,66 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Location"
+                            android:text="Business Headquaters Location"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/filter_profile_chipText_businesheadquaters__location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
+                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:labelPosition_="left"
+                        custom:textColor_="@android:color/black">
+
+                    </com.libaml.android.view.chip.ChipLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_parent_rounded_corner"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_location" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Interested Business Location"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -256,8 +316,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -463,6 +522,78 @@
 
                     <io.apptik.widget.MultiSlider
                         android:id="@+id/activity_filter_runratesales_range_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:track="@drawable/example_scrubber_secondary_holo"
+                        app:drawThumbsApart="false"
+                        app:range1="@drawable/example_scrubber_secondary_holo"
+                        app:range1Color="@android:color/darker_gray"
+                        app:range2Color="@android:color/holo_green_dark"
+                        app:thumbColor="@color/blue"
+                        app:thumbNumber="2"
+                        app:trackColor="@android:color/holo_orange_dark" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Monthly sales"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" From "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_monthlysales_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_monthlysales_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <io.apptik.widget.MultiSlider
+                        android:id="@+id/activity_filter_monthlysales_range_slider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -816,6 +947,155 @@
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="12">
+
+                    <CheckBox
+                        android:id="@+id/chbx_Limited_Liability_Partnership"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="5"
+                        android:text="Limited Liability Partnership"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <View
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="5" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_parent_rounded_corner"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_location" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Investor Location"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <com.libaml.android.view.chip.ChipLayout
+                        android:id="@+id/filter_profile_chipText_investor_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        custom:chipDrawable_="@drawable/round_corner_drawable"
+                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
+                        custom:chipPadding_="4dp"
+                        custom:chipTextPadding_="2dp"
+                        custom:deleteIcon_="@android:drawable/presence_offline"
+                        custom:labelPosition_="left"
+                        custom:textColor_="@android:color/black">
+
+                    </com.libaml.android.view.chip.ChipLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_parent_rounded_corner"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:text="Interested In"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spn_filter_investor_interested"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_weight="0.2"
+                        android:entries="@array/spinner_filter_main"
+                        android:gravity="left|center_vertical"
+                        android:text="Industry"
+                        android:textColor="@color/textColorPrimary" />
 
                 </LinearLayout>
 
