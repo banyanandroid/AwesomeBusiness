@@ -91,6 +91,12 @@
 
     </string-array>
 
+    <string-array name="spinner_filter_main">
+        <item>Business For sale</item>
+        <item>Investor/Buyers</item>
+        <item>Franchises</item>
+
+    </string-array>
 
 
     <!-- BELOW ARRAY'S ARE FOR TEST PURPOSE, DELETE LATER-->
@@ -101,8 +107,6 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-
-
 
 
     <string-array name="spinner_investor_investment_range">

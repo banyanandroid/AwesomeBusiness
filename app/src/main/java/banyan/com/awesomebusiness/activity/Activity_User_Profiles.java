@@ -27,17 +27,16 @@ public class Activity_User_Profiles extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_menu);
+        setContentView(R.layout.activity_my_profiles);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_close));
+        mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
+                Intent i = new Intent(getApplicationContext(), Activity_UserProfile.class);
                 startActivity(i);
                 finish();
             }
