@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,8 +62,11 @@ public class Activity_Filter extends AppCompatActivity {
 
     Button btn_done;
 
-    public static final String TAG_TRANSACTION_ID = "business_interest_id";
-    public static final String TAG_TRANSACTION_NAME = "business_interest_name";
+    public static final String TAG_BUSINESS_INTEREST_ID = "business_interest_id";
+    public static final String TAG_BUSINESS_INTEREST_NAME = "business_interest_name";
+
+    public static final String TAG_INVESTOR_BUYER_TYPE_ID = "investor_an_id";
+    public static final String TAG_INVESTOR_BUYER_TYPE_NAME = "investor_an_name";
 
     public static final String TAG_SECTOR_NAME = "name";
     public static final String TAG_SECTOR_KEY = "key";
@@ -85,16 +89,29 @@ public class Activity_Filter extends AppCompatActivity {
     ArrayList<String> Arraylist_location_type = null;
 
 
-    ArrayList<String> Arraylist_business_transaction_id = null;
-    ArrayList<String> Arraylist_business_transaction_name = null;
+    ArrayList<String> Arraylist_business_interest_id = null;
+    ArrayList<String> Arraylist_business_interest_name = null;
     private ArrayAdapter<String> adapter_transaction;
 
-    SearchableSpinner spn_transaction_type;
+
+    ArrayList<String> Arraylist_investor_buyer_id = null;
+    ArrayList<String> Arraylist_investor_buyer_name = null;
+    private ArrayAdapter<String> adapter_investor_buyer_type;
+
+
+    SearchableSpinner spn_main_filter, spn_business_for_sale_type, spn_investor_buyer_type;
+    String str_main_filter = "";
     String str_selected_transaction_id, str_selected_transaction_type_name = "";
+    String str_selected_investor_buyer_type_id, str_selected_investor_buyer_type_name = "";
 
     ChipLayout chip_busineeslist, chip_business_location;
 
     String str_final_business_sector, str_final_Business_Location = "";
+
+    LinearLayout LL_business_for_sale_type, LL_investor_buyer_type, LL_franchise_headquaters_location,
+            LL_interested_business_locations, LL_interested_industry_sectors, LL_Slider_Investment_size,
+            LL_Slider_Asset_price, LL_Slider_Run_Rate_Sales, LL_Slider_EBITA, LL_Slider_Established,
+            LL_Checkboxes, LL_Investor_Buyer_Investor_Location, LL_Investor_Buyer_Investor_Interested_In;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +143,87 @@ public class Activity_Filter extends AppCompatActivity {
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
-        Arraylist_business_transaction_id = new ArrayList<String>();
-        Arraylist_business_transaction_name = new ArrayList<String>();
+        Arraylist_business_interest_id = new ArrayList<String>();
+        Arraylist_business_interest_name = new ArrayList<String>();
+
+        Arraylist_investor_buyer_id = new ArrayList<String>();
+        Arraylist_investor_buyer_name = new ArrayList<String>();
+
+        LL_business_for_sale_type = (LinearLayout) findViewById(R.id.layout_business_for_sale_type);
+        LL_investor_buyer_type = (LinearLayout) findViewById(R.id.layout_investor_buyer_type);
+        LL_franchise_headquaters_location = (LinearLayout) findViewById(R.id.layout_franchise_headquaters_location);
+        LL_interested_business_locations = (LinearLayout) findViewById(R.id.layout_interested_business_locations);
+        LL_interested_industry_sectors = (LinearLayout) findViewById(R.id.layout_interested_business_industries);
+        LL_Slider_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_investment_size);
+        LL_Slider_Asset_price = (LinearLayout) findViewById(R.id.layout_slider_asset_price);
+        LL_Slider_Run_Rate_Sales = (LinearLayout) findViewById(R.id.layout_slider_run_rate_sales);
+        LL_Slider_EBITA = (LinearLayout) findViewById(R.id.layout_slider_EBITDA);
+        LL_Slider_Established = (LinearLayout) findViewById(R.id.layout_slider_established);
+        LL_Checkboxes = (LinearLayout) findViewById(R.id.layout_checkboxes);
+        LL_Investor_Buyer_Investor_Location = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_location);
+        LL_Investor_Buyer_Investor_Interested_In = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_interested_in);
+
 
         ChipLayout.MAX_CHARACTER_COUNT = 20;
         chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_business_industry);
         chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_business_location);
 
-        spn_transaction_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
+        spn_main_filter = (SearchableSpinner) findViewById(R.id.spn_filter_main);
+
+        spn_business_for_sale_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
+        spn_investor_buyer_type = (SearchableSpinner) findViewById(R.id.spn_filter_investor_buyer_type);
+
+
+        spn_main_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                str_main_filter = spn_main_filter.getSelectedItem().toString();
+
+                if (str_main_filter.equals("Business For sale")) {
+
+                    LL_investor_buyer_type.setVisibility(View.GONE);
+                    LL_franchise_headquaters_location.setVisibility(View.GONE);
+
+                } else if (str_main_filter.equals("Investor/Buyers")) {
+
+
+                } else if (str_main_filter.equals("Franchises")) {
+
+
+                }
+
+            }
+        });
+
+
+       /* spn_main_filter.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+
+                        str_main_filter = spn_main_filter.getSelectedItem().toString();
+
+                        if (str_main_filter.equals("Business For sale")) {
+
+                            LL_investor_buyer_type.setVisibility(View.GONE);
+                            LL_franchise_headquaters_location.setVisibility(View.GONE);
+
+                        } else if (str_main_filter.equals("Investor/Buyers")) {
+
+
+                        } else if (str_main_filter.equals("Franchises")) {
+
+
+                        }
+
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });*/
+
 
         btn_done = (Button) findViewById(R.id.btn_filter_done);
         btn_done.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +262,7 @@ public class Activity_Filter extends AppCompatActivity {
             dialog = new SpotsDialog(Activity_Filter.this);
             dialog.show();
             queue = Volley.newRequestQueue(Activity_Filter.this);
-            Get_Transaction_type();
+            Get_Business_For_Sale_type();
 
         } catch (Exception e) {
 
@@ -181,10 +271,10 @@ public class Activity_Filter extends AppCompatActivity {
 
 
     /*****************************
-     * To get  Transaction Type
+     * To get  Business For sale Type
      ***************************/
 
-    public void Get_Transaction_type() {
+    public void Get_Business_For_Sale_type() {
         String tag_json_obj = "json_obj_req";
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new com.android.volley.Response.Listener<String>() {
@@ -205,25 +295,120 @@ public class Activity_Filter extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String interest_key = obj1.getString(TAG_TRANSACTION_ID);
-                            String interest_name = obj1.getString(TAG_TRANSACTION_NAME);
+                            String interest_key = obj1.getString(TAG_BUSINESS_INTEREST_ID);
+                            String interest_name = obj1.getString(TAG_BUSINESS_INTEREST_NAME);
 
-                            Arraylist_business_transaction_id.add(interest_key);
-                            Arraylist_business_transaction_name.add(interest_name);
+                            Arraylist_business_interest_id.add(interest_key);
+                            Arraylist_business_interest_name.add(interest_name);
                         }
                         try {
                             adapter_transaction = new ArrayAdapter<String>(Activity_Filter.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_business_transaction_name);
-                            spn_transaction_type.setAdapter(adapter_transaction);
-                            //  spn_transaction_type.setThreshold(1);
+                                    android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
+                            spn_business_for_sale_type.setAdapter(adapter_transaction);
+                            //  spn_business_for_sale_type.setThreshold(1);
 
-                            spn_transaction_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            spn_business_for_sale_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
                                     t1 = (TextView) arg1;
                                     str_selected_transaction_type_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
-                                    str_selected_transaction_id = Arraylist_business_transaction_id.get(arg2);
+                                    str_selected_transaction_id = Arraylist_business_interest_id.get(arg2);
+
+
+                                }
+                            });
+
+                        } catch (Exception e) {
+
+                        }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_InvestorBuyer_type();
+                        } catch (Exception e) {
+
+                        }
+
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * To get  Business For sale Type
+     ***************************/
+
+    public void Get_InvestorBuyer_type() {
+        String tag_json_obj = "json_obj_req";
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_investor_buyer_type, new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String investor_buyer_id = obj1.getString(TAG_INVESTOR_BUYER_TYPE_ID);
+                            String investor_buyer_name = obj1.getString(TAG_INVESTOR_BUYER_TYPE_NAME);
+
+                            Arraylist_investor_buyer_id.add(investor_buyer_id);
+                            Arraylist_investor_buyer_name.add(investor_buyer_name);
+                        }
+                        try {
+                            adapter_investor_buyer_type = new ArrayAdapter<String>(Activity_Filter.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_investor_buyer_name);
+                            spn_investor_buyer_type.setAdapter(adapter_investor_buyer_type);
+                            //  spn_business_for_sale_type.setThreshold(1);
+
+                            spn_investor_buyer_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                                        long arg3) {
+                                    t1 = (TextView) arg1;
+                                    str_selected_investor_buyer_type_name = t1.getText().toString();
+                                    System.out.println("Argument " + arg2);
+                                    str_selected_investor_buyer_type_id = Arraylist_investor_buyer_id.get(arg2);
 
 
                                 }

@@ -21,11 +21,14 @@ public class AppConfig {
     public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
 
 
-//TEMPORARY URL's
+    //TEMPORARY URL's
     //Investor Profile  // CHANGE URL'S LATER (THESE R TEST URL'S)
     public static String url_investor_iam = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestoran";
     public static String url_investor_interested = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestorinterest";
     public static String url_investor_profile_add = "http://www.epictech.in/api_awesome/index.php/Apicontroller/addinvestorprofile";
+
+    //FILTER MENU
+    public static String url_investor_buyer_type = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestoran";
 
 
 }

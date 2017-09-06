@@ -30,6 +30,7 @@
 
 
             <LinearLayout
+                android:id="@+id/layout_main_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -81,6 +82,7 @@
 
 
             <LinearLayout
+                android:id="@+id/layout_business_for_sale_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -137,6 +139,64 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_investor_buyer_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/bg_parent_rounded_corner"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_transaction" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Transaction Types"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spn_filter_investor_buyer_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_weight="0.2"
+                        android:entries="@array/planets"
+                        android:gravity="left|center_vertical"
+                        android:text="Industry"
+                        android:textColor="@color/textColorPrimary"
+                        app:hintText="Select Transaction type" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_franchise_headquaters_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -168,7 +228,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Business Headquaters Location"
+                            android:text="Business Headquaters Locations"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -196,6 +256,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_interested_business_locations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -227,7 +288,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Interested Business Location"
+                            android:text="Interested Business Locations"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -255,6 +316,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_interested_business_industries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -320,6 +382,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_investment_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -393,6 +456,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_asset_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -465,6 +529,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_run_rate_sales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -537,6 +602,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_monthly_sales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -609,6 +675,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_EBITDA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -681,6 +748,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_slider_established"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -755,6 +823,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_checkboxes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -1004,10 +1073,10 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layout_investor_buyer_investor_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1053,6 +1122,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_investor_buyer_investor_interested_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
