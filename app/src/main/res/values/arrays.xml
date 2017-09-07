@@ -92,6 +92,7 @@
     </string-array>
 
     <string-array name="spinner_filter_main">
+        <item>Select</item>
         <item>Business For sale</item>
         <item>Investor/Buyers</item>
         <item>Franchises</item>
