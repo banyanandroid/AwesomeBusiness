@@ -22,14 +22,19 @@ public class AppConfig {
 
 
     //TEMPORARY URL's
+
     //Investor Profile  // CHANGE URL'S LATER (THESE R TEST URL'S)
-    public static String url_investor_iam = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestoran";
-    public static String url_investor_interested = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestorinterest";
-    public static String url_investor_profile_add = "http://www.epictech.in/api_awesome/index.php/Apicontroller/addinvestorprofile";
+    public static String url_investor_iam = BASE_URL + "/index.php/Apicontroller/listallinvestoran";
+    public static String url_investor_interested = BASE_URL + "/index.php/Apicontroller/listallinvestorinterest";
+    public static String url_investor_profile_add = BASE_URL + "/index.php/Apicontroller/addinvestorprofile";
 
     //FILTER MENU
-    public static String url_investor_buyer_type = "http://epictech.in/api_awesome/index.php/Apicontroller/listallinvestoran";
+    public static String url_investor_buyer_type = BASE_URL + "/index.php/Apicontroller/listallinvestoran";
 
+    //User Profiles
+    public static String url_user_business_profiles = BASE_URL + "/index.php/Apicontroller/listuserbusinessprofile";
+    public static String url_user_investor_profiles = BASE_URL + "/index.php/Apicontroller/listuserinvestorprofile";
+    public static String url_user_franchise_profiles = BASE_URL + "/index.php/Apicontroller/listuserfranchiseprofile";
 
 }
 

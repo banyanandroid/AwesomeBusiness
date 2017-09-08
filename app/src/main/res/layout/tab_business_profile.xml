@@ -4,20 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/business_profiles_swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/business_profiles_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/my_business_profile"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:dividerHeight="2dp"
-                android:listSelector="@color/row_activated">
+        <ListView
+            android:id="@+id/my_business_profile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="2dp"
+            android:listSelector="@color/row_activated">
 
-            </ListView>
+        </ListView>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

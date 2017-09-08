@@ -44,11 +44,7 @@ import butterknife.ButterKnife;
 public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
-    SheetLayout mSheetLayout;
-    FloatingActionButton mFab;
-
     String str_user_name, str_user_id;
-    String str_task_name, str_task_des;
 
     public static RequestQueue queue;
 
@@ -104,8 +100,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     HashMap<String, String> params = new HashMap<String, String>();
 
     public BusinessProfiles_Adapter adapter;
-
-    String str_select_task_id;
 
     private static final int REQUEST_CODE = 1;
 
@@ -167,19 +161,18 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                String enq_no = Business_profile_list.get(position).get(TAG);
+                System.out.println("ITEM CLICKED");
 
 
+               /* String business_id = Business_profile_list.get(position).get(TAG_BUSINESS_ID);
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                editor.putString("enq_no", enq_no);
-
+                editor.putString("business_id", business_id);
                 editor.commit();
-
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                startActivity(i);
+                startActivity(i);*/
+
             }
 
         });
@@ -213,7 +206,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
         String tag_json_obj = "json_obj_req";
         System.out.println("CAME 1");
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_social_login, new Response.Listener<String>() {
+                AppConfig.url_user_business_profiles, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -264,8 +257,8 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             String business_tentative_price = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE);
                             String business_legal_entity_type = obj1.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
 
-                            String location_name = obj1.getString(TAG_LOCATION_NAME);
-                            String location_key = obj1.getString(TAG_LOCATION_KEY);
+                          //  String location_name = obj1.getString(TAG_LOCATION_NAME);
+                         //   String location_key = obj1.getString(TAG_LOCATION_KEY);
 
 
                             // creating new HashMap
@@ -273,6 +266,43 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
 
                             // adding each child node to HashMap key => value
                             map.put(TAG_BUSINESS_ID, business_id);
+                            map.put(TAG_BUSINESS_KEY, business_id);
+                            map.put(TAG_BUSINESS_SHORT_DES, business_id);
+                            map.put(TAG_BUSINESS_YEARLY_SALES, business_id);
+                            map.put(TAG_BUSINESS_EBITDA, business_id);
+                            map.put(TAG_BUSINESS_EBITDA_RANGE, business_id);
+                            map.put(TAG_BUISNESS_INVESTMENT, business_id);
+                            map.put(TAG_BUISNESS_DESCRIPTION, business_id);
+                            map.put(TAG_BUSINESS_INTEREST_NAME, business_id);
+                            map.put(TAG_BUSINESS_ROLE_NAME, business_id);
+                            map.put(TAG_COUNTRY_CURRENCY, business_id);
+                            map.put(TAG_BUSINESS_CURRENCY, business_id);
+                            map.put(TAG_BUSINESS_SELL_LEASE, business_id);
+                            map.put(TAG_BUSINESS_ASSETS_FEATURES, business_id);
+                            map.put(TAG_BUSINESS_SELL_LEASE_PRICE, business_id);
+                            map.put(TAG_BUSINESS_SELL_LEASE_COST, business_id);
+                            map.put(TAG_BUSINESS_SELL_TYPE, business_id);
+                            map.put(TAG_BUSINESS_ASSETS_PURCHASED, business_id);
+                            map.put(TAG_BUSINESS_ASSETS_DESCRIPTION, business_id);
+                            map.put(TAG_BUSINESS_USER_ROLE, business_id);
+                            map.put(TAG_BUSINESS_USER_INTEREST_IN, business_id);
+                            map.put(TAG_BUSINESS_MOBILE_CODE, business_id);
+                            map.put(TAG_BUSINESS_USER_NAME, business_id);
+                            map.put(TAG_BUSINESS_USER_MOBILE, business_id);
+                            map.put(TAG_BUSINESS_USER_EMAIL, business_id);
+                            map.put(TAG_BUSINESS_COMPANY_NAME, business_id);
+                            map.put(TAG_BUSINESS_EMPLOYEE_COUNT, business_id);
+                            map.put(TAG_BUSINESS_ESTABLISHED, business_id);
+                            map.put(TAG_BUISNESS_PRODUCTS_SERVICES, business_id);
+                            map.put(TAG_BUISNESS_FACILITY, business_id);
+                            map.put(TAG_BUSINESS_ASSETS_REASON, business_id);
+                            map.put(TAG_BUSINESS_MONTH_SALES, business_id);
+                            map.put(TAG_BUSINESS_TENTATIVE_PRICE, business_id);
+                            map.put(TAG_BUSINESS_LEGAL_ENTITY_TYPE, business_id);
+
+                           // map.put(TAG_LOCATION_NAME, business_id);
+                          //  map.put(TAG_LOCATION_KEY, business_id);
+
 
 
                             Business_profile_list.add(map);
