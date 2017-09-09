@@ -164,14 +164,92 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 System.out.println("ITEM CLICKED");
 
 
-               /* String business_id = Business_profile_list.get(position).get(TAG_BUSINESS_ID);
+                String business_id = Business_profile_list.get(position).get(TAG_BUSINESS_ID);
+                String business_key = Business_profile_list.get(position).get(TAG_BUSINESS_KEY);
+                String business_short_des = Business_profile_list.get(position).get(TAG_BUSINESS_SHORT_DES);
+                String business_yearly_sales = Business_profile_list.get(position).get(TAG_BUSINESS_YEARLY_SALES);
+                String business_ebitda= Business_profile_list.get(position).get(TAG_BUSINESS_EBITDA);
+                String business_ebitda_range = Business_profile_list.get(position).get(TAG_BUSINESS_EBITDA_RANGE);
+                String business_investment = Business_profile_list.get(position).get(TAG_BUISNESS_INVESTMENT);
+                String business_description = Business_profile_list.get(position).get(TAG_BUISNESS_DESCRIPTION);
+                String business_interest_name = Business_profile_list.get(position).get(TAG_BUSINESS_INTEREST_NAME);
+                String business_role_name = Business_profile_list.get(position).get(TAG_BUSINESS_ROLE_NAME);
+                String business_country_currency = Business_profile_list.get(position).get(TAG_COUNTRY_CURRENCY);
+                String business_business_currency = Business_profile_list.get(position).get(TAG_BUSINESS_CURRENCY);
+                String business_sell_lease = Business_profile_list.get(position).get(TAG_BUSINESS_SELL_LEASE);
+                String business_assets_features = Business_profile_list.get(position).get(TAG_BUSINESS_ASSETS_FEATURES);
+                String business_sell_lease_price = Business_profile_list.get(position).get(TAG_BUSINESS_SELL_LEASE_PRICE);
+                String business_sell_lease_cost = Business_profile_list.get(position).get(TAG_BUSINESS_SELL_LEASE_COST);
+                String business_sell_type = Business_profile_list.get(position).get(TAG_BUSINESS_SELL_TYPE);
+                String business_assets_purchased = Business_profile_list.get(position).get(TAG_BUSINESS_ASSETS_PURCHASED);
+                String business_assets_description = Business_profile_list.get(position).get(TAG_BUSINESS_ASSETS_DESCRIPTION);
+                String business_user_role = Business_profile_list.get(position).get(TAG_BUSINESS_USER_ROLE);
+                String business_user_interest_in = Business_profile_list.get(position).get(TAG_BUSINESS_USER_INTEREST_IN);
+                String business_mobile_code = Business_profile_list.get(position).get(TAG_BUSINESS_MOBILE_CODE);
+                String business_user_name = Business_profile_list.get(position).get(TAG_BUSINESS_USER_NAME);
+                String business_user_mobile = Business_profile_list.get(position).get(TAG_BUSINESS_USER_MOBILE);
+                String business_user_email = Business_profile_list.get(position).get(TAG_BUSINESS_USER_EMAIL);
+                String business_company_name = Business_profile_list.get(position).get(TAG_BUSINESS_COMPANY_NAME);
+                String business_employee_count = Business_profile_list.get(position).get(TAG_BUSINESS_EMPLOYEE_COUNT);
+                String business_established = Business_profile_list.get(position).get(TAG_BUSINESS_ESTABLISHED);
+                String business_products_services = Business_profile_list.get(position).get(TAG_BUISNESS_PRODUCTS_SERVICES);
+                String business_facility = Business_profile_list.get(position).get(TAG_BUISNESS_FACILITY);
+                String business_assets_reason = Business_profile_list.get(position).get(TAG_BUSINESS_ASSETS_REASON);
+                String business_month_sales = Business_profile_list.get(position).get(TAG_BUSINESS_MONTH_SALES);
+                String business_tentative_price = Business_profile_list.get(position).get(TAG_BUSINESS_TENTATIVE_PRICE);
+                String business_legal_entity_type = Business_profile_list.get(position).get(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
+
+                String business_location_name = Business_profile_list.get(position).get(TAG_LOCATION_NAME);
+                String business_location_key = Business_profile_list.get(position).get(TAG_LOCATION_KEY);
+
+
+
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+
                 editor.putString("business_id", business_id);
+                editor.putString("business_id", business_key);
+                editor.putString("business_id", business_short_des);
+                editor.putString("business_id", business_yearly_sales);
+                editor.putString("business_id", business_ebitda);
+                editor.putString("business_id", business_ebitda_range);
+                editor.putString("business_id", business_investment);
+                editor.putString("business_id", business_description);
+                editor.putString("business_id", business_interest_name);
+                editor.putString("business_id", business_role_name);
+                editor.putString("business_id", business_country_currency);
+                editor.putString("business_id", business_business_currency);
+                editor.putString("business_id", business_sell_lease);
+                editor.putString("business_id", business_assets_features);
+                editor.putString("business_id", business_sell_lease_price);
+                editor.putString("business_id", business_sell_lease_cost);
+                editor.putString("business_id", business_sell_type);
+                editor.putString("business_id", business_assets_purchased);
+                editor.putString("business_id", business_assets_description);
+                editor.putString("business_id", business_user_role);
+                editor.putString("business_id", business_user_interest_in);
+                editor.putString("business_id", business_mobile_code);
+                editor.putString("business_id", business_user_name);
+                editor.putString("business_id", business_user_mobile);
+                editor.putString("business_id", business_user_email);
+                editor.putString("business_id", business_company_name);
+                editor.putString("business_id", business_employee_count);
+                editor.putString("business_id", business_established);
+                editor.putString("business_id", business_products_services);
+                editor.putString("business_id", business_facility);
+                editor.putString("business_id", business_assets_reason);
+                editor.putString("business_id", business_month_sales);
+                editor.putString("business_id", business_tentative_price);
+                editor.putString("business_id", business_legal_entity_type);
+                editor.putString("business_id", business_location_name);
+                editor.putString("business_id", business_location_key);
+
+
+
                 editor.commit();
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                startActivity(i);*/
+                startActivity(i);
 
             }
 
