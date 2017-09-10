@@ -70,6 +70,19 @@
             android:name=".activity.Activity_User_Profiles"
             android:label="My Profiles"></activity>
 
+        <activity
+            android:name=".activity.Activity_BusinessProfile_Update"
+            android:label="Update Business Profile"></activity>
+
+        <activity
+            android:name=".activity.Activity_FranchiseProfile_Update"
+            android:label="Update Franchise Profile"></activity>
+
+        <activity
+            android:name=".activity.Activity_InvestorProfile_Update"
+            android:label="Update Investor Profile"></activity>
+
+
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">

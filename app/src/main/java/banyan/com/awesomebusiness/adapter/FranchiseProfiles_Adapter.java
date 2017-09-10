@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.activity.Tab_Business_Profile;
+import banyan.com.awesomebusiness.activity.Tab_Franchises_Profile;
 
 /**
  * Created by User on 9/7/2017.
@@ -54,18 +55,18 @@ public class FranchiseProfiles_Adapter extends BaseAdapter {
         if (convertView == null)
             v = inflater.inflate(R.layout.list_user_franchise_profiles, null);
 
-        TextView txt_business_profile_desc = (TextView) v.findViewById(R.id.list_franchise_profile_description);
+        TextView txt_franchise_profile_desc = (TextView) v.findViewById(R.id.list_franchise_profile_description);
 
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-      //  System.out.println("SHORT DESCCCCCCC : " + Tab_Business_Profile.TAG_BUSINESS_SHORT_DES);
+        System.out.println("SHORT DESCCCCCCC : " + Tab_Franchises_Profile.TAG_FRANCHISE_BRAND_NAME);
 
-      //  txt_business_profile_desc.setText(result.get(Tab_Business_Profile.TAG_BUSINESS_SHORT_DES));
+        txt_franchise_profile_desc.setText(result.get(Tab_Franchises_Profile.TAG_FRANCHISE_BRAND_NAME));
 
 
         String color = bgColors[position % bgColors.length];
-      //  txt_business_profile_desc.setBackgroundColor(Color.parseColor(color));
+        txt_franchise_profile_desc.setBackgroundColor(Color.parseColor(color));
 
         return v;
 

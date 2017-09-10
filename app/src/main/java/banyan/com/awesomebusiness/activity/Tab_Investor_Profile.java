@@ -1,6 +1,9 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -145,12 +148,56 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
 
                 System.out.println("ITEM CLICKED");
 
+                String investor_id = Investor_profile_list.get(position).get(TAG_INVESTOR_ID);
+                String investor_key = Investor_profile_list.get(position).get(TAG_INVESTOR_KEY);
+                String investor_name = Investor_profile_list.get(position).get(TAG_INVESTOR_NAME);
+                String investor_confidential_email = Investor_profile_list.get(position).get(TAG_INVESTOR_CONFIDENTIAL_EMAIL);
+                String investor_confidential_mobile = Investor_profile_list.get(position).get(TAG_INVESTOR_CONFIDENTIAL_MOBILE);
+                String investor_user_role = Investor_profile_list.get(position).get(TAG_INVESTOR_USER_ROLE);
+                String investor_currency_from = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY_FROM);
+                String investor_currency_to = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY_TO);
+                String investor_currency = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY);
+                String investor_company_name = Investor_profile_list.get(position).get(TAG_INVESTOR_COMPANY_NAME);
+                String investor_designation = Investor_profile_list.get(position).get(TAG_INVESTOR_DESIGNATION);
+                String investo_profile_url = Investor_profile_list.get(position).get(TAG_INVESTO_PROFILE_URL);
+                String investor_short_description = Investor_profile_list.get(position).get(TAG_INVESTOR_SHORT_DESCRIPTION);
+                String investor_about_user = Investor_profile_list.get(position).get(TAG_INVESTOR_ABOUT_USER);
+                String investor_an_name = Investor_profile_list.get(position).get(TAG_INVESTOR_AN_NAME);
+                String investor_interest_name = Investor_profile_list.get(position).get(TAG_INVESTOR_INTEREST_NAME);
+
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("investor_id", investor_id);
+                editor.putString("investor_key", investor_key);
+                editor.putString("investor_name", investor_name);
+                editor.putString("investor_confidential_email", investor_confidential_email);
+                editor.putString("investor_confidential_mobile", investor_confidential_mobile);
+                editor.putString("investor_user_role", investor_user_role);
+                editor.putString("investor_currency_from", investor_currency_from);
+                editor.putString("investor_currency_to", investor_currency_to);
+                editor.putString("investor_currency", investor_currency);
+                editor.putString("investor_company_name", investor_company_name);
+                editor.putString("investor_designation", investor_designation);
+                editor.putString("investo_profile_url", investo_profile_url);
+                editor.putString("investor_short_description", investor_short_description);
+                editor.putString("investor_about_user", investor_about_user);
+                editor.putString("investor_an_name", investor_an_name);
+                editor.putString("investor_interest_name", investor_interest_name);
+
+                editor.commit();
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
+
 
             }
 
         });
 
-        return inflater.inflate(R.layout.tab_investor_profile, container, false);
+        return rootview;
     }
 
 
@@ -186,7 +233,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                     if (success == 1) {
 
                         JSONArray arr;
-                        arr = obj.getJSONArray("enquiry");
+                        arr = obj.getJSONArray("data");
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 

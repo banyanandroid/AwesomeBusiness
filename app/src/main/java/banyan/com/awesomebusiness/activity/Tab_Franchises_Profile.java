@@ -1,6 +1,8 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -52,48 +54,47 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
     private SwipeRefreshLayout swipeRefreshLayout;
 
 
-    /*
-     {
-            "franchise_id": "1",
-            "franchise_key": "2NtE7a",
-            "franchise_user_name": "sdg",
-            "franchise_email": "sdgs@dg.gj",
-            "franchise_mobile": "12354689",
-            "franchise_designation": "dfv",
-            "franchise_brand_name": "gdg",
-            "franchise_brand_offering": "1",
-            "franchise_brand_company": "dgds",
-            "franchise_brand_services": "fdh",
-            "franchise_brand_established": "2017",
-            "franchise_brand_headquaters": "1-continent",
-            "brand_salepartner_count": "hgdf",
-            "brand_salepartner_before_partnering": "gfhgd",
-            "brand_salepartner_expect": "fdhgbd",
-            "brand_salepartner_procedure": "dfgb",
-            "franchise_format": "1",
-            "franchise_logo": "62017_08_24_18_30_45.jpg",
-            "franchise_currency": "1",
-            "country_currency": "INR",
-            "location": [
-                {
-                    "location_name": "Asia",
-                    "location_key": "1111"
-                }
-            ],
-            "industry": [
-                {
-                    "industry_name": "Building Construction and Maintenance",
-                    "industry_key": "Ads123"
-                }
-            ],
-            "images": [],
-            "documents": [
-                {
-                    "document_path": "http://www.epictech.in/api_awesome/uploads/0"
-                }
-    */
+    public static final String TAG_FRANCHISE_ID = "franchise_id";
+    public static final String TAG_FRANCHISE_KEY = "franchise_key";
+    public static final String TAG_FRANCHISE_USER_NAME = "franchise_user_name";
+    public static final String TAG_FRANCHISE_EMAIL = "franchise_email";
+    public static final String TAG_FRANCHISE_MOBILE = "franchise_mobile";
+    public static final String TAG_FRANCHISE_DESIGNATION = "franchise_designation";
+    public static final String TAG_FRANCHISE_BRAND_NAME = "franchise_brand_name";
+    public static final String TAG_FRANCHISE_BRAND_OFFERING = "franchise_brand_offering";
+    public static final String TAG_FRANCHISE_BRAND_COMPANY = "franchise_brand_company";
+    public static final String TAG_FRANCHISE_BRAND_SERVICES = "franchise_brand_services";
+    public static final String TAG_FRANCHISE_BRAND_ESTABLISHED = "franchise_brand_established";
+    public static final String TAG_FRANCHISE_BRAND_HEADQUATERS = "franchise_brand_headquaters";
+    public static final String TAG_BRAND_SALEPARTNER_COUNT = "brand_salepartner_count";
+    public static final String TAG_BRAND_SALEPARTNER_BEFORE_PARTNERING = "brand_salepartner_before_partnering";
+    public static final String TAG_BRAND_SALEPARTNER_EXPECT = "brand_salepartner_expect";
+    public static final String TAG_BRAND_SALEPARTNER_PROCEDURE = "brand_salepartner_procedure";
+    public static final String TAG_FRANCHISE_FORMAT = "franchise_format";
+    public static final String TAG_FRANCHISE_LOGO = "franchise_logo";
+    public static final String TAG_FRANCHISE_CURRENCY = "franchise_currency";
+    public static final String TAG_COUNTRY_CURRENCY = "country_currency";
 
-    public static final String TAG_BUSINESS_ID = "business_id";
+    public static final String TAG_LOCATION_NAME = "location_name";
+    public static final String TAG_LOCATION_KEY = "location_key";
+    public static final String TAG_INDUSTRY_NAME = "industry_name";
+    public static final String TAG_INDUSTRY_KEY = "industry_key";
+
+    public static final String TAG_DOCUMENT_PATH = "document_path";
+
+    public static final String TAG_FRANCHISE_FORMAT_ID = "franchise_format_id";
+    public static final String TAG_FRANCHISE_FORMAT_NAME = "franchise_format_name";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT = "franchise_format_min_investment";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT = "franchise_format_max_investment";
+    public static final String TAG_FRANCHISE_FORMAT_FEE = "franchise_format_fee";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS = "franchise_format_no_of_staffs";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY = "franchise_format_royality";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE = "franchise_format_revenue";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT = "franchise_format_profit";
+    public static final String TAG_FRANCHISE_FORMAT_CREATED_ON = "franchise_format_created_on";
+    public static final String TAG_FRANCHISE_FORMAT_ACT = "franchise_format_act";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT = "franchise_format_min_sqft";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT = "franchise_format_max_sqft";
 
 
     static ArrayList<HashMap<String, String>> Franchise_profile_list;
@@ -118,7 +119,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                              Bundle savedInstanceState) {
 
 
-        View rootview = inflater.inflate(R.layout.tab_business_profile, container, false);
+        View rootview = inflater.inflate(R.layout.tab_franchises, container, false);
         ButterKnife.bind(getActivity());
 
         session = new SessionManager(getActivity());
@@ -130,6 +131,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
 
 
         List = (ListView) rootview.findViewById(R.id.my_franchises_profile);
+
         swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.franchise_profiles_swipe_refresh_layout);
 
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -165,13 +167,62 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
 
                 System.out.println("ITEM CLICKED");
 
+                String franchise_id = Franchise_profile_list.get(position).get(TAG_FRANCHISE_ID);
+                String franchise_key = Franchise_profile_list.get(position).get(TAG_FRANCHISE_KEY);
+                String franchise_user_name = Franchise_profile_list.get(position).get(TAG_FRANCHISE_USER_NAME);
+                String franchise_email = Franchise_profile_list.get(position).get(TAG_FRANCHISE_EMAIL);
+                String franchise_mobile = Franchise_profile_list.get(position).get(TAG_FRANCHISE_MOBILE);
+                String franchise_designation = Franchise_profile_list.get(position).get(TAG_FRANCHISE_DESIGNATION);
+                String franchise_brand_name = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_NAME);
+                String franchise_brand_offering = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_OFFERING);
+                String franchise_brand_company = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_COMPANY);
+                String franchise_brand_services = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_SERVICES);
+                String franchise_brand_established = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_ESTABLISHED);
+                String franchise_brand_headquaters = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BRAND_HEADQUATERS);
+                String brand_salepartner_count = Franchise_profile_list.get(position).get(TAG_BRAND_SALEPARTNER_COUNT);
+                String brand_salepartner_before_partnering = Franchise_profile_list.get(position).get(TAG_BRAND_SALEPARTNER_BEFORE_PARTNERING);
+                String brand_salepartner_expect = Franchise_profile_list.get(position).get(TAG_BRAND_SALEPARTNER_EXPECT);
+                String brand_salepartner_procedure = Franchise_profile_list.get(position).get(TAG_BRAND_SALEPARTNER_PROCEDURE);
+                String franchise_format = Franchise_profile_list.get(position).get(TAG_FRANCHISE_FORMAT);
+                String franchise_logo = Franchise_profile_list.get(position).get(TAG_FRANCHISE_LOGO);
+                String franchise_currency = Franchise_profile_list.get(position).get(TAG_FRANCHISE_CURRENCY);
+                String country_currency = Franchise_profile_list.get(position).get(TAG_COUNTRY_CURRENCY);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("franchise_id", franchise_id);
+                editor.putString("franchise_key", franchise_key);
+                editor.putString("franchise_user_name", franchise_user_name);
+                editor.putString("franchise_email", franchise_email);
+                editor.putString("franchise_mobile", franchise_mobile);
+                editor.putString("franchise_designation", franchise_designation);
+                editor.putString("franchise_brand_name", franchise_brand_name);
+                editor.putString("franchise_brand_offering", franchise_brand_offering);
+                editor.putString("franchise_brand_company", franchise_brand_company);
+                editor.putString("franchise_brand_services", franchise_brand_services);
+                editor.putString("franchise_brand_established", franchise_brand_established);
+                editor.putString("franchise_brand_headquaters", franchise_brand_headquaters);
+                editor.putString("brand_salepartner_count", brand_salepartner_count);
+                editor.putString("brand_salepartner_before_partnering", brand_salepartner_before_partnering);
+                editor.putString("brand_salepartner_expect", brand_salepartner_expect);
+                editor.putString("brand_salepartner_procedure", brand_salepartner_procedure);
+                editor.putString("franchise_format", franchise_format);
+                editor.putString("franchise_logo", franchise_logo);
+                editor.putString("franchise_currency", franchise_currency);
+                editor.putString("country_currency", country_currency);
+
+
+                editor.commit();
+
 
             }
 
         });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.tab_franchises, container, false);
+        return rootview;
     }
 
 
@@ -209,18 +260,101 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                     if (success == 1) {
 
                         JSONArray arr;
-                        arr = obj.getJSONArray("enquiry");
+                        arr = obj.getJSONArray("data");
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String business_id = obj1.getString(TAG_BUSINESS_ID);
+                            String franchise_id = obj1.getString(TAG_FRANCHISE_ID);
+                            String franchise_key = obj1.getString(TAG_FRANCHISE_KEY);
+                            String franchise_user_name = obj1.getString(TAG_FRANCHISE_USER_NAME);
+                            String franchise_email = obj1.getString(TAG_FRANCHISE_EMAIL);
+                            String franchise_mobile = obj1.getString(TAG_FRANCHISE_MOBILE);
+                            String franchise_designation = obj1.getString(TAG_FRANCHISE_DESIGNATION);
+                            String franchise_brand_name = obj1.getString(TAG_FRANCHISE_BRAND_NAME);
+                            String franchise_brand_offering = obj1.getString(TAG_FRANCHISE_BRAND_OFFERING);
+                            String franchise_brand_company = obj1.getString(TAG_FRANCHISE_BRAND_COMPANY);
+                            String franchise_brand_services = obj1.getString(TAG_FRANCHISE_BRAND_SERVICES);
+                            String franchise_brand_established = obj1.getString(TAG_FRANCHISE_BRAND_ESTABLISHED);
+                            String franchise_brand_headquaters = obj1.getString(TAG_FRANCHISE_BRAND_HEADQUATERS);
+                            String brand_salepartner_count = obj1.getString(TAG_BRAND_SALEPARTNER_COUNT);
+                            String brand_salepartner_before_partnering = obj1.getString(TAG_BRAND_SALEPARTNER_BEFORE_PARTNERING);
+                            String brand_salepartner_expect = obj1.getString(TAG_BRAND_SALEPARTNER_EXPECT);
+                            String brand_salepartner_procedure = obj1.getString(TAG_BRAND_SALEPARTNER_PROCEDURE);
+                            String franchise_format = obj1.getString(TAG_FRANCHISE_FORMAT);
+                            String franchise_logo = obj1.getString(TAG_FRANCHISE_LOGO);
+                            String franchise_currency = obj1.getString(TAG_FRANCHISE_CURRENCY);
+                            String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
+
+                            /*
+                            String location_name = obj1.getString(TAG_LOCATION_NAME);
+                            String location_key = obj1.getString(TAG_LOCATION_KEY);
+                            String industry_name = obj1.getString(TAG_INDUSTRY_NAME);
+                            String industry_key = obj1.getString(TAG_INDUSTRY_KEY);
+                            String document_path = obj1.getString(TAG_DOCUMENT_PATH);
+
+                            String franchise_format_id = obj1.getString(TAG_FRANCHISE_FORMAT_ID);
+                            String franchise_format_name = obj1.getString(TAG_FRANCHISE_FORMAT_NAME);
+                            String franchise_format_min_investment = obj1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT);
+                            String franchise_format_max_investment = obj1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT);
+                            String franchise_format_fee = obj1.getString(TAG_FRANCHISE_FORMAT_FEE);
+                            String franchise_format_no_of_staffs = obj1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS);
+                            String franchise_format_royality = obj1.getString(TAG_FRANCHISE_FORMAT_ROYALITY);
+                            String franchise_format_revenue = obj1.getString(TAG_FRANCHISE_FORMAT_REVENUE);
+                            String franchise_format_profit = obj1.getString(TAG_FRANCHISE_FORMAT_PROFIT);
+                            String franchise_format_created_on = obj1.getString(TAG_FRANCHISE_FORMAT_CREATED_ON);
+                            String franchise_format_act = obj1.getString(TAG_FRANCHISE_FORMAT_ACT);
+                            String franchise_format_min_sqft = obj1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT);
+                            String franchise_format_max_sqft = obj1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT);
+                            */
 
 
                             // creating new HashMap
                             HashMap<String, String> map = new HashMap<String, String>();
 
                             // adding each child node to HashMap key => value
-                            map.put(TAG_BUSINESS_ID, business_id);
+                            map.put(TAG_FRANCHISE_ID, franchise_id);
+                            map.put(TAG_FRANCHISE_KEY, franchise_key);
+                            map.put(TAG_FRANCHISE_USER_NAME, franchise_user_name);
+                            map.put(TAG_FRANCHISE_EMAIL, franchise_email);
+                            map.put(TAG_FRANCHISE_MOBILE, franchise_mobile);
+                            map.put(TAG_FRANCHISE_DESIGNATION, franchise_designation);
+                            map.put(TAG_FRANCHISE_BRAND_NAME, franchise_brand_name);
+                            map.put(TAG_FRANCHISE_BRAND_OFFERING, franchise_brand_offering);
+                            map.put(TAG_FRANCHISE_BRAND_COMPANY, franchise_brand_company);
+                            map.put(TAG_FRANCHISE_BRAND_SERVICES, franchise_brand_services);
+                            map.put(TAG_FRANCHISE_BRAND_ESTABLISHED, franchise_brand_established);
+                            map.put(TAG_FRANCHISE_BRAND_HEADQUATERS, franchise_brand_headquaters);
+                            map.put(TAG_BRAND_SALEPARTNER_COUNT, brand_salepartner_count);
+                            map.put(TAG_BRAND_SALEPARTNER_BEFORE_PARTNERING, brand_salepartner_before_partnering);
+                            map.put(TAG_BRAND_SALEPARTNER_EXPECT, brand_salepartner_expect);
+                            map.put(TAG_BRAND_SALEPARTNER_PROCEDURE, brand_salepartner_procedure);
+                            map.put(TAG_FRANCHISE_FORMAT, franchise_format);
+                            map.put(TAG_FRANCHISE_LOGO, franchise_logo);
+                            map.put(TAG_FRANCHISE_CURRENCY, franchise_currency);
+                            map.put(TAG_COUNTRY_CURRENCY, country_currency);
+
+                            /*
+                            map.put(TAG_LOCATION_NAME, location_name);
+                            map.put(TAG_LOCATION_KEY, location_key);
+                            map.put(TAG_INDUSTRY_NAME, industry_name);
+                            map.put(TAG_INDUSTRY_KEY, industry_key);
+                            map.put(TAG_DOCUMENT_PATH, document_path);
+
+                            map.put(TAG_FRANCHISE_FORMAT_ID, franchise_format_id);
+                            map.put(TAG_FRANCHISE_FORMAT_NAME, franchise_format_name);
+                            map.put(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT, franchise_format_min_investment);
+                            map.put(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT, franchise_format_max_investment);
+                            map.put(TAG_FRANCHISE_FORMAT_FEE, franchise_format_fee);
+                            map.put(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS, franchise_format_no_of_staffs);
+                            map.put(TAG_FRANCHISE_FORMAT_ROYALITY, franchise_format_royality);
+                            map.put(TAG_FRANCHISE_FORMAT_REVENUE, franchise_format_revenue);
+                            map.put(TAG_FRANCHISE_FORMAT_PROFIT, franchise_format_profit);
+                            map.put(TAG_FRANCHISE_FORMAT_CREATED_ON, franchise_format_created_on);
+                            map.put(TAG_FRANCHISE_FORMAT_ACT, franchise_format_act);
+                            map.put(TAG_FRANCHISE_FORMAT_MIN_SQFT, franchise_format_min_sqft);
+                            map.put(TAG_FRANCHISE_FORMAT_MAX_SQFT, franchise_format_max_sqft);
+
+                            */
 
 
                             Franchise_profile_list.add(map);

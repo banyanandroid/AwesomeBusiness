@@ -158,7 +158,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 String business_key = Business_profile_list.get(position).get(TAG_BUSINESS_KEY);
                 String business_short_des = Business_profile_list.get(position).get(TAG_BUSINESS_SHORT_DES);
                 String business_yearly_sales = Business_profile_list.get(position).get(TAG_BUSINESS_YEARLY_SALES);
-                String business_ebitda= Business_profile_list.get(position).get(TAG_BUSINESS_EBITDA);
+                String business_ebitda = Business_profile_list.get(position).get(TAG_BUSINESS_EBITDA);
                 String business_ebitda_range = Business_profile_list.get(position).get(TAG_BUSINESS_EBITDA_RANGE);
                 String business_investment = Business_profile_list.get(position).get(TAG_BUISNESS_INVESTMENT);
                 String business_description = Business_profile_list.get(position).get(TAG_BUISNESS_DESCRIPTION);
@@ -193,50 +193,49 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 String business_location_key = Business_profile_list.get(position).get(TAG_LOCATION_KEY);
 
 
-
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putString("business_id", business_id);
-                editor.putString("business_id", business_key);
-                editor.putString("business_id", business_short_des);
-                editor.putString("business_id", business_yearly_sales);
-                editor.putString("business_id", business_ebitda);
-                editor.putString("business_id", business_ebitda_range);
-                editor.putString("business_id", business_investment);
-                editor.putString("business_id", business_description);
-                editor.putString("business_id", business_interest_name);
-                editor.putString("business_id", business_role_name);
-                editor.putString("business_id", business_country_currency);
-                editor.putString("business_id", business_business_currency);
-                editor.putString("business_id", business_sell_lease);
-                editor.putString("business_id", business_assets_features);
-                editor.putString("business_id", business_sell_lease_price);
-                editor.putString("business_id", business_sell_lease_cost);
-                editor.putString("business_id", business_sell_type);
-                editor.putString("business_id", business_assets_purchased);
-                editor.putString("business_id", business_assets_description);
-                editor.putString("business_id", business_user_role);
-                editor.putString("business_id", business_user_interest_in);
-                editor.putString("business_id", business_mobile_code);
-                editor.putString("business_id", business_user_name);
-                editor.putString("business_id", business_user_mobile);
-                editor.putString("business_id", business_user_email);
-                editor.putString("business_id", business_company_name);
-                editor.putString("business_id", business_employee_count);
-                editor.putString("business_id", business_established);
-                editor.putString("business_id", business_products_services);
-                editor.putString("business_id", business_facility);
-                editor.putString("business_id", business_assets_reason);
-                editor.putString("business_id", business_month_sales);
-                editor.putString("business_id", business_tentative_price);
-                editor.putString("business_id", business_legal_entity_type);
-                editor.putString("business_id", business_location_name);
-                editor.putString("business_id", business_location_key);
+                editor.putString("business_key", business_key);
+                editor.putString("business_short_des", business_short_des);
+                editor.putString("business_yearly_sales", business_yearly_sales);
+                editor.putString("business_ebitda", business_ebitda);
+                editor.putString("business_ebitda_range", business_ebitda_range);
+                editor.putString("business_investment", business_investment);
+                editor.putString("business_description", business_description);
+                editor.putString("business_interest_name", business_interest_name);
+                editor.putString("business_role_name", business_role_name);
+                editor.putString("business_country_currency", business_country_currency);
+                editor.putString("business_business_currency", business_business_currency);
+                editor.putString("business_sell_lease", business_sell_lease);
+                editor.putString("business_assets_features", business_assets_features);
+                editor.putString("business_sell_lease_price", business_sell_lease_price);
+                editor.putString("business_sell_lease_cost", business_sell_lease_cost);
+                editor.putString("business_sell_type", business_sell_type);
+                editor.putString("business_assets_purchased", business_assets_purchased);
+                editor.putString("business_assets_description", business_assets_description);
+                editor.putString("business_user_role", business_user_role);
+                editor.putString("business_user_interest_in", business_user_interest_in);
+                editor.putString("business_mobile_code", business_mobile_code);
+                editor.putString("business_user_name", business_user_name);
+                editor.putString("business_user_mobile", business_user_mobile);
+                editor.putString("business_user_email", business_user_email);
+                editor.putString("business_company_name", business_company_name);
+                editor.putString("business_employee_count", business_employee_count);
+                editor.putString("business_established", business_established);
+                editor.putString("business_products_services", business_products_services);
+                editor.putString("business_facility", business_facility);
+                editor.putString("business_assets_reason", business_assets_reason);
+                editor.putString("business_month_sales", business_month_sales);
+                editor.putString("business_tentative_price", business_tentative_price);
+                editor.putString("business_legal_entity_type", business_legal_entity_type);
+                editor.putString("business_location_name", business_location_name);
+                editor.putString("business_location_key", business_location_key);
                 editor.commit();
 
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), Activity_BusinessProfile_Update.class);
                 startActivity(i);
 
             }
@@ -321,8 +320,8 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             String business_month_sales = obj1.getString(TAG_BUSINESS_MONTH_SALES);
                             String business_tentative_price = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE);
                             String business_legal_entity_type = obj1.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
-                          //  String location_name = obj1.getString(TAG_LOCATION_NAME);
-                         //   String location_key = obj1.getString(TAG_LOCATION_KEY);
+                            //  String location_name = obj1.getString(TAG_LOCATION_NAME);
+                            //   String location_key = obj1.getString(TAG_LOCATION_KEY);
 
 
                             // creating new HashMap
@@ -364,8 +363,8 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_BUSINESS_TENTATIVE_PRICE, business_tentative_price);
                             map.put(TAG_BUSINESS_LEGAL_ENTITY_TYPE, business_legal_entity_type);
 
-                           // map.put(TAG_LOCATION_NAME, business_id);
-                          //  map.put(TAG_LOCATION_KEY, business_id);
+                            // map.put(TAG_LOCATION_NAME, business_id);
+                            //  map.put(TAG_LOCATION_KEY, business_id);
 
                             Business_profile_list.add(map);
 
@@ -418,7 +417,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("user_id", "1");
+                params.put("user_id", str_user_id);
 
                 System.out.println("user_id" + "1");
 

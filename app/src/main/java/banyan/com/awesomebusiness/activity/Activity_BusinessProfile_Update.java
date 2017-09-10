@@ -60,6 +60,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     String TAG = "Auto_Res";
     String str_user_currency, str_user_id = "";
 
+    String str_business_key = "";
+
     // PIC Upload
 
     String listString = "";
@@ -89,6 +91,50 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     public static final String TAG_LOC_PLACE = "place";
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
+
+
+    //To Get The Previously Entered Values
+    public static final String TAG_BUSINESS_ID = "business_id";
+    public static final String TAG_BUSINESS_KEY = "business_key";
+    public static final String TAG_BUSINESS_SHORT_DES = "buisness_short_description";
+    public static final String TAG_BUSINESS_YEARLY_SALES = "business_yearly_sales";
+    public static final String TAG_BUSINESS_EBITDA = "business_ebitda";
+    public static final String TAG_BUSINESS_EBITDA_RANGE = "business_ebitda_range";
+    public static final String TAG_BUISNESS_INVESTMENT = "buisness_investment";
+    public static final String TAG_BUISNESS_DESCRIPTION = "buisness_description";
+    public static final String TAG_BUSINESS_INTEREST_NAME = "business_interest_name";
+    public static final String TAG_BUSINESS_ROLE_NAME = "business_role_name";
+    public static final String TAG_COUNTRY_CURRENCY = "country_currency";
+    public static final String TAG_BUSINESS_CURRENCY = "business_currency";
+    public static final String TAG_BUSINESS_SELL_LEASE = "business_sell_lease";
+    public static final String TAG_BUSINESS_ASSETS_FEATURES = "business_assets_features";
+    public static final String TAG_BUSINESS_SELL_LEASE_PRICE = "business_sell_lease_price";
+    public static final String TAG_BUSINESS_SELL_LEASE_COST = "business_sell_lease_cost";
+    public static final String TAG_BUSINESS_SELL_TYPE = "business_sell_type";
+    public static final String TAG_BUSINESS_ASSETS_PURCHASED = "business_assets_purchased";
+    public static final String TAG_BUSINESS_ASSETS_DESCRIPTION = "business_assets_description";
+    public static final String TAG_BUSINESS_USER_ROLE = "business_user_role";
+    public static final String TAG_BUSINESS_USER_INTEREST_IN = "business_user_interest_in";
+    public static final String TAG_BUSINESS_MOBILE_CODE = "business_mobile_code";
+    public static final String TAG_BUSINESS_USER_NAME = "business_user_name";
+    public static final String TAG_BUSINESS_USER_MOBILE = "business_user_mobile";
+    public static final String TAG_BUSINESS_USER_EMAIL = "business_user_email";
+    public static final String TAG_BUSINESS_COMPANY_NAME = "business_company_name";
+    public static final String TAG_BUSINESS_EMPLOYEE_COUNT = "business_employee_count";
+    public static final String TAG_BUSINESS_ESTABLISHED = "business_established";
+    public static final String TAG_BUISNESS_PRODUCTS_SERVICES = "buisness_products_services";
+    public static final String TAG_BUISNESS_FACILITY = "buisness_facility";
+    public static final String TAG_BUSINESS_ASSETS_REASON = "business_assets_reason";
+    public static final String TAG_BUSINESS_MONTH_SALES = "business_month_sales";
+    public static final String TAG_BUSINESS_TENTATIVE_PRICE = "business_tentative_price";
+    public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
+    public static final String TAG_BUSINESS_CONTACT_DETAILS = "business_contact_details";
+    public static final String TAG_BUSINESS_COMPANY_DETAILS = "business_company_details";
+
+
+    public static final String TAG_LOCATION_NAME = "location_name";
+    public static final String TAG_LOCATION_KEY = "location_key";
+
 
     ArrayList<String> Arraylist_business_role_id = null;
     ArrayList<String> Arraylist_business_role_name = null;
@@ -125,7 +171,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales,
             str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
-
 
 
     String str_ch_companydetails, str_ch_contactdetails, str_ch_yearly_sales_range,
@@ -232,6 +277,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_business_key = sharedPreferences.getString("business_key", "business_key");
+
 
         //values from myprofiles listview to set
 
@@ -463,7 +510,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             Encode_Image1();
             // textView.setText(sb.toString());
         }
-    }   
+    }
 
     public void Encode_Image1() {
 
@@ -537,7 +584,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
 
     /*****************************
@@ -923,6 +969,13 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Business_Profile();
+                        } catch (Exception e) {
+
+                        }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -957,6 +1010,235 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         queue.add(request);
     }
 
+
+    /*****************************
+     * GET Business Profile
+     ***************************/
+
+    public void Get_Business_Profile() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_user_business_profile_update, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                System.out.println("CAME RESPONSE ::: " + response.toString());
+
+                try {
+
+
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        //   arr = obj.getJSONArray("location");
+
+                        JSONArray arr_main;
+                        arr_main = obj.getJSONArray("data");
+
+                        for (int i = 0; arr_main.length() > i; i++) {
+
+                            //  String str_obj = obj.getString("data");
+                            JSONObject obj_data = arr_main.getJSONObject(i);
+
+                            String business_id = obj_data.getString(TAG_BUSINESS_ID);
+                            String business_key = obj_data.getString(TAG_BUSINESS_KEY);
+                            String buisness_short_description = obj_data.getString(TAG_BUSINESS_SHORT_DES);
+                            String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES);
+                            String business_ebitda = obj_data.getString(TAG_BUSINESS_EBITDA);
+                            String business_ebitda_range = obj_data.getString(TAG_BUSINESS_EBITDA_RANGE);
+                            String buisness_investment = obj_data.getString(TAG_BUISNESS_INVESTMENT);
+                            String buisness_description = obj_data.getString(TAG_BUISNESS_DESCRIPTION);
+                            String business_interest_name = obj_data.getString(TAG_BUSINESS_INTEREST_NAME);
+                            String business_role_name = obj_data.getString(TAG_BUSINESS_ROLE_NAME);
+                            String country_currency = obj_data.getString(TAG_COUNTRY_CURRENCY);
+                            String business_currency = obj_data.getString(TAG_BUSINESS_CURRENCY);
+                            String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE);
+                            String business_assets_features = obj_data.getString(TAG_BUSINESS_ASSETS_FEATURES);
+                            String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE);
+                            String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST);
+                            String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE);
+                            String business_assets_purchased = obj_data.getString(TAG_BUSINESS_ASSETS_PURCHASED);
+                            String business_assets_description = obj_data.getString(TAG_BUSINESS_ASSETS_DESCRIPTION);
+                            String business_user_role = obj_data.getString(TAG_BUSINESS_USER_ROLE);
+                            String business_user_interest_in = obj_data.getString(TAG_BUSINESS_USER_INTEREST_IN);
+                            String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE);
+                            String business_user_name = obj_data.getString(TAG_BUSINESS_USER_NAME);
+                            String business_user_mobile = obj_data.getString(TAG_BUSINESS_USER_MOBILE);
+                            String business_user_email = obj_data.getString(TAG_BUSINESS_USER_EMAIL);
+                            String business_company_name = obj_data.getString(TAG_BUSINESS_COMPANY_NAME);
+                            String business_contact_details = obj_data.getString(TAG_BUSINESS_CONTACT_DETAILS);
+                            String business_company_details = obj_data.getString(TAG_BUSINESS_COMPANY_DETAILS);
+                            String business_employee_count = obj_data.getString(TAG_BUSINESS_EMPLOYEE_COUNT);
+                            String business_established = obj_data.getString(TAG_BUSINESS_ESTABLISHED);
+                            String buisness_products_services = obj_data.getString(TAG_BUISNESS_PRODUCTS_SERVICES);
+                            String buisness_facility = obj_data.getString(TAG_BUISNESS_FACILITY);
+                            String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON);
+                            String business_month_sales = obj_data.getString(TAG_BUSINESS_MONTH_SALES);
+                            String business_tentative_price = obj_data.getString(TAG_BUSINESS_TENTATIVE_PRICE);
+                            String business_legal_entity_type = obj_data.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
+
+
+                            try {
+                                edt_name.setText("" + business_user_name);
+
+                                edt_company_name.setText("" + business_company_name);
+                                edt_mobile.setText("" + business_user_mobile);
+                                edt_official_email.setText("" + business_user_email);
+
+
+                          /*
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                            edt_edt_edt_edt.setText("" + strstrstrstr);
+
+                            */
+
+                                if (business_contact_details.equals("1")) {
+
+                                    chb_contatdetails.setChecked(true);
+                                } else {
+                                    chb_contatdetails.setChecked(false);
+                                }
+
+                                if (business_company_details.equals("1")) {
+
+                                    chb_companydetails.setChecked(true);
+
+                                } else {
+                                    chb_companydetails.setChecked(false);
+                                }
+
+
+                                if (business_ebitda_range.equals("1")) {
+
+                                    chb_display_EBITDA_as_range.setChecked(true);
+
+                                } else {
+                                    chb_display_EBITDA_as_range.setChecked(false);
+                                }
+
+
+                                //FOR YEARLY SALES RANGE
+                            /*
+                           if (business_company_details.equals("1")) {
+
+                                chb_yearly_sales_range.setChecked(true);
+
+                            } else {
+                                chb_yearly_sales_range.setChecked(false);
+                            }*/
+
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("location");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
+
+                        for (int j = 0; arr.length() > j; j++) {
+                            JSONObject obj_location = arr.getJSONObject(j);
+
+                           /* String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
+                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
+
+                            Arraylist_pref_location_id.add(prefer_location_id);
+                            Arraylist_pref_location_type.add(prefer_location_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+                        JSONArray arr1;
+
+                        arr1 = obj.getJSONArray("industry");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
+
+                        for (int k = 0; arr1.length() > k; k++) {
+                            JSONObject obj_indus = arr1.getJSONObject(k);
+
+                          /*  String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
+                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
+
+                            Arraylist_pref_sector_id.add(preferences_industries_id);
+                            Arraylist_pref_sector_type.add(preferences_industry_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Sector_List();
+
+                        } catch (Exception e) {
+
+                        }
+
+                    } else if (success == 0) {
+
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_BusinessProfile_Update.this)
+                                .setTitle("AWESOME BUSINESSES")
+                                .setText("Oops! Something went wrong :( \n Try Again")
+                                .setBackgroundColor(R.color.red)
+                                .show();
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+                Alerter.create(Activity_BusinessProfile_Update.this)
+                        .setTitle("AWESOME BUSINESSES")
+                        .setText("Internal Error :(\n" + error.getMessage())
+                        .setBackgroundColor(R.color.colorPrimaryDark)
+                        .show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("business_key", str_business_key);
+
+                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
+                System.out.println("BUSINESS KEYYYYYYYYYYYYY ::: " + str_business_key);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
 
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM
