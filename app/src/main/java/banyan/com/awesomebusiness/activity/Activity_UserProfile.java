@@ -469,7 +469,6 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                 ////////////////
 
-
                 System.out.println("Email IDDDDDD" + str_user_email);
                 System.out.println("New PassworDDDDD" + str_new_password);
 

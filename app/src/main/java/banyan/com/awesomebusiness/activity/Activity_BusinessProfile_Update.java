@@ -1044,12 +1044,14 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             String business_id = obj_data.getString(TAG_BUSINESS_ID);
                             String business_key = obj_data.getString(TAG_BUSINESS_KEY);
+
                             String buisness_short_description = obj_data.getString(TAG_BUSINESS_SHORT_DES);
                             String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES);
                             String business_ebitda = obj_data.getString(TAG_BUSINESS_EBITDA);
                             String business_ebitda_range = obj_data.getString(TAG_BUSINESS_EBITDA_RANGE);
                             String buisness_investment = obj_data.getString(TAG_BUISNESS_INVESTMENT);
                             String buisness_description = obj_data.getString(TAG_BUISNESS_DESCRIPTION);
+
                             String business_interest_name = obj_data.getString(TAG_BUSINESS_INTEREST_NAME);
                             String business_role_name = obj_data.getString(TAG_BUSINESS_ROLE_NAME);
                             String country_currency = obj_data.getString(TAG_COUNTRY_CURRENCY);
@@ -1063,6 +1065,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String business_assets_description = obj_data.getString(TAG_BUSINESS_ASSETS_DESCRIPTION);
                             String business_user_role = obj_data.getString(TAG_BUSINESS_USER_ROLE);
                             String business_user_interest_in = obj_data.getString(TAG_BUSINESS_USER_INTEREST_IN);
+
+
                             String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE);
                             String business_user_name = obj_data.getString(TAG_BUSINESS_USER_NAME);
                             String business_user_mobile = obj_data.getString(TAG_BUSINESS_USER_MOBILE);
@@ -1077,29 +1081,79 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON);
                             String business_month_sales = obj_data.getString(TAG_BUSINESS_MONTH_SALES);
                             String business_tentative_price = obj_data.getString(TAG_BUSINESS_TENTATIVE_PRICE);
+
                             String business_legal_entity_type = obj_data.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
 
 
                             try {
-                                edt_name.setText("" + business_user_name);
 
+                                edt_name.setText("" + business_user_name);
                                 edt_company_name.setText("" + business_company_name);
                                 edt_mobile.setText("" + business_user_mobile);
                                 edt_official_email.setText("" + business_user_email);
 
+                                edt_business_established_year.setText("" + business_established);
 
-                          /*
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
-                            edt_edt_edt_edt.setText("" + strstrstrstr);
+                                edt_no_of_permanent_employees.setText("" + business_employee_count);
+                                edt_business_highlights.setText("" + buisness_description);
+                                edt_business_des.setText("" + buisness_short_description);
 
-                            */
+                                edt_business_all_prod_serv.setText("" + buisness_products_services);
+                                edt_business_facility_desc.setText("" + buisness_facility);
+
+                                edt_avg_monthly_sales.setText("" + business_month_sales);
+                                edt_latest_yearly_sales.setText("" + business_yearly_sales);
+                                edt_EBITDA.setText("" + business_ebitda);
+                                edt_tentative_selling_price.setText("" + business_tentative_price);
+
+                                //
+                                edt_physical_assests_value.setText("" + business_ebitda);
+
+                                edt_reason_for_sale.setText("" + business_assets_reason);
+
+                                edt_year_asset_purchased.setText("" + business_assets_purchased);
+
+
+                                //Common
+                                EditText
+
+                                        edt_asset_seeking_to_sell, edt_asset_features,
+                                        edt_asset_selling_leasing_price, edt_asset_selling_eason;
+
+                                if (business_legal_entity_type.equals("Sole Proprietorship/Sole Trader")) {
+
+                                    spn_business_legal_type.setSelection(1);
+
+                                } else if (business_legal_entity_type.equals("General Partnership")) {
+
+                                    spn_business_legal_type.setSelection(2);
+
+                                } else if (business_legal_entity_type.equals("Limited Liability Partnership (LLP)")) {
+
+                                    spn_business_legal_type.setSelection(3);
+
+                                } else if (business_legal_entity_type.equals("Limited Liability Company (LLC)")) {
+
+                                    spn_business_legal_type.setSelection(4);
+
+                                } else if (business_legal_entity_type.equals("Private Limited Company")) {
+
+                                    spn_business_legal_type.setSelection(5);
+
+                                } else if (business_legal_entity_type.equals("Public Limited Company")) {
+
+                                    spn_business_legal_type.setSelection(6);
+
+                                } else if (business_legal_entity_type.equals("S Corporation")) {
+
+                                    spn_business_legal_type.setSelection(7);
+
+                                } else if (business_legal_entity_type.equals("C Corporation")) {
+
+                                    spn_business_legal_type.setSelection(8);
+
+                                }
+
 
                                 if (business_contact_details.equals("1")) {
 
@@ -1115,7 +1169,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 } else {
                                     chb_companydetails.setChecked(false);
                                 }
-
 
                                 if (business_ebitda_range.equals("1")) {
 

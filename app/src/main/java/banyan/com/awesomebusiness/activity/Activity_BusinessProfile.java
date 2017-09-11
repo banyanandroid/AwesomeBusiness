@@ -375,7 +375,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     chip_business_location.setFocusableInTouchMode(true);
                     chip_business_location.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_selected_role_id.equals("")) {
+                }/* else if (str_selected_role_id.equals("")) {
                     spn_i_am.setFocusable(true);
                     spn_i_am.setFocusableInTouchMode(true);
                     spn_i_am.requestFocus();
@@ -387,7 +387,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     spn_interested_in.requestFocus();
                     spn_interested_in.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else {
+                }*/ else {
                     dialog = new SpotsDialog(Activity_BusinessProfile.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(Activity_BusinessProfile.this);

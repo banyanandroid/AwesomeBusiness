@@ -771,7 +771,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("user_id", str_user_id);
+                params.put("user_id", "1");
 
                 System.out.println("USER_ID ::: " + "3");
 
