@@ -245,10 +245,8 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
 
         });
 
-
         // Inflate the layout for this fragment
         return rootview;
-
 
     }
 
@@ -257,7 +255,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
         try {
             queue = Volley.newRequestQueue(getActivity());
             Get_Business_Profiles();
-
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -327,7 +324,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             //  String location_name = obj1.getString(TAG_LOCATION_NAME);
                             //   String location_key = obj1.getString(TAG_LOCATION_KEY);
 
-
                             // creating new HashMap
                             HashMap<String, String> map = new HashMap<String, String>();
 
@@ -371,11 +367,9 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             //  map.put(TAG_LOCATION_KEY, business_id);
 
                             Business_profile_list.add(map);
-
                             adapter = new BusinessProfiles_Adapter(getActivity(),
                                     Business_profile_list);
                             List.setAdapter(adapter);
-
                             System.out.println("HASHMAP ARRAY" + Business_profile_list);
 
                         }
@@ -422,7 +416,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("user_id", str_user_id);
-
                 System.out.println("user_id" + "1");
 
                 return params;

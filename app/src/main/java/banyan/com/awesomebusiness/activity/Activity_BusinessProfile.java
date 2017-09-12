@@ -6,24 +6,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TextInputLayout;
-import android.support.percent.PercentLayoutHelper;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +46,7 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
 
 /**
@@ -66,10 +60,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public static RequestQueue queue;
     Button btn_add_pic, btn_submit;
     String TAG = "Auto_Res";
-    String str_user_currency, str_user_id = "";
+    String str_user_currency = "";
 
     // PIC Upload
-
     String listString = "";
     String encodedstring = "";
 
@@ -82,7 +75,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     TextView t1;
 
-    CardView Cardview_spn_others, Cardview_spn_selling_leasing;
 
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
@@ -120,10 +112,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter_interested;
 
-    SearchableSpinner spn_i_am, spn_interested_in;
-
-    ChipLayout chip_busineeslist, chip_business_location;
-
     String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_id, str_selected_interest_name = "";
 
@@ -140,15 +128,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     String str_final_business_sector, str_final_Business_Location = "";
 
+    CardView Cardview_spn_others, Cardview_spn_selling_leasing;
+
     //Common
     EditText edt_name, edt_mobile, edt_company_name, edt_official_email,
-
-    edt_business_established_year,
-            edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
+            edt_business_established_year, edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
             edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
             edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
     CheckBox chb_companydetails, chb_contatdetails, chb_display_EBITDA_as_range, chb_yearly_sales_range;
+
+    SearchableSpinner spn_i_am, spn_interested_in;
+
+    ChipLayout chip_busineeslist, chip_business_location;
 
     Spinner spn_business_legal_type;
 
@@ -161,6 +153,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     String str_asset_originally_purchased, str_industries_use_asset, str_asset_located_at,
             str_asset_seeking_sell, str_asset_features, str_asset_selling_leasing_price, str_amount_fixed_for, str_asset_selling_reason;
+
+    SessionManager session;
+    public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +177,18 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 finish();
             }
         });
+
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        HashMap<String, String> user = session.getUserDetails();
+        // name
+        str_user_name = user.get(SessionManager.KEY_USER);
+        str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
+        str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
+        str_user_id = user.get(SessionManager.KEY_USER_ID);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
 
         btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -235,12 +242,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
 
         spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
-        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-
-        System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         Arraylist_business_role_id = new ArrayList<String>();
         Arraylist_business_role_name = new ArrayList<String>();
@@ -476,7 +477,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         }
 
         queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-        Function_Login();
+        Function_Pic_Upload();
 
         //System.out.println("ENCODE :: " + listString);
 
@@ -485,10 +486,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
 
     /*********************************
-     *  POST
+     *  POST IMAGE
      * *********************************/
 
-    private void Function_Login() {
+    private void Function_Pic_Upload() {
 
         String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
 
@@ -665,20 +666,24 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             Arraylist_business_interest_name.add(interest_name);
                         }
                         try {
+                            System.out.println("ARRAY : " + Arraylist_business_interest_name);
+
                             adapter_interested = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
                             spn_interested_in.setAdapter(adapter_interested);
 
-
                             spn_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
+
+                                   Toast.makeText(getApplicationContext(), "CLICK" , Toast.LENGTH_LONG).show();
                                     t1 = (TextView) arg1;
                                     str_selected_interest_name = t1.getText().toString();
                                     System.out.println("Argument " + arg2);
                                     str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
 
                                     try {
+                                        System.out.println("INTERESTED IN ::: " + str_selected_interest_name);
                                         if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
                                             Cardview_spn_others.setVisibility(View.GONE);
                                             Cardview_spn_selling_leasing.setVisibility(View.VISIBLE);
@@ -772,7 +777,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
                             Arraylist_sector_type.add(sector_type);
-
                         }
                         try {
 
@@ -1018,15 +1022,12 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("email", str_official_email);
                 params.put("user_contact", str_ch_contactdetails);
                 params.put("user_company", str_ch_companydetails);
-
                 // String selected from dynamic values - Auto Complete
                 params.put("role", str_selected_role_id);
                 params.put("interest_in", str_selected_interest_id);
-
                 // String selected from dynamic values - MultiSelect (chipset)
                 params.put("locations", str_final_Business_Location);
                 params.put("industry", str_final_business_sector);
-
                 params.put("year", str_business_established_year);
                 params.put("employee", str_no_of_permanent_employees);
                 params.put("entitys", str_spn_business_legal_type);
@@ -1042,7 +1043,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
                 params.put("reason", str_reason_for_sale);
-
                 // Strings got by shared prefrences
                 params.put("user_id", str_user_id);
                 params.put("user_currency", str_user_currency);
