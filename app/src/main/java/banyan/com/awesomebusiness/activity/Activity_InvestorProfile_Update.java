@@ -56,7 +56,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "";
     TextView t1;
-    String str_user_currency, str_user_id = "";
+    String str_user_currency, str_user_id, str_investor_key = "";
 
 
     // COMPANY LOGO - PIC Upload
@@ -142,7 +142,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     String str_final_industry_update, str_final_location_update = "";
 
     //test purpose (for posting parameters empty) delete later
-    String empty="";
+    String empty = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +193,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_investor_key = sharedPreferences.getString("investor_key", "investor_key");
 
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
@@ -1104,6 +1105,13 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_InvestorProfile();
+                        } catch (Exception e) {
+
+                        }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -1128,6 +1136,140 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * GET Invstor Profile Previous Values
+     ***************************/
+
+    public void Get_InvestorProfile() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_user_investor_profile_update, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                System.out.println("CAME RESPONSE ::: " + response.toString());
+
+                try {
+
+
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+
+                        JSONArray arr_main;
+                        arr_main = obj.getJSONArray("data");
+
+                        for (int i = 0; arr_main.length() > i; i++) {
+
+                            //  String str_obj = obj.getString("data");
+                            JSONObject obj_data = arr_main.getJSONObject(i);
+
+                            //   String business_id = obj_data.getString(TAG_BUSINESS_ID);
+
+
+                            try {
+
+                                //   edt_name.setText("" + business_user_name);
+
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("location");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
+
+                        for (int j = 0; arr.length() > j; j++) {
+                            JSONObject obj_location = arr.getJSONObject(j);
+
+                           /* String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
+                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
+
+                            Arraylist_pref_location_id.add(prefer_location_id);
+                            Arraylist_pref_location_type.add(prefer_location_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+                        JSONArray arr1;
+
+                        arr1 = obj.getJSONArray("industry");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
+
+                        for (int k = 0; arr1.length() > k; k++) {
+                            JSONObject obj_indus = arr1.getJSONObject(k);
+
+                          /*  String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
+                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
+
+                            Arraylist_pref_sector_id.add(preferences_industries_id);
+                            Arraylist_pref_sector_type.add(preferences_industry_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+
+                    } else if (success == 0) {
+
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_InvestorProfile_Update.this)
+                                .setTitle("AWESOME BUSINESSES")
+                                .setText("Oops! Something went wrong :( \n Try Again")
+                                .setBackgroundColor(R.color.red)
+                                .show();
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+                Alerter.create(Activity_InvestorProfile_Update.this)
+                        .setTitle("AWESOME BUSINESSES")
+                        .setText("Internal Error :(\n" + error.getMessage())
+                        .setBackgroundColor(R.color.colorPrimaryDark)
+                        .show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("investor_key", str_investor_key);
+
+                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
+                System.out.println("INVESTORRRRR KEYYYYYYYYYYYYY ::: " + str_investor_key);
 
                 return params;
             }
@@ -1242,10 +1384,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         };
         queue.add(request);
     }
-
-
-
-
 
 
 }

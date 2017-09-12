@@ -1,5 +1,6 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -213,8 +214,10 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                 editor.putString("franchise_currency", franchise_currency);
                 editor.putString("country_currency", country_currency);
 
-
                 editor.commit();
+
+                Intent i = new Intent(getActivity(), Activity_FranchiseProfile_Update.class);
+                startActivity(i);
 
 
             }

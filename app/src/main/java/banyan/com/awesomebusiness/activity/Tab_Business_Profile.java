@@ -91,6 +91,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_BUSINESS_MONTH_SALES = "business_month_sales";
     public static final String TAG_BUSINESS_TENTATIVE_PRICE = "business_tentative_price";
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
+    public static final String TAG_BUSINESS_REASON = "business_reason";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -184,6 +185,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 String business_established = Business_profile_list.get(position).get(TAG_BUSINESS_ESTABLISHED);
                 String business_products_services = Business_profile_list.get(position).get(TAG_BUISNESS_PRODUCTS_SERVICES);
                 String business_facility = Business_profile_list.get(position).get(TAG_BUISNESS_FACILITY);
+                String business_reason = Business_profile_list.get(position).get(TAG_BUSINESS_REASON);
                 String business_assets_reason = Business_profile_list.get(position).get(TAG_BUSINESS_ASSETS_REASON);
                 String business_month_sales = Business_profile_list.get(position).get(TAG_BUSINESS_MONTH_SALES);
                 String business_tentative_price = Business_profile_list.get(position).get(TAG_BUSINESS_TENTATIVE_PRICE);
@@ -228,6 +230,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 editor.putString("business_products_services", business_products_services);
                 editor.putString("business_facility", business_facility);
                 editor.putString("business_assets_reason", business_assets_reason);
+                editor.putString("business_reason", business_reason);
                 editor.putString("business_month_sales", business_month_sales);
                 editor.putString("business_tentative_price", business_tentative_price);
                 editor.putString("business_legal_entity_type", business_legal_entity_type);
@@ -316,6 +319,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             String business_established = obj1.getString(TAG_BUSINESS_ESTABLISHED);
                             String buisness_products_services = obj1.getString(TAG_BUISNESS_PRODUCTS_SERVICES);
                             String buisness_facility = obj1.getString(TAG_BUISNESS_FACILITY);
+                            String buisness_reason = obj1.getString(TAG_BUSINESS_REASON);
                             String business_assets_reason = obj1.getString(TAG_BUSINESS_ASSETS_REASON);
                             String business_month_sales = obj1.getString(TAG_BUSINESS_MONTH_SALES);
                             String business_tentative_price = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE);

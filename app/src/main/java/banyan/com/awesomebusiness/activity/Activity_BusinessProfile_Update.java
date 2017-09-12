@@ -130,7 +130,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
     public static final String TAG_BUSINESS_CONTACT_DETAILS = "business_contact_details";
     public static final String TAG_BUSINESS_COMPANY_DETAILS = "business_company_details";
-
+    public static final String TAG_BUSINESS_REASON = "business_reason";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -191,7 +191,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     Spinner spn_business_legal_type;
 
     //Selling or Leasing out business
-    EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_eason;
+    EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_reason;
 
     ChipLayout chip_industries_use_asset, chip_asset_loation;
 
@@ -267,7 +267,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         edt_asset_seeking_to_sell = (EditText) findViewById(R.id.edt_wt_asset_sell);
         edt_asset_features = (EditText) findViewById(R.id.edt_asset_features);
         edt_asset_selling_leasing_price = (EditText) findViewById(R.id.edt_price_selling_leasing);
-        edt_asset_selling_eason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
+        edt_asset_selling_reason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
 
         chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
         chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
@@ -278,9 +278,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_business_key = sharedPreferences.getString("business_key", "business_key");
-
-
-        //values from myprofiles listview to set
 
 
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
@@ -782,6 +779,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         queue.add(request);
     }
 
+
     /*****************************
      * To get  Business sector List
      ***************************/
@@ -894,6 +892,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
+
 
     /*****************************
      * To get  Business Location List
@@ -1026,100 +1025,116 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                 try {
 
-
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
 
                     if (success == 1) {
-
-                        //   arr = obj.getJSONArray("location");
 
                         JSONArray arr_main;
                         arr_main = obj.getJSONArray("data");
 
                         for (int i = 0; arr_main.length() > i; i++) {
 
-                            //  String str_obj = obj.getString("data");
                             JSONObject obj_data = arr_main.getJSONObject(i);
 
                             String business_id = obj_data.getString(TAG_BUSINESS_ID);
                             String business_key = obj_data.getString(TAG_BUSINESS_KEY);
-
-                            String buisness_short_description = obj_data.getString(TAG_BUSINESS_SHORT_DES);
-                            String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES);
-                            String business_ebitda = obj_data.getString(TAG_BUSINESS_EBITDA);
-                            String business_ebitda_range = obj_data.getString(TAG_BUSINESS_EBITDA_RANGE);
-                            String buisness_investment = obj_data.getString(TAG_BUISNESS_INVESTMENT);
-                            String buisness_description = obj_data.getString(TAG_BUISNESS_DESCRIPTION);
-
-                            String business_interest_name = obj_data.getString(TAG_BUSINESS_INTEREST_NAME);
-                            String business_role_name = obj_data.getString(TAG_BUSINESS_ROLE_NAME);
                             String country_currency = obj_data.getString(TAG_COUNTRY_CURRENCY);
                             String business_currency = obj_data.getString(TAG_BUSINESS_CURRENCY);
-                            String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE);
-                            String business_assets_features = obj_data.getString(TAG_BUSINESS_ASSETS_FEATURES);
-                            String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE);
-                            String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST);
-                            String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE);
-                            String business_assets_purchased = obj_data.getString(TAG_BUSINESS_ASSETS_PURCHASED);
-                            String business_assets_description = obj_data.getString(TAG_BUSINESS_ASSETS_DESCRIPTION);
-                            String business_user_role = obj_data.getString(TAG_BUSINESS_USER_ROLE);
-                            String business_user_interest_in = obj_data.getString(TAG_BUSINESS_USER_INTEREST_IN);
 
+                            String business_user_name = obj_data.getString(TAG_BUSINESS_USER_NAME); // user nme
+                            String business_user_mobile = obj_data.getString(TAG_BUSINESS_USER_MOBILE); // user mobile
+                            String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE); // country code
+                            String business_user_email = obj_data.getString(TAG_BUSINESS_USER_EMAIL); // user email
+                            String business_company_name = obj_data.getString(TAG_BUSINESS_COMPANY_NAME); // user company name
 
-                            String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE);
-                            String business_user_name = obj_data.getString(TAG_BUSINESS_USER_NAME);
-                            String business_user_mobile = obj_data.getString(TAG_BUSINESS_USER_MOBILE);
-                            String business_user_email = obj_data.getString(TAG_BUSINESS_USER_EMAIL);
-                            String business_company_name = obj_data.getString(TAG_BUSINESS_COMPANY_NAME);
-                            String business_contact_details = obj_data.getString(TAG_BUSINESS_CONTACT_DETAILS);
-                            String business_company_details = obj_data.getString(TAG_BUSINESS_COMPANY_DETAILS);
-                            String business_employee_count = obj_data.getString(TAG_BUSINESS_EMPLOYEE_COUNT);
-                            String business_established = obj_data.getString(TAG_BUSINESS_ESTABLISHED);
-                            String buisness_products_services = obj_data.getString(TAG_BUISNESS_PRODUCTS_SERVICES);
-                            String buisness_facility = obj_data.getString(TAG_BUISNESS_FACILITY);
-                            String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON);
-                            String business_month_sales = obj_data.getString(TAG_BUSINESS_MONTH_SALES);
-                            String business_tentative_price = obj_data.getString(TAG_BUSINESS_TENTATIVE_PRICE);
+                            String business_contact_details = obj_data.getString(TAG_BUSINESS_CONTACT_DETAILS); // chb_contact details
+                            String business_company_details = obj_data.getString(TAG_BUSINESS_COMPANY_DETAILS); // chb_company details
+                            String business_interest_name = obj_data.getString(TAG_BUSINESS_INTEREST_NAME); //spn intereted in
+                            String business_user_interest_in = obj_data.getString(TAG_BUSINESS_USER_INTEREST_IN); // spn intereted in - selected items id
+                            String business_role_name = obj_data.getString(TAG_BUSINESS_ROLE_NAME);  //spn select ur role
+                            String business_user_role = obj_data.getString(TAG_BUSINESS_USER_ROLE); //spn select ur role - selected items id
 
-                            String business_legal_entity_type = obj_data.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
+                            String business_established = obj_data.getString(TAG_BUSINESS_ESTABLISHED);    //yr business purchased
+                            String business_employee_count = obj_data.getString(TAG_BUSINESS_EMPLOYEE_COUNT); // no of permanant employees
+                            String business_legal_entity_type = obj_data.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE); //spn business legal entity type
+                            String buisness_short_description = obj_data.getString(TAG_BUSINESS_SHORT_DES); // describe business in single line
+                            String buisness_description = obj_data.getString(TAG_BUISNESS_DESCRIPTION); // highlights of business
+                            String buisness_products_services = obj_data.getString(TAG_BUISNESS_PRODUCTS_SERVICES); // list all products & services
+                            String buisness_facility = obj_data.getString(TAG_BUISNESS_FACILITY); // describe ur facility
+                            String business_month_sales = obj_data.getString(TAG_BUSINESS_MONTH_SALES); // business average monthly sales
+                            String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES); // latest yearly sales
 
+                            String business_ebitda = obj_data.getString(TAG_BUSINESS_EBITDA); //EBITA operating profit margin
+                            String business_ebitda_range = obj_data.getString(TAG_BUSINESS_EBITDA_RANGE); // chb_display as range
+                            String buisness_investment = obj_data.getString(TAG_BUISNESS_INVESTMENT); // value physical assets owned by business
+                            String business_tentative_price = obj_data.getString(TAG_BUSINESS_TENTATIVE_PRICE); //tentative selling price
+                            String business_reason = obj_data.getString(TAG_BUSINESS_REASON);
+                            String business_assets_purchased = obj_data.getString(TAG_BUSINESS_ASSETS_PURCHASED); // year asset purchased
+                            //assets location - In another array
+                            //assets industry - In another array
+                            String business_assets_description = obj_data.getString(TAG_BUSINESS_ASSETS_DESCRIPTION); // what assets u seeking to sell
+                            String business_assets_features = obj_data.getString(TAG_BUSINESS_ASSETS_FEATURES); // features of the asset
+                            String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE); // what price u selling / leasing
+                            String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON); //Reason for selling this asset
+
+                            String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE); // spn amount fixed for
+
+                            String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE); // unknown -null -no need to set
+                            String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST); //unknown null -no need to set
 
                             try {
 
                                 edt_name.setText("" + business_user_name);
+                                edt_name.setEnabled(false);
                                 edt_company_name.setText("" + business_company_name);
+                                edt_company_name.setEnabled(false);
                                 edt_mobile.setText("" + business_user_mobile);
+                                edt_mobile.setEnabled(false);
                                 edt_official_email.setText("" + business_user_email);
+                                edt_official_email.setEnabled(false);
 
                                 edt_business_established_year.setText("" + business_established);
-
                                 edt_no_of_permanent_employees.setText("" + business_employee_count);
                                 edt_business_highlights.setText("" + buisness_description);
                                 edt_business_des.setText("" + buisness_short_description);
-
                                 edt_business_all_prod_serv.setText("" + buisness_products_services);
                                 edt_business_facility_desc.setText("" + buisness_facility);
-
                                 edt_avg_monthly_sales.setText("" + business_month_sales);
                                 edt_latest_yearly_sales.setText("" + business_yearly_sales);
                                 edt_EBITDA.setText("" + business_ebitda);
+                                edt_physical_assests_value.setText("" + buisness_investment);
                                 edt_tentative_selling_price.setText("" + business_tentative_price);
-
-                                //
-                                edt_physical_assests_value.setText("" + business_ebitda);
-
-                                edt_reason_for_sale.setText("" + business_assets_reason);
-
+                                edt_reason_for_sale.setText("" + business_reason);
                                 edt_year_asset_purchased.setText("" + business_assets_purchased);
+                                edt_asset_seeking_to_sell.setText("" + business_assets_description);
+                                edt_asset_features.setText("" + business_assets_features);
+                                edt_asset_selling_leasing_price.setText("" + business_sell_lease_price);
+                                edt_asset_selling_reason.setText("" + business_assets_reason);
 
 
-                                //Common
-                                EditText
+                                // Setting Check/Uncheck for checkbox Display Contact Details
+                                if (business_contact_details.equals("1")) {
+                                    chb_contatdetails.setChecked(true);
+                                } else {
+                                    chb_contatdetails.setChecked(false);
+                                }
 
-                                        edt_asset_seeking_to_sell, edt_asset_features,
-                                        edt_asset_selling_leasing_price, edt_asset_selling_eason;
+                                // Setting Check/Uncheck for checkbox Display Company Details
+                                if (business_company_details.equals("1")) {
+                                    chb_companydetails.setChecked(true);
+                                } else {
+                                    chb_companydetails.setChecked(false);
+                                }
 
+                                // Setting Check/Uncheck for checkbox EBITDA Range
+                                if (business_ebitda_range.equals("1")) {
+                                    chb_display_EBITDA_as_range.setChecked(true);
+                                } else {
+                                    chb_display_EBITDA_as_range.setChecked(false);
+                                }
+
+                                // Setting Selected Item for Spinner - Legal Entity Type
                                 if (business_legal_entity_type.equals("Sole Proprietorship/Sole Trader")) {
 
                                     spn_business_legal_type.setSelection(1);
@@ -1154,40 +1169,20 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                                 }
 
+                                // Setting Selected Item for Spinner - Amount Is Fixed For
+                                if (business_sell_type.equals("Sole Proprietorship/Sole Trader")) {
 
-                                if (business_contact_details.equals("1")) {
+                                    spn_business_legal_type.setSelection(1);
 
-                                    chb_contatdetails.setChecked(true);
-                                } else {
-                                    chb_contatdetails.setChecked(false);
+                                } else if (business_sell_type.equals("General Partnership")) {
+
+                                    spn_business_legal_type.setSelection(2);
+
+                                } else if (business_sell_type.equals("Limited Liability Partnership (LLP)")) {
+
+                                    spn_business_legal_type.setSelection(3);
+
                                 }
-
-                                if (business_company_details.equals("1")) {
-
-                                    chb_companydetails.setChecked(true);
-
-                                } else {
-                                    chb_companydetails.setChecked(false);
-                                }
-
-                                if (business_ebitda_range.equals("1")) {
-
-                                    chb_display_EBITDA_as_range.setChecked(true);
-
-                                } else {
-                                    chb_display_EBITDA_as_range.setChecked(false);
-                                }
-
-
-                                //FOR YEARLY SALES RANGE
-                            /*
-                           if (business_company_details.equals("1")) {
-
-                                chb_yearly_sales_range.setChecked(true);
-
-                            } else {
-                                chb_yearly_sales_range.setChecked(false);
-                            }*/
 
 
                             } catch (Exception e) {
@@ -1233,14 +1228,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         } catch (Exception e) {
                         }
 
-
-                        try {
-                            queue = Volley.newRequestQueue(getApplicationContext());
-                            Get_Sector_List();
-
-                        } catch (Exception e) {
-
-                        }
 
                     } else if (success == 0) {
 
@@ -1292,6 +1279,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
+
 
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM

@@ -135,7 +135,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
 
-
     String str_ch_companydetails, str_ch_contactdetails, str_ch_yearly_sales_range,
             str_ch_display_EBITDA_range = "0";
 
@@ -468,7 +467,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             Encode_Image1();
             // textView.setText(sb.toString());
         }
-    }   
+    }
 
     public void Encode_Image1() {
 
@@ -542,7 +541,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
 
     /*****************************
@@ -978,7 +976,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                 try {
                     JSONObject obj = new JSONObject(response);
-                    System.out.println("RESPONSE : " + response);
+                    System.out.println("RESPONSEEEEEEEEEEEEEEEEEEE : " + response);
                     int success = obj.getInt("status");
                     if (success == 1) {
                         dialog.dismiss();
@@ -1052,7 +1050,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                 ////////////////
 
-
                 System.out.println("user_name" + str_name);
                 System.out.println("company_name" + str_company_name);
                 System.out.println("mobile_no" + str_mobile);
@@ -1080,7 +1077,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("reason" + str_reason_for_sale);
                 System.out.println("user_id" + str_user_id);
                 System.out.println("user_currency" + str_user_currency);
-
 
                 return params;
             }

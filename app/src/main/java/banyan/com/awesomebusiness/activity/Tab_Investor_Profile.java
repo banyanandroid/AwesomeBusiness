@@ -189,7 +189,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
 
                 editor.commit();
 
-                Intent i = new Intent(getActivity(), MainActivity.class);
+                Intent i = new Intent(getActivity(), Activity_InvestorProfile_Update.class);
                 startActivity(i);
 
 

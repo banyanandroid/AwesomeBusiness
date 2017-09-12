@@ -1,9 +1,11 @@
 package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +59,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     SpotsDialog dialog;
     public static RequestQueue queue;
     String TAG = "FRANCHISE PROFILE";
+    String str_user_currency,str_franchise_key, str_user_id = "";
     TextView t1;
 
     //FOR IMAGE UPLOAD
@@ -240,6 +243,11 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                 finish();
             }
         });
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_franchise_key = sharedPreferences.getString("franchise_key", "franchise_key");
 
         Arraylist_country_id = new ArrayList<String>();
         Arraylist_country_phone_code = new ArrayList<String>();
@@ -1974,6 +1982,15 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_FranchiseProfile();
+
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -1998,6 +2015,146 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * GET Franchise Profile Previously entered values
+     ***************************/
+
+    public void Get_FranchiseProfile() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_user_franchise_profile_update, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                System.out.println("CAME RESPONSE ::: " + response.toString());
+
+                try {
+
+
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        //   arr = obj.getJSONArray("location");
+
+                        JSONArray arr_main;
+                        arr_main = obj.getJSONArray("data");
+
+                        for (int i = 0; arr_main.length() > i; i++) {
+
+                            //  String str_obj = obj.getString("data");
+                            JSONObject obj_data = arr_main.getJSONObject(i);
+
+
+
+
+                            try {
+
+
+
+
+                             
+
+
+
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("location");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
+
+                        for (int j = 0; arr.length() > j; j++) {
+                            JSONObject obj_location = arr.getJSONObject(j);
+
+                           /* String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
+                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
+
+                            Arraylist_pref_location_id.add(prefer_location_id);
+                            Arraylist_pref_location_type.add(prefer_location_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+                        JSONArray arr1;
+
+                        arr1 = obj.getJSONArray("industry");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
+
+                        for (int k = 0; arr1.length() > k; k++) {
+                            JSONObject obj_indus = arr1.getJSONObject(k);
+
+                          /*  String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
+                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
+
+                            Arraylist_pref_sector_id.add(preferences_industries_id);
+                            Arraylist_pref_sector_type.add(preferences_industry_type);*/
+                        }
+
+                        try {
+                        } catch (Exception e) {
+                        }
+
+
+                       
+
+                    } else if (success == 0) {
+
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_FranchiseProfile_Update.this)
+                                .setTitle("AWESOME BUSINESSES")
+                                .setText("Oops! Something went wrong :( \n Try Again")
+                                .setBackgroundColor(R.color.red)
+                                .show();
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+                Alerter.create(Activity_FranchiseProfile_Update.this)
+                        .setTitle("AWESOME BUSINESSES")
+                        .setText("Internal Error :(\n" + error.getMessage())
+                        .setBackgroundColor(R.color.colorPrimaryDark)
+                        .show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("franchise_key", str_franchise_key);
+
+                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
+                System.out.println("FRANCHISE KEYYYYYYYYYYYYY ::: " + str_franchise_key);
 
                 return params;
             }
