@@ -162,6 +162,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_profile);
 
+        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::");
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -375,7 +377,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     chip_business_location.setFocusableInTouchMode(true);
                     chip_business_location.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }/* else if (str_selected_role_id.equals("")) {
+                } /*else if (str_selected_role_id.equals("")) {
                     spn_i_am.setFocusable(true);
                     spn_i_am.setFocusableInTouchMode(true);
                     spn_i_am.requestFocus();
@@ -398,6 +400,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         });
 
         try {
+
+            System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::"+ "INITIAL");
             dialog = new SpotsDialog(Activity_BusinessProfile.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
@@ -640,6 +644,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
+        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::"+ "INTERESTEDDDDDDDDDD");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
@@ -666,21 +671,17 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             Arraylist_business_interest_name.add(interest_name);
                         }
                         try {
-                            System.out.println("ARRAY : " + Arraylist_business_interest_name);
-
                             adapter_interested = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
                             spn_interested_in.setAdapter(adapter_interested);
 
-                            spn_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                                        long arg3) {
+                            spn_interested_in.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                   Toast.makeText(getApplicationContext(), "CLICK" , Toast.LENGTH_LONG).show();
-                                    t1 = (TextView) arg1;
+                                    t1 = (TextView) view;
                                     str_selected_interest_name = t1.getText().toString();
-                                    System.out.println("Argument " + arg2);
-                                    str_selected_interest_id = Arraylist_business_interest_id.get(arg2);
+                                    str_selected_interest_id = Arraylist_business_interest_id.get(position);
 
                                     try {
                                         System.out.println("INTERESTED IN ::: " + str_selected_interest_name);
@@ -695,6 +696,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                                     }
 
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
 
                                 }
                             });
