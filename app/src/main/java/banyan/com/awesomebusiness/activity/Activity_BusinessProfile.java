@@ -401,7 +401,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         try {
 
-            System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::"+ "INITIAL");
+            System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::" + "INITIAL");
             dialog = new SpotsDialog(Activity_BusinessProfile.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
@@ -644,7 +644,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::"+ "INTERESTEDDDDDDDDDD");
+        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::" + "INTERESTEDDDDDDDDDD");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
@@ -816,6 +816,34 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                 }
                             });
 
+                            chip_industries_use_asset.setAdapter(adapter_sector);
+
+                            chip_industries_use_asset.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
+
+                                    t1 = (TextView) view;
+                                    String str_sector_key = t1.getText().toString();
+                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
+
+                                    String str_select_sector_key = Arraylist_sector_key.get(i);
+                                    String str_select_sector_type = Arraylist_sector_type.get(i);
+                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
+                                    Arraylist_selected_sectorkey.add(str_select_item);
+
+                                    for (String s : Arraylist_selected_sectorkey) {
+                                        str_final_business_sector += s + ",";
+                                    }
+
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
+
+
+                                }
+                            });
+
+
                         } catch (Exception e) {
 
                         }
@@ -903,8 +931,37 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
                             chip_business_location.setAdapter(adapter_sector);
 
+
                             System.out.println("ARAAAAY :: " + 222222);
                             chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    System.out.println("Position :::::::: " + position);
+
+
+                                    t1 = (TextView) view;
+                                    String str_location_key = t1.getText().toString();
+                                    int i = Arraylist_location_place.indexOf(str_location_key);
+
+                                    String str_select_location_key = Arraylist_location_key.get(i);
+                                    String str_select_location_type = Arraylist_location_type.get(i);
+
+                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
+                                    Arraylist_selected_location.add(str_select_item);
+
+                                    for (String s : Arraylist_selected_location) {
+                                        str_final_Business_Location += s + ",";
+                                    }
+
+                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
+
+
+                                }
+                            });
+
+                            chip_asset_loation.setAdapter(adapter_sector);
+                            chip_asset_loation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
