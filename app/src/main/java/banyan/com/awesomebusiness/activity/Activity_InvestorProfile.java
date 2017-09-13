@@ -47,6 +47,7 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
 
 /**
@@ -60,7 +61,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "";
     TextView t1;
-    String str_user_currency, str_user_id = "";
+    String str_user_currency = "";
 
     // COMPANY LOGO - PIC Upload
 
@@ -147,6 +148,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     //test purpose (for posting parameters empty) delete later
     String empty = "";
 
+    SessionManager session;
+    public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +171,16 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 finish();
             }
         });
+
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        HashMap<String, String> user = session.getUserDetails();
+
+        // name
+        str_user_name = user.get(SessionManager.KEY_USER);
+        str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
+        str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
+        str_user_id = user.get(SessionManager.KEY_USER_ID);
 
         Arraylist_investor_role_id = new ArrayList<String>();
         Arraylist_investor_role_name = new ArrayList<String>();
@@ -194,9 +208,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         Arraylist_image_encode = new ArrayList<String>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         ChipLayout.MAX_CHARACTER_COUNT = 20;
@@ -254,7 +266,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 ///////  FOR GETTING ENTERED SECTOR TYPE AND ID
                 ///////////////////////
 
-                /*
                 String str_industry_from_chip = chip_busineeslist.getText().toString();
                 System.out.println("FETCHED INDUSTRIES FROMCHIPLAYOUTTTTTTTT :: " + str_industry_from_chip);
                 String[] items_comma = str_industry_from_chip.split(",");
@@ -307,7 +318,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     }
                 }
                 System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
-                */
 
 
                 ///////////////////////

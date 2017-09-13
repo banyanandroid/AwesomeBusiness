@@ -118,8 +118,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter_interested;
 
-    String str_selected_role_id, str_selected_role_name = "";
-    String str_selected_interest_id, str_selected_interest_name = "";
+    String str_selected_role_id, str_selected_role_name = "empty";
+    String str_selected_interest_id, str_selected_interest_name = "empty";
 
     // Strings To Post For JSON
     String str_name, str_company_name, str_mobile, str_official_email,
@@ -347,47 +347,49 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // Spinner Value to String
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
+                System.out.println("str_test : " + str_selected_role_id);
+                System.out.println("str_test 2 : " + str_selected_role_name);
+                System.out.println("str_test 3 : " + str_selected_interest_id);
+                System.out.println("str_test 4 : " + str_selected_interest_name);
+
+                if (str_name.equals("")) {
+                    edt_name.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_name.equals("")) {
+                    edt_company_name.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_mobile.equals("")) {
+                    edt_mobile.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_official_email.equals("")) {
+                    edt_official_email.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_selected_role_id == null || str_selected_role_id.isEmpty()) {
+                    spn_i_am.setFocusable(true);
+                    spn_i_am.setFocusableInTouchMode(true);
+                    spn_i_am.requestFocus();
+                    spn_i_am.performClick();
+                    TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_selected_interest_id == null || str_selected_interest_id.isEmpty()) {
+                    spn_interested_in.setFocusable(true);
+                    spn_interested_in.setFocusableInTouchMode(true);
+                    spn_interested_in.requestFocus();
+                    spn_interested_in.performClick();
+                    TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                }
+
                 if (str_profile_type.equals("normal")) {
 
                     System.out.println("str_final_business_sector  : " + str_final_business_sector);
                     System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
 
-                    if (str_name.equals("")) {
-                        edt_name.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_company_name.equals("")) {
-                        edt_company_name.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_mobile.equals("")) {
-                        edt_mobile.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_official_email.equals("")) {
-                        edt_official_email.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_selected_role_id.equals("")) {
-                        spn_i_am.setFocusable(true);
-                        spn_i_am.setFocusableInTouchMode(true);
-                        spn_i_am.requestFocus();
-                        spn_i_am.performClick();
-                        TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_selected_interest_id.equals("")) {
-                        spn_interested_in.setFocusable(true);
-                        spn_interested_in.setFocusableInTouchMode(true);
-                        spn_interested_in.requestFocus();
-                        spn_interested_in.performClick();
-                        TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_business_established_year.equals("")) {
+                     if (str_business_established_year.equals("")) {
                         edt_business_established_year.setError("Enter Year");
                         TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_business_sector.equals("")) {
-                        chip_busineeslist.setFocusable(true);
-                        chip_busineeslist.setFocusableInTouchMode(true);
-                        chip_busineeslist.requestFocus();
+                    } else if (str_final_business_sector.equals("")|| str_final_business_sector.equals("null")) {
                         TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_final_Business_Location.equals("")) {
-                        chip_business_location.setFocusable(true);
-                        chip_business_location.setFocusableInTouchMode(true);
-                        chip_business_location.requestFocus();
+
                         TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_no_of_permanent_employees.equals("")) {
                         edt_no_of_permanent_employees.setError("Enter Permanent Employees");
@@ -437,31 +439,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                 } else if (str_profile_type.equals("asset")) {
 
-                    if (str_name.equals("")) {
-                        edt_name.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_company_name.equals("")) {
-                        edt_company_name.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_mobile.equals("")) {
-                        edt_mobile.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_official_email.equals("")) {
-                        edt_official_email.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_selected_role_id.equals("")) {
-                        spn_i_am.setFocusable(true);
-                        spn_i_am.setFocusableInTouchMode(true);
-                        spn_i_am.requestFocus();
-                        spn_i_am.performClick();
-                        TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_selected_interest_id.equals("")) {
-                        spn_interested_in.setFocusable(true);
-                        spn_interested_in.setFocusableInTouchMode(true);
-                        spn_interested_in.requestFocus();
-                        spn_interested_in.performClick();
-                        TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_year_asset_purchased.equals("")) {
+                    if (str_year_asset_purchased.equals("")) {
                         edt_year_asset_purchased.setFocusable(true);
                         TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_final_business_sector.equals("")) {

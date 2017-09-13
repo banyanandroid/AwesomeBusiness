@@ -539,15 +539,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 Arraylist_selected_final_industry.clear();
 
 
-                ///////////////////////
-                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
-                ///////////////////////
-                String str_Headquaters = auto_headquaters.getText().toString();
-                int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
-                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
-                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
-                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
-                System.out.println("FINAL SELECTED HEADQUATERS :: " + str_final_headquaters);
+
 
 
                 ///////////////////////
@@ -658,6 +650,17 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     }
                     System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
                 }*/
+
+
+                ///////////////////////
+                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
+                ///////////////////////
+                String str_Headquaters = auto_headquaters.getText().toString();
+                int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
+                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
+                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
+                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
+                System.out.println("FINAL SELECTED HEADQUATERS :: " + str_final_headquaters);
 
                 ///////// TO GET THE SPINNER VALUE TO THE STRING
                 str_no_of_formats = spn_no_of_salespartner_formats.getSelectedItem().toString();
@@ -813,7 +816,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
                 //Unfortunately Stopped during this checking process
-                else if (str_final_headquaters.equals("")) {
+               /* else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Headquaters");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Headquaters Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -825,7 +828,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     chip_industry.setFocusable(true);
                     chip_industry.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Enter Your Industry", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }
+                }*/
 
 
                 // THIS ELSE IF STATEMENT IS TO CHECK WHETHER THE  NO OF SALES PARTNER FORMATS IS SELECTED OR NOT

@@ -356,10 +356,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     int pos = position;
                     str_selected_currency_position = String.valueOf(pos);
 
+                    System.out.println("str_selected_currency_id" + str_selected_currency_id);
+
                     txt_select_currency.setText("" + str_selected_currency);
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("currency_position", str_selected_currency);
+                    editor.putString("str_selected_currency", str_selected_currency_id);
                     editor.commit();
                 }
 
