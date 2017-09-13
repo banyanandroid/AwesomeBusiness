@@ -276,7 +276,8 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Year Business Established/Assests Purchased"
-                            android:inputType="textEmailAddress"
+                            android:inputType="number"
+                            android:maxLength="4"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 

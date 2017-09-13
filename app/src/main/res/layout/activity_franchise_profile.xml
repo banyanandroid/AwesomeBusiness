@@ -311,7 +311,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:text="Company's headquarters located at"
+                        android:text="Company's headquarters location"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
 
@@ -337,51 +337,77 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:hint="Enter no.of sales partners you already have?"
+                            android:hint="No.of sales partners you already have"
                             android:inputType="number"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/edt_wt_lookfor_sales_partners"
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="What do you look for in a sales partner\nbefore partnering?"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_wt_lookfor_sales_partners"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="What do you look for in a sales partner\nbefore partnering?"
+                            android:inputType="text"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
 
-                    <EditText
-                        android:id="@+id/edt_wt_kindof_support"
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Kind of support the sales partner can\nexpect from you?"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_wt_kindof_support"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Kind of support the sales partner can\nexpect from you"
+                            android:inputType="textMultiLine"
+                            android:maxLines="4"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_wt_procedure"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Procedure to become your Sales Partner?"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_wt_procedure"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Procedure to become your Sales Partner"
+                            android:inputType="textMultiLine"
+                            android:maxLines="4"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Cities/states/countries you want to expand"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/Franchise_chipset_locations_expand"
@@ -396,7 +422,7 @@
                         custom:chipTextPadding_="2dp"
                         custom:deleteIcon_="@android:drawable/presence_offline"
                         custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Cities/states/countries you want to expand in"
+                        custom:hint_="Enter Locations"
                         custom:labelPosition_="left"
                         custom:textColor_="@android:color/black">
 
@@ -525,7 +551,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
@@ -536,7 +562,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -545,68 +571,94 @@
                     </LinearLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_one_wt_brand_fee"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Brand fee included in this investment"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_one_wt_brand_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Brand fee included in this investment"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_one_avg_no_of_staff"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average no.of staff required"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_one_avg_no_of_staff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average no.of staff required"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_one_royalty_commission"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Royalty / Commission"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_one_royalty_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Royalty / Commission"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_one_avg_monthly_revenue"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Monthly Revenue per sales partner"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_format_one_avg_profit_margin"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_one_avg_monthly_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Monthly Revenue per sales partner"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Operating Profit Margin %"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_one_avg_profit_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Operating Profit Margin %"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
 
@@ -720,7 +772,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
@@ -731,7 +783,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -739,69 +791,95 @@
 
                     </LinearLayout>
 
-
-                    <EditText
-                        android:id="@+id/edt_format_two_wt_brand_fee"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Brand fee included in this investment"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_two_wt_brand_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Brand fee included in this investment"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_two_avg_no_of_staff"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average no.of staff required"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_two_avg_no_of_staff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average no.of staff required"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_two_royalty_commission"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Royalty / Commission"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_two_royalty_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Royalty / Commission"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_two_avg_monthly_revenue"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Monthly Revenue per sales partner"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_format_two_avg_profit_margin"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_two_avg_monthly_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Monthly Revenue per sales partner"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Operating Profit Margin %"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_two_avg_profit_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Operating Profit Margin %"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </LinearLayout>
 
@@ -915,7 +993,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
@@ -926,7 +1004,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -934,69 +1012,95 @@
 
                     </LinearLayout>
 
-
-                    <EditText
-                        android:id="@+id/edt_format_three_wt_brand_fee"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Brand fee included in this investment"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_three_wt_brand_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Brand fee included in this investment"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_three_avg_no_of_staff"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average no.of staff required"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_three_avg_no_of_staff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average no.of staff required"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_three_royalty_commission"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Royalty / Commission"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_three_royalty_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Royalty / Commission"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_three_avg_monthly_revenue"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Monthly Revenue per sales partner"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_format_three_avg_profit_margin"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_three_avg_monthly_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Monthly Revenue per sales partner"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Operating Profit Margin %"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_three_avg_profit_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Operating Profit Margin %"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </LinearLayout>
 
@@ -1110,7 +1214,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
@@ -1121,7 +1225,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -1129,69 +1233,95 @@
 
                     </LinearLayout>
 
-
-                    <EditText
-                        android:id="@+id/edt_format_four_wt_brand_fee"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Brand fee included in this investment"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_four_wt_brand_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Brand fee included in this investment"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_four_avg_no_of_staff"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average no.of staff required"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_four_avg_no_of_staff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average no.of staff required"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_four_royalty_commission"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Royalty / Commission"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_four_royalty_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Royalty / Commission"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_four_avg_monthly_revenue"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Monthly Revenue per sales partner"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_format_four_avg_profit_margin"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_four_avg_monthly_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Monthly Revenue per sales partner"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Operating Profit Margin %"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_four_avg_profit_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Operating Profit Margin %"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </LinearLayout>
 
@@ -1305,7 +1435,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp" />
@@ -1316,7 +1446,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_parent_rounded_corner"
-                            android:hint="INR"
+                            android:hint=""
                             android:inputType="number"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -1325,68 +1455,95 @@
                     </LinearLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_five_wt_brand_fee"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Brand fee included in this investment"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_five_wt_brand_fee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Brand fee included in this investment"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_five_avg_no_of_staff"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average no.of staff required"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_five_avg_no_of_staff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average no.of staff required"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_five_royalty_commission"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Royalty / Commission"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_five_royalty_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Royalty / Commission"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <EditText
-                        android:id="@+id/edt_format_five_avg_monthly_revenue"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Monthly Revenue per sales partner"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
 
-                    <EditText
-                        android:id="@+id/edt_format_five_avg_profit_margin"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_five_avg_monthly_revenue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Monthly Revenue per sales partner"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Average Operating Profit Margin %"
-                        android:inputType="text"
-                        android:paddingLeft="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_format_five_avg_profit_margin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Average Operating Profit Margin %"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </LinearLayout>
 

@@ -444,7 +444,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         });
 
         //  HERE WE MAKE CARD VIEWS OF " NO.OF SALES PARTNER FORMATS "  VISIBLE OR INVISIBLE ACCORDING TO SPINNER VALUE SELECTION
-        //   AND ALSO ASSING A VALUE TO THE STRINGS OF THE CARDVIEWS WHICH ARE GONE.
         spn_no_of_salespartner_formats.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(
@@ -686,7 +685,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 }
 
 
-            /*
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED EDIT TEXT'S
                 str_auth_person_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
@@ -815,7 +813,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
                 //Unfortunately Stopped during this checking process
-               *//* else if (str_final_headquaters.equals("")) {
+                else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Headquaters");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Headquaters Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -827,7 +825,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     chip_industry.setFocusable(true);
                     chip_industry.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Enter Your Industry", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*//*
+                }
 
 
                 // THIS ELSE IF STATEMENT IS TO CHECK WHETHER THE  NO OF SALES PARTNER FORMATS IS SELECTED OR NOT
@@ -1538,7 +1536,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                 }
 
-*/
                 System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
                 System.out.println("EMAIL :::::::::::" + str_email);
                 System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
@@ -2194,12 +2191,12 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("email", str_email);
                 params.put("mobile_no", str_mobile_num);
                 params.put("designation", str_designation);
+                params.put("brand_name", str_brand_name);
+                params.put("about_company", str_about_company);
+                params.put("products_services", str_all_prod_serv);
 
-                params.put("brand_name", str_opportunity_offered);
                 params.put("offering", str_opportunity_offered);
                 params.put("industry", str_opportunity_offered);
-                params.put("about_company", str_opportunity_offered);
-                params.put("products_services", str_opportunity_offered);
                 params.put("years", str_opportunity_offered);
                 params.put("headquarters", str_opportunity_offered);
                 params.put("sales_partners", str_opportunity_offered);
@@ -2207,84 +2204,86 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("salespartner_expectation", str_opportunity_offered);
                 params.put("location", str_opportunity_offered);
 
+
                 params.put("franchise_format_count", str_opportunity_offered);
                 params.put("currency_change", str_opportunity_offered);
 
+
                 //FORMAT 1
-                params.put("format_name", str_opportunity_offered);
-                params.put("min_sq", str_opportunity_offered);
-                params.put("max_sq", str_opportunity_offered);
-                params.put("min_invest", str_opportunity_offered);
-                params.put("max_invest", str_opportunity_offered);
-                params.put("brand_fee", str_opportunity_offered);
-                params.put("staff_require", str_opportunity_offered);
-                params.put("royalty_commission", str_opportunity_offered);
-                params.put("monthly_revenue", str_opportunity_offered);
-                params.put("profit_margin", str_opportunity_offered);
+                params.put("format_name", str_format_name_1);
+                params.put("min_sq", str_format_spaceneeded_minimum_1);
+                params.put("max_sq", str_format_spaceneeded_maximum_1);
+                params.put("min_invest", str_format_investment_needed_minimum_1);
+                params.put("max_invest", str_format_investment_needed_maximum_1);
+                params.put("brand_fee", str_format_brand_fee_1);
+                params.put("staff_require", str_format_staff_required_1);
+                params.put("royalty_commission", str_format_royalty_commission_1);
+                params.put("monthly_revenue", str_format_salespartner_monthly_revenue_1);
+                params.put("profit_margin", str_format_operating_profitmargin_1);
 
 
                 //FORMAT 2
-                params.put("format_name2", str_opportunity_offered);
-                params.put("min_sq2", str_opportunity_offered);
-                params.put("max_sq2", str_opportunity_offered);
-                params.put("min_invest2", str_opportunity_offered);
-                params.put("max_invest2", str_opportunity_offered);
-                params.put("brand_fee2", str_opportunity_offered);
-                params.put("staff_require2", str_opportunity_offered);
-                params.put("royalty_commission2", str_opportunity_offered);
-                params.put("monthly_revenue2", str_opportunity_offered);
-                params.put("profit_margin2", str_opportunity_offered);
+                params.put("format_name2", str_format_name_2);
+                params.put("min_sq2", str_format_spaceneeded_minimum_2);
+                params.put("max_sq2", str_format_spaceneeded_maximum_2);
+                params.put("min_invest2", str_format_investment_needed_minimum_2);
+                params.put("max_invest2", str_format_investment_needed_maximum_2);
+                params.put("brand_fee2", str_format_brand_fee_2);
+                params.put("staff_require2", str_format_staff_required_2);
+                params.put("royalty_commission2", str_format_royalty_commission_2);
+                params.put("monthly_revenue2", str_format_salespartner_monthly_revenue_2);
+                params.put("profit_margin2", str_format_operating_profitmargin_2);
+
 
                 //FORMAT 3
-                params.put("format_name3", str_opportunity_offered);
-                params.put("min_sq3", str_opportunity_offered);
-                params.put("max_sq3", str_opportunity_offered);
-                params.put("min_invest3", str_opportunity_offered);
-                params.put("max_invest3", str_opportunity_offered);
-                params.put("brand_fee3", str_opportunity_offered);
-                params.put("staff_require3", str_opportunity_offered);
-                params.put("royalty_commission3", str_opportunity_offered);
-                params.put("monthly_revenue3", str_opportunity_offered);
-                params.put("profit_margin3", str_opportunity_offered);
+                params.put("format_name3", str_format_name_3);
+                params.put("min_sq3", str_format_spaceneeded_minimum_3);
+                params.put("max_sq3", str_format_spaceneeded_maximum_3);
+                params.put("min_invest3", str_format_investment_needed_minimum_3);
+                params.put("max_invest3", str_format_investment_needed_maximum_3);
+                params.put("brand_fee3", str_format_brand_fee_3);
+                params.put("staff_require3", str_format_staff_required_3);
+                params.put("royalty_commission3", str_format_royalty_commission_3);
+                params.put("monthly_revenue3", str_format_salespartner_monthly_revenue_3);
+                params.put("profit_margin3", str_format_operating_profitmargin_3);
 
 
                 //FORMAT 4
-                params.put("format_name4", str_opportunity_offered);
-                params.put("min_sq4", str_opportunity_offered);
-                params.put("max_sq4", str_opportunity_offered);
-                params.put("min_invest4", str_opportunity_offered);
-                params.put("max_invest4", str_opportunity_offered);
-                params.put("brand_fee4", str_opportunity_offered);
-                params.put("staff_require4", str_opportunity_offered);
-                params.put("royalty_commission4", str_opportunity_offered);
-                params.put("monthly_revenue4", str_opportunity_offered);
-                params.put("profit_margin4", str_opportunity_offered);
-
+                params.put("format_name4", str_format_name_4);
+                params.put("min_sq4", str_format_spaceneeded_minimum_4);
+                params.put("max_sq4", str_format_spaceneeded_maximum_4);
+                params.put("min_invest4", str_format_investment_needed_minimum_4);
+                params.put("max_invest4", str_format_investment_needed_maximum_4);
+                params.put("brand_fee4", str_format_brand_fee_4);
+                params.put("staff_require4", str_format_staff_required_4);
+                params.put("royalty_commission4", str_format_royalty_commission_4);
+                params.put("monthly_revenue4", str_format_salespartner_monthly_revenue_4);
+                params.put("profit_margin4", str_format_operating_profitmargin_4);
 
                 //FORMAT 5
-                params.put("format_name5", str_opportunity_offered);
-                params.put("min_sq5", str_opportunity_offered);
-                params.put("max_sq5", str_opportunity_offered);
-                params.put("min_invest5", str_opportunity_offered);
-                params.put("max_invest5", str_opportunity_offered);
-                params.put("brand_fee5", str_opportunity_offered);
-                params.put("staff_require5", str_opportunity_offered);
-                params.put("royalty_commission5", str_opportunity_offered);
-                params.put("monthly_revenue5", str_opportunity_offered);
-                params.put("profit_margin5", str_opportunity_offered);
+                params.put("format_name5", str_format_name_5);
+                params.put("min_sq5", str_format_spaceneeded_minimum_5);
+                params.put("max_sq5", str_format_spaceneeded_maximum_5);
+                params.put("min_invest5", str_format_investment_needed_minimum_5);
+                params.put("max_invest5", str_format_investment_needed_maximum_5);
+                params.put("brand_fee5", str_format_brand_fee_5);
+                params.put("staff_require5", str_format_staff_required_5);
+                params.put("royalty_commission5", str_format_royalty_commission_5);
+                params.put("monthly_revenue5", str_format_salespartner_monthly_revenue_5);
+                params.put("profit_margin5", str_format_operating_profitmargin_5);
+
 
                 //FORMAT 6
-                params.put("format_name6", str_opportunity_offered);
-                params.put("min_sq6", str_opportunity_offered);
-                params.put("max_sq6", str_opportunity_offered);
-                params.put("min_invest6", str_opportunity_offered);
-                params.put("max_invest6", str_opportunity_offered);
-                params.put("brand_fee6", str_opportunity_offered);
-                params.put("staff_require6", str_opportunity_offered);
-                params.put("royalty_commission6", str_opportunity_offered);
-                params.put("monthly_revenue6", str_opportunity_offered);
-                params.put("profit_margin6", str_opportunity_offered);
-
+                params.put("format_name6", str_format_name_6);
+                params.put("min_sq6", str_format_spaceneeded_minimum_6);
+                params.put("max_sq6", str_format_spaceneeded_maximum_6);
+                params.put("min_invest6", str_format_investment_needed_minimum_6);
+                params.put("max_invest6", str_format_investment_needed_maximum_6);
+                params.put("brand_fee6", str_format_brand_fee_6);
+                params.put("staff_require6", str_format_staff_required_6);
+                params.put("royalty_commission6", str_format_royalty_commission_6);
+                params.put("monthly_revenue6", str_format_salespartner_monthly_revenue_6);
+                params.put("profit_margin6", str_format_operating_profitmargin_6);
 
                 return params;
             }
@@ -2299,7 +2298,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
 /*
 
-if ((isset($_POST['name'])) &&
+                      if ((isset($_POST['name'])) &&
                         (isset($_POST['email']))
                         && (isset($_POST['mobile_no']))
                         && (isset($_POST['designation']))

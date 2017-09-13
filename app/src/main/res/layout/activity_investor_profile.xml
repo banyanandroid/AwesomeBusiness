@@ -59,10 +59,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -77,10 +76,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_mobile_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -94,10 +92,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_office_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -277,10 +274,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_company_work_at"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -296,15 +292,15 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_designation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Your Designation"
+                            android:inputType="text"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -312,10 +308,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_linkedin_profile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -329,16 +324,16 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_company_sector"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Your Company's Sector"
                             android:inputType="text"
+                            android:singleLine="true"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
@@ -347,10 +342,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_investor_profile_business_interested"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -366,10 +360,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_about_yourself"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

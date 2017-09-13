@@ -145,7 +145,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     String str_final_industry_update, str_final_location_update = "";
 
     //test purpose (for posting parameters empty) delete later
-    String empty="";
+    String empty = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,15 +249,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 Arraylist_fetched_industries.clear();
                 Arraylist_selected_final_industry.clear();
 
-                ///////////////////////
-                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
-                ///////////////////////
-
-                String str_Headquaters = auto_headquaters.getText().toString();
-                int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
-                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
-                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
-                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
 
                 ///////////////////////
                 ///////  FOR GETTING ENTERED SECTOR TYPE AND ID
@@ -379,6 +370,18 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 }
 
 */
+
+                ///////////////////////
+                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
+                ///////////////////////
+
+                String str_Headquaters = auto_headquaters.getText().toString();
+                int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
+                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
+                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
+                str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
+
+                //GETTING STRING VALUES FROM NORMAL EDIT TEXT'S
                 str_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
                 str_mobile = edt_mobile_number.getText().toString();
@@ -410,13 +413,13 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_mobile_number.setError("Enter Mobile Number");
                     edt_mobile_number.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } /*else if (str_selected_role_id.equals("")) {
+                } else if (str_selected_role_id.equals("")) {
                     spn_i_am.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_selected_interest_id.equals("")) {
                     spn_interested_in.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Your Interest", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/ else if (str_deal_minimum.equals("")) {
+                } else if (str_deal_minimum.equals("")) {
                     edt_dealsize_minimum.setError("Enter Minimum Deal Size");
                     edt_dealsize_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -428,14 +431,14 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_dealsize_maximum.setError("Invalid Value");
                     edt_dealsize_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Deal Size", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/ else if (str_company_name.equals("")) {
-                    edt_company_name.setError("Enter Company Name");
-                    edt_company_name.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Company Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_headquaters.equals("")) {
+                }*/ else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Location");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Location Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_name.equals("")) {
+                    edt_company_name.setError("Enter Company Name");
+                    edt_company_name.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Company Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_designation.equals("")) {
                     edt_designation.setError("Enter Designation");
                     edt_designation.requestFocus();
@@ -654,18 +657,18 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                             spn_i_am.setAdapter(adapter_i_am);
 
 
-                            spn_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                                        long arg3) {
+                            spn_i_am.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                    System.out.println("CLICKEEEEDDDDD");
-
-                                    t1 = (TextView) arg1;
+                                    t1 = (TextView) view;
                                     str_selected_role_name = t1.getText().toString();
-                                    str_selected_role_id = Arraylist_investor_role_id.get(arg2);
+                                    str_selected_role_id = Arraylist_investor_role_id.get(position);
 
-                                    System.out.println("STEP  1111111111111" + str_selected_role_id);
-                                    System.out.println("STEP  2222222222222" + str_selected_role_name);
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
 
                                 }
                             });
@@ -752,18 +755,22 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1, Arraylist_investor_interest_name);
                             spn_interested_in.setAdapter(adapter_interested);
 
+                            spn_interested_in.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            spn_interested_in.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                                        long arg3) {
-                                    t1 = (TextView) arg1;
+                                    t1 = (TextView) view;
                                     str_selected_interest_name = t1.getText().toString();
-                                    System.out.println("Argument " + arg2);
-                                    str_selected_interest_id = Arraylist_investor_interest_id.get(arg2);
+                                    str_selected_interest_id = Arraylist_investor_interest_id.get(position);
 
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
 
                                 }
                             });
+
 
                         } catch (Exception e) {
 
@@ -1196,21 +1203,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
 
-                str_name = edt_name.getText().toString();
-                str_email = edt_email.getText().toString();
-                str_mobile = edt_mobile_number.getText().toString();
-
-                str_deal_minimum = edt_dealsize_minimum.getText().toString();
-                str_deal_maximum = edt_dealsize_maximum.getText().toString();
-
-                str_company_name = edt_company_name.getText().toString();
-                str_designation = edt_designation.getText().toString();
-                str_web_linkedin = edt_wed_linkedin.getText().toString();
-                str_company_sector = edt_company_sector.getText().toString();
-                str_kindof_business_interested = edt_kind_business_interested.getText().toString();
-                str_company_about = edt_company_about.getText().toString();
-
-
                 params.put("name_u", str_name);
                 params.put("mob_u", str_mobile);
                 params.put("email_u", str_email);
@@ -1233,12 +1225,33 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 params.put("busi_in", str_kindof_business_interested);
                 params.put("abt_you", str_company_about);
 
-                params.put("profile_img", empty);
-                params.put("profile_document", empty);
+                params.put("profile_img", "IMAGEEEEEEEEEEE emptyyy");
+                params.put("profile_document", "DOCUMENTTTTTTT emptyyy");
                 params.put("logo_file", listString);
 
                 params.put("user_currency", str_user_currency);
                 params.put("user_id", str_user_id);
+
+                //////////////////////////////
+
+                System.out.println("name_u" + str_name);
+                System.out.println("mob_u" + str_mobile);
+                System.out.println("email_u" + str_email);
+                System.out.println("inter_u" + str_selected_interest_id);
+                System.out.println("am_an" + str_selected_role_id);
+                System.out.println("indust" + str_final_industry_update);
+                System.out.println("location_u" + str_final_location_update);
+                System.out.println("invest_inr" + str_deal_minimum);
+                System.out.println("invest_to" + str_deal_maximum);
+                System.out.println("location" + str_final_headquaters);
+                System.out.println("com_y" + str_company_name);
+                System.out.println("desig" + str_designation);
+                System.out.println("linked" + str_web_linkedin);
+                System.out.println("com_s" + str_company_sector);
+                System.out.println("busi_in" + str_kindof_business_interested);
+                System.out.println("abt_you" + str_company_about);
+                System.out.println("user_currency" + str_user_currency);
+                System.out.println("user_id" + str_user_id);
 
                 return params;
             }
@@ -1247,27 +1260,5 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     }
 
 
-
-
-
-
 }
 
-
-
-
-/*
-
-
-   (isset($_POST['name_u'])) && (isset($_POST['mob_u'])) && (isset($_POST['email_u'])) &&
-				(isset($_POST['inter_u'])) && (isset($_POST['am_an'])) && (isset($_POST['indust']))
-				&& (isset($_POST['location_u'])) &&
-				(isset($_POST['user_currency'])) && (isset($_POST['invest_inr']))
-				 && (isset($_POST['invest_to'])) &&
-				(isset($_POST['location'])) && (isset($_POST['com_y'])) && (isset($_POST['desig'])) &&
-				(isset($_POST['linked'])) && (isset($_POST['com_s'])) && (isset($_POST['busi_in'])) &&
-				(isset($_POST['abt_you'])) && (isset($_POST['profile_img'])) && (isset($_POST['profile_document']))
-				 && (isset($_POST['logo_file']))&& (isset($_POST['user_id']))
-
-
-				 */
