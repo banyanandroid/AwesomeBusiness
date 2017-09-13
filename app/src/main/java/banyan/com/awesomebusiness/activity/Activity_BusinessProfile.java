@@ -1147,7 +1147,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("tentative_price" + str_tentative_selling_price);
                 System.out.println("reason" + str_reason_for_sale);
                 System.out.println("user_id" + str_user_id);
-                System.out.println("user_currency" + str_user_currency);
+                System.out.println("user  _currency" + str_user_currency);
 
                 return params;
             }
