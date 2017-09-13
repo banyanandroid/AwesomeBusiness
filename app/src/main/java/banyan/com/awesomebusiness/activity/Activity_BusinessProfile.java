@@ -407,11 +407,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                      * ************************/
                     String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
+                    Arraylist_fetched_industries.clear();
                     for (int i = 0; i < str_industries.length; i++) {
                         Arraylist_fetched_industries.add(str_industries[i]);
                     }
                     System.out.println("array : " + Arraylist_fetched_industries);
 
+                    Arraylist_selected_final_industry.clear();
                     for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
                         String get_indestry = Arraylist_fetched_industries.get(i);
@@ -435,11 +437,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                     String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
 
+                    Arraylist_fetched_location.clear();
                     for (int i = 0; i < str_location.length; i++) {
                         Arraylist_fetched_location.add(str_location[i]);
                     }
                     System.out.println("array : " + Arraylist_fetched_location);
 
+                    Arraylist_selected_final_location.clear();
                     for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
 
                         String get_location = Arraylist_fetched_location.get(i);
@@ -517,11 +521,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                      * *************************/
                     String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
 
+                    Arraylist_fetched_industries.clear();
                     for (int i = 0; i < str_asset_industries.length; i++) {
                         Arraylist_fetched_industries.add(str_asset_industries[i]);
                     }
                     System.out.println("array : " + Arraylist_fetched_industries);
 
+                    Arraylist_selected_final_industry.clear();
                     for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
                         String get_indestry = Arraylist_fetched_industries.get(i);
