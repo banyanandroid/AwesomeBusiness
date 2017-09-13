@@ -164,22 +164,17 @@
                         android:textSize="16dp"
                         android:textStyle="normal" />
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/investor_profile_chipText_business_location"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/investor_profile_business_multi_location"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16sp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,22 +185,17 @@
                         android:textSize="16dp"
                         android:textStyle="normal" />
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/investor_profile_chipText_industries_interested"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/investor_profile_industries_multi_interested"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16sp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
 
                     <TextView

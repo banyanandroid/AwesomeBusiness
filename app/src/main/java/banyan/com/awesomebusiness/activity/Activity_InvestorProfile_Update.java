@@ -198,8 +198,8 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         ChipLayout.MAX_CHARACTER_COUNT = 20;
-        chip_busineeslist = (ChipLayout) findViewById(R.id.investor_profile_chipText_industries_interested);
-        chip_business_location = (ChipLayout) findViewById(R.id.investor_profile_chipText_business_location);
+       /* chip_busineeslist = (ChipLayout) findViewById(R.id.investor_profile_chipText_industries_interested);
+        chip_business_location = (ChipLayout) findViewById(R.id.investor_profile_chipText_business_location);*/
 
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile_number = (EditText) findViewById(R.id.edt_mobile_number);

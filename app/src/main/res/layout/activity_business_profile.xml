@@ -283,43 +283,47 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_busi_industry"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Select Business Industry"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/business_profile_multi_busi_industry"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Select Business Industry"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
-                    </com.libaml.android.view.chip.ChipLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Business Located At"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
-
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_busi_loca_at"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/business_profile_multi_busi_loca_at"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Business Located At"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
-
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -665,54 +669,46 @@
                     </android.support.design.widget.TextInputLayout>
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="Industries that use this asset"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_Industries_use_asset"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/business_profile_multi_Industries_use_asset"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Select Industries that can use this asset"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="Asset Located at"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_asset_loca_at"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/business_profile_multi_asset_loca_at"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/edittext_theme_landing_page"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:hintColor_="@android:color/darker_gray"
-                        custom:hint_="Asset Located At"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"

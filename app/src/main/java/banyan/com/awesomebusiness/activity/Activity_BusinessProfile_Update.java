@@ -160,8 +160,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
-    ChipLayout chip_busineeslist, chip_business_location;
-
     String str_selected_role_id, str_selected_role_name = "";
     String str_selected_interest_id, str_selected_interest_name = "";
 
@@ -193,7 +191,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     //Selling or Leasing out business
     EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_reason;
 
-    ChipLayout chip_industries_use_asset, chip_asset_loation;
 
     Spinner spn_amount_fixed_for;
 
@@ -223,9 +220,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
         btn_submit = (Button) findViewById(R.id.btn_submit);
-
-        Cardview_spn_others = (CardView) findViewById(R.id.card_view_three);
-        Cardview_spn_selling_leasing = (CardView) findViewById(R.id.card_view_interested_leasing_business);
 
         // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
@@ -258,10 +252,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
 
-        ChipLayout.MAX_CHARACTER_COUNT = 20;
-        chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
-        chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_loca_at);
-
         //Selling or Leasing out business
         edt_year_asset_purchased = (EditText) findViewById(R.id.edt_loan_when_asset_purchased);
         edt_asset_seeking_to_sell = (EditText) findViewById(R.id.edt_wt_asset_sell);
@@ -269,8 +259,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         edt_asset_selling_leasing_price = (EditText) findViewById(R.id.edt_price_selling_leasing);
         edt_asset_selling_reason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
 
-        chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
-        chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
+      /*  chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
+        chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);*/
 
         spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
 
@@ -405,14 +395,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     spn_business_legal_type.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Business legal entity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_final_business_sector.equals("")) {
-                    chip_busineeslist.setFocusable(true);
-                    chip_busineeslist.setFocusableInTouchMode(true);
-                    chip_busineeslist.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_final_Business_Location.equals("")) {
-                    chip_business_location.setFocusable(true);
-                    chip_business_location.setFocusableInTouchMode(true);
-                    chip_business_location.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_selected_role_id.equals("")) {
                     spn_i_am.setFocusable(true);
@@ -819,34 +803,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile_Update.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_sector_name);
-                            chip_busineeslist.setAdapter(adapter_sector);
 
-                            chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_sector_key = t1.getText().toString();
-                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
-
-                                    String str_select_sector_key = Arraylist_sector_key.get(i);
-                                    String str_select_sector_type = Arraylist_sector_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_sectorkey.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_sectorkey) {
-                                        str_final_business_sector += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
-
-                                }
-                            });
 
                         } catch (Exception e) {
 
@@ -932,37 +889,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_location_place);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile_Update.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_location_place);
-                            chip_business_location.setAdapter(adapter_sector);
-
-                            System.out.println("ARAAAAY :: " + 222222);
-                            chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-
-                                    t1 = (TextView) view;
-                                    String str_location_key = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location_key);
-
-                                    String str_select_location_key = Arraylist_location_key.get(i);
-                                    String str_select_location_type = Arraylist_location_type.get(i);
-
-                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                    Arraylist_selected_location.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
-
-
-                                }
-                            });
 
                         } catch (Exception e) {
 

@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -146,19 +147,28 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
-    ChipLayout chip_busineeslist, chip_business_location;
+    //Multi Auto Complete Textview
+    MultiAutoCompleteTextView auto_bus_busineeslist, auto_bus_locationlist, auto_industries_use_asset, auto_asset_loation;
 
     Spinner spn_business_legal_type;
 
     //Selling or Leasing out business
     EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_eason;
 
-    ChipLayout chip_industries_use_asset, chip_asset_loation;
-
     Spinner spn_amount_fixed_for;
 
     String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
             str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
+
+    String str_final_industry_update, str_final_location_update = "";
+
+    /* Arralist fetched indestries list */
+    ArrayList<String> Arraylist_fetched_industries = null;
+    ArrayList<String> Arraylist_selected_final_industry = null;
+
+    /* Arralist fetched Location list */
+    ArrayList<String> Arraylist_fetched_location = null;
+    ArrayList<String> Arraylist_selected_final_location = null;
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
@@ -239,9 +249,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
 
-        ChipLayout.MAX_CHARACTER_COUNT = 20;
-        chip_busineeslist = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_industry);
-        chip_business_location = (ChipLayout) findViewById(R.id.business_profile_chipText_busi_loca_at);
+        auto_bus_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_busi_industry);
+        auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_busi_loca_at);
+
+        auto_industries_use_asset = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_Industries_use_asset);
+        auto_asset_loation = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_asset_loca_at);
 
         //Selling or Leasing out business
         edt_year_asset_purchased = (EditText) findViewById(R.id.edt_loan_when_asset_purchased);
@@ -251,9 +263,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_asset_selling_eason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
 
         txt_img_count = (TextView) findViewById(R.id.bus_prof_txt_img_count);
-
-        chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
-        chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
 
         spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
 
@@ -274,6 +283,12 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
+        Arraylist_fetched_location = new ArrayList<String>();
+        Arraylist_selected_final_location = new ArrayList<String>();
+
+        Arraylist_fetched_industries = new ArrayList<String>();
+        Arraylist_selected_final_industry = new ArrayList<String>();
+
         // IMG PIC
         Arraylist_image_encode = new ArrayList<String>();
         Arraylist_dummy = new ArrayList<String>();
@@ -282,6 +297,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         edt_name.setText("" + str_user_name);
         edt_official_email.setText("" + str_user_email);
+
+
+        Cardview_spn_others.setVisibility(View.GONE);
+        Cardview_spn_selling_leasing.setVisibility(View.GONE);
 
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,22 +318,22 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // String Values According to checkbox state
                 if (chb_companydetails.isChecked()) {
                     str_ch_companydetails = "1";
-                }else {
+                } else {
                     str_ch_companydetails = "0";
                 }
                 if (chb_contatdetails.isChecked()) {
                     str_ch_contactdetails = "1";
-                }else {
+                } else {
                     str_ch_contactdetails = "0";
                 }
                 if (chb_yearly_sales_range.isChecked()) {
                     str_ch_yearly_sales_range = "1";
-                }else {
+                } else {
                     str_ch_yearly_sales_range = "0";
                 }
                 if (chb_display_EBITDA_as_range.isChecked()) {
                     str_ch_display_EBITDA_range = "1";
-                }else {
+                } else {
                     str_ch_display_EBITDA_range = "0";
                 }
 
@@ -383,10 +402,65 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     System.out.println("str_final_business_sector  : " + str_final_business_sector);
                     System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
 
-                     if (str_business_established_year.equals("")) {
+                    /*****************************
+                     * Get Multi Sector Details
+                     * ************************/
+                    String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
+
+                    for (int i = 0; i < str_industries.length; i++) {
+                        Arraylist_fetched_industries.add(str_industries[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_industries);
+
+                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                        String get_indestry = Arraylist_fetched_industries.get(i);
+                        get_indestry = get_indestry.trim();
+                        System.out.println("get_indestry : " + get_indestry);
+                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                        String select_sect_id = Arraylist_sector_key.get(indus_position);
+                        String select_sect_type = Arraylist_sector_type.get(indus_position);
+
+                        String sector = select_sect_id + "-" + select_sect_type;
+                        Arraylist_selected_final_industry.add(sector);
+
+                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                    }
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
+                    /*****************************
+                     * Get Multi Location Details
+                     * ************************/
+
+                    String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
+
+                    for (int i = 0; i < str_location.length; i++) {
+                        Arraylist_fetched_location.add(str_location[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+
+                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
+
+                    if (str_business_established_year.equals("")) {
                         edt_business_established_year.setError("Enter Year");
                         TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_business_sector.equals("")|| str_final_business_sector.equals("null")) {
+                    } else if (str_final_business_sector.equals("") || str_final_business_sector.equals("null")) {
                         TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_final_Business_Location.equals("")) {
 
@@ -439,18 +513,68 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                 } else if (str_profile_type.equals("asset")) {
 
+                    /******************************
+                     * Get Asset Multi Sector Details
+                     * *************************/
+                    String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
+
+                    for (int i = 0; i < str_asset_industries.length; i++) {
+                        Arraylist_fetched_industries.add(str_asset_industries[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_industries);
+
+                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                        String get_indestry = Arraylist_fetched_industries.get(i);
+                        get_indestry = get_indestry.trim();
+                        System.out.println("get_indestry : " + get_indestry);
+                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                        String select_sect_id = Arraylist_sector_key.get(indus_position);
+                        String select_sect_type = Arraylist_sector_type.get(indus_position);
+
+                        String sector = select_sect_id + "-" + select_sect_type;
+                        Arraylist_selected_final_industry.add(sector);
+
+                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                    }
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
+                    /******************************
+                     * Get Asset Multi Location Details
+                     * *************************/
+
+                    String[] str_asset_location = auto_asset_loation.getText().toString().split(", ");
+
+                    for (int i = 0; i < str_asset_location.length; i++) {
+                        Arraylist_fetched_location.add(str_asset_location[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+
+                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
+
+
                     if (str_year_asset_purchased.equals("")) {
                         edt_year_asset_purchased.setFocusable(true);
                         TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_final_business_sector.equals("")) {
-                        chip_industries_use_asset.setFocusable(true);
-                        chip_industries_use_asset.setFocusableInTouchMode(true);
-                        chip_industries_use_asset.requestFocus();
                         TastyToast.makeText(getApplicationContext(), "Select Assets Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_final_Business_Location.equals("")) {
-                        chip_asset_loation.setFocusable(true);
-                        chip_asset_loation.setFocusableInTouchMode(true);
-                        chip_asset_loation.requestFocus();
                         TastyToast.makeText(getApplicationContext(), "Select Assets Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_asset_seeking_to_sell.equals("")) {
                         edt_asset_seeking_to_sell.setFocusable(true);
@@ -545,7 +669,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                 Arraylist_image_encode.add(encodedstring);
 
-                txt_img_count.setText("("+Arraylist_image_encode.size()+")"+ " Images Added");
+                txt_img_count.setText("(" + Arraylist_image_encode.size() + ")" + " Images Added");
                 btn_add_pic.setText("Change Image");
             }
             Encode_Image1();
@@ -555,10 +679,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     public void Encode_Image1() {
 
         listString = TextUtils.join("IMAGE:", Arraylist_image_encode);
-
-        /*for (String s : Arraylist_image_encode) {
-            listString += s + "IMAGE:";
-        }*/
 
     }
 
@@ -656,7 +776,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /*****************************
      * To get  Interested in  Details
@@ -807,55 +926,17 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile.this,
+                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_sector_name);
-                            chip_busineeslist.setAdapter(adapter_sector);
+                            auto_bus_busineeslist.setAdapter(adapter_process);
+                            auto_bus_busineeslist
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_bus_busineeslist.setThreshold(1);
 
-                            chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_sector_key = t1.getText().toString();
-                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
-
-                                    String str_select_sector_key = Arraylist_sector_key.get(i);
-                                    String str_select_sector_type = Arraylist_sector_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_sectorkey.add(str_select_item);
-
-                                    str_final_business_sector = TextUtils.join(", ", Arraylist_selected_sectorkey);
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
-                                }
-                            });
-
-                            chip_industries_use_asset.setAdapter(adapter_sector);
-
-                            chip_industries_use_asset.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_sector_key = t1.getText().toString();
-                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
-
-                                    String str_select_sector_key = Arraylist_sector_key.get(i);
-                                    String str_select_sector_type = Arraylist_sector_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_sectorkey.add(str_select_item);
-
-                                    str_final_business_sector = TextUtils.join(", ", Arraylist_selected_sectorkey);
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-                                }
-                            });
-
+                            auto_industries_use_asset.setAdapter(adapter_process);
+                            auto_industries_use_asset
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_industries_use_asset.setThreshold(1);
 
                         } catch (Exception e) {
 
@@ -941,58 +1022,18 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_location_place);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_BusinessProfile.this,
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_BusinessProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
-                            chip_business_location.setAdapter(adapter_sector);
 
+                            auto_bus_locationlist.setAdapter(adapter_location);
+                            auto_bus_locationlist
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_bus_locationlist.setThreshold(1);
 
-                            System.out.println("ARAAAAY :: " + 222222);
-                            chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-
-                                    t1 = (TextView) view;
-                                    String str_location = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location);
-                                    String str_select_location_key = Arraylist_location_key.get(i);
-                                    String str_select_location_type = Arraylist_location_type.get(i);
-
-                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                    Arraylist_selected_location.add(str_select_item);
-
-                                    str_final_Business_Location = TextUtils.join(", ", Arraylist_selected_location);
-
-                                    System.out.println("FINAL LOCATION :: " + str_final_Business_Location);
-
-                                }
-                            });
-
-                            chip_asset_loation.setAdapter(adapter_sector);
-                            chip_asset_loation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_location_key = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location_key);
-
-                                    String str_select_location_key = Arraylist_location_key.get(i);
-                                    String str_select_location_type = Arraylist_location_type.get(i);
-
-                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                    Arraylist_selected_location.add(str_select_item);
-
-                                    str_final_Business_Location = TextUtils.join(", ", Arraylist_selected_location);
-
-                                    System.out.println("FINAL LOCATION :: " + str_final_Business_Location);
-
-                                }
-                            });
+                            auto_asset_loation.setAdapter(adapter_location);
+                            auto_asset_loation
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_asset_loation.setThreshold(1);
 
                         } catch (Exception e) {
 
