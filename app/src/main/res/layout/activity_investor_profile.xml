@@ -164,8 +164,8 @@
                         android:gravity="center"
                         android:text="Locations Interested"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/investor_profile_chipText_business_location"
@@ -190,8 +190,8 @@
                         android:gravity="center"
                         android:text="Industries Interested"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/investor_profile_chipText_industries_interested"
@@ -217,8 +217,8 @@
                         android:gravity="center"
                         android:text="Your Deal Size Range"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
 
                     <LinearLayout
@@ -257,10 +257,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Your/Company's Current location"
+                        android:text="Your / Company's Current location"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
 
                     <AutoCompleteTextView
                         android:id="@+id/edit_profile_edt_user_location"
@@ -344,54 +344,43 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        android:text="What kind of businesses are you interested in"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
 
-
-                    <EditText
-                        android:id="@+id/edt_investor_profile_business_interested"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:inputType="textMultiLine"
-                        android:maxLines="4"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:scrollbars="vertical"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_investor_profile_business_interested"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="Kind of businesses you are interested"
+                            android:inputType="textMultiLine"
+                            android:maxLines="4"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        android:text="About Your Company"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/edt_about_yourself"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Write about your background &amp; how you can help \na business grow."
-                        android:inputType="textMultiLine"
-                        android:maxLines="10"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:scrollbars="vertical"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_about_yourself"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:hint="About your background &amp; how you help \na business grow"
+                            android:inputType="textMultiLine"
+                            android:maxLines="6"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
 
                     <Button
                         android:id="@+id/btn_add_photos"
