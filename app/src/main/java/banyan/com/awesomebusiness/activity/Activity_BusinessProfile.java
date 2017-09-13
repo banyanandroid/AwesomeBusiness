@@ -571,9 +571,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     if (str_year_asset_purchased.equals("")) {
                         edt_year_asset_purchased.setFocusable(true);
                         TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_business_sector.equals("")) {
+                    } else if (str_final_industry_update.equals("")) {
                         TastyToast.makeText(getApplicationContext(), "Select Assets Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_Business_Location.equals("")) {
+                    } else if (str_final_location_update.equals("")) {
                         TastyToast.makeText(getApplicationContext(), "Select Assets Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_asset_seeking_to_sell.equals("")) {
                         edt_asset_seeking_to_sell.setFocusable(true);
@@ -591,10 +591,15 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         edt_asset_selling_eason.setFocusable(true);
                         TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else {
-                        dialog = new SpotsDialog(Activity_BusinessProfile.this);
-                        dialog.show();
-                        queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-                        Function_Submit_BusinessProfile();
+
+                        if (str_user_currency.equals("str_selected_currency")) {
+                            TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        } else {
+                            dialog = new SpotsDialog(Activity_BusinessProfile.this);
+                            dialog.show();
+                            queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
+                            Function_Submit_BusinessProfile();
+                        }
                     }
                 }
 
