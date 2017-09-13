@@ -183,6 +183,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         HashMap<String, String> user = session.getUserDetails();
+
         // name
         str_user_name = user.get(SessionManager.KEY_USER);
         str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
@@ -265,6 +266,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // IMG PIC
         Arraylist_image_encode = new ArrayList<String>();
         Arraylist_dummy = new ArrayList<String>();
+
+        // Default Setter Function
+
+        edt_name.setText(""+str_user_name);
+        edt_official_email.setText(""+str_user_email);
 
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,8 +406,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         });
 
         try {
-
-            System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::" + "INITIAL");
             dialog = new SpotsDialog(Activity_BusinessProfile.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
@@ -590,13 +594,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1, Arraylist_business_role_name);
                             spn_i_am.setAdapter(adapter_i_am);
 
+                            spn_i_am.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            spn_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                                        long arg3) {
-                                    t1 = (TextView) arg1;
+                                    t1 = (TextView) view;
                                     str_selected_role_name = t1.getText().toString();
-                                    str_selected_role_id = Arraylist_business_role_id.get(arg2);
+                                    str_selected_role_id = Arraylist_business_role_id.get(position);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
                                 }
                             });
 
@@ -752,7 +762,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     /*****************************
      * To get  Business sector List
      ***************************/
-
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
         System.out.println("CAME 1");

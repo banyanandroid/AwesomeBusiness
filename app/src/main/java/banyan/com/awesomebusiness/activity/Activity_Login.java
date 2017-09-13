@@ -248,8 +248,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Animation clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_right_to_left);
                 btnSignup.startAnimation(clockwise);
+
                 str_signup_email = edt_singup_email.getText().toString();
                 str_signup_pass = edt_signup_pass.getText().toString();
                 str_signup_repeat_pass = edt_signup_repeat_pass.getText().toString();

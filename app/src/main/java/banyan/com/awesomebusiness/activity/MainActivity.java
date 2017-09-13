@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     private ArrayAdapter<String> adapter_country_currency;
 
-    String str_selected_country_name, str_selected_country_id, str_selected_currency;
+    String str_selected_country_name, str_selected_country_id, str_selected_currency, str_selected_currency_id;
+    String str_selected_country_position, str_selected_currency_position;
     SearchableSpinner spinner_country, spinner_currency;
+    TextView txt_select_country, txt_select_currency;
     Switch switch_notification;
     TextView popup_txt_notification;
 
@@ -112,9 +114,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // display the first navigation drawer view on app launch
         displayView(0);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_previous_selected_country_name = sharedPreferences.getString("str_selected_country_name", "str_selected_country_name");
-        str_previous_selected_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_previous_selected_country_name = sharedPreferences.getString("str_selected_country_position", "str_selected_country_position");
+        str_previous_selected_currency = sharedPreferences.getString("str_selected_currency_position", "str_selected_currency_position");
+*/
 
         try {
             dialog = new SpotsDialog(MainActivity.this);
@@ -171,9 +174,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -181,8 +182,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             return true;
         }
         if (id == R.id.action_add_business_profile) {
-            /*Toast.makeText(getApplicationContext(), "Business Profile", Toast.LENGTH_LONG).show();
-            return true;*/
+
             Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile.class);
             startActivity(i);
         }
@@ -276,23 +276,35 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     public void Function_AlertDialog() {
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_previous_selected_country_name = sharedPreferences.getString("country_position", "country_position");
+        str_previous_selected_currency = sharedPreferences.getString("currency_position", "currency_position");
+
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.popup_custom, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
-
-        // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
 
         spinner_country = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_country);
-        // spinner_country.setTitle(str_previous_selected_country_name);
         spinner_currency = (SearchableSpinner) promptsView.findViewById(R.id.popup_spinner_currency);
-        // spinner_currency.setTitle(str_previous_selected_currency);
+        txt_select_country = (TextView) promptsView.findViewById(R.id.popup_txt_country);
+        txt_select_currency = (TextView) promptsView.findViewById(R.id.popup_txt_currency);
 
         switch_notification = (Switch) promptsView.findViewById(R.id.popup_switvh_notification);
         popup_txt_notification = (TextView) promptsView.findViewById(R.id.popup_txt_notification);
 
+        if (str_previous_selected_country_name.equals("country_position")) {
+            txt_select_country.setText("" + str_previous_selected_country_name);
+        } else {
+            txt_select_country.setText("");
+        }
+        if (str_previous_selected_currency.equals("currency_position")) {
+            txt_select_currency.setText("" + str_previous_selected_currency);
+        } else {
+            txt_select_currency.setText("");
+        }
 
         try {
             spinner_country
@@ -304,14 +316,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                    System.out.println("Countryyyyyyyyyyyy");
+
                     t1 = (TextView) view;
                     str_selected_country_name = t1.getText().toString();
                     str_selected_country_id = Arraylist_country_id.get(position);
+                    int pos = position;
+                    str_selected_country_position = String.valueOf(pos);
 
-                    System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_name);
-                    System.out.println("Countryyyyyyyyyyyyy ::::::::::::::: " + str_selected_country_id);
-
-
+                    txt_select_country.setText("" + str_selected_country_name);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("country_position", str_selected_country_name);
+                    editor.commit();
                 }
 
                 @Override
@@ -325,6 +342,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             android.R.layout.simple_spinner_dropdown_item,
                             Arraylist_country_currency));
 
+            // spinner_currency.setSelection(2);
+
+
             spinner_currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -332,18 +352,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     t1 = (TextView) view;
                     str_selected_currency = t1.getText().toString();
 
-                    System.out.println("Currencyyyyyyyyyyyyy ::::::::::::::: " + str_selected_currency);
+                    str_selected_currency_id = Arraylist_country_id.get(position);
+                    int pos = position;
+                    str_selected_currency_position = String.valueOf(pos);
 
-                   /* try {
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("str_selected_currency", str_selected_currency);
-                        editor.commit();
-                    } catch (Exception e) {
-
-                    }
-*/
-
+                    txt_select_currency.setText("" + str_selected_currency);
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("currency_position", str_selected_currency);
+                    editor.commit();
                 }
 
                 @Override
@@ -380,7 +397,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             public void onClick(DialogInterface dialog, int id) {
                                 // get user input and set it to result
                                 // edit text
-
                                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("str_selected_country_name", str_selected_country_name);
