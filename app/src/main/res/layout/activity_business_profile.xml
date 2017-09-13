@@ -679,7 +679,7 @@
                         android:layout_height="20dp"
                         android:text="Industries that use this asset"
                         android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                     <com.libaml.android.view.chip.ChipLayout
                         android:id="@+id/business_profile_chipText_Industries_use_asset"

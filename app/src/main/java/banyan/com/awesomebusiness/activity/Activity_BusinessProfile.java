@@ -21,9 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -42,6 +44,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -151,11 +154,16 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     Spinner spn_amount_fixed_for;
 
-    String str_asset_originally_purchased, str_industries_use_asset, str_asset_located_at,
-            str_asset_seeking_sell, str_asset_features, str_asset_selling_leasing_price, str_amount_fixed_for, str_asset_selling_reason;
+    String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
+            str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
+
+    // Condition String
+
+    String str_profile_type = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,8 +277,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         // Default Setter Function
 
-        edt_name.setText(""+str_user_name);
-        edt_official_email.setText(""+str_user_email);
+        edt_name.setText("" + str_user_name);
+        edt_official_email.setText("" + str_user_email);
 
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,90 +324,163 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_tentative_selling_price = edt_tentative_selling_price.getText().toString();
                 str_reason_for_sale = edt_reason_for_sale.getText().toString();
 
+
+                //Asset _ for sale
+                str_year_asset_purchased = edt_year_asset_purchased.getText().toString();
+                str_asset_seeking_to_sell = edt_asset_seeking_to_sell.getText().toString();
+                str_asset_features = edt_asset_features.getText().toString();
+                str_asset_selling_leasing_price = edt_asset_selling_leasing_price.getText().toString();
+                str_asset_selling_eason = edt_asset_selling_eason.getText().toString();
+                str_amount_fixed_for = spn_amount_fixed_for.getSelectedItem().toString();
+
                 // Spinner Value to String
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
-                if (str_name.equals("")) {
-                    edt_name.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_company_name.equals("")) {
-                    edt_company_name.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_mobile.equals("")) {
-                    edt_mobile.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_official_email.equals("")) {
-                    edt_official_email.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_established_year.equals("")) {
-                    edt_business_established_year.setError("Enter Year");
-                    TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_no_of_permanent_employees.equals("")) {
-                    edt_no_of_permanent_employees.setError("Enter Permanent Employees");
-                    TastyToast.makeText(getApplicationContext(), "Permanent Employees Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_desc.equals("")) {
-                    edt_business_des.setError("Enter Business Description");
-                    TastyToast.makeText(getApplicationContext(), "Business Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_highlights.equals("")) {
-                    edt_business_highlights.setError("Enter Business Highlights");
-                    TastyToast.makeText(getApplicationContext(), "Business Highlights Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_all_prod_serv.equals("")) {
-                    edt_business_all_prod_serv.setError("Enter Products & Services");
-                    TastyToast.makeText(getApplicationContext(), "Products & Services Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_facility_desc.equals("")) {
-                    edt_business_facility_desc.setError("Enter Business Facility Description");
-                    TastyToast.makeText(getApplicationContext(), "Business Facility Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_avg_monthly_sales.equals("")) {
-                    edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
-                    TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_latest_yearly_sales.equals("")) {
-                    edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
-                    TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_EBITDA.equals("")) {
-                    edt_EBITDA.setError("Enter EBITDA");
-                    TastyToast.makeText(getApplicationContext(), "EBITDA Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_physical_assests_value.equals("")) {
-                    edt_physical_assests_value.setError("Please Enter Assets Value");
-                    TastyToast.makeText(getApplicationContext(), " Assets Value Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_tentative_selling_price.equals("")) {
-                    edt_tentative_selling_price.setError("Please Enter Tentative Selling Price");
-                    TastyToast.makeText(getApplicationContext(), " Tentative Selling Price Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_reason_for_sale.equals("")) {
-                    edt_reason_for_sale.setError("Please Enter Reason For Sale");
-                    TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_spn_business_legal_type.equals("Select Business legal entity type")) {
-                    spn_business_legal_type.setFocusable(true);
-                    spn_business_legal_type.setFocusableInTouchMode(true);
-                    spn_business_legal_type.requestFocus();
-                    spn_business_legal_type.performClick();
-                    TastyToast.makeText(getApplicationContext(), "Select Business legal entity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_business_sector.equals("")) {
-                    chip_busineeslist.setFocusable(true);
-                    chip_busineeslist.setFocusableInTouchMode(true);
-                    chip_busineeslist.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_Business_Location.equals("")) {
-                    chip_business_location.setFocusable(true);
-                    chip_business_location.setFocusableInTouchMode(true);
-                    chip_business_location.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } /*else if (str_selected_role_id.equals("")) {
-                    spn_i_am.setFocusable(true);
-                    spn_i_am.setFocusableInTouchMode(true);
-                    spn_i_am.requestFocus();
-                    spn_i_am.performClick();
-                    TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_selected_interest_id.equals("")) {
-                    spn_interested_in.setFocusable(true);
-                    spn_interested_in.setFocusableInTouchMode(true);
-                    spn_interested_in.requestFocus();
-                    spn_interested_in.performClick();
-                    TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/ else {
-                    dialog = new SpotsDialog(Activity_BusinessProfile.this);
-                    dialog.show();
-                    queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-                    Function_Submit_BusinessProfile();
+                if (str_profile_type.equals("normal")) {
+
+                    if (str_name.equals("")) {
+                        edt_name.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_company_name.equals("")) {
+                        edt_company_name.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_mobile.equals("")) {
+                        edt_mobile.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_official_email.equals("")) {
+                        edt_official_email.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_selected_role_id.equals("")) {
+                        spn_i_am.setFocusable(true);
+                        spn_i_am.setFocusableInTouchMode(true);
+                        spn_i_am.requestFocus();
+                        spn_i_am.performClick();
+                        TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_selected_interest_id.equals("")) {
+                        spn_interested_in.setFocusable(true);
+                        spn_interested_in.setFocusableInTouchMode(true);
+                        spn_interested_in.requestFocus();
+                        spn_interested_in.performClick();
+                        TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_business_established_year.equals("")) {
+                        edt_business_established_year.setError("Enter Year");
+                        TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_final_business_sector.equals("")) {
+                        chip_busineeslist.setFocusable(true);
+                        chip_busineeslist.setFocusableInTouchMode(true);
+                        chip_busineeslist.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_final_Business_Location.equals("")) {
+                        chip_business_location.setFocusable(true);
+                        chip_business_location.setFocusableInTouchMode(true);
+                        chip_business_location.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_no_of_permanent_employees.equals("")) {
+                        edt_no_of_permanent_employees.setError("Enter Permanent Employees");
+                        TastyToast.makeText(getApplicationContext(), "Permanent Employees Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_spn_business_legal_type.equals("Select Business legal entity type")) {
+                        spn_business_legal_type.setFocusable(true);
+                        spn_business_legal_type.setFocusableInTouchMode(true);
+                        spn_business_legal_type.requestFocus();
+                        spn_business_legal_type.performClick();
+                        TastyToast.makeText(getApplicationContext(), "Select Business legal entity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_business_desc.equals("")) {
+                        edt_business_des.setError("Enter Business Description");
+                        TastyToast.makeText(getApplicationContext(), "Business Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_business_highlights.equals("")) {
+                        edt_business_highlights.setError("Enter Business Highlights");
+                        TastyToast.makeText(getApplicationContext(), "Business Highlights Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_business_all_prod_serv.equals("")) {
+                        edt_business_all_prod_serv.setError("Enter Products & Services");
+                        TastyToast.makeText(getApplicationContext(), "Products & Services Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_business_facility_desc.equals("")) {
+                        edt_business_facility_desc.setError("Enter Business Facility Description");
+                        TastyToast.makeText(getApplicationContext(), "Business Facility Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_avg_monthly_sales.equals("")) {
+                        edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
+                        TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_latest_yearly_sales.equals("")) {
+                        edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
+                        TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_EBITDA.equals("")) {
+                        edt_EBITDA.setError("Enter EBITDA");
+                        TastyToast.makeText(getApplicationContext(), "EBITDA Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_physical_assests_value.equals("")) {
+                        edt_physical_assests_value.setError("Please Enter Assets Value");
+                        TastyToast.makeText(getApplicationContext(), " Assets Value Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_tentative_selling_price.equals("")) {
+                        edt_tentative_selling_price.setError("Please Enter Tentative Selling Price");
+                        TastyToast.makeText(getApplicationContext(), " Tentative Selling Price Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_reason_for_sale.equals("")) {
+                        edt_reason_for_sale.setError("Please Enter Reason For Sale");
+                        TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+                        dialog = new SpotsDialog(Activity_BusinessProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
+                        Function_Submit_BusinessProfile();
+                    }
+
+                } else if (str_profile_type.equals("asset")) {
+
+                    if (str_name.equals("")) {
+                        edt_name.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_company_name.equals("")) {
+                        edt_company_name.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_mobile.equals("")) {
+                        edt_mobile.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_official_email.equals("")) {
+                        edt_official_email.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_selected_role_id.equals("")) {
+                        spn_i_am.setFocusable(true);
+                        spn_i_am.setFocusableInTouchMode(true);
+                        spn_i_am.requestFocus();
+                        spn_i_am.performClick();
+                        TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_selected_interest_id.equals("")) {
+                        spn_interested_in.setFocusable(true);
+                        spn_interested_in.setFocusableInTouchMode(true);
+                        spn_interested_in.requestFocus();
+                        spn_interested_in.performClick();
+                        TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_year_asset_purchased.equals("")) {
+                        edt_year_asset_purchased.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_final_business_sector.equals("")) {
+                        chip_industries_use_asset.setFocusable(true);
+                        chip_industries_use_asset.setFocusableInTouchMode(true);
+                        chip_industries_use_asset.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select Assets Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_final_Business_Location.equals("")) {
+                        chip_asset_loation.setFocusable(true);
+                        chip_asset_loation.setFocusableInTouchMode(true);
+                        chip_asset_loation.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select Assets Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_asset_seeking_to_sell.equals("")) {
+                        edt_asset_seeking_to_sell.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_asset_features.equals("")) {
+                        edt_asset_features.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Features Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_asset_selling_leasing_price.equals("")) {
+                        edt_asset_selling_leasing_price.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Features Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_amount_fixed_for.equals("Above Amount Is Fixed For") || str_asset_selling_leasing_price.equals("")) {
+                        spn_amount_fixed_for.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_asset_selling_eason.equals("")) {
+                        edt_asset_selling_eason.setFocusable(true);
+                        TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+                        dialog = new SpotsDialog(Activity_BusinessProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
+                        Function_Submit_BusinessProfile();
+                    }
                 }
 
             }
@@ -696,9 +777,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     try {
                                         System.out.println("INTERESTED IN ::: " + str_selected_interest_name);
                                         if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+                                            str_profile_type = "asset";
                                             Cardview_spn_others.setVisibility(View.GONE);
                                             Cardview_spn_selling_leasing.setVisibility(View.VISIBLE);
                                         } else if (!str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+                                            str_profile_type = "normal";
                                             Cardview_spn_others.setVisibility(View.VISIBLE);
                                             Cardview_spn_selling_leasing.setVisibility(View.GONE);
                                         }
@@ -1093,12 +1176,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("email", str_official_email);
                 params.put("user_contact", str_ch_contactdetails);
                 params.put("user_company", str_ch_companydetails);
-                // String selected from dynamic values - Auto Complete
                 params.put("role", str_selected_role_id);
                 params.put("interest_in", str_selected_interest_id);
-                // String selected from dynamic values - MultiSelect (chipset)
-                params.put("locations", str_final_Business_Location);
-                params.put("industry", str_final_business_sector);
                 params.put("year", str_business_established_year);
                 params.put("employee", str_no_of_permanent_employees);
                 params.put("entitys", str_spn_business_legal_type);
@@ -1114,10 +1193,19 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
                 params.put("reason", str_reason_for_sale);
-                // Strings got by shared prefrences
-                params.put("user_id", str_user_id);
+                params.put("assets_purchased", str_year_asset_purchased);
+                params.put("assets_description", str_asset_seeking_to_sell);
+                params.put("assets_features", str_asset_features);
+                params.put("sellingprice", str_asset_selling_leasing_price);
+                params.put("sellingtype", str_amount_fixed_for);
+                params.put("reasonassets", str_asset_selling_eason);
+                params.put("locations", str_final_Business_Location);
+                params.put("industry", str_final_business_sector);
+                params.put("images", listString);
+                params.put("documents", "documents");
+                params.put("documentstype", "documentstype");
                 params.put("user_currency", str_user_currency);
-                params.put("image", listString);
+                params.put("user_id", str_user_id);
 
                 ////////////////
 
@@ -1147,11 +1235,27 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("tentative_price" + str_tentative_selling_price);
                 System.out.println("reason" + str_reason_for_sale);
                 System.out.println("user_id" + str_user_id);
-                System.out.println("user  _currency" + str_user_currency);
+                System.out.println("user_currency" + str_user_currency);
 
-                return params;
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
             }
         };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        // Adding request to request queue
         queue.add(request);
     }
 }

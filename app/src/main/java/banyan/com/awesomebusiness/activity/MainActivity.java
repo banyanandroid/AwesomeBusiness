@@ -296,14 +296,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         popup_txt_notification = (TextView) promptsView.findViewById(R.id.popup_txt_notification);
 
         if (str_previous_selected_country_name.equals("country_position")) {
-            txt_select_country.setText("" + str_previous_selected_country_name);
-        } else {
             txt_select_country.setText("");
+        } else {
+            txt_select_country.setText("" + str_previous_selected_country_name);
         }
         if (str_previous_selected_currency.equals("currency_position")) {
-            txt_select_currency.setText("" + str_previous_selected_currency);
-        } else {
             txt_select_currency.setText("");
+        } else {
+            txt_select_currency.setText("" + str_previous_selected_currency);
         }
 
         try {
