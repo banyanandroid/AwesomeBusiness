@@ -460,10 +460,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     if (str_business_established_year.equals("")) {
                         edt_business_established_year.setError("Enter Year");
                         TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_business_sector.equals("") || str_final_business_sector.equals("null")) {
+                    } else if (str_final_industry_update.equals("") || str_final_industry_update.equals("null")) {
                         TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_Business_Location.equals("")) {
-
+                    } else if (str_final_location_update.equals("")) {
                         TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_no_of_permanent_employees.equals("")) {
                         edt_no_of_permanent_employees.setError("Enter Permanent Employees");
@@ -1153,8 +1152,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("sellingprice", str_asset_selling_leasing_price);
                 params.put("sellingtype", str_amount_fixed_for);
                 params.put("reasonassets", str_asset_selling_eason);
-                params.put("locations", str_final_Business_Location);
-                params.put("industry", str_final_business_sector);
+                params.put("locations", str_final_location_update);
+                params.put("industry", str_final_industry_update);
                 params.put("images", listString);
                 params.put("documents", "documents");
                 params.put("documentstype", "documentstype");
@@ -1192,8 +1191,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("sellingprice" + str_asset_selling_leasing_price);
                 System.out.println("sellingtype" + str_amount_fixed_for);
                 System.out.println("reasonassets" + str_asset_selling_eason);
-                System.out.println("locations" + str_final_Business_Location);
-                System.out.println("industry" + str_final_business_sector);
+                System.out.println("locations" + str_final_location_update);
+                System.out.println("industry" + str_final_industry_update);
                 System.out.println("images" + listString);
                 System.out.println("documents" + " documents emptyyyyyyyy");
                 System.out.println("documentstype" + "documents typeee emptyyyyyyyy");
