@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -77,6 +78,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     private int REQUEST_CODE_PICKER = 2000;
 
     TextView t1;
+
+    TextView txt_img_count;
 
 
     public static final String TAG_ROLE_ID = "business_role_id";
@@ -170,8 +173,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_profile);
 
-        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::");
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -249,6 +250,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_asset_selling_leasing_price = (EditText) findViewById(R.id.edt_price_selling_leasing);
         edt_asset_selling_eason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
 
+        txt_img_count = (TextView) findViewById(R.id.bus_prof_txt_img_count);
+
         chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
         chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);
 
@@ -296,15 +299,23 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // String Values According to checkbox state
                 if (chb_companydetails.isChecked()) {
                     str_ch_companydetails = "1";
+                }else {
+                    str_ch_companydetails = "0";
                 }
                 if (chb_contatdetails.isChecked()) {
                     str_ch_contactdetails = "1";
+                }else {
+                    str_ch_contactdetails = "0";
                 }
                 if (chb_yearly_sales_range.isChecked()) {
                     str_ch_yearly_sales_range = "1";
+                }else {
+                    str_ch_yearly_sales_range = "0";
                 }
                 if (chb_display_EBITDA_as_range.isChecked()) {
                     str_ch_display_EBITDA_range = "1";
+                }else {
+                    str_ch_display_EBITDA_range = "0";
                 }
 
                 str_name = edt_name.getText().toString();
@@ -337,6 +348,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
                 if (str_profile_type.equals("normal")) {
+
+                    System.out.println("str_final_business_sector  : " + str_final_business_sector);
+                    System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
 
                     if (str_name.equals("")) {
                         edt_name.setFocusable(true);
@@ -552,86 +566,23 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 Log.e("base64", "-----" + encodedstring);
 
                 Arraylist_image_encode.add(encodedstring);
-            }
 
+                txt_img_count.setText("("+Arraylist_image_encode.size()+")"+ " Images Added");
+                btn_add_pic.setText("Change Image");
+            }
             Encode_Image1();
-            // textView.setText(sb.toString());
         }
     }
 
     public void Encode_Image1() {
 
-        for (String s : Arraylist_image_encode) {
+        listString = TextUtils.join("IMAGE:", Arraylist_image_encode);
+
+        /*for (String s : Arraylist_image_encode) {
             listString += s + "IMAGE:";
-        }
+        }*/
 
-        queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-        Function_Pic_Upload();
-
-        //System.out.println("ENCODE :: " + listString);
-
-        //Log.d(":STRING:", listString);
     }
-
-
-    /*********************************
-     *  POST IMAGE
-     * *********************************/
-
-    private void Function_Pic_Upload() {
-
-        String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
-
-        StringRequest request = new StringRequest(Request.Method.POST,
-                url_login, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG_LOC_KEY, response.toString());
-                Log.d("USER_LOGIN", response.toString());
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    System.out.println("REG 00" + obj);
-
-                    int success = obj.getInt("status");
-
-                    System.out.println("REG" + success);
-
-                    if (success == 1) {
-
-                    } else {
-
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("image", listString);
-                System.out.println("IMG :: " + listString);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        queue.add(request);
-    }
-
 
     /*****************************
      * To get  I am/an  Details
@@ -735,7 +686,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("WELCOMEEEEEEEEEEEEEEEEEEEEEEEEEEEE :::" + "INTERESTEDDDDDDDDDD");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_interested_in, new Response.Listener<String>() {
 
@@ -898,12 +848,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
                                     Arraylist_selected_sectorkey.add(str_select_item);
 
-                                    for (String s : Arraylist_selected_sectorkey) {
-                                        str_final_business_sector += s + ",";
-                                    }
+                                    str_final_business_sector = TextUtils.join(", ", Arraylist_selected_sectorkey);
 
                                     System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
 
                                 }
                             });
@@ -925,13 +872,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
                                     Arraylist_selected_sectorkey.add(str_select_item);
 
-                                    for (String s : Arraylist_selected_sectorkey) {
-                                        str_final_business_sector += s + ",";
-                                    }
+                                    str_final_business_sector = TextUtils.join(", ", Arraylist_selected_sectorkey);
 
                                     System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
-
                                 }
                             });
 
@@ -967,6 +910,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
             }
         }) {
+
 
             @Override
             protected Map<String, String> getParams() {
@@ -1033,21 +977,17 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
 
                                     t1 = (TextView) view;
-                                    String str_location_key = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location_key);
-
+                                    String str_location = t1.getText().toString();
+                                    int i = Arraylist_location_place.indexOf(str_location);
                                     String str_select_location_key = Arraylist_location_key.get(i);
                                     String str_select_location_type = Arraylist_location_type.get(i);
 
                                     String str_select_item = str_select_location_key + "-" + str_select_location_type;
                                     Arraylist_selected_location.add(str_select_item);
 
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }
+                                    str_final_Business_Location = TextUtils.join(", ", Arraylist_selected_location);
 
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
-
+                                    System.out.println("FINAL LOCATION :: " + str_final_Business_Location);
 
                                 }
                             });
@@ -1059,7 +999,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                                     System.out.println("Position :::::::: " + position);
 
-
                                     t1 = (TextView) view;
                                     String str_location_key = t1.getText().toString();
                                     int i = Arraylist_location_place.indexOf(str_location_key);
@@ -1070,12 +1009,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                                     String str_select_item = str_select_location_key + "-" + str_select_location_type;
                                     Arraylist_selected_location.add(str_select_item);
 
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }
+                                    str_final_Business_Location = TextUtils.join(", ", Arraylist_selected_location);
 
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
-
+                                    System.out.println("FINAL LOCATION :: " + str_final_Business_Location);
 
                                 }
                             });
@@ -1083,7 +1019,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         } catch (Exception e) {
 
                         }
-
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);

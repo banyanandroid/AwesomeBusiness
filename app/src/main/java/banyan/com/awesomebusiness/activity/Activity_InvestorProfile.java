@@ -62,7 +62,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     TextView t1;
     String str_user_currency, str_user_id = "";
 
-
     // COMPANY LOGO - PIC Upload
 
     String listString = "";

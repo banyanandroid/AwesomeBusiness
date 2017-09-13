@@ -58,11 +58,9 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/edt_textinput_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary"
-                        android:theme="@style/TextLabel">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -70,18 +68,15 @@
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Name"
                             android:inputType="text"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp" />
+                            android:textColor="@color/textColorPrimary"/>
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary"
-                        android:theme="@style/TextLabel">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_company_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -97,11 +92,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary"
-                        android:theme="@style/TextLabel">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_mobile_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -117,11 +110,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary"
-                        android:theme="@style/TextLabel">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_official_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -276,11 +267,9 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@color/textColorPrimary"
-                        android:theme="@style/TextLabel">
+                        android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <EditText
                             android:id="@+id/edt_when_established"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -849,18 +838,36 @@
                         android:orientation="horizontal"
                         android:weightSum="2">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="20dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1.5"
-                            android:text="Add business &amp; product photos"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Add business &amp; product photos"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/bus_prof_txt_img_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                        </LinearLayout>
+
 
                         <Button
                             android:id="@+id/btn_add_photos"
                             android:layout_width="0dp"
-                            android:layout_height="35dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="0.5"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:text="Add Pic"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -66,10 +67,15 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
     //FOR IMAGE UPLOAD
     private int REQUEST_CODE_PICKER = 2000;
+    private int REQUEST_CODE_PICKER1 = 2000;
     private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> image = new ArrayList<>();
     ArrayList<String> Arraylist_image_encode = null;
     String listString = "";
     String encodedstring = "";
+    String encoded_logo = "";
+    String image_type = "";
+
 
     // SEARCHABLE SPINNER AND STRING FOR COUNTRY PHONE CODE
     SearchableSpinner spn_country_code;
@@ -415,15 +421,27 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         spn_no_of_salespartner_formats = (Spinner) findViewById(R.id.spn_sales_partners_format);
         spn_opportunities_offered = (Spinner) findViewById(R.id.spn_opportunities_offered);
 
-
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
+        btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
+
+
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                image_type = "store_pics";
                 ImagePicker();
             }
         });
 
+        btn_add_brand_logo_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image_type = "logo";
+                ImagePicker1();
+            }
+        });
 
         //  HERE WE MAKE CARD VIEWS OF " NO.OF SALES PARTNER FORMATS "  VISIBLE OR INVISIBLE ACCORDING TO SPINNER VALUE SELECTION
         //   AND ALSO ASSING A VALUE TO THE STRINGS OF THE CARDVIEWS WHICH ARE GONE.
@@ -512,7 +530,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 });
 
 
-        btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2052,6 +2069,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+            image = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             StringBuilder sb = new StringBuilder();
             for (int i = 0, l = images.size(); i < l; i++) {
 
@@ -2064,82 +2082,59 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 encodedstring = Base64.encodeToString(ba, 0);
                 Log.e("base64", "-----" + encodedstring);
 
-                Arraylist_image_encode.add(encodedstring);
+                if (image_type.equals("store_pics")) {
+
+                    Arraylist_image_encode.add(encodedstring);
+
+                } else if (image_type.equals("logo")) {
+                    encoded_logo = encodedstring;
+                } else {
+                    TastyToast.makeText(getApplicationContext(), "Internal Error !", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                }
             }
 
-            Encode_Image1();
-            // textView.setText(sb.toString());
+            if (image_type.equals("store_pics")) {
+                Encode_Image1();
+            } else if (image_type.equals("logo")) {
+                encoded_logo = encodedstring;
+            } else {
+                TastyToast.makeText(getApplicationContext(), "Internal Server Error !", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+            }
         }
     }
 
     public void Encode_Image1() {
-
-        for (String s : Arraylist_image_encode) {
-            listString += s + "IMAGE:";
-        }
-
-        queue = Volley.newRequestQueue(Activity_FranchiseProfile.this);
-        Function_Post_image();
-
-        //System.out.println("ENCODE :: " + listString);
-
-        //Log.d(":STRING:", listString);
+        listString = TextUtils.join("IMAGE:", Arraylist_image_encode);
     }
 
-    /*********************************
-     *  POST IMAGE
-     * *********************************/
-    private void Function_Post_image() {
 
-        String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
+    public void ImagePicker1() {
+        ImagePicker.create(this)
+                .folderMode(true) // set folder mode (false by default)
+                .folderTitle("Folder") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(1) // max images can be selected (999 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
+                .origin(image) // original selected images, used in multi mode
+                .start(REQUEST_CODE_PICKER1); // start image picker activity with request code
+    }
 
-        StringRequest request = new StringRequest(Request.Method.POST,
-                url_login, new Response.Listener<String>() {
+    // Traditional intent
+    public void startWithIntent1() {
+        Intent intent = new Intent(this, ImagePickerActivity.class);
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("USER_LOGIN", response.toString());
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    System.out.println("REG 00" + obj);
-
-                    int success = obj.getInt("status");
-
-                    System.out.println("REG" + success);
-
-                    if (success == 1) {
-
-                    } else {
-
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("image", listString);
-                System.out.println("IMG :: " + listString);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        queue.add(request);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_MODE, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_MODE, ImagePickerActivity.MODE_MULTIPLE);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_LIMIT, 1);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SHOW_CAMERA, true);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES, image);
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_FOLDER_TITLE, "Album");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_TITLE, "Tap to select images");
+        intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_DIRECTORY, "Camera");
+        startActivityForResult(intent, REQUEST_CODE_PICKER1);
     }
 
 
@@ -2289,7 +2284,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("royalty_commission6", str_opportunity_offered);
                 params.put("monthly_revenue6", str_opportunity_offered);
                 params.put("profit_margin6", str_opportunity_offered);
-
 
 
                 return params;

@@ -416,7 +416,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("user_id", str_user_id);
-                System.out.println("user_id" + "1");
+                System.out.println("user_id" + str_user_id);
 
                 return params;
             }
