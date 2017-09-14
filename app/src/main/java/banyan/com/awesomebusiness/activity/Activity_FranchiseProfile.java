@@ -716,7 +716,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 // THIS ELSE IF STATEMENT IS TO CHECK WHETHER THE  NO OF SALES PARTNER FORMATS IS SELECTED OR NOT
                 else if (str_no_of_formats.equals("No of Sales Partner Formats")) {
                     TastyToast.makeText(getApplicationContext(), "Please Select No of Sales Partner Formats ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else {
+                }
+
+                if (str_no_of_formats != null && !str_no_of_formats.isEmpty()) {
                     // THIS SWITCH STATEMENT IS TO VALIDATE
                     // the STRINGS GOT FROM EDIT TEXT'S OF GET THE SELECTED NO OF FORMATS
                     switch (str_no_of_formats) {
@@ -1419,39 +1421,35 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                             break;
                     }
 
+                } else {
+
+
+                    System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
+                    System.out.println("EMAIL :::::::::::" + str_email);
+                    System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
+                    System.out.println("DESIGNATION :::::::::::" + str_designation);
+                    System.out.println("BRAND NAME :::::::::::" + str_brand_name);
+                    System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
+                    System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
+                    System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
+                    System.out.println(" NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
+                    System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
+                    System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
+                    System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
+                    System.out.println("FORMAT 1111111112 NAME :::::::::::" + str_format_name_1);
+                    System.out.println("FORMAT 2222222222 NAME :::::::::::" + str_format_name_2);
+                    System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
+
+                    try {
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        // Function_Submit_FranchiseProfile();
+
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
                 }
-
-                System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
-                System.out.println("EMAIL :::::::::::" + str_email);
-                System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
-                System.out.println("DESIGNATION :::::::::::" + str_designation);
-                System.out.println("BRAND NAME :::::::::::" + str_brand_name);
-                System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
-                System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
-                System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
-                System.out.println(" NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
-                System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
-                System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
-                System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
-
-                System.out.println("FORMAT 1111111112 NAME :::::::::::" + str_format_name_1);
-                System.out.println("FORMAT 2222222222 NAME :::::::::::" + str_format_name_2);
-
-
-                System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
-
-
-                try {
-                    dialog = new SpotsDialog(Activity_FranchiseProfile.this);
-                    dialog.show();
-                    queue = Volley.newRequestQueue(getApplicationContext());
-                    // Function_Submit_FranchiseProfile();
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-
-
             }
         });
 
@@ -1460,7 +1458,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
             Get_CountryCode();
-
         } catch (Exception e) {
             // TODO: handle exception
         }
