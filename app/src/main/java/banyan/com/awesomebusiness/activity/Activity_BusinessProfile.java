@@ -608,7 +608,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         }
                     }
                 }
-
             }
         });
 

@@ -188,6 +188,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+
         Arraylist_investor_role_id = new ArrayList<String>();
         Arraylist_investor_role_name = new ArrayList<String>();
 
@@ -212,10 +215,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         Arraylist_selected_final_location = new ArrayList<String>();
 
         Arraylist_image_encode = new ArrayList<String>();
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-        System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
         auto_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.investor_profile_industries_multi_interested);
         auto_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.investor_profile_business_multi_location);
@@ -257,123 +256,84 @@ public class Activity_InvestorProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String str_bus_list = auto_busineeslist.getText().toString();
+                String str_loc_list = auto_locationlist.getText().toString();
 
-                /******************************
-                 * Get Multi Sector Details
-                 * *************************/
-                String[] str_industries = auto_busineeslist.getText().toString().split(", ");
+                if (str_bus_list.equals("")) {
 
-                for (int i = 0; i < str_industries.length; i++) {
-                    Arraylist_fetched_industries.add(str_industries[i]);
-                }
-                System.out.println("array : " + Arraylist_fetched_industries);
+                    TastyToast.makeText(getApplicationContext(), "Please Enter Interested Industries ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
-                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+                } else {
 
-                    String get_indestry = Arraylist_fetched_industries.get(i);
-                    get_indestry = get_indestry.trim();
-                    System.out.println("get_indestry : " + get_indestry);
-                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                    String select_sect_id = Arraylist_sector_key.get(indus_position);
-                    String select_sect_type = Arraylist_sector_type.get(indus_position);
+                    /******************************
+                     * Get Multi Sector Details
+                     * *************************/
+                    String[] str_industries = auto_busineeslist.getText().toString().split(", ");
 
-                    String sector = select_sect_id + "-" + select_sect_type;
-                    Arraylist_selected_final_industry.add(sector);
-
-                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
-
-                }
-                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
-
-                /******************************
-                 * Get Multi Location Details
-                 * *************************/
-
-                String[] str_location = auto_locationlist.getText().toString().split(", ");
-
-                for (int i = 0; i < str_location.length; i++) {
-                    Arraylist_fetched_location.add(str_location[i]);
-                }
-                System.out.println("array : " + Arraylist_fetched_location);
-
-                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                    String get_location = Arraylist_fetched_location.get(i);
-                    get_location = get_location.trim();
-                    System.out.println("get_location : " + get_location);
-                    int location_position = Arraylist_location_place.indexOf(get_location);
-                    String select_location_id = Arraylist_location_key.get(location_position);
-                    String select_location_type = Arraylist_location_type.get(location_position);
-
-                    String location = select_location_id + "-" + select_location_type;
-                    Arraylist_selected_final_location.add(location);
-
-                    str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
-
-                }
-                System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
-
-
-                ///////////////////////
-                ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
-                ///////////////////////
-
-                /*
-                String str_location_from_chip = chip_business_location.getText().toString();
-                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
-
-                String[] items_loc_comma = str_location_from_chip.split(",");
-                for (String item_loc_comma : items_loc_comma) {
-                    String[] items_loc_left = item_loc_comma.split("\\[");
-                    for (String item_loc_left : items_loc_left) {
-                        if (item_loc_left.equals("")) {
-
-                        } else {
-                            Character last_letter = item_loc_left.charAt(item_loc_left.length() - 1);
-                            if (last_letter.equals(']')) {
-                            } else {
-                                System.out.println("right filter" + item_loc_left);
-                                Arraylist_fetched_location.add(item_loc_left);
-                            }
-                        }
+                    Arraylist_fetched_industries.clear();
+                    for (int i = 0; i < str_industries.length; i++) {
+                        Arraylist_fetched_industries.add(str_industries[i]);
                     }
+                    System.out.println("array : " + Arraylist_fetched_industries);
 
-                    String[] items_loc_right = item_loc_comma.split("\\]");
-                    for (String item_loc_right : items_loc_right) {
+                    Arraylist_selected_final_industry.clear();
+                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
-                        if (item_loc_right.equals("")) {
+                        String get_indestry = Arraylist_fetched_industries.get(i);
+                        get_indestry = get_indestry.trim();
+                        System.out.println("get_indestry : " + get_indestry);
+                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                        String select_sect_id = Arraylist_sector_key.get(indus_position);
+                        String select_sect_type = Arraylist_sector_type.get(indus_position);
 
-                        } else {
-                            Character first_letter = item_loc_right.charAt(0);
-                            if (first_letter.equals('[')) {
-                            } else {
-                                System.out.println("left filter" + item_loc_right);
-                                Arraylist_fetched_location.add(item_loc_right);
-                            }
-                        }
+                        String sector = select_sect_id + "-" + select_sect_type;
+                        Arraylist_selected_final_industry.add(sector);
+
+                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
 
                     }
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
                 }
-                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                if (str_loc_list.equals("")) {
+                    TastyToast.makeText(getApplicationContext(), "Please Enter Interested Location ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+
+                    /******************************
+                     * Get Multi Location Details
+                     * *************************/
+
+                    String[] str_location = auto_locationlist.getText().toString().split(", ");
+
+                    Arraylist_fetched_location.clear();
+                    for (int i = 0; i < str_location.length; i++) {
+                        Arraylist_fetched_location.add(str_location[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
 
                     Arraylist_selected_final_location.clear();
-                    String get_Location = Arraylist_fetched_location.get(i);
-                    get_Location = get_Location.trim();
-                    int location_position = Arraylist_location_place.indexOf(get_Location);
-                    String str_location_type = Arraylist_location_type.get(location_position);
-                    String select_location_id = Arraylist_location_key.get(location_position + 1);
-                    String select_location_type = Arraylist_location_type.get(location_position + 1);
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
 
-                    String location = select_location_id + "-" + select_location_type;
-                    Arraylist_selected_final_location.add(location);
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        System.out.println("location_position : " + location_position);
+                        System.out.println("Arraylist_location_key : " + Arraylist_location_key);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
 
-                    for (String L : Arraylist_selected_final_location) {
-                        str_final_location_update += L + ",";
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+
+                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
                     }
-                    System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
+
                 }
 
-*/
 
                 ///////////////////////
                 ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
@@ -400,12 +360,26 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 str_kindof_business_interested = edt_kind_business_interested.getText().toString();
                 str_company_about = edt_company_about.getText().toString();
 
-/*
                 //CONVERTING DEAL SIZE MINIMUM & MAXIMUM VALUES TO INTEGER TO CHECK MAXIMUM IS GREATER THAN MINIMUM VALUES
-                int_deal_minimum = Integer.valueOf(str_deal_minimum);
-                int_deal_maximum = Integer.valueOf(str_deal_maximum);
-*/
-              /*  if (str_name.equals("")) {
+
+                if (str_deal_minimum.equals("")) {
+                    edt_dealsize_minimum.setError("Enter Minimum Deal Size");
+                    edt_dealsize_minimum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    int_deal_minimum = Integer.valueOf(str_deal_minimum);
+                }
+
+                if (str_deal_maximum.equals("")) {
+                    edt_dealsize_maximum.setError("Enter Maximum Deal Size");
+                    edt_dealsize_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    int_deal_maximum = Integer.valueOf(str_deal_maximum);
+                }
+
+
+                if (str_name.equals("")) {
                     edt_name.setError("Enter  Name");
                     edt_name.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -431,11 +405,11 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_dealsize_maximum.setError("Enter Maximum Deal Size");
                     edt_dealsize_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } *//*else if (int_deal_maximum <= int_deal_minimum) {
+                } else if (int_deal_maximum <= int_deal_minimum) {
                     edt_dealsize_maximum.setError("Invalid Value");
                     edt_dealsize_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Deal Size", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*//* else if (str_final_headquaters.equals("")) {
+                } else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Location");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Location Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -464,11 +438,17 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_company_about.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
-                   *//* dialog = new SpotsDialog(Activity_InvestorProfile.this);
-                    dialog.show();
-                    queue = Volley.newRequestQueue(Activity_InvestorProfile.this);
-                    Function_Submit_InvestorProfile();*//*
-                }*/
+
+                    if (str_user_currency.equals("str_selected_currency")) {
+                        TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+                        dialog = new SpotsDialog(Activity_InvestorProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_InvestorProfile.this);
+                        Function_Submit_InvestorProfile();
+                    }
+
+                }
 
 
             }
