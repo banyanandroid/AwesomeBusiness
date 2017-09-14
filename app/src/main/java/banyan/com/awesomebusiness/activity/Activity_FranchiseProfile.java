@@ -1417,7 +1417,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                 edt_format_operating_profitmargin_6.setError("Enter Operating Profit Margin %");
                                 TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                             }
-
                             break;
                     }
 

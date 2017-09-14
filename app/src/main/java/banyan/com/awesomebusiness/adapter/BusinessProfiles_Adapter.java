@@ -7,14 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.activity.Tab_Business_Profile;
+import banyan.com.awesomebusiness.activity.Tab_Investor_Profile;
 
 /**
  * Created by User on 9/7/2017.
@@ -54,19 +58,32 @@ public class BusinessProfiles_Adapter extends BaseAdapter {
         if (convertView == null)
             v = inflater.inflate(R.layout.list_user_business_profiles, null);
 
-        System.out.println("CAMEEEEEEEE : " + Tab_Business_Profile.TAG_BUSINESS_SHORT_DES);
-
-        TextView txt_business_profile_desc = (TextView) v.findViewById(R.id.list_business_profile_description);
+        TextView bus_desc = (TextView) v.findViewById(R.id.list_bus_des);
+        TextView bus_type = (TextView) v.findViewById(R.id.list_bus_interest_type);
+        TextView bus_location = (TextView) v.findViewById(R.id.list_bus_location);
+        TextView bus_status = (TextView) v.findViewById(R.id.list_bus_status);
+        ImageView prod_img = (ImageView) v.findViewById(R.id.list_business_profile);
 
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-        System.out.println("SHORT DESCCCCCCC : " + Tab_Business_Profile.TAG_BUSINESS_SHORT_DES);
+        String str_bus_name = result.get(Tab_Business_Profile.TAG_BUSINESS_SHORT_DES);
+        String str_bus_type = result.get(Tab_Business_Profile.TAG_BUSINESS_INTEREST_NAME);
+        String str_bus_location = result.get(Tab_Business_Profile.TAG_LOCATION_NAME);
+        String str_bus_status = result.get(Tab_Business_Profile.TAG_BUSINESS_STATUS);
 
-        txt_business_profile_desc.setText(result.get(Tab_Business_Profile.TAG_BUSINESS_SHORT_DES));
+        bus_desc.setText(str_bus_name);
+        bus_type.setText(str_bus_type);
+        bus_location.setText(str_bus_location);
+        bus_status.setText(str_bus_status);
 
-        String color = bgColors[position % bgColors.length];
-        txt_business_profile_desc.setBackgroundColor(Color.parseColor(color));
+        String impath = result.get(Tab_Business_Profile.TAG_IMAGE_PATH);
+
+        Glide.with(activity)
+                .load(impath)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(prod_img);
+
 
         return v;
 

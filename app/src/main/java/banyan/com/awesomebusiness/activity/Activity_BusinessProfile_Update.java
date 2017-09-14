@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -92,7 +94,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
 
-
     //To Get The Previously Entered Values
     public static final String TAG_BUSINESS_ID = "business_id";
     public static final String TAG_BUSINESS_KEY = "business_key";
@@ -135,6 +136,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
 
+    public static final String TAG_INDUSTRY_NAME = "industry_name";
+    public static final String TAG_INDUSTRY_KEY = "industry_key";
+
 
     ArrayList<String> Arraylist_business_role_id = null;
     ArrayList<String> Arraylist_business_role_name = null;
@@ -155,6 +159,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_location_type = null;
 
     private ArrayAdapter<String> adapter_i_am;
+
+    ArrayList<String> Arraylist_update_location = null;
+    ArrayList<String> Arraylist_update_industries = null;
 
     private ArrayAdapter<String> adapter_interested;
 
@@ -191,6 +198,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     //Selling or Leasing out business
     EditText edt_year_asset_purchased, edt_asset_seeking_to_sell, edt_asset_features, edt_asset_selling_leasing_price, edt_asset_selling_reason;
 
+    MultiAutoCompleteTextView auto_bus_busineeslist, auto_bus_locationlist, auto_industries_use_asset, auto_asset_loation;
 
     Spinner spn_amount_fixed_for;
 
@@ -200,7 +208,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_profile);
+        setContentView(R.layout.activity_business_profile_update);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -223,9 +231,10 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
-        spn_i_am.setTitle("Select Your Role");
+        spn_i_am.setTitle("Select Yourr Role");
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_intersted);
-        spn_interested_in.setTitle("Select Your Interest");
+        spn_interested_in.setTitle("Select Yourr Interest");
+
         // Common Edittext
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
@@ -252,6 +261,12 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
 
+        auto_bus_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_busi_industry);
+        auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_busi_loca_at);
+
+        auto_industries_use_asset = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_Industries_use_asset);
+        auto_asset_loation = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_asset_loca_at);
+
         //Selling or Leasing out business
         edt_year_asset_purchased = (EditText) findViewById(R.id.edt_loan_when_asset_purchased);
         edt_asset_seeking_to_sell = (EditText) findViewById(R.id.edt_wt_asset_sell);
@@ -259,8 +274,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         edt_asset_selling_leasing_price = (EditText) findViewById(R.id.edt_price_selling_leasing);
         edt_asset_selling_reason = (EditText) findViewById(R.id.edt_reason_for_sell_asset);
 
-      /*  chip_industries_use_asset = (ChipLayout) findViewById(R.id.business_profile_chipText_Industries_use_asset);
-        chip_asset_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_asset_loca_at);*/
 
         spn_amount_fixed_for = (Spinner) findViewById(R.id.spn_amount_for);
 
@@ -268,7 +281,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_business_key = sharedPreferences.getString("business_key", "business_key");
-
 
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
@@ -289,6 +301,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
+        Arraylist_update_location = new ArrayList<String>();
+        Arraylist_update_industries = new ArrayList<String>();
+
         // IMG PIC
         Arraylist_image_encode = new ArrayList<String>();
         Arraylist_dummy = new ArrayList<String>();
@@ -300,7 +315,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 ImagePicker();
             }
         });
-
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,7 +430,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     queue = Volley.newRequestQueue(Activity_BusinessProfile_Update.this);
                     Function_Submit_BusinessProfile();
                 }
-
             }
         });
 
@@ -431,14 +444,11 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
-
     }
 
     /*******************************
      *  PIC UPLOADER
      * ***************************/
-
     // Recomended builder
     public void ImagePicker() {
         ImagePicker.create(this)
@@ -498,15 +508,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         for (String s : Arraylist_image_encode) {
             listString += s + "IMAGE:";
         }
-
-        queue = Volley.newRequestQueue(Activity_BusinessProfile_Update.this);
-        Function_Login();
-
-        //System.out.println("ENCODE :: " + listString);
-
-        //Log.d(":STRING:", listString);
     }
-
 
     /*********************************
      *  POST
@@ -559,7 +561,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
@@ -797,13 +798,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
                             Arraylist_sector_type.add(sector_type);
-
                         }
                         try {
-
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
-
-
 
                         } catch (Exception e) {
 
@@ -957,6 +954,10 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     if (success == 1) {
 
                         JSONArray arr_main;
+                        JSONArray arr_location;
+                        JSONArray arr_industry;
+
+
                         arr_main = obj.getJSONArray("data");
 
                         for (int i = 0; arr_main.length() > i; i++) {
@@ -998,7 +999,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String business_reason = obj_data.getString(TAG_BUSINESS_REASON);
                             String business_assets_purchased = obj_data.getString(TAG_BUSINESS_ASSETS_PURCHASED); // year asset purchased
                             //assets location - In another array
-                            //assets industry - In another array
                             String business_assets_description = obj_data.getString(TAG_BUSINESS_ASSETS_DESCRIPTION); // what assets u seeking to sell
                             String business_assets_features = obj_data.getString(TAG_BUSINESS_ASSETS_FEATURES); // features of the asset
                             String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE); // what price u selling / leasing
@@ -1008,6 +1008,32 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE); // unknown -null -no need to set
                             String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST); //unknown null -no need to set
+
+                            arr_location = obj_data.getJSONArray("location");
+                            Arraylist_update_location.clear();
+                            for (int j = 0; arr_location.length() > j; j++) {
+                                JSONObject obj_location = arr_location.getJSONObject(j);
+
+                                String location_name = obj_location.getString(TAG_LOCATION_NAME);
+                                String location_key = obj_location.getString(TAG_LOCATION_KEY);
+
+                                Arraylist_update_location.add(location_name);
+
+                            }
+                            String str_final_location = TextUtils.join(", ", Arraylist_update_location);
+
+                            arr_industry = obj_data.getJSONArray("industry");
+                            Arraylist_update_industries.clear();
+                            for (int j = 0; arr_industry.length() > j; j++) {
+                                JSONObject obj_industry = arr_location.getJSONObject(j);
+
+                                String industry_name = obj_industry.getString(TAG_INDUSTRY_NAME);
+                                String industry_key = obj_industry.getString(TAG_INDUSTRY_KEY);
+
+                                Arraylist_update_industries.add(industry_name);
+
+                            }
+                            String str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
 
                             try {
 
@@ -1020,6 +1046,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 edt_official_email.setText("" + business_user_email);
                                 edt_official_email.setEnabled(false);
 
+
+                                auto_bus_busineeslist.setText("" + str_final_industries);
+                                auto_bus_locationlist.setText("" + str_final_location);
                                 edt_business_established_year.setText("" + business_established);
                                 edt_no_of_permanent_employees.setText("" + business_employee_count);
                                 edt_business_highlights.setText("" + buisness_description);
@@ -1110,50 +1139,10 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                                 }
 
-
                             } catch (Exception e) {
 
                             }
                         }
-
-                        JSONArray arr;
-
-                        arr = obj.getJSONArray("location");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
-
-                        for (int j = 0; arr.length() > j; j++) {
-                            JSONObject obj_location = arr.getJSONObject(j);
-
-                           /* String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
-                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
-
-                            Arraylist_pref_location_id.add(prefer_location_id);
-                            Arraylist_pref_location_type.add(prefer_location_type);*/
-                        }
-
-                        try {
-                        } catch (Exception e) {
-                        }
-
-                        JSONArray arr1;
-
-                        arr1 = obj.getJSONArray("industry");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
-
-                        for (int k = 0; arr1.length() > k; k++) {
-                            JSONObject obj_indus = arr1.getJSONObject(k);
-
-                          /*  String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
-                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
-
-                            Arraylist_pref_sector_id.add(preferences_industries_id);
-                            Arraylist_pref_sector_type.add(preferences_industry_type);*/
-                        }
-
-                        try {
-                        } catch (Exception e) {
-                        }
-
 
                     } else if (success == 0) {
 

@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.fabtransitionactivity.SheetLayout;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
@@ -34,10 +32,8 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.adapter.BusinessProfiles_Adapter;
-import banyan.com.awesomebusiness.adapter.CartAdapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
-import butterknife.ButterKnife;
 
 /**
  * Created by Jo on 9/4/2017.
@@ -92,11 +88,22 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_BUSINESS_TENTATIVE_PRICE = "business_tentative_price";
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
     public static final String TAG_BUSINESS_REASON = "business_reason";
+    public static final String TAG_BUSINESS_STATUS = "business_status";
+
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
 
+    public static final String TAG_INDUSTRY_NAME = "industry_name";
+    public static final String TAG_INDUSTRY_KEY = "industry_key";
 
+    public static final String TAG_IMAGE_PATH = "image_path";
+
+    ArrayList<String> Arraylist_update_location = null;
+    ArrayList<String> Arraylist_update_industries = null;
+    ArrayList<String> Arraylist_update_images = null;
+
+    String str_final_location, str_final_industry, str_final_image = "";
     static ArrayList<HashMap<String, String>> Business_profile_list;
 
     HashMap<String, String> params = new HashMap<String, String>();
@@ -143,6 +150,10 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                                     }
                                 }
         );
+
+        Arraylist_update_location = new ArrayList<String>();
+        Arraylist_update_industries = new ArrayList<String>();
+        Arraylist_update_images = new ArrayList<String>();
 
         // Hashmap for ListView
         Business_profile_list = new ArrayList<HashMap<String, String>>();
@@ -253,13 +264,13 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         try {
+            Business_profile_list.clear();
             queue = Volley.newRequestQueue(getActivity());
             Get_Business_Profiles();
         } catch (Exception e) {
             // TODO: handle exception
         }
     }
-
 
     /*****************************
      * GET Business Profiles
@@ -282,6 +293,10 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                     if (success == 1) {
 
                         JSONArray arr;
+                        JSONArray arr_location;
+                        JSONArray arr_industry;
+                        JSONArray arr_images;
+
                         arr = obj.getJSONArray("data");
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
@@ -321,12 +336,57 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             String business_month_sales = obj1.getString(TAG_BUSINESS_MONTH_SALES);
                             String business_tentative_price = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE);
                             String business_legal_entity_type = obj1.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
-                            //  String location_name = obj1.getString(TAG_LOCATION_NAME);
-                            //   String location_key = obj1.getString(TAG_LOCATION_KEY);
+                            String business_status = obj1.getString(TAG_BUSINESS_STATUS);
 
-                            // creating new HashMap
+                            arr_location = obj1.getJSONArray("location");
+                            if (arr_location != null) {
+                                Arraylist_update_location.clear();
+                                for (int j = 0; arr_location.length() > j; j++) {
+                                    JSONObject obj_location = arr_location.getJSONObject(j);
+
+                                    String location_name = obj_location.getString(TAG_LOCATION_NAME);
+                                    String location_key = obj_location.getString(TAG_LOCATION_KEY);
+
+                                    Arraylist_update_location.add(location_name);
+
+                                }
+                                str_final_location = TextUtils.join(", ", Arraylist_update_location);
+                            }
+
+                            arr_industry = obj1.getJSONArray("industry");
+                            if (arr_industry != null) {
+                                System.out.println("Length Industry:: " + arr_industry.length());
+                                Arraylist_update_industries.clear();
+                                for (int k = 0; arr_industry.length() > k; k++) {
+                                    JSONObject obj_indus = arr_industry.getJSONObject(k);
+                                    System.out.println("INDUS :: " + obj_indus);
+                                    String industry_name = obj_indus.getString(TAG_INDUSTRY_NAME);
+                                    String industry_key = obj_indus.getString(TAG_INDUSTRY_KEY);
+
+                                    Arraylist_update_industries.add(industry_name);
+                                }
+                                str_final_industry = TextUtils.join(", ", Arraylist_update_industries);
+                            }
+
+                            arr_images = obj1.getJSONArray("images");
+                            if (arr_images != null) {
+                                System.out.println("Length images:: " + arr_images.length());
+                                Arraylist_update_images.clear();
+                                for (int l = 0; arr_images.length() > l; l++) {
+                                    JSONObject obj_image = arr_images.getJSONObject(l);
+                                    String image_path = obj_image.getString(TAG_IMAGE_PATH);
+
+                                    Arraylist_update_images.add(image_path);
+                                }
+
+                                if (Arraylist_update_images.size() > 0){
+                                    str_final_image = Arraylist_update_images.get(0);
+                                    System.out.println("IMAGE : " + str_final_image);
+                                }
+                            }
+
+                           // creating new HashMap
                             HashMap<String, String> map = new HashMap<String, String>();
-
                             // adding each child node to HashMap key => value
                             map.put(TAG_BUSINESS_ID, business_id);
                             map.put(TAG_BUSINESS_KEY, business_key);
@@ -362,9 +422,11 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_BUSINESS_MONTH_SALES, business_month_sales);
                             map.put(TAG_BUSINESS_TENTATIVE_PRICE, business_tentative_price);
                             map.put(TAG_BUSINESS_LEGAL_ENTITY_TYPE, business_legal_entity_type);
+                            map.put(TAG_BUSINESS_STATUS, business_status);
+                            map.put(TAG_LOCATION_NAME, str_final_location);
+                            map.put(TAG_INDUSTRY_NAME, str_final_industry);
+                            map.put(TAG_IMAGE_PATH, str_final_image);
 
-                            // map.put(TAG_LOCATION_NAME, business_id);
-                            //  map.put(TAG_LOCATION_KEY, business_id);
 
                             Business_profile_list.add(map);
                             adapter = new BusinessProfiles_Adapter(getActivity(),

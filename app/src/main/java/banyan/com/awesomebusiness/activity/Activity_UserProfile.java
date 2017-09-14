@@ -47,7 +47,7 @@ public class Activity_UserProfile extends AppCompatActivity {
     TextView txt_username, txt_user_email, txt_user_mobile,
             txt_user_current_role, txt_user_company;
 
-    TextView txt_edit, txt_change_password , txt_myprofile;
+    TextView txt_edit, txt_change_password, txt_myprofile;
 
     ImageView img_edit, img_change_password;
 
@@ -140,7 +140,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
 
         img_profile_picture = (CircleImageView) findViewById(R.id.user_profile_picture);
-       // img_edit = (ImageView) findViewById(R.id.profile_img_edit);
+        // img_edit = (ImageView) findViewById(R.id.profile_img_edit);
         txt_edit = (TextView) findViewById(R.id.profile_txt_edit);
 
         txt_username = (TextView) findViewById(R.id.userprofile_txt_username);
@@ -165,7 +165,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
 
         txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
-       // img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
+        // img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
 
 
         /*img_edit.setOnClickListener(new View.OnClickListener() {
