@@ -366,11 +366,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // Spinner Value to String
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
-                System.out.println("str_test : " + str_selected_role_id);
-                System.out.println("str_test 2 : " + str_selected_role_name);
-                System.out.println("str_test 3 : " + str_selected_interest_id);
-                System.out.println("str_test 4 : " + str_selected_interest_name);
-
                 if (str_name.equals("")) {
                     edt_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -405,31 +400,32 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     /*****************************
                      * Get Multi Sector Details
                      * ************************/
-                    String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
-                    Arraylist_fetched_industries.clear();
-                    for (int i = 0; i < str_industries.length; i++) {
-                        Arraylist_fetched_industries.add(str_industries[i]);
-                    }
-                    System.out.println("array : " + Arraylist_fetched_industries);
+                        String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
-                    Arraylist_selected_final_industry.clear();
-                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+                        Arraylist_fetched_industries.clear();
+                        for (int i = 0; i < str_industries.length; i++) {
+                            Arraylist_fetched_industries.add(str_industries[i]);
+                        }
+                        System.out.println("array : " + Arraylist_fetched_industries);
 
-                        String get_indestry = Arraylist_fetched_industries.get(i);
-                        get_indestry = get_indestry.trim();
-                        System.out.println("get_indestry : " + get_indestry);
-                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                        String select_sect_id = Arraylist_sector_key.get(indus_position);
-                        String select_sect_type = Arraylist_sector_type.get(indus_position);
+                        Arraylist_selected_final_industry.clear();
+                        for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
-                        String sector = select_sect_id + "-" + select_sect_type;
-                        Arraylist_selected_final_industry.add(sector);
+                            String get_indestry = Arraylist_fetched_industries.get(i);
+                            get_indestry = get_indestry.trim();
+                            System.out.println("get_indestry : " + get_indestry);
+                            int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                            String select_sect_id = Arraylist_sector_key.get(indus_position);
+                            String select_sect_type = Arraylist_sector_type.get(indus_position);
 
-                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+                            String sector = select_sect_id + "-" + select_sect_type;
+                            Arraylist_selected_final_industry.add(sector);
 
-                    }
-                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+                            str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                        }
+                        System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
                     /*****************************
                      * Get Multi Location Details
