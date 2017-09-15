@@ -1086,7 +1086,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_iam, new Response.Listener<String>() {
 
-
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());

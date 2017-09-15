@@ -100,9 +100,9 @@
                             android:id="@+id/edit_profile_edt_user_number"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
-                            android:layout_weight="4"
                             android:layout_gravity="right"
                             android:layout_toLeftOf="@+id/updatebusiness_profile_spinner_country"
+                            android:layout_weight="4"
                             android:background="@drawable/bg_parent_rounded_corner"
                             android:hint="MOBILE NUMBER"
                             android:inputType="phone"
@@ -260,33 +260,6 @@
                         android:gravity="center"
                         android:text="Industries"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_business_industry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16sp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Industries"
-                        android:textColor="@color/textColorPrimary"
                         android:textSize="16dp"
                         android:textStyle="normal" />
 
@@ -295,39 +268,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
-                        android:inputType="text"
                         android:hint=""
-                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:inputType="text"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Locations"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/business_profile_chipText_business_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:textSize="16sp"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
-
-                    </com.libaml.android.view.chip.ChipLayout>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -343,13 +289,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:hint=""
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:ems="10"
+                        android:hint=""
+                        android:inputType="text"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
 
                 </LinearLayout>
@@ -520,7 +465,6 @@
 
 
                     </LinearLayout>
-
 
 
                 </LinearLayout>

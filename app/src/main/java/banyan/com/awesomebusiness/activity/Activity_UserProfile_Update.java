@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -71,7 +73,10 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
     CheckBox chb_BusinessProposals, chb_NewOpportunitis;
 
-   // ChipLayout chip_preferred_industries, chip_preferred_loation;
+    //Multi Auto Complete Textview
+    MultiAutoCompleteTextView auto_prof_location, auto_prof_industry;
+
+    // ChipLayout chip_preferred_industries, chip_preferred_loation;
 
     Button btn_update;
 
@@ -120,6 +125,12 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     public static final String TAG_PREF_CREATEON = "preferences_createdon";
     public static final String TAG_PREF_ACT = "preferences_act";
 
+    public static final String TAG_LOCATION_NAME = "location_name";
+    public static final String TAG_LOCATION_KEY = "location_key";
+
+    public static final String TAG_INDUSTRY_NAME = "industry_name";
+    public static final String TAG_INDUSTRY_KEY = "industry_key";
+
     ArrayList<String> Arraylist_country_id = null;
     ArrayList<String> Arraylist_country_phone_code = null;
 
@@ -137,13 +148,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_selected_sectorkey = null;
     ArrayList<String> Arraylist_selected_location = null;
 
+    String str_final_industry_update, str_final_location_update = "";
     /* Arralist fetched indestries list */
-
     ArrayList<String> Arraylist_fetched_industries = null;
+    ArrayList<String> Arraylist_selected_final_industry = null;
 
     /* Arralist fetched Location list */
-
     ArrayList<String> Arraylist_fetched_location = null;
+    ArrayList<String> Arraylist_selected_final_location = null;
 
     ArrayList<String> Arraylist_location_place = null;
     ArrayList<String> Arraylist_location_place_continent = null;
@@ -153,9 +165,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
 
-    ArrayList<String> Arraylist_selected_final_location = null;
-
     String str_final_business_sector, str_final_Business_Location = "";
+
+    String str_final_location, str_final_industries = "";
 
     String str_chb_businessproposals, str_chb_newopportunities = "0";
 
@@ -175,11 +187,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     String str_up_profile_user_name, str_up_country_code, str_up_user_mobile,
             str_up_user_gst_num, str_up_user_company_name, str_up_user_address,
             str_up_user_designation, str_up_user_location = "";
-
-
-    String str_final_sector_update = "";
-
-    String str_final_location_update = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,9 +229,12 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
         Arraylist_selected_final_sector = new ArrayList<String>();
 
-        Arraylist_fetched_industries = new ArrayList<String>();
 
         Arraylist_fetched_location = new ArrayList<String>();
+        Arraylist_selected_final_location = new ArrayList<String>();
+
+        Arraylist_fetched_industries = new ArrayList<String>();
+        Arraylist_selected_final_industry = new ArrayList<String>();
 
         Arraylist_location_place = new ArrayList<String>();
 
@@ -235,8 +245,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
-
-        Arraylist_selected_final_location = new ArrayList<String>();
 
         Arraylist_pref_sector_id = new ArrayList<String>();
         Arraylist_pref_sector_type = new ArrayList<String>();
@@ -258,6 +266,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
         chb_BusinessProposals = (CheckBox) findViewById(R.id.chbx_emailfreq_businessproposals);
         chb_NewOpportunitis = (CheckBox) findViewById(R.id.chbx_emailfreq_newOpportunities);
+
+        auto_prof_location = (MultiAutoCompleteTextView) findViewById(R.id.user_profile_multi_business_location);
+        auto_prof_industry = (MultiAutoCompleteTextView) findViewById(R.id.user_profile_multi_business_industry);
 
         edt_name = (EditText) findViewById(R.id.edit_profile_edt_user_name);
         edt_mobilenumber = (EditText) findViewById(R.id.edit_profile_edt_user_number);
@@ -307,8 +318,64 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*****************************
+                 * Get Multi Sector Details
+                 * ************************/
+                String[] str_industries = auto_prof_industry.getText().toString().split(", ");
+
                 Arraylist_fetched_industries.clear();
-                Arraylist_selected_final_sector.clear();
+                for (int i = 0; i < str_industries.length; i++) {
+                    Arraylist_fetched_industries.add(str_industries[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_industries);
+
+                Arraylist_selected_final_industry.clear();
+                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                    String get_indestry = Arraylist_fetched_industries.get(i);
+                    get_indestry = get_indestry.trim();
+                    System.out.println("get_indestry : " + get_indestry);
+                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                    String select_sect_id = Arraylist_sector_key.get(indus_position);
+                    String select_sect_type = Arraylist_sector_type.get(indus_position);
+
+                    String sector = select_sect_id + "-" + select_sect_type;
+                    Arraylist_selected_final_industry.add(sector);
+
+                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                }
+                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
+                /*****************************
+                 * Get Multi Location Details
+                 * ************************/
+
+                String[] str_location = auto_prof_location.getText().toString().split(", ");
+
+                Arraylist_fetched_location.clear();
+                for (int i = 0; i < str_location.length; i++) {
+                    Arraylist_fetched_location.add(str_location[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_location);
+
+                Arraylist_selected_final_location.clear();
+                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                    String get_location = Arraylist_fetched_location.get(i);
+                    get_location = get_location.trim();
+                    System.out.println("get_location : " + get_location);
+                    int location_position = Arraylist_location_place.indexOf(get_location);
+                    String select_location_id = Arraylist_location_key.get(location_position);
+                    String select_location_type = Arraylist_location_type.get(location_position);
+
+                    String location = select_location_id + "-" + select_location_type;
+                    Arraylist_selected_final_location.add(location);
+
+                    str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                }
+                System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
 
                 str_up_profile_user_name = edt_name.getText().toString();
                 str_up_user_mobile = edt_mobilenumber.getText().toString();
@@ -373,7 +440,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     System.out.println("Email Freq  Business Prposals   " + str_chb_businessproposals);
                     System.out.println("Email Freq New Opportunities    " + str_chb_newopportunities);
                     //sectors
-                    System.out.println("Selected Industry Sectorssss:::::" + str_final_sector_update);
+                    System.out.println("Selected Industry Sectorssss:::::" + str_final_industry_update);
                     System.out.println("Selected LocatioNNNNNNNNNNNNN:::::" + str_final_location_update);
                     System.out.println("Selected Country ID:::::" + str_selected_country_id);
 
@@ -551,29 +618,26 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         } catch (Exception e) {
 
                         }
+                        JSONArray arr_result;
+                        arr_result = obj.getJSONArray("result");
+                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr_result);
 
-                        JSONArray arr;
+                        for (int i = 0; arr_result.length() > i; i++) {
+                            JSONObject obj_result = arr_result.getJSONObject(i);
 
-                        arr = obj.getJSONArray("result");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
+                            String prefer_location_name = obj_result.getString(TAG_LOCATION_NAME);
+                            String prefer_location_key = obj_result.getString(TAG_LOCATION_KEY);
 
-                        for (int i = 0; arr.length() > i; i++) {
-                            JSONObject obj1 = arr.getJSONObject(i);
-
-                            String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
-                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
-
-                            Arraylist_pref_location_id.add(prefer_location_id);
-                            Arraylist_pref_location_type.add(prefer_location_type);
+                            Arraylist_pref_location_id.add(prefer_location_name);
+                            Arraylist_pref_location_type.add(prefer_location_key);
                         }
+                        str_final_location = TextUtils.join(", ", Arraylist_pref_location_id);
 
                         try {
-
-
+                            auto_prof_location.setText(str_final_location+", ");
                         } catch (Exception e) {
 
                         }
-
 
                         JSONArray arr1;
 
@@ -583,11 +647,18 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         for (int j = 0; arr1.length() > j; j++) {
                             JSONObject obj_sec = arr1.getJSONObject(j);
 
-                            String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
-                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
+                            String preferences_industries_name = obj_sec.getString(TAG_INDUSTRY_NAME);
+                            String preferences_industry_key = obj_sec.getString(TAG_INDUSTRY_KEY);
 
-                            Arraylist_pref_sector_id.add(preferences_industries_id);
-                            Arraylist_pref_sector_type.add(preferences_industry_type);
+                            Arraylist_pref_sector_id.add(preferences_industries_name);
+                            Arraylist_pref_sector_type.add(preferences_industry_key);
+                        }
+                        str_final_industries = TextUtils.join(", ", Arraylist_pref_sector_id);
+
+                        try {
+                            auto_prof_industry.setText(str_final_industries+", ");
+                        } catch (Exception e) {
+
                         }
 
                         try {
@@ -688,9 +759,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                         }
                         try {
-
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
 
+                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_UserProfile_Update.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_sector_name);
+                            auto_prof_industry.setAdapter(adapter_process);
+                            auto_prof_industry
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_prof_industry.setThreshold(1);
 
                         } catch (Exception e) {
 
@@ -770,7 +846,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                             Arraylist_location_place.add(location_place);
 
-                            if (location_type.equals("continent")) {
+                        /*    if (location_type.equals("continent")) {
                                 Arraylist_location_place_continent.add(location_place);
                             } else if (location_type.equals("country")) {
                                 Arraylist_location_place_country.add(location_place);
@@ -779,7 +855,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             } else if (location_type.equals("city")) {
                                 Arraylist_location_place_city.add(location_place);
                             }
-
+*/
 
                             Arraylist_location_key.add(location_key);
                             Arraylist_location_type.add(location_type);
@@ -806,9 +882,16 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                                     str_up_user_location = str_select_location_key + "-" + str_select_location_type;
                                     System.out.println("User Location :: " + str_up_user_location);
 
-
                                 }
                             });
+
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_UserProfile_Update.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_location_place);
+
+                            auto_prof_location.setAdapter(adapter_location);
+                            auto_prof_location
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_prof_location.setThreshold(1);
 
                         } catch (Exception e) {
 
@@ -972,7 +1055,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 params.put("designation", str_up_user_designation);
                 params.put("gst_number", str_up_user_gst_num);
                 params.put("address", str_up_user_address);
-                params.put("industries", str_final_sector_update);
+                params.put("industries", str_final_industry_update);
                 params.put("cities", str_final_location_update);
                 params.put("emailfrequency", str_chb_businessproposals);
                 params.put("notify", str_chb_newopportunities);
@@ -986,7 +1069,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 System.out.println("Designation" + str_up_user_designation);
                 System.out.println("GST Number" + str_up_user_gst_num);
                 System.out.println("Address" + str_up_user_address);
-                System.out.println("Industries" + str_final_sector_update);
+                System.out.println("Industries" + str_final_industry_update);
                 System.out.println("Cities" + str_final_Business_Location);
                 System.out.println("Email Frequency" + str_chb_businessproposals);
                 System.out.println("Notify" + str_chb_newopportunities);
