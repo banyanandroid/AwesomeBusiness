@@ -71,7 +71,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
     CheckBox chb_BusinessProposals, chb_NewOpportunitis;
 
-    ChipLayout chip_preferred_industries, chip_preferred_loation;
+   // ChipLayout chip_preferred_industries, chip_preferred_loation;
 
     Button btn_update;
 
@@ -136,8 +136,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     /*Multi Select*/
     ArrayList<String> Arraylist_selected_sectorkey = null;
     ArrayList<String> Arraylist_selected_location = null;
-
-
 
     /* Arralist fetched indestries list */
 
@@ -252,12 +250,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
         txt_investment_minimum_value.setText(String.valueOf(Mslider_InvestmentRange.getThumb(0).getValue()));
         txt_investment_maximum_value.setText(String.valueOf(Mslider_InvestmentRange.getThumb(1).getValue()));
 
-
-        // Chip Layout
-        ChipLayout.MAX_CHARACTER_COUNT = 20;
-        chip_preferred_industries = (ChipLayout) findViewById(R.id.business_profile_chipText_business_industry);
-        chip_preferred_loation = (ChipLayout) findViewById(R.id.business_profile_chipText_business_location);
-
         // AutoCompleteTextView
         spn_country_code = (SearchableSpinner) findViewById(R.id.updatebusiness_profile_spinner_country);
         spn_country_code.setTitle("Country Code");
@@ -317,132 +309,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                 Arraylist_fetched_industries.clear();
                 Arraylist_selected_final_sector.clear();
-
-                String str_sector_from_chip = chip_preferred_industries.getText().toString();
-                String str_location_from_chip = chip_preferred_loation.getText().toString();
-
-                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
-
-                ///////  FOR GETTING PREVIOUSLY ENTERED SECTOR TYPE AND ID
-
-                String[] items_comma = str_sector_from_chip.split(",");
-                for (String item_comma : items_comma) {
-                    String[] items_left = item_comma.split("\\[");
-                    for (String item_left : items_left) {
-                        if (item_left.equals("")) {
-
-                        } else {
-                            Character last_letter = item_left.charAt(item_left.length() - 1);
-                            if (last_letter.equals(']')) {
-                            } else {
-                                Arraylist_fetched_industries.add(item_left);
-                            }
-                        }
-                    }
-
-                    String[] items_right = item_comma.split("\\]");
-                    for (String item_right : items_right) {
-
-                        if (item_right.equals("")) {
-
-                        } else {
-                            Character first_letter = item_right.charAt(0);
-                            if (first_letter.equals('[')) {
-                            } else {
-                                Arraylist_fetched_industries.add(item_right);
-                            }
-                        }
-
-                        // Arraylist_fetched_industries.add(item_right);
-                    }
-                }
-
-                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
-
-                    String get_indestry = Arraylist_fetched_industries.get(i);
-                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-
-                    String select_sect_id = Arraylist_sector_key.get(indus_position + 1);
-                    String select_sect_type = Arraylist_sector_type.get(indus_position + 1);
-
-                    String sector = select_sect_id + "-" + select_sect_type;
-                    Arraylist_selected_final_sector.add(sector);
-
-                    for (String s : Arraylist_selected_final_sector) {
-                        str_final_sector_update += s + ",";
-                    }
-                }
-
-
-                ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
-
-                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
-
-                String[] items_loc_comma = str_location_from_chip.split(",");
-                for (String item_loc_comma : items_loc_comma) {
-                    String[] items_loc_left = item_loc_comma.split("\\[");
-                    for (String item_loc_left : items_loc_left) {
-                        if (item_loc_left.equals("")) {
-
-                        } else {
-                            Character last_letter = item_loc_left.charAt(item_loc_left.length() - 1);
-                            if (last_letter.equals(']')) {
-                            } else {
-                                System.out.println("right filter" + item_loc_left);
-                                Arraylist_fetched_location.add(item_loc_left);
-                            }
-                        }
-                    }
-
-                    String[] items_loc_right = item_loc_comma.split("\\]");
-                    for (String item_loc_right : items_loc_right) {
-
-                        if (item_loc_right.equals("")) {
-
-                        } else {
-                            Character first_letter = item_loc_right.charAt(0);
-                            if (first_letter.equals('[')) {
-                            } else {
-                                System.out.println("left filter" + item_loc_right);
-                                Arraylist_fetched_location.add(item_loc_right);
-                            }
-                        }
-
-                        // Arraylist_fetched_industries.add(item_right);
-                    }
-                }
-
-                System.out.println("ARRAY :: " + Arraylist_fetched_location);
-                System.out.println("ARRAY :: " + Arraylist_fetched_location.size());
-
-                int location_position1 = Arraylist_location_place.indexOf("Karnataka");
-                System.out.println("LOCATION POSITION :::::::" + location_position1);
-
-                int location_position2 = Arraylist_location_place.indexOf("Kerala");
-                System.out.println("LOCATION POSITION Kerala :::::::" + location_position2);
-
-                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                    Arraylist_selected_final_location.clear();
-                    String get_Location = Arraylist_fetched_location.get(i);
-                    get_Location = get_Location.trim();
-                    int location_position = Arraylist_location_place.indexOf(get_Location);
-                    String str_location_type = Arraylist_location_type.get(location_position);
-                    String select_location_id = Arraylist_location_key.get(location_position + 1);
-                    String select_location_type = Arraylist_location_type.get(location_position + 1);
-
-                    String location = select_location_id + "-" + select_location_type;
-                    Arraylist_selected_final_location.add(location);
-
-                    for (String L : Arraylist_selected_final_location) {
-                        str_final_location_update += L + ",";
-                    }
-
-                    System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
-
-                }
-
-                str_selected_country_id = "1";
 
                 str_up_profile_user_name = edt_name.getText().toString();
                 str_up_user_mobile = edt_mobilenumber.getText().toString();
@@ -511,15 +377,12 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     System.out.println("Selected LocatioNNNNNNNNNNNNN:::::" + str_final_location_update);
                     System.out.println("Selected Country ID:::::" + str_selected_country_id);
 
-
                     dialog = new SpotsDialog(Activity_UserProfile_Update.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(Activity_UserProfile_Update.this);
                     Update_Profile();
 
                 }
-
-
             }
         });
 
@@ -828,34 +691,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_UserProfile_Update.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_sector_name);
-                            chip_preferred_industries.setAdapter(adapter_sector);
-
-                            chip_preferred_industries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_sector_key = t1.getText().toString();
-                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
-
-                                    String str_select_sector_key = Arraylist_sector_key.get(i);
-                                    String str_select_sector_type = Arraylist_sector_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_sectorkey.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_sectorkey) {
-                                        str_final_business_sector += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
-
-                                }
-                            });
 
                         } catch (Exception e) {
 
@@ -984,38 +819,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                             System.out.println("ARAAAAY :: " + Arraylist_location_place);
 
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_UserProfile_Update.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_location_place);
-
-                            chip_preferred_loation.setAdapter(adapter_sector);
-
-                            System.out.println("ARAAAAY :: " + 222222);
-                            chip_preferred_loation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-
-                                    t1 = (TextView) view;
-                                    String str_location_key = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location_key);
-
-                                    String str_select_location_key = Arraylist_location_key.get(i);
-                                    String str_select_location_type = Arraylist_location_type.get(i);
-                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                    Arraylist_selected_location.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
-
-
-                                }
-                            });
-
                         } catch (Exception e) {
 
                         }
@@ -1051,32 +854,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                                 String str_location_name = Arraylist_location_place_city.get(position);
                                 Arraylist_chipset_location.add(str_location_name);
                             }
-
-                        }
-
-                        System.out.println("SELECTED :::: " + Arraylist_chipset_location);
-
-                        chip_preferred_loation.setText(Arraylist_chipset_location);
-
-
-                        //TO SET PREVIOUSLY SELECTED INDUSTRIES IN CHIPLAYOUT
-
-                        ArrayList<String> Arraylist_chipset_industries = new ArrayList<>();
-
-                        for (int i = 0; i < Arraylist_pref_sector_id.size(); i++) {
-
-                            String str_sector_id = Arraylist_pref_sector_id.get(i);
-                            int id_position = Arraylist_pref_sector_id.indexOf(str_sector_id);
-                            String str_sector_type = Arraylist_pref_sector_type.get(i);
-
-                            if (str_sector_type.equals("sector")) {
-                                String str_industry_name = Arraylist_sector_name_industry.get(id_position);
-                                Arraylist_chipset_industries.add(str_industry_name);
-                            }
-
-                            chip_preferred_industries.setText(Arraylist_chipset_industries);
-
-                            System.out.println("PREVIOUSLY SELECTED INDUSTRIESSSSSSSSSS :: " + str_final_Business_Location);
 
                         }
 

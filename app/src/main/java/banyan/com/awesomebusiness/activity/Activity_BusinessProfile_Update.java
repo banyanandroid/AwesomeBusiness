@@ -22,9 +22,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -43,6 +45,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -218,7 +221,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     String str_profile_type = "";
 
-    String str_final_location,str_final_industries = "";
+    String str_final_location, str_final_industries = "";
 
     String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
             str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
@@ -245,7 +248,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         });
 
         btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
-      //  btn_submit = (Button) findViewById(R.id.bus_prof_update_btn_submit);
+        //  btn_submit = (Button) findViewById(R.id.bus_prof_update_btn_submit);
 
         btn_update = (Button) findViewById(R.id.bus_prof_update_btn_submit);
 
@@ -344,7 +347,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         Arraylist_dummy = new ArrayList<String>();
 
 
-
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,6 +393,12 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 str_selected_update_role_name = txt_iam.getText().toString();
                 str_selected_update_interest_name = txt_interested_in.getText().toString();
 
+                int str_role_postion = Arraylist_business_role_name.indexOf(str_selected_update_role_name);
+                int str_interest_postion = Arraylist_business_role_name.indexOf(str_selected_update_interest_name);
+
+                str_selected_role_id = Arraylist_business_role_id.get(str_role_postion);
+                str_selected_interest_id = Arraylist_business_interest_id.get(str_interest_postion);
+
                 //Asset _ for sale
                 str_year_asset_purchased = edt_year_asset_purchased.getText().toString();
                 str_asset_seeking_to_sell = edt_asset_seeking_to_sell.getText().toString();
@@ -414,7 +422,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 } else if (str_official_email.equals("")) {
                     edt_official_email.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }else if (str_selected_update_role_name == null || str_selected_update_role_name.isEmpty()) {
+                } else if (str_selected_update_role_name == null || str_selected_update_role_name.isEmpty()) {
                     spn_i_am.setFocusable(true);
                     spn_i_am.setFocusableInTouchMode(true);
                     spn_i_am.requestFocus();
@@ -545,7 +553,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         Function_Submit_BusinessProfile();
                     }
 
-                }else if(!str_selected_update_interest_name.equals("Selling / Leasing  Assets")){
+                } else if (!str_selected_update_interest_name.equals("Selling / Leasing  Assets")) {
 
                     /******************************
                      * Get Asset Multi Sector Details
@@ -724,8 +732,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
 
                     *//*****************************
-                     * Get Multi Sector Details
-                     * ************************//*
+         * Get Multi Sector Details
+         * ************************//*
                     String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -753,8 +761,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
                     *//*****************************
-                     * Get Multi Location Details
-                     * ************************//*
+         * Get Multi Location Details
+         * ************************//*
 
                     String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
 
@@ -838,8 +846,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 }else if(!str_selected_update_interest_name.equals("Selling / Leasing  Assets")){
 
                     *//******************************
-                     * Get Asset Multi Sector Details
-                     * *************************//*
+         * Get Asset Multi Sector Details
+         * *************************//*
                     String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -867,8 +875,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
                     *//******************************
-                     * Get Asset Multi Location Details
-                     * *************************//*
+         * Get Asset Multi Location Details
+         * *************************//*
 
                     String[] str_asset_location = auto_asset_loation.getText().toString().split(", ");
 
@@ -1118,7 +1126,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                     str_selected_role_name = t1.getText().toString();
                                     str_selected_role_id = Arraylist_business_role_id.get(arg2);
 
-                                    txt_iam.setText(""+str_selected_role_name);
+                                    txt_iam.setText("" + str_selected_role_name);
                                 }
                             });
 
@@ -1500,7 +1508,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             String business_user_name = obj_data.getString(TAG_BUSINESS_USER_NAME); // user nme
                             String business_user_mobile = obj_data.getString(TAG_BUSINESS_USER_MOBILE); // user mobile
-                           // String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE); // country code
+                            // String business_mobile_code = obj_data.getString(TAG_BUSINESS_MOBILE_CODE); // country code
                             String business_user_email = obj_data.getString(TAG_BUSINESS_USER_EMAIL); // user email
                             String business_company_name = obj_data.getString(TAG_BUSINESS_COMPANY_NAME); // user company name
 
@@ -1549,7 +1557,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 Arraylist_update_location.add(location_name);
 
                             }
-                             str_final_location = TextUtils.join(", ", Arraylist_update_location);
+                            str_final_location = TextUtils.join(", ", Arraylist_update_location);
 
                             System.out.println("LOCATION ::: " + str_final_location);
 
@@ -1599,11 +1607,11 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 auto_industries_use_asset = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_Industries_use_asset);
                                 auto_asset_loation = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_asset_loca_at);
 
-                                auto_bus_busineeslist.setText("" + str_final_industries+", ");
-                                auto_bus_locationlist.setText("" + str_final_location+", ");
+                                auto_bus_busineeslist.setText("" + str_final_industries + ", ");
+                                auto_bus_locationlist.setText("" + str_final_location + ", ");
 
-                                auto_industries_use_asset.setText("" + str_final_industries+", ");
-                                auto_asset_loation.setText("" + str_final_location+", ");
+                                auto_industries_use_asset.setText("" + str_final_industries + ", ");
+                                auto_asset_loation.setText("" + str_final_location + ", ");
 
                                 System.out.println("INSIDE AFTER LOCATION " + str_final_location);
                                 System.out.println("INSIDE AFTER SECTOR " + str_final_industries);
@@ -1872,9 +1880,24 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 System.out.println("user_currency" + str_user_currency);
 
 
-                return params;
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
             }
         };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
         queue.add(request);
     }
 }

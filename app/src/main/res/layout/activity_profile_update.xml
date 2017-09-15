@@ -280,6 +280,29 @@
 
                     </com.libaml.android.view.chip.ChipLayout>
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Industries"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/user_profile_multi_business_industry"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:hint=""
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -305,6 +328,28 @@
                         custom:textColor_="@android:color/black">
 
                     </com.libaml.android.view.chip.ChipLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Locations"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/user_profile_multi_business_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:hint=""
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" >
+                    </MultiAutoCompleteTextView>
 
 
                 </LinearLayout>
