@@ -72,12 +72,12 @@ public class FranchiseProfiles_Adapter extends BaseAdapter {
         String str_bus_name = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_BRAND_NAME);
         String str_bus_type = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_BRAND_SERVICES);
         String str_bus_location = result.get(Tab_Franchises_Profile.TAG_LOCATION_NAME);
-        // String str_bus_status = result.get(Tab_Investor_Profile.TAG_BUSINESS_STATUS);
+        String str_bus_status = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_STATUS);
 
         bus_desc.setText(str_bus_name);
         bus_type.setText(str_bus_type);
         bus_location.setText(str_bus_location);
-        bus_status.setText("Not Approved yet");
+        bus_status.setText(str_bus_status);
 
         String impath = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_LOGO);
 

@@ -70,12 +70,12 @@ public class InvestorProfiles_Adapter extends BaseAdapter {
         String str_bus_name = result.get(Tab_Investor_Profile.TAG_INVESTOR_NAME);
         String str_bus_type = result.get(Tab_Investor_Profile.TAG_INVESTOR_AN_NAME);
         String str_bus_location = result.get(Tab_Investor_Profile.TAG_LOCATION_NAME);
-        // String str_bus_status = result.get(Tab_Investor_Profile.TAG_BUSINESS_STATUS);
+        String str_bus_status = result.get(Tab_Investor_Profile.TAG_INVESTOR_STATUS);
 
         bus_desc.setText(str_bus_name);
         bus_type.setText(str_bus_type);
         bus_location.setText(str_bus_location);
-        bus_status.setText("Not Approved yet");
+        bus_status.setText(str_bus_status);
 
         String impath = result.get(Tab_Investor_Profile.TAG_IMAGE_PATH);
 

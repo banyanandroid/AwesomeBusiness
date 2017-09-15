@@ -76,6 +76,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
     public static final String TAG_FRANCHISE_LOGO = "franchise_logo";
     public static final String TAG_FRANCHISE_CURRENCY = "franchise_currency";
     public static final String TAG_COUNTRY_CURRENCY = "country_currency";
+    public static final String TAG_FRANCHISE_STATUS = "franchise_status";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -302,6 +303,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             String franchise_logo = obj1.getString(TAG_FRANCHISE_LOGO);
                             String franchise_currency = obj1.getString(TAG_FRANCHISE_CURRENCY);
                             String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
+                            String franchise_status = obj1.getString(TAG_FRANCHISE_STATUS);
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -397,6 +399,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             map.put(TAG_FRANCHISE_LOGO, franchise_logo);
                             map.put(TAG_FRANCHISE_CURRENCY, franchise_currency);
                             map.put(TAG_COUNTRY_CURRENCY, country_currency);
+                            map.put(TAG_FRANCHISE_STATUS, franchise_status);
 
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);

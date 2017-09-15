@@ -44,8 +44,6 @@ import butterknife.ButterKnife;
  * Created by Jo on 9/4/2017.
  */
 public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
-
     String str_user_name, str_user_id;
 
     public static RequestQueue queue;
@@ -74,6 +72,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_INVESTOR_ABOUT_USER = "investor_about_user";
     public static final String TAG_INVESTOR_AN_NAME = "investor_an_name";
     public static final String TAG_INVESTOR_INTEREST_NAME = "investor_interest_name";
+    public static final String TAG_INVESTOR_STATUS = "investor_status";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -267,6 +266,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             String investor_about_user = obj1.getString(TAG_INVESTOR_ABOUT_USER);
                             String investor_an_name = obj1.getString(TAG_INVESTOR_AN_NAME);
                             String investor_interest_name = obj1.getString(TAG_INVESTOR_INTEREST_NAME);
+                            String investor_status = obj1.getString(TAG_INVESTOR_STATUS);
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -336,6 +336,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_INVESTOR_ABOUT_USER, investor_about_user);
                             map.put(TAG_INVESTOR_AN_NAME, investor_an_name);
                             map.put(TAG_INVESTOR_INTEREST_NAME, investor_interest_name);
+                            map.put(TAG_INVESTOR_STATUS, investor_status);
 
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
