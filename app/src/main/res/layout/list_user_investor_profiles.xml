@@ -11,27 +11,90 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/alerter_activity_horizontal_margin"
-            android:layout_marginRight="@dimen/alerter_activity_horizontal_margin"
             android:orientation="horizontal"
             android:weightSum="10">
 
-            <TextView
-                android:id="@+id/list_investor_profile_description"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/icon_back"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="User Investor Profile Description Line One   user Investor Profile Description Line Two"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/list_investor_profile"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/list_investor_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/txt_grey"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/list_investor_interest_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/txt_grey"
+                    android:textSize="13dp" />
+
+
+                <TextView
+                    android:id="@+id/list_investor_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/list_investor_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/colorAccent1"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -104,6 +104,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     ArrayList<String> Arraylist_update_images = null;
 
     String str_final_location, str_final_industry, str_final_image = "";
+
     static ArrayList<HashMap<String, String>> Business_profile_list;
 
     HashMap<String, String> params = new HashMap<String, String>();

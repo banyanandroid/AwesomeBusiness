@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +21,7 @@ import banyan.com.awesomebusiness.activity.Tab_Business_Profile;
 import banyan.com.awesomebusiness.activity.Tab_Investor_Profile;
 
 /**
- * Created by User on 9/7/2017.
+ * Created by Jo on 9/7/2017.
  */
 
 public class InvestorProfiles_Adapter extends BaseAdapter {
@@ -55,18 +58,31 @@ public class InvestorProfiles_Adapter extends BaseAdapter {
         if (convertView == null)
             v = inflater.inflate(R.layout.list_user_investor_profiles, null);
 
-        TextView txt_investor_profile_desc = (TextView) v.findViewById(R.id.list_investor_profile_description);
+        TextView bus_desc = (TextView) v.findViewById(R.id.list_investor_des);
+        TextView bus_type = (TextView) v.findViewById(R.id.list_investor_interest_type);
+        TextView bus_location = (TextView) v.findViewById(R.id.list_investor_location);
+        TextView bus_status = (TextView) v.findViewById(R.id.list_investor_status);
+        ImageView prod_img = (ImageView) v.findViewById(R.id.list_investor_profile);
 
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-        System.out.println("SHORT DESCCCCCCC : " + Tab_Investor_Profile.TAG_INVESTOR_SHORT_DESCRIPTION);
+        String str_bus_name = result.get(Tab_Investor_Profile.TAG_INVESTOR_NAME);
+        String str_bus_type = result.get(Tab_Investor_Profile.TAG_INVESTOR_AN_NAME);
+        String str_bus_location = result.get(Tab_Investor_Profile.TAG_LOCATION_NAME);
+        // String str_bus_status = result.get(Tab_Investor_Profile.TAG_BUSINESS_STATUS);
 
-        txt_investor_profile_desc.setText(result.get(Tab_Investor_Profile.TAG_INVESTOR_SHORT_DESCRIPTION));
+        bus_desc.setText(str_bus_name);
+        bus_type.setText(str_bus_type);
+        bus_location.setText(str_bus_location);
+        bus_status.setText("Not Approved yet");
 
+        String impath = result.get(Tab_Investor_Profile.TAG_IMAGE_PATH);
 
-        String color = bgColors[position % bgColors.length];
-        txt_investor_profile_desc.setBackgroundColor(Color.parseColor(color));
+        Glide.with(activity)
+                .load(impath)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(prod_img);
 
         return v;
 

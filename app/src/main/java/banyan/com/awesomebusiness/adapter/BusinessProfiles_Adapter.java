@@ -21,7 +21,7 @@ import banyan.com.awesomebusiness.activity.Tab_Business_Profile;
 import banyan.com.awesomebusiness.activity.Tab_Investor_Profile;
 
 /**
- * Created by User on 9/7/2017.
+ * Created by Jo on 9/7/2017.
  */
 
 public class BusinessProfiles_Adapter extends BaseAdapter {

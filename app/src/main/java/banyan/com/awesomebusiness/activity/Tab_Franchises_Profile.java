@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,11 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
+
     public static final String TAG_INDUSTRY_NAME = "industry_name";
     public static final String TAG_INDUSTRY_KEY = "industry_key";
+
+    public static final String TAG_IMAGE_PATH = "image_path";
 
     public static final String TAG_DOCUMENT_PATH = "document_path";
 
@@ -97,6 +101,11 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
     public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT = "franchise_format_min_sqft";
     public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT = "franchise_format_max_sqft";
 
+    ArrayList<String> Arraylist_update_location = null;
+    ArrayList<String> Arraylist_update_industries = null;
+    ArrayList<String> Arraylist_update_images = null;
+
+    String str_final_location, str_final_industry, str_final_image = "";
 
     static ArrayList<HashMap<String, String>> Franchise_profile_list;
 
@@ -153,8 +162,10 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                                 }
         );
 
-        // Hashmap for ListView
-        Franchise_profile_list = new ArrayList<HashMap<String, String>>();
+
+        Arraylist_update_location = new ArrayList<String>();
+        Arraylist_update_industries = new ArrayList<String>();
+        Arraylist_update_images = new ArrayList<String>();
 
 
         // Hashmap for ListView
@@ -263,6 +274,10 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                     if (success == 1) {
 
                         JSONArray arr;
+                        JSONArray arr_location;
+                        JSONArray arr_industry;
+                        JSONArray arr_images;
+
                         arr = obj.getJSONArray("data");
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
@@ -287,6 +302,53 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             String franchise_logo = obj1.getString(TAG_FRANCHISE_LOGO);
                             String franchise_currency = obj1.getString(TAG_FRANCHISE_CURRENCY);
                             String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
+
+                            arr_location = obj1.getJSONArray("location");
+                            if (arr_location != null) {
+                                Arraylist_update_location.clear();
+                                for (int j = 0; arr_location.length() > j; j++) {
+                                    JSONObject obj_location = arr_location.getJSONObject(j);
+
+                                    String location_name = obj_location.getString(TAG_LOCATION_NAME);
+                                    String location_key = obj_location.getString(TAG_LOCATION_KEY);
+
+                                    Arraylist_update_location.add(location_name);
+
+                                }
+                                str_final_location = TextUtils.join(", ", Arraylist_update_location);
+                            }
+
+                            arr_industry = obj1.getJSONArray("industry");
+                            if (arr_industry != null) {
+                                System.out.println("Length Industry:: " + arr_industry.length());
+                                Arraylist_update_industries.clear();
+                                for (int k = 0; arr_industry.length() > k; k++) {
+                                    JSONObject obj_indus = arr_industry.getJSONObject(k);
+                                    System.out.println("INDUS :: " + obj_indus);
+                                    String industry_name = obj_indus.getString(TAG_INDUSTRY_NAME);
+                                    String industry_key = obj_indus.getString(TAG_INDUSTRY_KEY);
+
+                                    Arraylist_update_industries.add(industry_name);
+                                }
+                                str_final_industry = TextUtils.join(", ", Arraylist_update_industries);
+                            }
+
+                            arr_images = obj1.getJSONArray("images");
+                            if (arr_images != null) {
+                                System.out.println("Length images:: " + arr_images.length());
+                                Arraylist_update_images.clear();
+                                for (int l = 0; arr_images.length() > l; l++) {
+                                    JSONObject obj_image = arr_images.getJSONObject(l);
+                                    String image_path = obj_image.getString(TAG_IMAGE_PATH);
+
+                                    Arraylist_update_images.add(image_path);
+                                }
+
+                                if (Arraylist_update_images.size() > 0){
+                                    str_final_image = Arraylist_update_images.get(0);
+                                    System.out.println("IMAGE : " + str_final_image);
+                                }
+                            }
 
                             /*
                             String location_name = obj1.getString(TAG_LOCATION_NAME);
@@ -335,6 +397,10 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             map.put(TAG_FRANCHISE_LOGO, franchise_logo);
                             map.put(TAG_FRANCHISE_CURRENCY, franchise_currency);
                             map.put(TAG_COUNTRY_CURRENCY, country_currency);
+
+                            map.put(TAG_LOCATION_NAME, str_final_location);
+                            map.put(TAG_INDUSTRY_NAME, str_final_industry);
+                            map.put(TAG_IMAGE_PATH, str_final_image);
 
                             /*
                             map.put(TAG_LOCATION_NAME, location_name);
