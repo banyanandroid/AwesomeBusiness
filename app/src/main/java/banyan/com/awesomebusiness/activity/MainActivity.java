@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     String str_previous_selected_country_name, str_previous_selected_currency;
 
+    String ip_currency, ip_country_id, ip_country = "";
+
     // CART
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
     TextView tv_notification, tv_message;
@@ -359,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     System.out.println("str_selected_currency_id" + str_selected_currency_id);
 
                     txt_select_currency.setText("" + str_selected_currency);
+
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("currency_position", str_selected_currency);
@@ -458,7 +461,81 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                             Arraylist_country_currency.add(country_currency);
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Currency_Country_by_IP();
+                        } catch (Exception e) {
 
+                        }
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /******************************************
+     * To get  Currency and Country By IP
+     ****************************************/
+
+    public void Get_Currency_Country_by_IP() {
+        String tag_json_obj = "json_obj_req";
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_ip_registration, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONObject obj1 = obj.getJSONObject("data");
+
+                        ip_country_id = obj1.getString(TAG_COUNTRY_ID);
+                        ip_currency = obj1.getString(TAG_COUNTRY_NAME);
+                        ip_country = obj1.getString(TAG_COUNTRY_CURRENCY);
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("str_selected_country_name", str_selected_country_name);
+                        editor.putString("str_selected_country_id", ip_currency);
+                        editor.putString("str_selected_currency", ip_country_id);
+                        editor.commit();
+
+                        /*txt_select_country.setText("" + ip_country);
+                        txt_select_currency.setText("" + ip_currency);*/
+                        dialog.dismiss();
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }

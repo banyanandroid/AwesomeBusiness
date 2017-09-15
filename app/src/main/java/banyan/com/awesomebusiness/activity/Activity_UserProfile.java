@@ -400,7 +400,6 @@ public class Activity_UserProfile extends AppCompatActivity {
                     queue = Volley.newRequestQueue(Activity_UserProfile.this);
                     Function_Change_Password();
                 }
-
             }
         });
 

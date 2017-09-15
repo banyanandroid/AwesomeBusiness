@@ -3,6 +3,7 @@ package banyan.com.awesomebusiness.global;
 public class AppConfig {
     public static String BASE_URL = "http://www.epictech.in/api_awesome";
 
+    public static String url_ip_registration = BASE_URL + "/index.php/Apicontroller/";
     public static String url_registration = BASE_URL + "/index.php/apicontroller/createUsers";
     public static String url_login = BASE_URL + "/index.php/apicontroller/loginusers";
     public static String url_social_login = BASE_URL + "/index.php/apicontroller/sociallogin";
@@ -19,7 +20,6 @@ public class AppConfig {
     public static String url_business = BASE_URL + "/index.php/Apicontroller/getallbusiness";
     public static String url_business_location = BASE_URL + "/index.php/Apicontroller/alllocation";
     public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
-
 
     //TEMPORARY URL's
 
