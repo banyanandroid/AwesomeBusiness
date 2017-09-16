@@ -118,6 +118,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     public static final String TAG_USER_EMAIL_BUSINESS_PROPOSALS = "user_business_proposals_email";
     public static final String TAG_USER_EMAIL_NEW_OPPORTUNITIES = "user_business_proposals_notify";
 
+    public static final String TAG_USER_LOCATION_ID = "user_location";
+    public static final String TAG_USER_LOCATION_TYPE = "user_location_type";
+
     public static final String TAG_PREF_LOCATION_ID = "prefer_location_id";
     public static final String TAG_PREF_LOCATION_TYPE = "prefer_location_type";
     public static final String TAG_PREF_USER_ID = "prefer_user_id";
@@ -186,7 +189,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     //To get the previously entered parameters and set it in the edit text
     String str_prev_profile_user_name, str_prev_user_mobile,
             str_prev_user_gst_num, str_prev_user_company_name, str_prev_user_address,
-            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities,str_prof_image = "";
+            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities,str_prof_image,
+            str_location_id= "";
 
     //To Post the newly entered parameters and update it to JSON
     String str_up_profile_user_name, str_up_user_mobile,
@@ -600,9 +604,13 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         str_prev_email_business_proposals = obj_data.getString(TAG_USER_EMAIL_BUSINESS_PROPOSALS);
                         str_prev_email_new_opportunities = obj_data.getString(TAG_USER_EMAIL_NEW_OPPORTUNITIES);
                         str_prof_image = obj_data.getString(TAG_USER_PHOTO);
+                        String user_location_id = obj_data.getString(TAG_USER_LOCATION_ID);
+                        String user_location_type = obj_data.getString(TAG_USER_LOCATION_TYPE);
+                        str_location_id = user_location_id+"-"+user_location_type;
 
 
                         try {
+                            System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL : " + str_up_user_location);
                             edt_name.setText("" + str_prev_profile_user_name);
                             edt_mobilenumber.setText("" + str_prev_user_mobile);
                             edt_companyname.setText("" + str_prev_user_company_name);
@@ -610,6 +618,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                             edt_designation.setText("" + str_prev_user_designation);
                             edt_address.setText("" + str_prev_user_address);
                             edt_GST_number.setText("" + str_prev_user_gst_num);
+
 
                             if (str_prev_email_business_proposals.equals("1")) {
 
@@ -1042,7 +1051,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 params.put("user_name", str_up_profile_user_name);
                 params.put("mobile_code", "91");
                 params.put("ph_no", str_up_user_mobile);
-                params.put("location", str_up_user_location);
+                params.put("location", str_location_id);
                 params.put("designation", str_up_user_designation);
                 params.put("gst_number", str_up_user_gst_num);
                 params.put("address", str_up_user_address);
@@ -1059,7 +1068,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 System.out.println("User_Name" + str_up_profile_user_name);
                 System.out.println("Mobile Code" + "91");
                 System.out.println("ph_no" + str_up_user_mobile);
-                System.out.println("Location" + str_up_user_location);
+                System.out.println("Location" + str_location_id);
                 System.out.println("Company Name" + str_up_user_company_name);
                 System.out.println("Designation" + str_up_user_designation);
                 System.out.println("GST Number" + str_up_user_gst_num);
