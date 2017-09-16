@@ -397,6 +397,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
 
                 str_up_user_location = auto_user_location.getText().toString();
 
+                int pos = Arraylist_location_place.indexOf(str_up_user_location);
+                String loc_id = Arraylist_location_key.get(pos);
+                String loc_type = Arraylist_location_type.get(pos);
+
+                str_up_user_location = loc_id+"-"+loc_type;
+
+
+
                 str_selected_phone_code = spn_country_code.getSelectedItem().toString();
 
 
@@ -1051,7 +1059,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 params.put("user_name", str_up_profile_user_name);
                 params.put("mobile_code", "91");
                 params.put("ph_no", str_up_user_mobile);
-                params.put("location", str_location_id);
+                params.put("location", str_up_user_location);
                 params.put("designation", str_up_user_designation);
                 params.put("gst_number", str_up_user_gst_num);
                 params.put("address", str_up_user_address);
@@ -1068,7 +1076,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 System.out.println("User_Name" + str_up_profile_user_name);
                 System.out.println("Mobile Code" + "91");
                 System.out.println("ph_no" + str_up_user_mobile);
-                System.out.println("Location" + str_location_id);
+                System.out.println("Location" + str_up_user_location);
                 System.out.println("Company Name" + str_up_user_company_name);
                 System.out.println("Designation" + str_up_user_designation);
                 System.out.println("GST Number" + str_up_user_gst_num);

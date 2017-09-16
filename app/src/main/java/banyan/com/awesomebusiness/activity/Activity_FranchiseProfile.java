@@ -1800,10 +1800,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     }
 
 
-                }
-
-
-                try {
+                } try {
 
                     System.out.println("COUNTTTT 9999999999999999999999 ");
                     System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
@@ -1837,8 +1834,8 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-                    // TODO: handle exception
-                }
+                // TODO: handle exception
+            }
 
 
             }
