@@ -84,7 +84,6 @@ public class BusinessProfiles_Adapter extends BaseAdapter {
                 .placeholder(R.mipmap.ic_launcher)
                 .into(prod_img);
 
-
         return v;
 
     }

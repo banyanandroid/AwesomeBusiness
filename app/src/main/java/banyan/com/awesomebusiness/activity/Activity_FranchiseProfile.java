@@ -1,9 +1,11 @@
 package banyan.com.awesomebusiness.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -50,6 +53,7 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
 
 /**
@@ -64,6 +68,10 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "FRANCHISE PROFILE";
     TextView t1;
+    String str_user_currency = "";
+
+    SessionManager session;
+    public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
 
     //FOR IMAGE UPLOAD
     private int REQUEST_CODE_PICKER = 2000;
@@ -77,14 +85,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     String image_type = "";
 
 
-    // SEARCHABLE SPINNER AND STRING FOR COUNTRY PHONE CODE
-    SearchableSpinner spn_country_code;
-    String str_selected_country_id, str_selected_phone_code;
-
-    public static final String TAG_COUNTRY_ID = "country_id";
-    public static final String TAG_COUNTRY_PHONE_CODE = "country_phone_code";
-    public static final String TAG_COUNTRY_NAME = "country_name";
-
     public static final String TAG_INDUSTRT_NAME = "name";
     public static final String TAG_INDUSTRY_KEY = "key";
     public static final String TAG_INDUSTRY_TYPE = "type";
@@ -93,10 +93,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     public static final String TAG_HEADQUATERS_KEY = "key";
     public static final String TAG_HEADQUATERS_TYPE = "type";
 
-    ArrayList<String> Arraylist_country_id = null;
-    ArrayList<String> Arraylist_country_phone_code = null;
-
-    private ArrayAdapter<String> adapter_country_code;
 
     ArrayList<String> Arraylist_industry_name = null;
     ArrayList<String> Arraylist_industry_key = null;
@@ -106,12 +102,10 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_fetched_industries = null;
     ArrayList<String> Arraylist_selected_final_industry = null;
 
-
     /* Arralist fetched Location list */
     ArrayList<String> Arraylist_fetched_location = null;
 
     ArrayList<String> Arraylist_selected_final_location = null;
-
 
     ArrayList<String> Arraylist_selected_industry_key = null;
     String str_final_industry = "";
@@ -130,13 +124,12 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_expand_location_type = null;
 
     ArrayList<String> Arraylist_selected_expand_location = null;
-    String str_final_expand__Location = "";
-
-    ChipLayout chip_industry, chip_expand_locations;
 
     AutoCompleteTextView auto_headquaters;
 
-
+    //Multi Auto Complete Textview
+    MultiAutoCompleteTextView auto_franchise_business_industry, auto_franchise_business_expand_locations;
+    //Final location and industry and headquaters sring to post
     String str_final_headquaters, str_final_location_update, str_final_industry_update = "";
 
     // EDIT TEXT AND THEIR RELATED STRINGS
@@ -173,7 +166,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             str_format_brand_fee_1, str_format_staff_required_1, str_format_royalty_commission_1,
             str_format_salespartner_monthly_revenue_1, str_format_operating_profitmargin_1 = "";
 
-
     // FORMAT 2
     EditText edt_format_name_2, edt_format_spaceneeded_minimum_2, edt_format_spaceneeded_maximum_2,
             edt_format_investment_needed_minimum_2, edt_format_investment_needed_maximum_2,
@@ -184,7 +176,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             str_format_investment_needed_minimum_2, str_format_investment_needed_maximum_2,
             str_format_brand_fee_2, str_format_staff_required_2, str_format_royalty_commission_2,
             str_format_salespartner_monthly_revenue_2, str_format_operating_profitmargin_2 = "";
-
 
     // FORMAT 3
     EditText edt_format_name_3, edt_format_spaceneeded_minimum_3, edt_format_spaceneeded_maximum_3,
@@ -230,6 +221,20 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             str_format_brand_fee_6, str_format_staff_required_6, str_format_royalty_commission_6,
             str_format_salespartner_monthly_revenue_6, str_format_operating_profitmargin_6 = "";
 
+    // Integers to check entered (Space neede , Investment needed)min values in formats is greater than the max value or not
+    Integer int_format_1_space_needed_minimum, int_format_1_space_needed_maximum,
+            int_format_2_space_needed_minimum, int_format_2_space_needed_maximum,
+            int_format_3_space_needed_minimum, int_format_3_space_needed_maximum,
+            int_format_4_space_needed_minimum, int_format_4_space_needed_maximum,
+            int_format_5_space_needed_minimum, int_format_5_space_needed_maximum,
+            int_format_6_space_needed_minimum, int_format_6_space_needed_maximum,
+            int_format_1_investment_needed_minimum, int_format_1_investment_needed_maximum,
+            int_format_2_investment_needed_minimum, int_format_2_investment_needed_maximum,
+            int_format_3_investment_needed_minimum, int_format_3_investment_needed_maximum,
+            int_format_4_investment_needed_minimum, int_format_4_investment_needed_maximum,
+            int_format_5_investment_needed_minimum, int_format_5_investment_needed_maximum,
+            int_format_6_investment_needed_minimum, int_format_6_investment_needed_maximum = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,8 +257,18 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             }
         });
 
-        Arraylist_country_id = new ArrayList<String>();
-        Arraylist_country_phone_code = new ArrayList<String>();
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+        HashMap<String, String> user = session.getUserDetails();
+
+        // name
+        str_user_name = user.get(SessionManager.KEY_USER);
+        str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
+        str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
+        str_user_id = user.get(SessionManager.KEY_USER_ID);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
 
 
         Arraylist_industry_name = new ArrayList<String>();
@@ -287,9 +302,10 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         // ARRAYLIST , ARRAY ADAPTER , SEARCHABLE SPINNER  FOR -- THE YEAR COMPANY'S OPERATIONS START
         ArrayList<String> years = new ArrayList<String>();
         int CurerntYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 1800; i <= CurerntYear; i++) {
+        for (int i = 1900; i <= CurerntYear; i++) {
             years.add(Integer.toString(i));
         }
+
         ArrayAdapter<String> years_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, years);
         spn_years_company_opr_start = (Spinner) findViewById(R.id.franchise_profile_spinner_years);
         spn_years_company_opr_start.setAdapter(years_adapter);
@@ -300,6 +316,46 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             int spinnerPosition = years_adapter.getPosition(str_default_year);
             spn_years_company_opr_start.setSelection(spinnerPosition);
         }
+
+
+        cv_format_one = (CardView) findViewById(R.id.card_view_format_one);
+        cv_format_one.setVisibility(View.GONE);
+
+        cv_format_two = (CardView) findViewById(R.id.card_view_format_two);
+        cv_format_two.setVisibility(View.GONE);
+
+        cv_format_three = (CardView) findViewById(R.id.card_view_format_three);
+        cv_format_three.setVisibility(View.GONE);
+
+        cv_format_four = (CardView) findViewById(R.id.card_view_format_four);
+        cv_format_four.setVisibility(View.GONE);
+
+        cv_format_five = (CardView) findViewById(R.id.card_view_format_five);
+        cv_format_five.setVisibility(View.GONE);
+
+        cv_format_six = (CardView) findViewById(R.id.card_view_format_six);
+        cv_format_six.setVisibility(View.GONE);
+
+
+        edt_name = (EditText) findViewById(R.id.edt_auth_person_name);
+        edt_email = (EditText) findViewById(R.id.edt_official_email);
+        edt_mobile_num = (EditText) findViewById(R.id.edt_mobile_number);
+        edt_designation = (EditText) findViewById(R.id.edt_designation);
+        edt_brand_name = (EditText) findViewById(R.id.edt_brandname);
+        edt_about_company = (EditText) findViewById(R.id.edt_about_company);
+        edt_all_prod = (EditText) findViewById(R.id.edt_list_product_services);
+        edt_no_of_sales_partners = (EditText) findViewById(R.id.edt_no_of_sales_partners);
+        edt_lookfor_in_salespartner = (EditText) findViewById(R.id.edt_wt_lookfor_sales_partners);
+        edt_kindof_support = (EditText) findViewById(R.id.edt_wt_kindof_support);
+        edt_procedure_salespartner = (EditText) findViewById(R.id.edt_wt_procedure);
+
+        spn_no_of_salespartner_formats = (Spinner) findViewById(R.id.spn_sales_partners_format);
+        spn_opportunities_offered = (Spinner) findViewById(R.id.spn_opportunities_offered);
+
+        auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_Franchise_profile_company_headquaters);
+        auto_franchise_business_industry = (MultiAutoCompleteTextView) findViewById(R.id.franchise_profile_multi_busi_industry);
+        auto_franchise_business_expand_locations = (MultiAutoCompleteTextView) findViewById(R.id.franchise_profile_multi_busi_expand_locations);
+
 
         //// NO.OF SALES PARTNER FORMATS EDITTEXT'S
         ////
@@ -376,55 +432,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         edt_format_operating_profitmargin_6 = (EditText) findViewById(R.id.edt_format_six_avg_profit_margin);
 
 
-        // SEARCHABLESPINNER
-        spn_country_code = (SearchableSpinner) findViewById(R.id.franchise_profile_spinner_country);
-        spn_country_code.setTitle("Country Code");
-
-        ChipLayout.MAX_CHARACTER_COUNT = 20;
-        chip_industry = (ChipLayout) findViewById(R.id.Franchise_chipset_industry);
-        chip_expand_locations = (ChipLayout) findViewById(R.id.Franchise_chipset_locations_expand);
-
-        auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_Franchise_profile_company_headquaters);
-
-        cv_format_one = (CardView) findViewById(R.id.card_view_format_one);
-        cv_format_one.setVisibility(View.GONE);
-
-        cv_format_two = (CardView) findViewById(R.id.card_view_format_two);
-        cv_format_two.setVisibility(View.GONE);
-
-        cv_format_three = (CardView) findViewById(R.id.card_view_format_three);
-        cv_format_three.setVisibility(View.GONE);
-
-        cv_format_four = (CardView) findViewById(R.id.card_view_format_four);
-        cv_format_four.setVisibility(View.GONE);
-
-        cv_format_five = (CardView) findViewById(R.id.card_view_format_five);
-        cv_format_five.setVisibility(View.GONE);
-
-        cv_format_six = (CardView) findViewById(R.id.card_view_format_six);
-        cv_format_six.setVisibility(View.GONE);
-
-
-        edt_name = (EditText) findViewById(R.id.edt_auth_person_name);
-
-        edt_email = (EditText) findViewById(R.id.edt_official_email);
-        edt_mobile_num = (EditText) findViewById(R.id.edt_mobile_number);
-        edt_designation = (EditText) findViewById(R.id.edt_designation);
-        edt_brand_name = (EditText) findViewById(R.id.edt_brandname);
-        edt_about_company = (EditText) findViewById(R.id.edt_about_company);
-        edt_all_prod = (EditText) findViewById(R.id.edt_list_product_services);
-        edt_no_of_sales_partners = (EditText) findViewById(R.id.edt_no_of_sales_partners);
-        edt_lookfor_in_salespartner = (EditText) findViewById(R.id.edt_wt_lookfor_sales_partners);
-        edt_kindof_support = (EditText) findViewById(R.id.edt_wt_kindof_support);
-        edt_procedure_salespartner = (EditText) findViewById(R.id.edt_wt_procedure);
-
-        spn_no_of_salespartner_formats = (Spinner) findViewById(R.id.spn_sales_partners_format);
-        spn_opportunities_offered = (Spinner) findViewById(R.id.spn_opportunities_offered);
-
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
-
 
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,9 +544,71 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             public void onClick(View v) {
 
 
+                /*****************************
+                 * Get Multi Industry Details
+                 * ************************/
+                String[] str_industries = auto_franchise_business_industry.getText().toString().split(", ");
+
+                Arraylist_fetched_industries.clear();
+                for (int i = 0; i < str_industries.length; i++) {
+                    Arraylist_fetched_industries.add(str_industries[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_industries);
+
+                Arraylist_selected_final_industry.clear();
+                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                    String get_indestry = Arraylist_fetched_industries.get(i);
+                    get_indestry = get_indestry.trim();
+                    System.out.println("get_indestry : " + get_indestry);
+                    int indus_position = Arraylist_industry_name.indexOf(get_indestry);
+                    String select_sect_id = Arraylist_industry_key.get(indus_position);
+                    String select_sect_type = Arraylist_industry_type.get(indus_position);
+
+                    String sector = select_sect_id + "-" + select_sect_type;
+                    Arraylist_selected_final_industry.add(sector);
+
+                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                }
+                System.out.println("FINAL SELECTED INDUSTRYYYYYYYYYYYYY :: " + str_final_industry_update);
+
+
+                /*****************************
+                 * Get Multi Location Details
+                 * ************************/
+
+                String[] str_location = auto_franchise_business_expand_locations.getText().toString().split(", ");
+
+                Arraylist_fetched_location.clear();
+                for (int i = 0; i < str_location.length; i++) {
+                    Arraylist_fetched_location.add(str_location[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_location);
+
+                Arraylist_selected_final_location.clear();
+                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                    String get_location = Arraylist_fetched_location.get(i);
+                    get_location = get_location.trim();
+                    System.out.println("get_location : " + get_location);
+                    int location_position = Arraylist_location_place.indexOf(get_location);
+                    String select_location_id = Arraylist_location_key.get(location_position);
+                    String select_location_type = Arraylist_location_type.get(location_position);
+
+                    String location = select_location_id + "-" + select_location_type;
+                    Arraylist_selected_final_location.add(location);
+
+                    str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                }
+                System.out.println("FINAL SELECTED LOCATIONNNNNNNNN :: " + str_final_location_update);
+
+
                 ///////////////////////
                 ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
                 ///////////////////////
+
                 String str_Headquaters = auto_headquaters.getText().toString();
                 int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
                 String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
@@ -544,13 +616,26 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
                 System.out.println("FINAL SELECTED HEADQUATERS :: " + str_final_headquaters);
 
+
                 ///////// TO GET THE SPINNER VALUE TO THE STRING
                 str_no_of_formats = spn_no_of_salespartner_formats.getSelectedItem().toString();
+
+                System.out.println("No OF FORMATSSSSSSS" + str_no_of_formats);
+
+
                 str_selected_opportunity = spn_opportunities_offered.getSelectedItem().toString();
+
+                System.out.println("OPPORTUNITIES OFFERED" + str_selected_opportunity);
+
+
                 switch (str_selected_opportunity) {
                     case "":
                         spn_opportunities_offered.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Select One", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        TastyToast.makeText(getApplicationContext(), "Select one oppurtunity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
+                    case "Select One":
+                        spn_opportunities_offered.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Select one oppurtunity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
                     case "Franchise":
                         str_opportunity_offered = "1";
@@ -583,6 +668,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 str_kindof_support = edt_kindof_support.getText().toString();
                 str_procedure_salespartner = edt_procedure_salespartner.getText().toString();
                 str_year_company_opr_start = spn_years_company_opr_start.getSelectedItem().toString();
+
 
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED NO OF FORMAT'S EDIT TEXT'S
                 str_format_name_1 = edt_format_name_1.getText().toString();
@@ -672,6 +758,10 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     edt_brand_name.setError("Enter BrandName");
                     edt_brand_name.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Brand Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_final_industry_update.equals("")) {
+                    auto_franchise_business_industry.setError("Enter Industries");
+                    auto_franchise_business_industry.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Industries Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_about_company.equals("")) {
                     edt_about_company.setError("Enter about your company");
                     edt_about_company.requestFocus();
@@ -680,6 +770,10 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     edt_all_prod.setError("Enter All Products & Services");
                     edt_all_prod.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_final_headquaters.equals("")) {
+                    auto_headquaters.setError("Enter Company Headquaters");
+                    auto_headquaters.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Company Headquaters Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_no_of_salespartner.equals("")) {
                     edt_no_of_sales_partners.setError("Enter No Of Sales Partners");
                     edt_no_of_sales_partners.requestFocus();
@@ -696,878 +790,1079 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     edt_procedure_salespartner.setError("Enter the procedure to become sales partner");
                     edt_procedure_salespartner.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }
-                //Unfortunately Stopped during this checking process
-               /* else if (str_final_headquaters.equals("")) {
-                    auto_headquaters.setError("Enter Company Headquaters");
-                    auto_headquaters.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Company Headquaters Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_location_update.equals("")) {
-                    chip_expand_locations.setFocusable(true);
-                    chip_expand_locations.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Enter The Locations You Want to Expand", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_industry_update.equals("")) {
-                    chip_industry.setFocusable(true);
-                    chip_industry.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Enter Your Industry", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/
-
-
-                // THIS ELSE IF STATEMENT IS TO CHECK WHETHER THE  NO OF SALES PARTNER FORMATS IS SELECTED OR NOT
-                else if (str_no_of_formats.equals("No of Sales Partner Formats")) {
+                } else if (str_no_of_formats.equals("No of Sales Partner Formats")) {
                     TastyToast.makeText(getApplicationContext(), "Please Select No of Sales Partner Formats ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
 
-                if (str_no_of_formats != null && !str_no_of_formats.isEmpty()) {
-                    // THIS SWITCH STATEMENT IS TO VALIDATE
-                    // the STRINGS GOT FROM EDIT TEXT'S OF GET THE SELECTED NO OF FORMATS
-                    switch (str_no_of_formats) {
 
-                        case "1":
-                            // IF STATEMENT FOR VALIDATING STRINGS OF FORMAT 1(WHEN NO OF SELECTED FORMATS 1)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            break;
+                if (str_no_of_formats.equals("1")) {
 
-                        case "2":
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 2)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 2)
-                            else if (str_format_name_2.equals("")) {
-                                edt_format_name_2.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_2.equals("")) {
-                                edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_2.equals("")) {
-                                edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_2.equals("")) {
-                                edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_2.equals("")) {
-                                edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_2.equals("")) {
-                                edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_2.equals("")) {
-                                edt_format_staff_required_2.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_2.equals("")) {
-                                edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
-                                edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_2.equals("")) {
-                                edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            break;
+                    // IF STATEMENT FOR VALIDATING STRINGS OF FORMAT 1(WHEN NO OF SELECTED FORMATS 1)
+                    System.out.println("FORMATS COUNT:: 111111111111111111111 ");
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
 
-                        case "3":
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 3)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 3)
-                            else if (str_format_name_2.equals("")) {
-                                edt_format_name_2.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_2.equals("")) {
-                                edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_2.equals("")) {
-                                edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_2.equals("")) {
-                                edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_2.equals("")) {
-                                edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_2.equals("")) {
-                                edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_2.equals("")) {
-                                edt_format_staff_required_2.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_2.equals("")) {
-                                edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
-                                edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_2.equals("")) {
-                                edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 3)
-                            else if (str_format_name_3.equals("")) {
-                                edt_format_name_3.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_3.equals("")) {
-                                edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_3.equals("")) {
-                                edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_3.equals("")) {
-                                edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_3.equals("")) {
-                                edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_3.equals("")) {
-                                edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_3.equals("")) {
-                                edt_format_staff_required_3.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_3.equals("")) {
-                                edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
-                                edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_3.equals("")) {
-                                edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-
-                            break;
-
-                        case "4":
-
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 4)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 4)
-                            else if (str_format_name_2.equals("")) {
-                                edt_format_name_2.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_2.equals("")) {
-                                edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_2.equals("")) {
-                                edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_2.equals("")) {
-                                edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_2.equals("")) {
-                                edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_2.equals("")) {
-                                edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_2.equals("")) {
-                                edt_format_staff_required_2.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_2.equals("")) {
-                                edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
-                                edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_2.equals("")) {
-                                edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 4)
-                            else if (str_format_name_3.equals("")) {
-                                edt_format_name_3.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_3.equals("")) {
-                                edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_3.equals("")) {
-                                edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_3.equals("")) {
-                                edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_3.equals("")) {
-                                edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_3.equals("")) {
-                                edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_3.equals("")) {
-                                edt_format_staff_required_3.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_3.equals("")) {
-                                edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
-                                edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_3.equals("")) {
-                                edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 4)
-                            else if (str_format_name_4.equals("")) {
-                                edt_format_name_4.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_4.equals("")) {
-                                edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_4.equals("")) {
-                                edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_4.equals("")) {
-                                edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_4.equals("")) {
-                                edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_4.equals("")) {
-                                edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_4.equals("")) {
-                                edt_format_staff_required_4.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_4.equals("")) {
-                                edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
-                                edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_4.equals("")) {
-                                edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-
-                            break;
-
-                        case "5":
-
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 5)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 5)
-                            else if (str_format_name_2.equals("")) {
-                                edt_format_name_2.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_2.equals("")) {
-                                edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_2.equals("")) {
-                                edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_2.equals("")) {
-                                edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_2.equals("")) {
-                                edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_2.equals("")) {
-                                edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_2.equals("")) {
-                                edt_format_staff_required_2.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_2.equals("")) {
-                                edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
-                                edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_2.equals("")) {
-                                edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 5)
-                            else if (str_format_name_3.equals("")) {
-                                edt_format_name_3.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_3.equals("")) {
-                                edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_3.equals("")) {
-                                edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_3.equals("")) {
-                                edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_3.equals("")) {
-                                edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_3.equals("")) {
-                                edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_3.equals("")) {
-                                edt_format_staff_required_3.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_3.equals("")) {
-                                edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
-                                edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_3.equals("")) {
-                                edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 5)
-                            else if (str_format_name_4.equals("")) {
-                                edt_format_name_4.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_4.equals("")) {
-                                edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_4.equals("")) {
-                                edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_4.equals("")) {
-                                edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_4.equals("")) {
-                                edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_4.equals("")) {
-                                edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_4.equals("")) {
-                                edt_format_staff_required_4.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_4.equals("")) {
-                                edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
-                                edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_4.equals("")) {
-                                edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 5 (WHEN NO OF SELECTED FORMATS 5)
-                            else if (str_format_name_5.equals("")) {
-                                edt_format_name_5.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_5.equals("")) {
-                                edt_format_spaceneeded_minimum_5.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_5.equals("")) {
-                                edt_format_spaceneeded_maximum_5.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_5.equals("")) {
-                                edt_format_investment_needed_minimum_5.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_5.equals("")) {
-                                edt_format_investment_needed_maximum_5.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_5.equals("")) {
-                                edt_format_brand_fee_5.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_5.equals("")) {
-                                edt_format_staff_required_5.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_5.equals("")) {
-                                edt_format_royalty_commission_5.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_5.equals("")) {
-                                edt_format_salespartner_monthly_revenue_5.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_5.equals("")) {
-                                edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-
-                            break;
-
-                        case "6":
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 6)
-                            if (str_format_name_1.equals("")) {
-                                edt_format_name_1.setError("Enter Format Name");
-
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_1.equals("")) {
-                                edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_1.equals("")) {
-                                edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_1.equals("")) {
-                                edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_1.equals("")) {
-                                edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_1.equals("")) {
-                                edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_1.equals("")) {
-                                edt_format_staff_required_1.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_1.equals("")) {
-                                edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
-                                edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_1.equals("")) {
-                                edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 6)
-                            else if (str_format_name_2.equals("")) {
-                                edt_format_name_2.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_2.equals("")) {
-                                edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_2.equals("")) {
-                                edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_2.equals("")) {
-                                edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_2.equals("")) {
-                                edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_2.equals("")) {
-                                edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_2.equals("")) {
-                                edt_format_staff_required_2.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_2.equals("")) {
-                                edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
-                                edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_2.equals("")) {
-                                edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 6)
-                            else if (str_format_name_3.equals("")) {
-                                edt_format_name_3.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_3.equals("")) {
-                                edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_3.equals("")) {
-                                edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_3.equals("")) {
-                                edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_3.equals("")) {
-                                edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_3.equals("")) {
-                                edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_3.equals("")) {
-                                edt_format_staff_required_3.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_3.equals("")) {
-                                edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
-                                edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_3.equals("")) {
-                                edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 6)
-                            else if (str_format_name_4.equals("")) {
-                                edt_format_name_4.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_4.equals("")) {
-                                edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_4.equals("")) {
-                                edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_4.equals("")) {
-                                edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_4.equals("")) {
-                                edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_4.equals("")) {
-                                edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_4.equals("")) {
-                                edt_format_staff_required_4.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_4.equals("")) {
-                                edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
-                                edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_4.equals("")) {
-                                edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 5 (WHEN NO OF SELECTED FORMATS 6)
-                            else if (str_format_name_5.equals("")) {
-                                edt_format_name_5.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_5.equals("")) {
-                                edt_format_spaceneeded_minimum_5.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_5.equals("")) {
-                                edt_format_spaceneeded_maximum_5.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_5.equals("")) {
-                                edt_format_investment_needed_minimum_5.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_5.equals("")) {
-                                edt_format_investment_needed_maximum_5.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_5.equals("")) {
-                                edt_format_brand_fee_5.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_5.equals("")) {
-                                edt_format_staff_required_5.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_5.equals("")) {
-                                edt_format_royalty_commission_5.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_5.equals("")) {
-                                edt_format_salespartner_monthly_revenue_5.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_5.equals("")) {
-                                edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            // IF STATEMENT FOR VALIDATING STRING OF FORMAT 6 (WHEN NO OF SELECTED FORMATS 6)
-                            else if (str_format_name_6.equals("")) {
-                                edt_format_name_6.setError("Enter Format Name");
-                                TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_minimum_6.equals("")) {
-                                edt_format_spaceneeded_minimum_6.setError("Enter Minimum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_spaceneeded_maximum_6.equals("")) {
-                                edt_format_spaceneeded_maximum_6.setError("Enter Maximum Space Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_minimum_6.equals("")) {
-                                edt_format_investment_needed_minimum_6.setError("Enter Minimum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_investment_needed_maximum_6.equals("")) {
-                                edt_format_investment_needed_maximum_6.setError("Enter Maximum Investment Needed");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_brand_fee_6.equals("")) {
-                                edt_format_brand_fee_6.setError("Enter Brand Fee Included in this investment");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_staff_required_6.equals("")) {
-                                edt_format_staff_required_6.setError("Enter No Of Staff Required");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_royalty_commission_6.equals("")) {
-                                edt_format_royalty_commission_6.setError("Enter Royalty / Commission");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_salespartner_monthly_revenue_6.equals("")) {
-                                edt_format_salespartner_monthly_revenue_6.setError("Enter Sales Partner Monthly Revenue");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            } else if (str_format_operating_profitmargin_6.equals("")) {
-                                edt_format_operating_profitmargin_6.setError("Enter Operating Profit Margin %");
-                                TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                            }
-                            break;
+                    //If ststement to check max<=min value
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     }
 
-                } else {
+
+                } else if (str_no_of_formats.equals("2")) {
+
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 2)
 
 
+                    System.out.println("FORMATS COUNT:: 222222222222222222 ");
+
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 2)
+                    else if (str_format_name_2.equals("")) {
+                        edt_format_name_2.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_2.equals("")) {
+                        edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_2.equals("")) {
+                        edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_2.equals("")) {
+                        edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_2.equals("")) {
+                        edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_2.equals("")) {
+                        edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_2.equals("")) {
+                        edt_format_staff_required_2.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_2.equals("")) {
+                        edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
+                        edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_2.equals("")) {
+                        edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+
+                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
+                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
+                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
+                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
+
+                    //If ststement to check max<=min value
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+
+                } else if (str_no_of_formats.equals("3")) {
+
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 3)
+
+
+                    System.out.println("FORMATS COUNT:: 333333333333333333 ");
+
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 3)
+                    else if (str_format_name_2.equals("")) {
+                        edt_format_name_2.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_2.equals("")) {
+                        edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_2.equals("")) {
+                        edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_2.equals("")) {
+                        edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_2.equals("")) {
+                        edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_2.equals("")) {
+                        edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_2.equals("")) {
+                        edt_format_staff_required_2.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_2.equals("")) {
+                        edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
+                        edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_2.equals("")) {
+                        edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 3)
+                    else if (str_format_name_3.equals("")) {
+                        edt_format_name_3.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_3.equals("")) {
+                        edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_3.equals("")) {
+                        edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_3.equals("")) {
+                        edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_3.equals("")) {
+                        edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_3.equals("")) {
+                        edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_3.equals("")) {
+                        edt_format_staff_required_3.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_3.equals("")) {
+                        edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
+                        edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_3.equals("")) {
+                        edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+
+                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
+                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
+                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
+                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
+
+                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
+                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
+                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
+                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+
+                    //If ststement to check max<=min value
+
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                } else if (str_no_of_formats.equals("4")) {
+
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 4)
+
+                    System.out.println("FORMATS COUNT:: 4444444444444444444444 ");
+
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 4)
+                    else if (str_format_name_2.equals("")) {
+                        edt_format_name_2.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_2.equals("")) {
+                        edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_2.equals("")) {
+                        edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_2.equals("")) {
+                        edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_2.equals("")) {
+                        edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_2.equals("")) {
+                        edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_2.equals("")) {
+                        edt_format_staff_required_2.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_2.equals("")) {
+                        edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
+                        edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_2.equals("")) {
+                        edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 4)
+                    else if (str_format_name_3.equals("")) {
+                        edt_format_name_3.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_3.equals("")) {
+                        edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_3.equals("")) {
+                        edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_3.equals("")) {
+                        edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_3.equals("")) {
+                        edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_3.equals("")) {
+                        edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_3.equals("")) {
+                        edt_format_staff_required_3.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_3.equals("")) {
+                        edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
+                        edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_3.equals("")) {
+                        edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 4)
+                    else if (str_format_name_4.equals("")) {
+                        edt_format_name_4.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_4.equals("")) {
+                        edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_4.equals("")) {
+                        edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_4.equals("")) {
+                        edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_4.equals("")) {
+                        edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_4.equals("")) {
+                        edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_4.equals("")) {
+                        edt_format_staff_required_4.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_4.equals("")) {
+                        edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
+                        edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_4.equals("")) {
+                        edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+
+                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
+                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
+                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
+                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
+
+                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
+                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
+                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
+                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+
+
+                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
+                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
+                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
+                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
+
+                    //If ststement to check max<=min value
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                } else if (str_no_of_formats.equals("5")) {
+
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 5)
+
+                    System.out.println("FORMATS COUNT:: 5555555555555555555555 ");
+
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 5)
+                    else if (str_format_name_2.equals("")) {
+                        edt_format_name_2.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_2.equals("")) {
+                        edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_2.equals("")) {
+                        edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_2.equals("")) {
+                        edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_2.equals("")) {
+                        edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_2.equals("")) {
+                        edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_2.equals("")) {
+                        edt_format_staff_required_2.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_2.equals("")) {
+                        edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
+                        edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_2.equals("")) {
+                        edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 5)
+                    else if (str_format_name_3.equals("")) {
+                        edt_format_name_3.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_3.equals("")) {
+                        edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_3.equals("")) {
+                        edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_3.equals("")) {
+                        edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_3.equals("")) {
+                        edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_3.equals("")) {
+                        edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_3.equals("")) {
+                        edt_format_staff_required_3.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_3.equals("")) {
+                        edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
+                        edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_3.equals("")) {
+                        edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 5)
+                    else if (str_format_name_4.equals("")) {
+                        edt_format_name_4.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_4.equals("")) {
+                        edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_4.equals("")) {
+                        edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_4.equals("")) {
+                        edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_4.equals("")) {
+                        edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_4.equals("")) {
+                        edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_4.equals("")) {
+                        edt_format_staff_required_4.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_4.equals("")) {
+                        edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
+                        edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_4.equals("")) {
+                        edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 5 (WHEN NO OF SELECTED FORMATS 5)
+                    else if (str_format_name_5.equals("")) {
+                        edt_format_name_5.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_5.equals("")) {
+                        edt_format_spaceneeded_minimum_5.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_5.equals("")) {
+                        edt_format_spaceneeded_maximum_5.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_5.equals("")) {
+                        edt_format_investment_needed_minimum_5.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_5.equals("")) {
+                        edt_format_investment_needed_maximum_5.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_5.equals("")) {
+                        edt_format_brand_fee_5.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_5.equals("")) {
+                        edt_format_staff_required_5.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_5.equals("")) {
+                        edt_format_royalty_commission_5.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_5.equals("")) {
+                        edt_format_salespartner_monthly_revenue_5.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_5.equals("")) {
+                        edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+
+                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
+                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
+                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
+                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
+
+                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
+                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
+                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
+                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+
+
+                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
+                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
+                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
+                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
+
+                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
+                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
+                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
+                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
+
+
+                    //If ststement to check max<=min value
+
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_5.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_5.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+
+                } else if (str_no_of_formats.equals("6")) {
+
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 1 (WHEN NO OF SELECTED FORMATS 6)
+
+                    System.out.println("FORMATS COUNT:: 66666666666666666666666 ");
+
+                    if (str_format_name_1.equals("")) {
+                        edt_format_name_1.setError("Enter Format Name");
+
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_1.equals("")) {
+                        edt_format_spaceneeded_minimum_1.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_1.equals("")) {
+                        edt_format_spaceneeded_maximum_1.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_1.equals("")) {
+                        edt_format_investment_needed_minimum_1.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_1.equals("")) {
+                        edt_format_investment_needed_maximum_1.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_1.equals("")) {
+                        edt_format_brand_fee_1.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_1.equals("")) {
+                        edt_format_staff_required_1.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_1.equals("")) {
+                        edt_format_royalty_commission_1.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_1.equals("")) {
+                        edt_format_salespartner_monthly_revenue_1.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_1.equals("")) {
+                        edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 2 (WHEN NO OF SELECTED FORMATS 6)
+                    else if (str_format_name_2.equals("")) {
+                        edt_format_name_2.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_2.equals("")) {
+                        edt_format_spaceneeded_minimum_2.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_2.equals("")) {
+                        edt_format_spaceneeded_maximum_2.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_2.equals("")) {
+                        edt_format_investment_needed_minimum_2.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_2.equals("")) {
+                        edt_format_investment_needed_maximum_2.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_2.equals("")) {
+                        edt_format_brand_fee_2.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_2.equals("")) {
+                        edt_format_staff_required_2.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_2.equals("")) {
+                        edt_format_royalty_commission_2.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_2.equals("")) {
+                        edt_format_salespartner_monthly_revenue_2.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_2.equals("")) {
+                        edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 3 (WHEN NO OF SELECTED FORMATS 6)
+                    else if (str_format_name_3.equals("")) {
+                        edt_format_name_3.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_3.equals("")) {
+                        edt_format_spaceneeded_minimum_3.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_3.equals("")) {
+                        edt_format_spaceneeded_maximum_3.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_3.equals("")) {
+                        edt_format_investment_needed_minimum_3.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_3.equals("")) {
+                        edt_format_investment_needed_maximum_3.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_3.equals("")) {
+                        edt_format_brand_fee_3.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_3.equals("")) {
+                        edt_format_staff_required_3.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_3.equals("")) {
+                        edt_format_royalty_commission_3.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_3.equals("")) {
+                        edt_format_salespartner_monthly_revenue_3.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_3.equals("")) {
+                        edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 4 (WHEN NO OF SELECTED FORMATS 6)
+                    else if (str_format_name_4.equals("")) {
+                        edt_format_name_4.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_4.equals("")) {
+                        edt_format_spaceneeded_minimum_4.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_4.equals("")) {
+                        edt_format_spaceneeded_maximum_4.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_4.equals("")) {
+                        edt_format_investment_needed_minimum_4.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_4.equals("")) {
+                        edt_format_investment_needed_maximum_4.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_4.equals("")) {
+                        edt_format_brand_fee_4.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_4.equals("")) {
+                        edt_format_staff_required_4.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_4.equals("")) {
+                        edt_format_royalty_commission_4.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_4.equals("")) {
+                        edt_format_salespartner_monthly_revenue_4.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_4.equals("")) {
+                        edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 5 (WHEN NO OF SELECTED FORMATS 6)
+                    else if (str_format_name_5.equals("")) {
+                        edt_format_name_5.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_5.equals("")) {
+                        edt_format_spaceneeded_minimum_5.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_5.equals("")) {
+                        edt_format_spaceneeded_maximum_5.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_5.equals("")) {
+                        edt_format_investment_needed_minimum_5.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_5.equals("")) {
+                        edt_format_investment_needed_maximum_5.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_5.equals("")) {
+                        edt_format_brand_fee_5.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_5.equals("")) {
+                        edt_format_staff_required_5.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_5.equals("")) {
+                        edt_format_royalty_commission_5.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_5.equals("")) {
+                        edt_format_salespartner_monthly_revenue_5.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_5.equals("")) {
+                        edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+                    // IF STATEMENT FOR VALIDATING STRING OF FORMAT 6 (WHEN NO OF SELECTED FORMATS 6)
+                    else if (str_format_name_6.equals("")) {
+                        edt_format_name_6.setError("Enter Format Name");
+                        TastyToast.makeText(getApplicationContext(), "Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_minimum_6.equals("")) {
+                        edt_format_spaceneeded_minimum_6.setError("Enter Minimum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_spaceneeded_maximum_6.equals("")) {
+                        edt_format_spaceneeded_maximum_6.setError("Enter Maximum Space Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_minimum_6.equals("")) {
+                        edt_format_investment_needed_minimum_6.setError("Enter Minimum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_investment_needed_maximum_6.equals("")) {
+                        edt_format_investment_needed_maximum_6.setError("Enter Maximum Investment Needed");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_brand_fee_6.equals("")) {
+                        edt_format_brand_fee_6.setError("Enter Brand Fee Included in this investment");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_staff_required_6.equals("")) {
+                        edt_format_staff_required_6.setError("Enter No Of Staff Required");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_royalty_commission_6.equals("")) {
+                        edt_format_royalty_commission_6.setError("Enter Royalty / Commission");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_salespartner_monthly_revenue_6.equals("")) {
+                        edt_format_salespartner_monthly_revenue_6.setError("Enter Sales Partner Monthly Revenue");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_format_operating_profitmargin_6.equals("")) {
+                        edt_format_operating_profitmargin_6.setError("Enter Operating Profit Margin %");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+                    //Getting the min and max values from edit texts to check max<=min value
+                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
+                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
+                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
+                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+
+                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
+                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
+                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
+                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
+
+                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
+                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
+                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
+                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+
+                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
+                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
+                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
+                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
+
+                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
+                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
+                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
+                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
+
+                    int_format_6_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_6);
+                    int_format_6_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_6);
+                    int_format_6_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_6);
+                    int_format_6_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_6);
+
+                    //If ststement to check max<=min value
+                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_1.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_2.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_3.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_4.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
+                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
+                        edt_format_spaceneeded_maximum_5.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
+                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
+                        edt_format_investment_needed_maximum_5.requestFocus();
+                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }
+
+
+                }
+
+
+                try {
+
+                    System.out.println("COUNTTTT 9999999999999999999999 ");
                     System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
                     System.out.println("EMAIL :::::::::::" + str_email);
                     System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
                     System.out.println("DESIGNATION :::::::::::" + str_designation);
                     System.out.println("BRAND NAME :::::::::::" + str_brand_name);
+                    System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
+                    System.out.println("BUSINESS INDUSTRIES ::::" + str_final_industry_update);
                     System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
                     System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
                     System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
-                    System.out.println(" NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
+                    System.out.println("HEADQUATERS ::::" + str_final_headquaters);
+                    System.out.println("NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
                     System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
                     System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
                     System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
-                    System.out.println("FORMAT 1111111112 NAME :::::::::::" + str_format_name_1);
-                    System.out.println("FORMAT 2222222222 NAME :::::::::::" + str_format_name_2);
-                    System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
+                    System.out.println("EXPAND LOCATIONS :::::::::::" + str_final_location_update);
+                    System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
 
                     try {
+                        System.out.println("COUNTTTT 101010101010101010 ");
                         dialog = new SpotsDialog(Activity_FranchiseProfile.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(getApplicationContext());
-                        // Function_Submit_FranchiseProfile();
+                        Function_Submit_FranchiseProfile();
 
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
+
+
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
+
+
             }
         });
 
-        try {
+        try
+
+        {
             dialog = new SpotsDialog(Activity_FranchiseProfile.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
-            Get_CountryCode();
-        } catch (Exception e) {
+            Get_Business_industry();
+        } catch (
+                Exception e)
+
+        {
             // TODO: handle exception
         }
 
     }
 
-    /*****************************
-     * To get  Country Code
-     ***************************/
-
-    public void Get_CountryCode() {
-        String tag_json_obj = "json_obj_req";
-        System.out.println("STEP  1111111111111");
-        StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_country, new Response.Listener<String>() {
-
-
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, response.toString());
-
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    int success = obj.getInt("status");
-                    System.out.println("STEP  22222222222");
-
-                    if (success == 1) {
-
-                        JSONArray arr;
-
-                        arr = obj.getJSONArray("data");
-                        System.out.println("STEP  33333333");
-
-                        for (int i = 0; arr.length() > i; i++) {
-                            JSONObject obj1 = arr.getJSONObject(i);
-
-                            String Country_id = obj1.getString(TAG_COUNTRY_ID);
-                            String Country_PhoneCode = obj1.getString(TAG_COUNTRY_PHONE_CODE);
-                            String Country_Name = obj1.getString(TAG_COUNTRY_NAME);
-
-                            Arraylist_country_id.add(Country_id);
-                            Arraylist_country_phone_code.add(Country_PhoneCode);
-                        }
-
-
-                        try {
-
-                            adapter_country_code = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_country_phone_code);
-                            spn_country_code.setAdapter(adapter_country_code);
-
-                            spn_country_code.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                                        long arg3) {
-                                    t1 = (TextView) arg1;
-                                    str_selected_phone_code = t1.getText().toString();
-                                    str_selected_country_id = Arraylist_country_id.get(arg2);
-
-                                    System.out.println("Countryyyyyyyyyyyyy CODEEEEEEE ::::::::::::::: " + str_selected_phone_code);
-                                    System.out.println("Countryyyyyyyyyyyyy IIDDDDDDDD ::::::::::::::: " + str_selected_country_id);
-
-                                }
-                            });
-
-                        } catch (Exception e) {
-
-                        }
-
-                        try {
-                            queue = Volley.newRequestQueue(getApplicationContext());
-                            Get_Business_industry();
-
-                        } catch (Exception e) {
-
-                        }
-
-                    } else if (success == 0) {
-                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                    }
-
-                    dialog.dismiss();
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                dialog.dismiss();
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        queue.add(request);
-    }
 
     /*****************************
-     * To get  Business sector List
+     * To get  Business Industry List
      ***************************/
 
     public void Get_Business_industry() {
@@ -1607,32 +1902,12 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                             ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_industry_name);
-                            chip_industry.setAdapter(adapter_sector);
+                            auto_franchise_business_industry.setAdapter(adapter_sector);
 
-                            chip_industry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            auto_franchise_business_industry
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_franchise_business_industry.setThreshold(1);
 
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_industry_key = t1.getText().toString();
-                                    int i = Arraylist_industry_name.indexOf(str_industry_key);
-
-                                    String str_select_sector_key = Arraylist_industry_key.get(i);
-                                    String str_select_sector_type = Arraylist_industry_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_industry_key.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_industry_key) {
-                                        str_final_industry += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_industry);
-
-
-                                }
-                            });
 
                         } catch (Exception e) {
 
@@ -1741,11 +2016,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                     String str_select_location_key = Arraylist_location_key.get(i);
                                     String str_select_location_type = Arraylist_location_type.get(i);
                                     str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                   /* Arraylist_selected_location.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }*/
                                     System.out.println("FINAL Business Location :: " + str_select_item);
 
 
@@ -1840,35 +2110,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                             ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_FranchiseProfile.this,
                                     android.R.layout.simple_list_item_1, Arraylist_expand_location_place);
-                            chip_expand_locations.setAdapter(adapter_location);
+                            auto_franchise_business_expand_locations.setAdapter(adapter_location);
 
+                            auto_franchise_business_expand_locations
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_franchise_business_expand_locations.setThreshold(1);
 
                             System.out.println("ARAAAAY :: " + 222222);
-                            chip_expand_locations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_expand_location_key = t1.getText().toString();
-                                    int i = Arraylist_expand_location_place.indexOf(str_expand_location_key);
-
-                                    String str_select_expand_location_key = Arraylist_expand_location_key.get(i);
-                                    String str_select_expand_location_type = Arraylist_expand_location_type.get(i);
-                                    String str_select_expand_item = str_select_expand_location_key + "-" + str_select_expand_location_type;
-                                    Arraylist_selected_expand_location.add(str_select_expand_item);
-
-                                    for (String s : Arraylist_selected_expand_location) {
-                                        str_final_expand__Location += s + ",";
-                                    }
-
-                                    System.out.println("FINAL Expand Location :: " + str_final_expand__Location);
-
-
-                                }
-                            });
 
                         } catch (Exception e) {
 
@@ -2023,7 +2272,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     private void Function_Submit_FranchiseProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_business_profile, new Response.Listener<String>() {
+                AppConfig.url_add_franchise_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -2038,7 +2287,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                         Alerter.create(Activity_FranchiseProfile.this)
                                 .setTitle("Success")
-                                .setText("Bussiness Profile Added Successfully")
+                                .setText("Franchise Profile Added Successfully")
                                 .setBackgroundColor(R.color.colorAccent)
                                 .show();
                     } else {
@@ -2068,6 +2317,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
 
+                //GENERAL
                 params.put("name", str_auth_person_name);
                 params.put("email", str_email);
                 params.put("mobile_no", str_mobile_num);
@@ -2075,19 +2325,24 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("brand_name", str_brand_name);
                 params.put("about_company", str_about_company);
                 params.put("products_services", str_all_prod_serv);
-
                 params.put("offering", str_opportunity_offered);
-                params.put("industry", str_opportunity_offered);
-                params.put("years", str_opportunity_offered);
-                params.put("headquarters", str_opportunity_offered);
-                params.put("sales_partners", str_opportunity_offered);
-                params.put("salespartner_looking", str_opportunity_offered);
-                params.put("salespartner_expectation", str_opportunity_offered);
-                params.put("location", str_opportunity_offered);
+                params.put("industry", str_final_industry_update);
+                params.put("years", str_year_company_opr_start);
+                params.put("headquarters", str_final_headquaters);
+                params.put("sales_partners", str_no_of_salespartner);
+                params.put("salespartner_looking", str_lookfor_in_salespartner);
+                params.put("salespartner_expectation", str_kindof_support);
+                params.put("procedure_salespartner", str_procedure_salespartner);
+                params.put("location", str_final_location_update);
+                params.put("franchise_format_count", str_no_of_formats);
 
-
-                params.put("franchise_format_count", str_opportunity_offered);
-                params.put("currency_change", str_opportunity_offered);
+                //OTHERS
+                params.put("logo", encoded_logo);
+                params.put("images", listString);
+                params.put("doc_name", "DOCUMENT NAMEEEEEEEEE");
+                params.put("document_type", "DOCUMENT TYPEEEE");
+                params.put("currency_change", str_user_currency);
+                params.put("user_id", str_user_id);
 
 
                 //FORMAT 1
@@ -2166,6 +2421,27 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 params.put("monthly_revenue6", str_format_salespartner_monthly_revenue_6);
                 params.put("profit_margin6", str_format_operating_profitmargin_6);
 
+
+                System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
+                System.out.println("EMAIL :::::::::::" + str_email);
+                System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
+                System.out.println("DESIGNATION :::::::::::" + str_designation);
+                System.out.println("BRAND NAME :::::::::::" + str_brand_name);
+                System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
+                System.out.println("BUSINESS INDUSTRIES ::::" + str_final_industry_update);
+                System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
+                System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
+                System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
+                System.out.println("HEADQUATERS ::::" + str_final_headquaters);
+                System.out.println("NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
+                System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
+                System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
+                System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
+                System.out.println("EXPAND LOCATIONS :::::::::::" + str_final_location_update);
+                System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
+                System.out.println("USER CURRENCY :::::::::::" + str_user_currency);
+                System.out.println("USER ID :::::::::::" + str_user_id);
+
                 return params;
             }
         };
@@ -2174,107 +2450,3 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
 
 }
-
-
-
-/*
-
-                      if ((isset($_POST['name'])) &&
-                        (isset($_POST['email']))
-                        && (isset($_POST['mobile_no']))
-                        && (isset($_POST['designation']))
-                        && (isset($_POST['brand_name']))
-                        && (isset($_POST['offering'])) &&
-                        (isset($_POST['industry'])) &&
-                        (isset($_POST['about_company'])) &&
-                        (isset($_POST['products_services']))
-                        && (isset($_POST['years'])) &&
-                        (isset($_POST['headquarters'])) &&
-                        (isset($_POST['sales_partners'])) &&
-                        (isset($_POST['salespartner_looking'])) &&
-                        (isset($_POST['salespartner_expectation'])) &&
-                        (isset($_POST['procedure_salespartner'])) &&
-                        (isset($_POST['location'])) &&
-                        (isset($_POST['franchise_format_count'])) &&
-                        (isset($_POST['currency_change'])) &&
-
-
-                        (isset($_POST['format_name'])) &&
-                        (isset($_POST['min_sq'])) &&
-                        (isset($_POST['max_sq'])) &&
-                        (isset($_POST['min_invest'])) &&
-                        (isset($_POST['max_invest'])) &&
-                        (isset($_POST['brand_fee'])) &&
-                        (isset($_POST['staff_require'])) &&
-                        (isset($_POST['royalty_commission'])) &&
-                        (isset($_POST['monthly_revenue'])) &&
-                        (isset($_POST['profit_margin'])) &&
-
-
-                        (isset($_POST['format_name2'])) &&
-                        (isset($_POST['min_sq2'])) &&
-                        (isset($_POST['max_sq2'])) &&
-                        (isset($_POST['min_invest2'])) &&
-                        (isset($_POST['max_invest2'])) &&
-                        (isset($_POST['brand_fee2'])) &&
-                        (isset($_POST['staff_require2'])) &&
-                        (isset($_POST['royalty_commission2'])) &&
-                        (isset($_POST['monthly_revenue2'])) &&
-                        (isset($_POST['profit_margin2'])) &&
-
-
-                        (isset($_POST['format_name3'])) &&
-                        (isset($_POST['min_sq3'])) &&
-                        (isset($_POST['max_sq3'])) &&
-                        (isset($_POST['min_invest3'])) &&
-                        (isset($_POST['max_invest3'])) &&
-                        (isset($_POST['brand_fee3'])) &&
-                        (isset($_POST['staff_require3'])) &&
-                        (isset($_POST['royalty_commission3'])) &&
-                        (isset($_POST['monthly_revenue3'])) &&
-                        (isset($_POST['profit_margin3'])) &&
-
-
-                        (isset($_POST['format_name4'])) &&
-                        (isset($_POST['min_sq4'])) &&
-                        (isset($_POST['max_sq4'])) &&
-                        (isset($_POST['min_invest4'])) &&
-                        (isset($_POST['max_invest4'])) &&
-                        (isset($_POST['brand_fee4'])) &&
-                        (isset($_POST['staff_require4'])) &&
-                        (isset($_POST['royalty_commission4'])) &&
-                        (isset($_POST['monthly_revenue4'])) &&
-                        (isset($_POST['profit_margin4'])) &&
-
-
-                        (isset($_POST['format_name5'])) &&
-                        (isset($_POST['min_sq5'])) &&
-                        (isset($_POST['max_sq5'])) &&
-                        (isset($_POST['min_invest5'])) &&
-                        (isset($_POST['max_invest5'])) &&
-                        (isset($_POST['brand_fee5'])) &&
-                        (isset($_POST['staff_require5'])) &&
-                        (isset($_POST['royalty_commission5'])) &&
-                        (isset($_POST['monthly_revenue5'])) &&
-                        (isset($_POST['profit_margin5'])) &&
-
-
-                        (isset($_POST['format_name6'])) &&
-                        (isset($_POST['min_sq6'])) &&
-                        (isset($_POST['max_sq6'])) &&
-                        (isset($_POST['min_invest6'])) &&
-                        (isset($_POST['max_invest6'])) &&
-                        (isset($_POST['brand_fee6'])) &&
-                        (isset($_POST['staff_require6'])) &&
-                        (isset($_POST['royalty_commission6'])) &&
-                        (isset($_POST['monthly_revenue6'])) &&
-                        (isset($_POST['profit_margin6'])) &&
-
-
-                        (isset($_POST['logo'])) &&
-                        (isset($_POST['images'])) &&
-                        (isset($_POST['doc_name'])) &&
-                        (isset($_POST['document_type']))) {
-
-
- */

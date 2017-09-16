@@ -245,6 +245,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
     public void onRefresh() {
         try {
             Franchise_profile_list.clear();
+            System.out.println("USER IDDDD" + str_user_id);
             queue = Volley.newRequestQueue(getActivity());
             Get_Franchise_Profiles();
 

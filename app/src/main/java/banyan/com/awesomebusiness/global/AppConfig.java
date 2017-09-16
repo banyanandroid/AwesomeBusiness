@@ -21,7 +21,8 @@ public class AppConfig {
     public static String url_business_location = BASE_URL + "/index.php/Apicontroller/alllocation";
     public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
 
-    //TEMPORARY URL's
+    public static String url_add_franchise_profile = BASE_URL + "/index.php/Apicontroller/addfranchiseprofile";
+
 
     //Investor Profile  // CHANGE URL'S LATER (THESE R TEST URL'S)
     public static String url_investor_iam = BASE_URL + "/index.php/Apicontroller/listallinvestoran";

@@ -23,12 +23,15 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gdacciaro.iOSDialog.iOSDialog;
 import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
@@ -40,6 +43,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -105,11 +109,12 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     //For Setting Previous values of the user profile
     public static final String TAG_USER_NAME = "user_name";
     public static final String TAG_USER_MOBILE = "user_mobile";
-    public static final String TAG_USER_LOCATION = "user_location";
+    public static final String TAG_USER_LOCATION = "location_name";
     public static final String TAG_USER_GST_NUMBER = "user_gst_number";
     public static final String TAG_USER_COMPANY_NAME = "user_company_name";
     public static final String TAG_USER_ADDRESS = "user_address";
     public static final String TAG_USER_DESIGINATION = "user_designation";
+    public static final String TAG_USER_PHOTO = "user_photo";
     public static final String TAG_USER_EMAIL_BUSINESS_PROPOSALS = "user_business_proposals_email";
     public static final String TAG_USER_EMAIL_NEW_OPPORTUNITIES = "user_business_proposals_notify";
 
@@ -181,12 +186,14 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     //To get the previously entered parameters and set it in the edit text
     String str_prev_profile_user_name, str_prev_user_mobile,
             str_prev_user_gst_num, str_prev_user_company_name, str_prev_user_address,
-            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities = "";
+            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities,str_prof_image = "";
 
     //To Post the newly entered parameters and update it to JSON
-    String str_up_profile_user_name, str_up_country_code, str_up_user_mobile,
+    String str_up_profile_user_name, str_up_user_mobile,
             str_up_user_gst_num, str_up_user_company_name, str_up_user_address,
             str_up_user_designation, str_up_user_location = "";
+
+    String str_up_country_code = "+91";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -383,6 +390,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 str_up_user_designation = edt_designation.getText().toString();
                 str_up_user_gst_num = edt_GST_number.getText().toString();
                 str_up_user_address = edt_address.getText().toString();
+
+                str_up_user_location = auto_user_location.getText().toString();
 
                 str_selected_phone_code = spn_country_code.getSelectedItem().toString();
 
@@ -590,6 +599,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         str_prev_user_location = obj_data.getString(TAG_USER_LOCATION);
                         str_prev_email_business_proposals = obj_data.getString(TAG_USER_EMAIL_BUSINESS_PROPOSALS);
                         str_prev_email_new_opportunities = obj_data.getString(TAG_USER_EMAIL_NEW_OPPORTUNITIES);
+                        str_prof_image = obj_data.getString(TAG_USER_PHOTO);
+
 
                         try {
                             edt_name.setText("" + str_prev_profile_user_name);
@@ -997,31 +1008,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                     if (success == 1) {
                         dialog.dismiss();
 
-                        Alerter.create(Activity_UserProfile_Update.this)
-                                .setTitle("Success.......!")
-                                .setText("Your Profile Updated Successfully")
-                                .setBackgroundColor(R.color.colorAccent)
-                                .show();
-
-                        Intent i = new Intent(getApplicationContext(), Activity_UserProfile.class);
-                        startActivity(i);
-                        finish();
+                        AlertDialog();
 
                     } else {
                         dialog.dismiss();
-                        System.out.println("User_Name" + str_up_profile_user_name);
-                        System.out.println("Mobile Code" + str_selected_country_id);
-                        System.out.println("Phone Number" + str_up_user_mobile);
-                        System.out.println("Location" + str_up_user_location);
-                        System.out.println("Company Name" + str_up_user_company_name);
-                        System.out.println("Designation" + str_up_user_designation);
-                        System.out.println("GST Number" + str_up_user_gst_num);
-                        System.out.println("Address" + str_up_user_address);
-                        System.out.println("Industries" + str_final_business_sector);
-                        System.out.println("Cities" + str_final_Business_Location);
-                        System.out.println("Email Frequency" + str_chb_businessproposals);
-                        System.out.println("Notify" + str_chb_newopportunities);
-                        System.out.println("User Id" + str_user_id);
+
                         TastyToast.makeText(getApplicationContext(), "Oops...! Update Failed :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
@@ -1047,11 +1038,11 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 //FROM EDIT TEXT
+                params.put("userid", str_user_id);
                 params.put("user_name", str_up_profile_user_name);
-                params.put("mobile_code", str_selected_country_id);
+                params.put("mobile_code", "91");
                 params.put("ph_no", str_up_user_mobile);
                 params.put("location", str_up_user_location);
-                params.put("company_name", str_up_user_company_name);
                 params.put("designation", str_up_user_designation);
                 params.put("gst_number", str_up_user_gst_num);
                 params.put("address", str_up_user_address);
@@ -1059,27 +1050,79 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 params.put("cities", str_final_location_update);
                 params.put("emailfrequency", str_chb_businessproposals);
                 params.put("notify", str_chb_newopportunities);
-                params.put("userid", str_user_id);
+                params.put("dealsize", "");
+                params.put("profile_img", str_prof_image);
+                params.put("company_name", str_up_user_company_name);
 
+
+                System.out.println("User Id" + str_user_id);
                 System.out.println("User_Name" + str_up_profile_user_name);
-                System.out.println("Mobile Code" + str_selected_country_id);
-                System.out.println("Phone Number" + str_up_user_mobile);
+                System.out.println("Mobile Code" + "91");
+                System.out.println("ph_no" + str_up_user_mobile);
                 System.out.println("Location" + str_up_user_location);
                 System.out.println("Company Name" + str_up_user_company_name);
                 System.out.println("Designation" + str_up_user_designation);
                 System.out.println("GST Number" + str_up_user_gst_num);
                 System.out.println("Address" + str_up_user_address);
                 System.out.println("Industries" + str_final_industry_update);
-                System.out.println("Cities" + str_final_Business_Location);
+                System.out.println("Cities" + str_final_location_update);
                 System.out.println("Email Frequency" + str_chb_businessproposals);
                 System.out.println("Notify" + str_chb_newopportunities);
-                System.out.println("User Id" + str_user_id);
+                System.out.println("dealsize" + "");
+                System.out.println("profile_img" + str_prof_image);
 
-                return params;
+
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
             }
         };
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
         queue.add(request);
     }
 
+    private void AlertDialog() {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(
+                Activity_UserProfile_Update
+                        .this).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle("Awesome Business");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("Your Profile Updated Successfully");
+
+        // Setting Icon to Dialog
+        alertDialog.setIcon(R.mipmap.ic_launcher);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to execute after dialog closed
+
+
+                Intent i = new Intent(getApplicationContext(), Activity_UserProfile.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
 
 }
