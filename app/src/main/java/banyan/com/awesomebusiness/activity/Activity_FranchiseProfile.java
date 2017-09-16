@@ -829,22 +829,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_1.equals("")) {
                         edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+                    } else {
 
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
 
 
@@ -917,36 +909,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_2.equals("")) {
                         edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
 
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
 
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     }
 
 
@@ -1051,51 +1021,16 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_3.equals("")) {
                         edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-                    //If ststement to check max<=min value
-
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
 
                 } else if (str_no_of_formats.equals("4")) {
 
@@ -1229,63 +1164,16 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_4.equals("")) {
                         edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
 
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
 
                 } else if (str_no_of_formats.equals("5")) {
 
@@ -1451,78 +1339,14 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_5.equals("")) {
                         edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
 
 
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
-                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
-                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
-                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
-
-
-                    //If ststement to check max<=min value
-
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     }
 
 
@@ -1723,119 +1547,17 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_6.equals("")) {
                         edt_format_operating_profitmargin_6.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
-                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
-                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
-                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
-
-                    int_format_6_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_6);
-                    int_format_6_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_6);
-                    int_format_6_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_6);
-                    int_format_6_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_6);
-
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
-
-
-                } try {
-
-                    System.out.println("COUNTTTT 9999999999999999999999 ");
-                    System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
-                    System.out.println("EMAIL :::::::::::" + str_email);
-                    System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
-                    System.out.println("DESIGNATION :::::::::::" + str_designation);
-                    System.out.println("BRAND NAME :::::::::::" + str_brand_name);
-                    System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
-                    System.out.println("BUSINESS INDUSTRIES ::::" + str_final_industry_update);
-                    System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
-                    System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
-                    System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
-                    System.out.println("HEADQUATERS ::::" + str_final_headquaters);
-                    System.out.println("NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
-                    System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
-                    System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
-                    System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
-                    System.out.println("EXPAND LOCATIONS :::::::::::" + str_final_location_update);
-                    System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
-
-                    try {
-                        System.out.println("COUNTTTT 101010101010101010 ");
                         dialog = new SpotsDialog(Activity_FranchiseProfile.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(getApplicationContext());
                         Function_Submit_FranchiseProfile();
 
-                    } catch (Exception e) {
-                        // TODO: handle exception
                     }
 
 
-                } catch (Exception e) {
-                // TODO: handle exception
-            }
+                }
 
 
             }
@@ -2438,6 +2160,11 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
                 System.out.println("USER CURRENCY :::::::::::" + str_user_currency);
                 System.out.println("USER ID :::::::::::" + str_user_id);
+
+
+                System.out.println("LOGOOOOOOOOO:::::::::::" + encoded_logo);
+                System.out.println("IMAGESSSSSSS:::::::::::" + listString);
+
 
                 return params;
             }

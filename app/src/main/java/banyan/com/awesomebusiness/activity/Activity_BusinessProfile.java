@@ -401,31 +401,31 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                      * Get Multi Sector Details
                      * ************************/
 
-                        String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
+                    String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
-                        Arraylist_fetched_industries.clear();
-                        for (int i = 0; i < str_industries.length; i++) {
-                            Arraylist_fetched_industries.add(str_industries[i]);
-                        }
-                        System.out.println("array : " + Arraylist_fetched_industries);
+                    Arraylist_fetched_industries.clear();
+                    for (int i = 0; i < str_industries.length; i++) {
+                        Arraylist_fetched_industries.add(str_industries[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_industries);
 
-                        Arraylist_selected_final_industry.clear();
-                        for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+                    Arraylist_selected_final_industry.clear();
+                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
 
-                            String get_indestry = Arraylist_fetched_industries.get(i);
-                            get_indestry = get_indestry.trim();
-                            System.out.println("get_indestry : " + get_indestry);
-                            int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                            String select_sect_id = Arraylist_sector_key.get(indus_position);
-                            String select_sect_type = Arraylist_sector_type.get(indus_position);
+                        String get_indestry = Arraylist_fetched_industries.get(i);
+                        get_indestry = get_indestry.trim();
+                        System.out.println("get_indestry : " + get_indestry);
+                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                        String select_sect_id = Arraylist_sector_key.get(indus_position);
+                        String select_sect_type = Arraylist_sector_type.get(indus_position);
 
-                            String sector = select_sect_id + "-" + select_sect_type;
-                            Arraylist_selected_final_industry.add(sector);
+                        String sector = select_sect_id + "-" + select_sect_type;
+                        Arraylist_selected_final_industry.add(sector);
 
-                            str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
 
-                        }
-                        System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+                    }
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
                     /*****************************
                      * Get Multi Location Details

@@ -1071,7 +1071,6 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 params.put("profile_img", str_prof_image);
                 params.put("company_name", str_up_user_company_name);
 
-
                 System.out.println("User Id" + str_user_id);
                 System.out.println("User_Name" + str_up_profile_user_name);
                 System.out.println("Mobile Code" + "91");
