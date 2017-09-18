@@ -591,14 +591,12 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         queue.add(request);
     }
 
-
     /*****************************
      * To get  I am/an  Details
      ***************************/
 
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("STEP  1111111111111");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_investor_iam, new Response.Listener<String>() {
 
@@ -609,8 +607,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
-                    System.out.println("STEP  22222222222");
-
                     if (success == 1) {
 
                         JSONArray arr;
@@ -694,7 +690,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /*****************************
      * To get  Interested in  Details
@@ -794,6 +789,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         queue.add(request);
     }
 
+    /*****************************
+     * To get  Sector List
+     ***************************/
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
@@ -977,9 +975,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         queue.add(request);
     }
 
-    /*****************************
-     * To get  Business Location List
-     ***************************/
+    /*******************************************
+     * To get  Business HQ Location List
+     ******************************************/
 
     public void Get_Business_Headquaters() {
         String tag_json_obj = "json_obj_req";
@@ -1082,7 +1080,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM

@@ -73,6 +73,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
 
+    //FOR IMAGE UPLOAD
+    private int REQUEST_CODE_PICKER = 2000;
+    private int REQUEST_CODE_PICKER1 = 2000;
+    private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> image = new ArrayList<>();
+    ArrayList<String> Arraylist_image_encode = null;
+    String listString = "";
+    String encodedstring = "";
+    String encoded_logo = "";
+    String image_type = "";
 
     public static final String TAG_FRANCHISE_ID = "franchise_id";
     public static final String TAG_FRANCHISE_KEY = "franchise_key";
@@ -96,19 +106,6 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     public static final String TAG_FRANCHISE_CURRENCY = "franchise_currency";
     public static final String TAG_COUNTRY_CURRENCY = "country_currency";
 
-
-    //FOR IMAGE UPLOAD
-    private int REQUEST_CODE_PICKER = 2000;
-    private int REQUEST_CODE_PICKER1 = 2000;
-    private ArrayList<Image> images = new ArrayList<>();
-    private ArrayList<Image> image = new ArrayList<>();
-    ArrayList<String> Arraylist_image_encode = null;
-    String listString = "";
-    String encodedstring = "";
-    String encoded_logo = "";
-    String image_type = "";
-
-
     public static final String TAG_INDUSTRT_NAME = "name";
     public static final String TAG_INDUSTRY_KEY = "key";
     public static final String TAG_INDUSTRY_TYPE = "type";
@@ -116,6 +113,98 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     public static final String TAG_HEADQUATERS_PLACE = "place";
     public static final String TAG_HEADQUATERS_KEY = "key";
     public static final String TAG_HEADQUATERS_TYPE = "type";
+
+    public static final String TAG_LOCATION_NAME = "location_name";
+    public static final String TAG_LOCATION_KEY = "location_key";
+
+    public static final String TAG_INDUSTRY_NAMEE = "industry_name";
+    public static final String TAG_INDUSTRY_KEYY = "industry_key";
+
+
+    //String Related to no of formats
+    //FORMAT 1
+    public static final String TAG_FRANCHISE_ID1 = "franchise_id1";
+    public static final String TAG_FRANCHISE_FORMAT_NAME1 = "franchise_format_name1";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1 = "franchise_format_min_investment1";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1 = "franchise_format_max_investment1";
+    public static final String TAG_FRANCHISE_FORMAT_FEE1 = "franchise_format_fee1";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1 = "franchise_format_no_of_staffs1";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY1 = "franchise_format_royality1";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE1 = "franchise_format_revenue1";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT1 = "franchise_format_profit1";
+    public static final String TAG_FRANCHISE_FORMAT_ACT1 = "franchise_format_act1";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT1 = "franchise_format_min_sqft1";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT1 = "franchise_format_max_sqft1";
+
+    //FORMAT 2
+    public static final String TAG_FRANCHISE_ID2 = "franchise_id2";
+    public static final String TAG_FRANCHISE_FORMAT_NAME2 = "franchise_format_name2";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2 = "franchise_format_min_investment2";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2 = "franchise_format_max_investment2";
+    public static final String TAG_FRANCHISE_FORMAT_FEE2 = "franchise_format_fee2";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2 = "franchise_format_no_of_staffs2";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY2 = "franchise_format_royality2";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE2 = "franchise_format_revenue2";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT2 = "franchise_format_profit2";
+    public static final String TAG_FRANCHISE_FORMAT_ACT2 = "franchise_format_act2";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT2 = "franchise_format_min_sqft2";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT2 = "franchise_format_max_sqft2";
+
+    //FORMAT 3
+    public static final String TAG_FRANCHISE_ID3 = "franchise_id3";
+    public static final String TAG_FRANCHISE_FORMAT_NAME3 = "franchise_format_name3";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT3 = "franchise_format_min_investment3";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT3 = "franchise_format_max_investment3";
+    public static final String TAG_FRANCHISE_FORMAT_FEE3 = "franchise_format_fee3";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS3 = "franchise_format_no_of_staffs3";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY3 = "franchise_format_royality3";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE3 = "franchise_format_revenue3";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT3 = "franchise_format_profit3";
+    public static final String TAG_FRANCHISE_FORMAT_ACT3 = "franchise_format_act3";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT3 = "franchise_format_min_sqft3";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT3 = "franchise_format_max_sqft3";
+
+    //FORMAT 4
+    public static final String TAG_FRANCHISE_ID4 = "franchise_id4";
+    public static final String TAG_FRANCHISE_FORMAT_NAME4 = "franchise_format_name4";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT4 = "franchise_format_min_investment4";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT4 = "franchise_format_max_investment4";
+    public static final String TAG_FRANCHISE_FORMAT_FEE4 = "franchise_format_fee4";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS4 = "franchise_format_no_of_staffs4";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY4 = "franchise_format_royality4";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE4 = "franchise_format_revenue4";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT4 = "franchise_format_profit4";
+    public static final String TAG_FRANCHISE_FORMAT_ACT4 = "franchise_format_act4";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT4 = "franchise_format_min_sqft4";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT4 = "franchise_format_max_sqft4";
+
+    //FORMAT 5
+    public static final String TAG_FRANCHISE_ID5 = "franchise_id5";
+    public static final String TAG_FRANCHISE_FORMAT_NAME5 = "franchise_format_name5";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT5 = "franchise_format_min_investment5";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT5 = "franchise_format_max_investment5";
+    public static final String TAG_FRANCHISE_FORMAT_FEE5 = "franchise_format_fee5";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS5 = "franchise_format_no_of_staffs5";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY5 = "franchise_format_royality5";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE5 = "franchise_format_revenue5";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT5 = "franchise_format_profit5";
+    public static final String TAG_FRANCHISE_FORMAT_ACT5 = "franchise_format_act5";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT5 = "franchise_format_min_sqft5";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT5 = "franchise_format_max_sqft5";
+
+    //FORMAT 6
+    public static final String TAG_FRANCHISE_ID6 = "franchise_id6";
+    public static final String TAG_FRANCHISE_FORMAT_NAME6 = "franchise_format_name6";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_INVESTMENT6 = "franchise_format_min_investment6";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_INVESTMENT6 = "franchise_format_max_investment6";
+    public static final String TAG_FRANCHISE_FORMAT_FEE6 = "franchise_format_fee6";
+    public static final String TAG_FRANCHISE_FORMAT_NO_OF_STAFFS6 = "franchise_format_no_of_staffs6";
+    public static final String TAG_FRANCHISE_FORMAT_ROYALITY6 = "franchise_format_royality6";
+    public static final String TAG_FRANCHISE_FORMAT_REVENUE6 = "franchise_format_revenue6";
+    public static final String TAG_FRANCHISE_FORMAT_PROFIT6 = "franchise_format_profit6";
+    public static final String TAG_FRANCHISE_FORMAT_ACT6 = "franchise_format_act6";
+    public static final String TAG_FRANCHISE_FORMAT_MIN_SQFT6 = "franchise_format_min_sqft6";
+    public static final String TAG_FRANCHISE_FORMAT_MAX_SQFT6 = "franchise_format_max_sqft6";
 
 
     ArrayList<String> Arraylist_industry_name = null;
@@ -181,6 +270,8 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     Spinner spn_years_company_opr_start;
     String str_year_company_opr_start = "";
 
+    //To get previous Values for edit
+    String str_final_location, str_final_industries = "";
 
     // FORMAT 1
     EditText edt_format_name_1, edt_format_spaceneeded_minimum_1, edt_format_spaceneeded_maximum_1,
@@ -294,9 +385,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
 
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_user_id = sharedPreferences.getString("str_user_id", "str_user_id");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_franchise_key = sharedPreferences.getString("franchise_key", "franchise_key");
 
@@ -326,7 +415,6 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
-
 
         //Image Upload
         Arraylist_image_encode = new ArrayList<String>();
@@ -831,8 +919,6 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                 if (str_no_of_formats.equals("1")) {
 
                     // IF STATEMENT FOR VALIDATING STRINGS OF FORMAT 1(WHEN NO OF SELECTED FORMATS 1)
-
-
                     System.out.println("FORMATS COUNT:: 111111111111111111111 ");
                     if (str_format_name_1.equals("")) {
                         edt_format_name_1.setError("Enter Format Name");
@@ -864,22 +950,14 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_1.equals("")) {
                         edt_format_operating_profitmargin_1.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+                    } else {
 
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
 
 
@@ -952,36 +1030,14 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_2.equals("")) {
                         edt_format_operating_profitmargin_2.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
 
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
 
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     }
 
 
@@ -1086,51 +1142,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_3.equals("")) {
                         edt_format_operating_profitmargin_3.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+
+                        dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-                    //If ststement to check max<=min value
-
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
 
                 } else if (str_no_of_formats.equals("4")) {
 
@@ -1264,63 +1285,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_4.equals("")) {
                         edt_format_operating_profitmargin_4.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else {
+
+                        dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
+
+
                     }
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
 
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
 
                 } else if (str_no_of_formats.equals("5")) {
 
@@ -1486,78 +1460,14 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_5.equals("")) {
                         edt_format_operating_profitmargin_5.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
+                        dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(getApplicationContext());
+                        Function_Submit_FranchiseProfile();
 
 
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
-                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
-                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
-                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
-
-
-                    //If ststement to check max<=min value
-
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     }
 
 
@@ -1758,113 +1668,13 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                     } else if (str_format_operating_profitmargin_6.equals("")) {
                         edt_format_operating_profitmargin_6.setError("Enter Operating Profit Margin %");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
+                    } else {
 
-                    //Getting the min and max values from edit texts to check max<=min value
-                    int_format_1_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_1);
-                    int_format_1_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_1);
-                    int_format_1_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_1);
-                    int_format_1_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_1);
-
-                    int_format_2_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_2);
-                    int_format_2_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_2);
-                    int_format_2_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_2);
-                    int_format_2_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_2);
-
-                    int_format_3_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_3);
-                    int_format_3_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_3);
-                    int_format_3_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_3);
-                    int_format_3_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_3);
-
-                    int_format_4_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_4);
-                    int_format_4_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_4);
-                    int_format_4_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_4);
-                    int_format_4_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_4);
-
-                    int_format_5_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_5);
-                    int_format_5_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_5);
-                    int_format_5_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_5);
-                    int_format_5_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_5);
-
-                    int_format_6_space_needed_minimum = Integer.valueOf(str_format_spaceneeded_minimum_6);
-                    int_format_6_space_needed_maximum = Integer.valueOf(str_format_spaceneeded_maximum_6);
-                    int_format_6_investment_needed_minimum = Integer.valueOf(str_format_investment_needed_minimum_6);
-                    int_format_6_investment_needed_maximum = Integer.valueOf(str_format_investment_needed_maximum_6);
-
-                    //If ststement to check max<=min value
-                    if (int_format_1_space_needed_maximum <= int_format_1_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_1.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_1_investment_needed_maximum <= int_format_1_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_1.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_1.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_space_needed_maximum <= int_format_2_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_2.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_2_investment_needed_maximum <= int_format_2_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_2.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_2.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_space_needed_maximum <= int_format_3_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_3.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_3_investment_needed_maximum <= int_format_3_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_3.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_3.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_space_needed_maximum <= int_format_4_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_4.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_4_investment_needed_maximum <= int_format_4_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_4.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_4.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_space_needed_maximum <= int_format_5_space_needed_minimum) {
-                        edt_format_spaceneeded_maximum_5.setError("Invalid Value");
-                        edt_format_spaceneeded_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (int_format_5_investment_needed_maximum <= int_format_5_investment_needed_minimum) {
-                        edt_format_investment_needed_maximum_5.setError("Invalid Value");
-                        edt_format_investment_needed_maximum_5.requestFocus();
-                        TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }
-
-
-                } else {
-
-                    System.out.println("COUNTTTT 9999999999999999999999 ");
-                    System.out.println("PERSON NAME :::::::::::" + str_auth_person_name);
-                    System.out.println("EMAIL :::::::::::" + str_email);
-                    System.out.println("MOBILE NUMBER :::::::::::" + str_mobile_num);
-                    System.out.println("DESIGNATION :::::::::::" + str_designation);
-                    System.out.println("BRAND NAME :::::::::::" + str_brand_name);
-                    System.out.println("OPPORTUNITIES ::::" + str_opportunity_offered);
-                    System.out.println("BUSINESS INDUSTRIES ::::" + str_final_industry_update);
-                    System.out.println("ABOUT COMPANY :::::::::::" + str_about_company);
-                    System.out.println("ALL PRODUCTS & SERVICES :::::::::::" + str_all_prod_serv);
-                    System.out.println("YEAR OPERATIONS START :::::::::::" + str_year_company_opr_start);
-                    System.out.println("HEADQUATERS ::::" + str_final_headquaters);
-                    System.out.println("NO OF SALES PARTNER :::::::::::" + str_no_of_salespartner);
-                    System.out.println("LOOK FOR IN SALES PARTNER :::::::::::" + str_lookfor_in_salespartner);
-                    System.out.println("KIND OF SUPPORT  :::::::::::" + str_kindof_support);
-                    System.out.println("PROCEDURE SALES PARTNER :::::::::::" + str_procedure_salespartner);
-                    System.out.println("EXPAND LOCATIONS :::::::::::" + str_final_location_update);
-                    System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
-
-                    try {
-                        System.out.println("COUNTTTT 101010101010101010 ");
                         dialog = new SpotsDialog(Activity_FranchiseProfile_Update.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(getApplicationContext());
                         Function_Submit_FranchiseProfile();
 
-                    } catch (Exception e) {
-                        // TODO: handle exception
                     }
 
 
@@ -2156,8 +1966,9 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         try {
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Franchise_Profile();
-                        } catch (Exception e) {
 
+                        } catch (Exception e) {
+                            // TODO: handle exception
                         }
 
                     } else if (success == 0) {
@@ -2217,6 +2028,8 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         JSONArray arr_main;
                         JSONArray arr_location;
                         JSONArray arr_industry;
+                        JSONArray arr_formats;
+
 
                         arr_main = obj.getJSONArray("data");
 
@@ -2245,16 +2058,13 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                             String franchise_currency = obj_data.getString(TAG_FRANCHISE_CURRENCY);
                             String country_currency = obj_data.getString(TAG_COUNTRY_CURRENCY);
 
-
-
-
-                          /*  arr_location = obj_data.getJSONArray("location");
+                            arr_location = obj_data.getJSONArray("location");
                             Arraylist_update_location.clear();
                             for (int j = 0; arr_location.length() > j; j++) {
                                 JSONObject obj_location = arr_location.getJSONObject(j);
 
-                              //  String location_name = obj_location.getString(TAG_LOCATION_NAME);
-                              //  String location_key = obj_location.getString(TAG_LOCATION_KEY);
+                                String location_name = obj_location.getString(TAG_LOCATION_NAME);
+                                String location_key = obj_location.getString(TAG_LOCATION_KEY);
 
                                 Arraylist_update_location.add(location_name);
 
@@ -2268,16 +2078,15 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                             for (int k = 0; arr_industry.length() > k; k++) {
                                 JSONObject obj_industry = arr_industry.getJSONObject(k);
 
-                              //  String industry_name = obj_industry.getString(TAG_INDUSTRY_NAME);
-                              //  String industry_key = obj_industry.getString(TAG_INDUSTRY_KEY);
+                                String industry_name = obj_industry.getString(TAG_INDUSTRY_NAMEE);
+                                String industry_key = obj_industry.getString(TAG_INDUSTRY_KEYY);
 
                                 Arraylist_update_industries.add(industry_name);
 
                             }
                             str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
-*/
-                            try {
 
+                            try {
                                 //setting editext values
                                 edt_name.setText("" + franchise_user_name);
                                 edt_name.setEnabled(false);
@@ -2299,7 +2108,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                                 auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_Franchise_profile_company_headquaters);
                                 auto_headquaters.setText(franchise_brand_headquaters);
 
-                                //Setting selection for spinner
+                                //Setting selection for spinner - (OPPORTUNITIES OFFERED)
                                 if (franchise_brand_offering.equals("1")) {
 
                                     spn_opportunities_offered.setSelection(1);
@@ -2319,6 +2128,630 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                                 } else if (franchise_brand_offering.equals("5")) {
 
                                     spn_opportunities_offered.setSelection(5);
+
+                                }
+
+                                //Setting selection for spinner - (NO_OF_SALESPARTNER_FORMATS)
+                                if (franchise_format.equals("1")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(1);
+
+                                } else if (franchise_format.equals("2")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(2);
+
+                                } else if (franchise_format.equals("3")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(3);
+
+                                } else if (franchise_format.equals("4")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(4);
+
+                                } else if (franchise_format.equals("5")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(5);
+
+                                } else if (franchise_format.equals("6")) {
+
+                                    spn_no_of_salespartner_formats.setSelection(6);
+
+                                }
+
+                                System.out.println("INSIDE LOCATION " + str_final_location);
+                                System.out.println("INSIDE SECTOR " + str_final_industries);
+
+                                auto_franchise_business_industry = (MultiAutoCompleteTextView) findViewById(R.id.franchise_profile_multi_busi_industry);
+                                auto_franchise_business_expand_locations = (MultiAutoCompleteTextView) findViewById(R.id.franchise_profile_multi_busi_expand_locations);
+
+                                auto_franchise_business_industry.setText("" + str_final_industries + ", ");
+                                auto_franchise_business_expand_locations.setText("" + str_final_location + ", ");
+
+                                System.out.println("INSIDE AFTER LOCATION " + str_final_location);
+                                System.out.println("INSIDE AFTER SECTOR " + str_final_industries);
+
+
+                                if (franchise_format.equals("1")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.GONE);
+                                    cv_format_three.setVisibility(View.GONE);
+                                    cv_format_four.setVisibility(View.GONE);
+                                    cv_format_five.setVisibility(View.GONE);
+                                    cv_format_six.setVisibility(View.GONE);
+
+
+                                } else if (franchise_format.equals("2")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.VISIBLE);
+
+                                    cv_format_three.setVisibility(View.GONE);
+                                    cv_format_four.setVisibility(View.GONE);
+                                    cv_format_five.setVisibility(View.GONE);
+                                    cv_format_six.setVisibility(View.GONE);
+
+                                } else if (franchise_format.equals("3")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.VISIBLE);
+                                    cv_format_three.setVisibility(View.VISIBLE);
+
+                                    cv_format_four.setVisibility(View.GONE);
+                                    cv_format_five.setVisibility(View.GONE);
+                                    cv_format_six.setVisibility(View.GONE);
+
+                                } else if (franchise_format.equals("4")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.VISIBLE);
+                                    cv_format_three.setVisibility(View.VISIBLE);
+                                    cv_format_four.setVisibility(View.VISIBLE);
+
+                                    cv_format_five.setVisibility(View.GONE);
+                                    cv_format_six.setVisibility(View.GONE);
+
+                                } else if (franchise_format.equals("5")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.VISIBLE);
+                                    cv_format_three.setVisibility(View.VISIBLE);
+                                    cv_format_four.setVisibility(View.VISIBLE);
+                                    cv_format_five.setVisibility(View.VISIBLE);
+
+                                    cv_format_six.setVisibility(View.GONE);
+
+                                } else if (franchise_format.equals("6")) {
+
+                                    cv_format_one.setVisibility(View.VISIBLE);
+                                    cv_format_two.setVisibility(View.VISIBLE);
+                                    cv_format_three.setVisibility(View.VISIBLE);
+                                    cv_format_four.setVisibility(View.VISIBLE);
+                                    cv_format_five.setVisibility(View.VISIBLE);
+                                    cv_format_six.setVisibility(View.VISIBLE);
+
+                                }
+
+
+                                //GETTING FORMATS AND THERIR VALUES AND SETTING IT IN STRINGS
+                                arr_formats = obj_data.getJSONArray("format");
+                                System.out.println("INSIDE FORMAT ARRAYYYYY" + arr_formats);
+                                if (franchise_format.equals("1")) {
+
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+
+                                } else if (franchise_format.equals("2")) {
+
+
+                                } else if (franchise_format.equals("3")) {
+
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    edt_format_name_2.setText("" + franchise_format_name2);
+                                    edt_format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    edt_format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    edt_format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    edt_format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    edt_format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    edt_format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    edt_format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    edt_format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    edt_format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
+
+                                    JSONObject obj_format3 = arr_formats.getJSONObject(2);
+
+                                    String franchise_id3 = obj_format3.getString(TAG_FRANCHISE_ID3);
+                                    String franchise_format_name3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NAME3);
+                                    String franchise_format_min_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT3);
+                                    String franchise_format_max_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT3);
+                                    String franchise_format_fee3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_FEE3);
+                                    String franchise_format_no_of_staffs3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS3);
+                                    String franchise_format_royality3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ROYALITY3);
+                                    String franchise_format_revenue3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_REVENUE3);
+                                    String franchise_format_profit3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_PROFIT3);
+                                    String franchise_format_act3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ACT3);
+                                    String franchise_format_min_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT3);
+                                    String franchise_format_max_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT3);
+
+                                    edt_format_name_3.setText("" + franchise_format_name3);
+                                    edt_format_spaceneeded_minimum_3.setText("" + franchise_format_min_sqft3);
+                                    edt_format_spaceneeded_maximum_3.setText("" + franchise_format_max_sqft3);
+                                    edt_format_investment_needed_minimum_3.setText("" + franchise_format_min_investment3);
+                                    edt_format_investment_needed_maximum_3.setText("" + franchise_format_max_investment3);
+                                    edt_format_brand_fee_3.setText("" + franchise_format_fee3);
+                                    edt_format_staff_required_3.setText("" + franchise_format_no_of_staffs3);
+                                    edt_format_royalty_commission_3.setText("" + franchise_format_royality3);
+                                    edt_format_salespartner_monthly_revenue_3.setText("" + franchise_format_revenue3);
+                                    edt_format_operating_profitmargin_3.setText("" + franchise_format_profit3);
+
+                                } else if (franchise_format.equals("4")) {
+
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    edt_format_name_2.setText("" + franchise_format_name2);
+                                    edt_format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    edt_format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    edt_format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    edt_format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    edt_format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    edt_format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    edt_format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    edt_format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    edt_format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
+
+                                    JSONObject obj_format3 = arr_formats.getJSONObject(2);
+
+                                    String franchise_id3 = obj_format3.getString(TAG_FRANCHISE_ID3);
+                                    String franchise_format_name3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NAME3);
+                                    String franchise_format_min_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT3);
+                                    String franchise_format_max_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT3);
+                                    String franchise_format_fee3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_FEE3);
+                                    String franchise_format_no_of_staffs3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS3);
+                                    String franchise_format_royality3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ROYALITY3);
+                                    String franchise_format_revenue3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_REVENUE3);
+                                    String franchise_format_profit3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_PROFIT3);
+                                    String franchise_format_act3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ACT3);
+                                    String franchise_format_min_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT3);
+                                    String franchise_format_max_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT3);
+
+                                    edt_format_name_3.setText("" + franchise_format_name3);
+                                    edt_format_spaceneeded_minimum_3.setText("" + franchise_format_min_sqft3);
+                                    edt_format_spaceneeded_maximum_3.setText("" + franchise_format_max_sqft3);
+                                    edt_format_investment_needed_minimum_3.setText("" + franchise_format_min_investment3);
+                                    edt_format_investment_needed_maximum_3.setText("" + franchise_format_max_investment3);
+                                    edt_format_brand_fee_3.setText("" + franchise_format_fee3);
+                                    edt_format_staff_required_3.setText("" + franchise_format_no_of_staffs3);
+                                    edt_format_royalty_commission_3.setText("" + franchise_format_royality3);
+                                    edt_format_salespartner_monthly_revenue_3.setText("" + franchise_format_revenue3);
+                                    edt_format_operating_profitmargin_3.setText("" + franchise_format_profit3);
+
+                                    JSONObject obj_format4 = arr_formats.getJSONObject(3);
+
+                                    String franchise_id4 = obj_format4.getString(TAG_FRANCHISE_ID4);
+                                    String franchise_format_name4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NAME4);
+                                    String franchise_format_min_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT4);
+                                    String franchise_format_max_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT4);
+                                    String franchise_format_fee4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_FEE4);
+                                    String franchise_format_no_of_staffs4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS4);
+                                    String franchise_format_royality4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ROYALITY4);
+                                    String franchise_format_revenue4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_REVENUE4);
+                                    String franchise_format_profit4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_PROFIT4);
+                                    String franchise_format_act4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ACT4);
+                                    String franchise_format_min_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT4);
+                                    String franchise_format_max_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT4);
+
+                                    edt_format_name_4.setText("" + franchise_format_name4);
+                                    edt_format_spaceneeded_minimum_4.setText("" + franchise_format_min_sqft4);
+                                    edt_format_spaceneeded_maximum_4.setText("" + franchise_format_max_sqft4);
+                                    edt_format_investment_needed_minimum_4.setText("" + franchise_format_min_investment4);
+                                    edt_format_investment_needed_maximum_4.setText("" + franchise_format_max_investment4);
+                                    edt_format_brand_fee_4.setText("" + franchise_format_fee4);
+                                    edt_format_staff_required_4.setText("" + franchise_format_no_of_staffs4);
+                                    edt_format_royalty_commission_4.setText("" + franchise_format_royality4);
+                                    edt_format_salespartner_monthly_revenue_4.setText("" + franchise_format_revenue4);
+                                    edt_format_operating_profitmargin_4.setText("" + franchise_format_profit4);
+
+                                } else if (franchise_format.equals("5")) {
+
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    edt_format_name_2.setText("" + franchise_format_name2);
+                                    edt_format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    edt_format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    edt_format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    edt_format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    edt_format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    edt_format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    edt_format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    edt_format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    edt_format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
+
+                                    JSONObject obj_format3 = arr_formats.getJSONObject(2);
+
+                                    String franchise_id3 = obj_format3.getString(TAG_FRANCHISE_ID3);
+                                    String franchise_format_name3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NAME3);
+                                    String franchise_format_min_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT3);
+                                    String franchise_format_max_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT3);
+                                    String franchise_format_fee3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_FEE3);
+                                    String franchise_format_no_of_staffs3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS3);
+                                    String franchise_format_royality3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ROYALITY3);
+                                    String franchise_format_revenue3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_REVENUE3);
+                                    String franchise_format_profit3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_PROFIT3);
+                                    String franchise_format_act3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ACT3);
+                                    String franchise_format_min_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT3);
+                                    String franchise_format_max_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT3);
+
+                                    edt_format_name_3.setText("" + franchise_format_name3);
+                                    edt_format_spaceneeded_minimum_3.setText("" + franchise_format_min_sqft3);
+                                    edt_format_spaceneeded_maximum_3.setText("" + franchise_format_max_sqft3);
+                                    edt_format_investment_needed_minimum_3.setText("" + franchise_format_min_investment3);
+                                    edt_format_investment_needed_maximum_3.setText("" + franchise_format_max_investment3);
+                                    edt_format_brand_fee_3.setText("" + franchise_format_fee3);
+                                    edt_format_staff_required_3.setText("" + franchise_format_no_of_staffs3);
+                                    edt_format_royalty_commission_3.setText("" + franchise_format_royality3);
+                                    edt_format_salespartner_monthly_revenue_3.setText("" + franchise_format_revenue3);
+                                    edt_format_operating_profitmargin_3.setText("" + franchise_format_profit3);
+
+                                    JSONObject obj_format4 = arr_formats.getJSONObject(3);
+
+                                    String franchise_id4 = obj_format4.getString(TAG_FRANCHISE_ID4);
+                                    String franchise_format_name4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NAME4);
+                                    String franchise_format_min_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT4);
+                                    String franchise_format_max_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT4);
+                                    String franchise_format_fee4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_FEE4);
+                                    String franchise_format_no_of_staffs4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS4);
+                                    String franchise_format_royality4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ROYALITY4);
+                                    String franchise_format_revenue4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_REVENUE4);
+                                    String franchise_format_profit4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_PROFIT4);
+                                    String franchise_format_act4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ACT4);
+                                    String franchise_format_min_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT4);
+                                    String franchise_format_max_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT4);
+
+                                    edt_format_name_4.setText("" + franchise_format_name4);
+                                    edt_format_spaceneeded_minimum_4.setText("" + franchise_format_min_sqft4);
+                                    edt_format_spaceneeded_maximum_4.setText("" + franchise_format_max_sqft4);
+                                    edt_format_investment_needed_minimum_4.setText("" + franchise_format_min_investment4);
+                                    edt_format_investment_needed_maximum_4.setText("" + franchise_format_max_investment4);
+                                    edt_format_brand_fee_4.setText("" + franchise_format_fee4);
+                                    edt_format_staff_required_4.setText("" + franchise_format_no_of_staffs4);
+                                    edt_format_royalty_commission_4.setText("" + franchise_format_royality4);
+                                    edt_format_salespartner_monthly_revenue_4.setText("" + franchise_format_revenue4);
+                                    edt_format_operating_profitmargin_4.setText("" + franchise_format_profit4);
+
+                                    JSONObject obj_format5 = arr_formats.getJSONObject(4);
+
+                                    String franchise_id5 = obj_format5.getString(TAG_FRANCHISE_ID5);
+                                    String franchise_format_name5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_NAME5);
+                                    String franchise_format_min_investment5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT5);
+                                    String franchise_format_max_investment5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT5);
+                                    String franchise_format_fee5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_FEE5);
+                                    String franchise_format_no_of_staffs5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS5);
+                                    String franchise_format_royality5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_ROYALITY5);
+                                    String franchise_format_revenue5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_REVENUE5);
+                                    String franchise_format_profit5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_PROFIT5);
+                                    String franchise_format_act5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_ACT5);
+                                    String franchise_format_min_sqft5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT5);
+                                    String franchise_format_max_sqft5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT5);
+
+                                    edt_format_name_5.setText("" + franchise_format_name5);
+                                    edt_format_spaceneeded_minimum_5.setText("" + franchise_format_min_sqft5);
+                                    edt_format_spaceneeded_maximum_5.setText("" + franchise_format_max_sqft5);
+                                    edt_format_investment_needed_minimum_5.setText("" + franchise_format_min_investment5);
+                                    edt_format_investment_needed_maximum_5.setText("" + franchise_format_max_investment5);
+                                    edt_format_brand_fee_5.setText("" + franchise_format_fee5);
+                                    edt_format_staff_required_5.setText("" + franchise_format_no_of_staffs5);
+                                    edt_format_royalty_commission_5.setText("" + franchise_format_royality5);
+                                    edt_format_salespartner_monthly_revenue_5.setText("" + franchise_format_revenue5);
+                                    edt_format_operating_profitmargin_5.setText("" + franchise_format_profit5);
+
+                                } else if (franchise_format.equals("6")) {
+
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    edt_format_name_2.setText("" + franchise_format_name2);
+                                    edt_format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    edt_format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    edt_format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    edt_format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    edt_format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    edt_format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    edt_format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    edt_format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    edt_format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
+
+                                    JSONObject obj_format3 = arr_formats.getJSONObject(2);
+
+                                    String franchise_id3 = obj_format3.getString(TAG_FRANCHISE_ID3);
+                                    String franchise_format_name3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NAME3);
+                                    String franchise_format_min_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT3);
+                                    String franchise_format_max_investment3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT3);
+                                    String franchise_format_fee3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_FEE3);
+                                    String franchise_format_no_of_staffs3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS3);
+                                    String franchise_format_royality3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ROYALITY3);
+                                    String franchise_format_revenue3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_REVENUE3);
+                                    String franchise_format_profit3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_PROFIT3);
+                                    String franchise_format_act3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_ACT3);
+                                    String franchise_format_min_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT3);
+                                    String franchise_format_max_sqft3 = obj_format3.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT3);
+
+                                    edt_format_name_3.setText("" + franchise_format_name3);
+                                    edt_format_spaceneeded_minimum_3.setText("" + franchise_format_min_sqft3);
+                                    edt_format_spaceneeded_maximum_3.setText("" + franchise_format_max_sqft3);
+                                    edt_format_investment_needed_minimum_3.setText("" + franchise_format_min_investment3);
+                                    edt_format_investment_needed_maximum_3.setText("" + franchise_format_max_investment3);
+                                    edt_format_brand_fee_3.setText("" + franchise_format_fee3);
+                                    edt_format_staff_required_3.setText("" + franchise_format_no_of_staffs3);
+                                    edt_format_royalty_commission_3.setText("" + franchise_format_royality3);
+                                    edt_format_salespartner_monthly_revenue_3.setText("" + franchise_format_revenue3);
+                                    edt_format_operating_profitmargin_3.setText("" + franchise_format_profit3);
+
+                                    JSONObject obj_format4 = arr_formats.getJSONObject(3);
+
+                                    String franchise_id4 = obj_format4.getString(TAG_FRANCHISE_ID4);
+                                    String franchise_format_name4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NAME4);
+                                    String franchise_format_min_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT4);
+                                    String franchise_format_max_investment4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT4);
+                                    String franchise_format_fee4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_FEE4);
+                                    String franchise_format_no_of_staffs4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS4);
+                                    String franchise_format_royality4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ROYALITY4);
+                                    String franchise_format_revenue4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_REVENUE4);
+                                    String franchise_format_profit4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_PROFIT4);
+                                    String franchise_format_act4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_ACT4);
+                                    String franchise_format_min_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT4);
+                                    String franchise_format_max_sqft4 = obj_format4.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT4);
+
+                                    edt_format_name_4.setText("" + franchise_format_name4);
+                                    edt_format_spaceneeded_minimum_4.setText("" + franchise_format_min_sqft4);
+                                    edt_format_spaceneeded_maximum_4.setText("" + franchise_format_max_sqft4);
+                                    edt_format_investment_needed_minimum_4.setText("" + franchise_format_min_investment4);
+                                    edt_format_investment_needed_maximum_4.setText("" + franchise_format_max_investment4);
+                                    edt_format_brand_fee_4.setText("" + franchise_format_fee4);
+                                    edt_format_staff_required_4.setText("" + franchise_format_no_of_staffs4);
+                                    edt_format_royalty_commission_4.setText("" + franchise_format_royality4);
+                                    edt_format_salespartner_monthly_revenue_4.setText("" + franchise_format_revenue4);
+                                    edt_format_operating_profitmargin_4.setText("" + franchise_format_profit4);
+
+                                    JSONObject obj_format5 = arr_formats.getJSONObject(4);
+
+                                    String franchise_id5 = obj_format5.getString(TAG_FRANCHISE_ID5);
+                                    String franchise_format_name5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_NAME5);
+                                    String franchise_format_min_investment5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT5);
+                                    String franchise_format_max_investment5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT5);
+                                    String franchise_format_fee5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_FEE5);
+                                    String franchise_format_no_of_staffs5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS5);
+                                    String franchise_format_royality5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_ROYALITY5);
+                                    String franchise_format_revenue5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_REVENUE5);
+                                    String franchise_format_profit5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_PROFIT5);
+                                    String franchise_format_act5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_ACT5);
+                                    String franchise_format_min_sqft5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT5);
+                                    String franchise_format_max_sqft5 = obj_format5.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT5);
+
+                                    edt_format_name_5.setText("" + franchise_format_name5);
+                                    edt_format_spaceneeded_minimum_5.setText("" + franchise_format_min_sqft5);
+                                    edt_format_spaceneeded_maximum_5.setText("" + franchise_format_max_sqft5);
+                                    edt_format_investment_needed_minimum_5.setText("" + franchise_format_min_investment5);
+                                    edt_format_investment_needed_maximum_5.setText("" + franchise_format_max_investment5);
+                                    edt_format_brand_fee_5.setText("" + franchise_format_fee5);
+                                    edt_format_staff_required_5.setText("" + franchise_format_no_of_staffs5);
+                                    edt_format_royalty_commission_5.setText("" + franchise_format_royality5);
+                                    edt_format_salespartner_monthly_revenue_5.setText("" + franchise_format_revenue5);
+                                    edt_format_operating_profitmargin_5.setText("" + franchise_format_profit5);
+
+                                    JSONObject obj_format6 = arr_formats.getJSONObject(5);
+
+                                    String franchise_id6 = obj_format6.getString(TAG_FRANCHISE_ID6);
+                                    String franchise_format_name6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_NAME6);
+                                    String franchise_format_min_investment6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT6);
+                                    String franchise_format_max_investment6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT6);
+                                    String franchise_format_fee6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_FEE6);
+                                    String franchise_format_no_of_staffs6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS6);
+                                    String franchise_format_royality6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_ROYALITY6);
+                                    String franchise_format_revenue6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_REVENUE6);
+                                    String franchise_format_profit6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_PROFIT6);
+                                    String franchise_format_act6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_ACT6);
+                                    String franchise_format_min_sqft6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT6);
+                                    String franchise_format_max_sqft6 = obj_format6.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT6);
+
+                                    edt_format_name_6.setText("" + franchise_format_name6);
+                                    edt_format_spaceneeded_minimum_6.setText("" + franchise_format_min_sqft6);
+                                    edt_format_spaceneeded_maximum_6.setText("" + franchise_format_max_sqft6);
+                                    edt_format_investment_needed_minimum_6.setText("" + franchise_format_min_investment6);
+                                    edt_format_investment_needed_maximum_6.setText("" + franchise_format_max_investment6);
+                                    edt_format_brand_fee_6.setText("" + franchise_format_fee6);
+                                    edt_format_staff_required_6.setText("" + franchise_format_no_of_staffs6);
+                                    edt_format_royalty_commission_6.setText("" + franchise_format_royality6);
+                                    edt_format_salespartner_monthly_revenue_6.setText("" + franchise_format_revenue6);
+                                    edt_format_operating_profitmargin_6.setText("" + franchise_format_profit6);
 
                                 }
 
@@ -2494,7 +2927,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     private void Function_Submit_FranchiseProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_franchise_profile, new Response.Listener<String>() {
+                AppConfig.url_update_franchise_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -2502,7 +2935,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
                 try {
                     JSONObject obj = new JSONObject(response);
-                    System.out.println("RESPONSE : " + response);
+                    System.out.println("FINAL SUBMIT RESPONSE : " + response);
                     int success = obj.getInt("status");
                     if (success == 1) {
                         dialog.dismiss();
@@ -2565,6 +2998,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                 params.put("document_type", "DOCUMENT TYPEEEE");
                 params.put("currency_change", str_user_currency);
                 params.put("user_id", str_user_id);
+                params.put("franchise_key", str_franchise_key);
 
 
                 //FORMAT 1
@@ -2663,6 +3097,11 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                 System.out.println("NO OF SALES PARTNER FORMATS :::::::::::" + str_no_of_formats);
                 System.out.println("USER CURRENCY :::::::::::" + str_user_currency);
                 System.out.println("USER ID :::::::::::" + str_user_id);
+
+
+                System.out.println("LOGOOOOOOOOO:::::::::::" + encoded_logo);
+                System.out.println("IMAGESSSSSSS:::::::::::" + listString);
+
 
                 return params;
             }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -58,9 +60,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     TextView t1;
     String str_user_currency, str_user_id, str_investor_key = "";
 
-
     // COMPANY LOGO - PIC Upload
-
     String listString = "";
     String encodedstring = "";
     private ArrayList<Image> images = new ArrayList<>();
@@ -68,8 +68,8 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     private int REQUEST_CODE_PICKER = 2000;
 
-
     Button btn_add_pic, btn_submit;
+
     EditText edt_name, edt_mobile_number, edt_email, edt_dealsize_minimum, edt_dealsize_maximum,
             edt_company_name, edt_designation, edt_wed_linkedin,
             edt_company_sector, edt_kind_business_interested, edt_company_about;
@@ -78,8 +78,13 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     AutoCompleteTextView auto_headquaters;
     String str_select_item, str_final_headquaters = "";
 
+    //Multi Auto Complete Textview
+    MultiAutoCompleteTextView auto_busineeslist, auto_locationlist;
+
+    TextView txt_role, txt_interested ;
+
     SearchableSpinner spn_i_am, spn_interested_in;
-    ChipLayout chip_busineeslist, chip_business_location;
+
     String str_final_business_sector, str_final_Business_Location = "";
 
     String str_name, str_mobile, str_email, str_deal_minimum, str_deal_maximum, str_company_name,
@@ -105,6 +110,10 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     public static final String TAG_HEADQUATERS_KEY = "key";
     public static final String TAG_HEADQUATERS_TYPE = "type";
 
+    String str_final_location, str_final_industries = "";
+
+    ArrayList<String> Arraylist_update_location = null;
+    ArrayList<String> Arraylist_update_industries = null;
 
     ArrayList<String> Arraylist_investor_role_id = null;
     ArrayList<String> Arraylist_investor_role_name = null;
@@ -116,9 +125,14 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_sector_key = null;
     ArrayList<String> Arraylist_sector_type = null;
 
+
     /* Arralist fetched indestries list */
     ArrayList<String> Arraylist_fetched_industries = null;
     ArrayList<String> Arraylist_selected_final_industry = null;
+
+    /* Arralist fetched Location list */
+    ArrayList<String> Arraylist_fetched_location = null;
+    ArrayList<String> Arraylist_selected_final_location = null;
 
     /*Multi Select*/
     ArrayList<String> Arraylist_selected_sectorkey = null;
@@ -127,11 +141,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     ArrayList<String> Arraylist_location_place = null;
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
-
-    /* Arralist fetched Location list */
-    ArrayList<String> Arraylist_fetched_location = null;
-    ArrayList<String> Arraylist_selected_final_location = null;
-
 
     private ArrayAdapter<String> adapter_i_am;
     private ArrayAdapter<String> adapter_interested;
@@ -147,7 +156,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_investor_profile);
+        setContentView(R.layout.activity_investor_profile_update);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -175,15 +184,18 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
 
-        Arraylist_fetched_industries = new ArrayList<String>();
-        Arraylist_selected_final_industry = new ArrayList<String>();
-
         Arraylist_selected_sectorkey = new ArrayList<String>();
         Arraylist_selected_location = new ArrayList<String>();
 
         Arraylist_location_place = new ArrayList<String>();
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
+
+        Arraylist_update_location = new ArrayList<String>();
+        Arraylist_update_industries = new ArrayList<String>();
+
+        Arraylist_fetched_industries = new ArrayList<String>();
+        Arraylist_selected_final_industry = new ArrayList<String>();
 
         Arraylist_fetched_location = new ArrayList<String>();
         Arraylist_selected_final_location = new ArrayList<String>();
@@ -197,33 +209,35 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
         System.out.println("user ID :::::: " + str_user_id + "user currency :::::: " + str_user_currency);
 
-        ChipLayout.MAX_CHARACTER_COUNT = 20;
-       /* chip_busineeslist = (ChipLayout) findViewById(R.id.investor_profile_chipText_industries_interested);
-        chip_business_location = (ChipLayout) findViewById(R.id.investor_profile_chipText_business_location);*/
+        edt_name = (EditText) findViewById(R.id.invest_prof_up_edt_name);
+        edt_mobile_number = (EditText) findViewById(R.id.invest_prof_up_edt_mobile_number);
+        edt_email = (EditText) findViewById(R.id.invest_prof_up_edt_office_email);
 
-        edt_name = (EditText) findViewById(R.id.edt_name);
-        edt_mobile_number = (EditText) findViewById(R.id.edt_mobile_number);
-        edt_email = (EditText) findViewById(R.id.edt_office_email);
-
-        edt_dealsize_minimum = (EditText) findViewById(R.id.edt_dealsize_minimum);
-        edt_dealsize_maximum = (EditText) findViewById(R.id.edt_dealsize_maximum);
-        edt_company_name = (EditText) findViewById(R.id.edt_company_work_at);
-        edt_designation = (EditText) findViewById(R.id.edt_designation);
-        edt_wed_linkedin = (EditText) findViewById(R.id.edt_linkedin_profile);
-        edt_company_sector = (EditText) findViewById(R.id.edt_company_sector);
-        edt_kind_business_interested = (EditText) findViewById(R.id.edt_investor_profile_business_interested);
-        edt_company_about = (EditText) findViewById(R.id.edt_about_yourself);
+        edt_dealsize_minimum = (EditText) findViewById(R.id.invest_prof_up_edt_dealsize_minimum);
+        edt_dealsize_maximum = (EditText) findViewById(R.id.invest_prof_up_edt_dealsize_maximum);
+        edt_company_name = (EditText) findViewById(R.id.invest_prof_up_edt_company_work_at);
+        edt_designation = (EditText) findViewById(R.id.invest_prof_up_edt_designation);
+        edt_wed_linkedin = (EditText) findViewById(R.id.invest_prof_up_edt_linkedin_profile);
+        edt_company_sector = (EditText) findViewById(R.id.invest_prof_up_edt_company_sector);
+        edt_kind_business_interested = (EditText) findViewById(R.id.invest_prof_up_edt_investor_profile_business_interested);
+        edt_company_about = (EditText) findViewById(R.id.invest_prof_up_edt_about_yourself);
 
 
-        auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_profile_edt_user_location);
+        auto_headquaters = (AutoCompleteTextView) findViewById(R.id.invest_prof_up_edit_profile_edt_user_location);
+
+        auto_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.investor_profile_industries_multi_interested);
+        auto_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.investor_profile_business_multi_location);
+
+        txt_role = (TextView) findViewById(R.id.invest_prof_upd_txt_your_role);
+        txt_interested = (TextView) findViewById(R.id.invest_prof_upd_txt_your_interest);
 
         // Searchable Spinner
-        spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_spn_i_am);
+        spn_i_am = (SearchableSpinner) findViewById(R.id.invest_prof_up_spn_i_am);
         spn_i_am.setTitle("Select Your Role");
-        spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_spn_intersted);
+        spn_interested_in = (SearchableSpinner) findViewById(R.id.invest_prof_up_spn_intersted);
         spn_interested_in.setTitle("Select Your Interest");
 
-        btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
+        btn_add_pic = (Button) findViewById(R.id.invest_prof_up_btn_add_photos);
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,150 +247,104 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         });
 
 
-        btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_submit = (Button) findViewById(R.id.invest_prof_up_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String str_bus_list = auto_busineeslist.getText().toString();
+                String str_loc_list = auto_locationlist.getText().toString();
 
-                //Temporary static values assigned
-                str_final_industry_update = "1-sector,2-sector,3-sector,";
-                str_final_location_update = "1-state,2-city,1-city,";
+                if (str_bus_list.equals("")) {
 
-                //CLEARING THE ARRAYLIST TO REMOVE PREVIOUS VALUES
-                Arraylist_fetched_industries.clear();
-                Arraylist_selected_final_industry.clear();
+                    TastyToast.makeText(getApplicationContext(), "Please Enter Interested Industries ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
-                ///////////////////////
-                ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
-                ///////////////////////
+                } else {
+
+                    /******************************
+                     * Get Multi Sector Details
+                     * *************************/
+                    String[] str_industries = auto_busineeslist.getText().toString().split(", ");
+
+                    Arraylist_fetched_industries.clear();
+                    for (int i = 0; i < str_industries.length; i++) {
+                        Arraylist_fetched_industries.add(str_industries[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_industries);
+
+                    Arraylist_selected_final_industry.clear();
+                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                        String get_indestry = Arraylist_fetched_industries.get(i);
+                        get_indestry = get_indestry.trim();
+                        System.out.println("get_indestry : " + get_indestry);
+                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                        String select_sect_id = Arraylist_sector_key.get(indus_position);
+                        String select_sect_type = Arraylist_sector_type.get(indus_position);
+
+                        String sector = select_sect_id + "-" + select_sect_type;
+                        Arraylist_selected_final_industry.add(sector);
+
+                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                    }
+                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
+                }
+
+                if (str_loc_list.equals("")) {
+                    TastyToast.makeText(getApplicationContext(), "Please Enter Interested Location ", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+
+                    /******************************
+                     * Get Multi Location Details
+                     * *************************/
+
+                    String[] str_location = auto_locationlist.getText().toString().split(", ");
+
+                    Arraylist_fetched_location.clear();
+                    for (int i = 0; i < str_location.length; i++) {
+                        Arraylist_fetched_location.add(str_location[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+
+                    Arraylist_selected_final_location.clear();
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        System.out.println("location_position : " + location_position);
+                        System.out.println("Arraylist_location_key : " + Arraylist_location_key);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+
+                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
+
+                }
 
                 String str_Headquaters = auto_headquaters.getText().toString();
                 int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
-                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
-                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
+                String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position);
+                String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position);
                 str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
 
-                ///////////////////////
-                ///////  FOR GETTING ENTERED SECTOR TYPE AND ID
-                ///////////////////////
+                String role = txt_role.getText().toString();
+                String interested = txt_interested.getText().toString();
 
-                /*
-                String str_industry_from_chip = chip_busineeslist.getText().toString();
-                System.out.println("FETCHED INDUSTRIES FROMCHIPLAYOUTTTTTTTT :: " + str_industry_from_chip);
-                String[] items_comma = str_industry_from_chip.split(",");
-                for (String item_comma : items_comma) {
-                    String[] items_left = item_comma.split("\\[");
-                    for (String item_left : items_left) {
-                        if (item_left.equals("")) {
+                int role_pos = Arraylist_investor_role_name.indexOf(role);
+                int interest_pos = Arraylist_investor_interest_name.indexOf(interested);
 
-                        } else {
-                            Character last_letter = item_left.charAt(item_left.length() - 1);
-                            if (last_letter.equals(']')) {
-                            } else {
-                                Arraylist_fetched_industries.add(item_left);
-                            }
-                        }
-                    }
-                    String[] items_right = item_comma.split("\\]");
-                    for (String item_right : items_right) {
+                str_selected_role_id = Arraylist_investor_role_id.get(role_pos);
+                str_selected_interest_id = Arraylist_investor_interest_id.get(interest_pos);
 
-                        if (item_right.equals("")) {
-
-                        } else {
-                            Character first_letter = item_right.charAt(0);
-                            if (first_letter.equals('[')) {
-                            } else {
-                                Arraylist_fetched_industries.add(item_right);
-                            }
-                        }
-
-                    }
-                }
-                System.out.println("Arraylist_fetched_industries :::: " + Arraylist_fetched_industries);
-                System.out.println("Arraylist_SIZEEEEEE :::: " + Arraylist_fetched_industries.size());
-
-                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
-
-                    String get_indestry = Arraylist_fetched_industries.get(i);
-                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-
-                    String select_sect_id = Arraylist_sector_key.get(indus_position + 1);
-                    String select_sect_type = Arraylist_sector_type.get(indus_position + 1);
-
-                    System.out.println("FINAL :: " + select_sect_id);
-
-                    String sector = select_sect_id + "-" + select_sect_type;
-                    Arraylist_selected_final_industry.add(sector);
-
-                    for (String s : Arraylist_selected_final_industry) {
-                        str_final_industry_update += s + ",";
-                    }
-                }
-                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
-                */
-
-
-                ///////////////////////
-                ///////  FOR GETTING PREVIOUSLY ENTERED LOCATION TYPE AND ID
-                ///////////////////////
-
-                /*
-                String str_location_from_chip = chip_business_location.getText().toString();
-                System.out.println("LOCATION FROM CHIPSETTTTTTTTT" + str_location_from_chip);
-
-                String[] items_loc_comma = str_location_from_chip.split(",");
-                for (String item_loc_comma : items_loc_comma) {
-                    String[] items_loc_left = item_loc_comma.split("\\[");
-                    for (String item_loc_left : items_loc_left) {
-                        if (item_loc_left.equals("")) {
-
-                        } else {
-                            Character last_letter = item_loc_left.charAt(item_loc_left.length() - 1);
-                            if (last_letter.equals(']')) {
-                            } else {
-                                System.out.println("right filter" + item_loc_left);
-                                Arraylist_fetched_location.add(item_loc_left);
-                            }
-                        }
-                    }
-
-                    String[] items_loc_right = item_loc_comma.split("\\]");
-                    for (String item_loc_right : items_loc_right) {
-
-                        if (item_loc_right.equals("")) {
-
-                        } else {
-                            Character first_letter = item_loc_right.charAt(0);
-                            if (first_letter.equals('[')) {
-                            } else {
-                                System.out.println("left filter" + item_loc_right);
-                                Arraylist_fetched_location.add(item_loc_right);
-                            }
-                        }
-
-                    }
-                }
-                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                    Arraylist_selected_final_location.clear();
-                    String get_Location = Arraylist_fetched_location.get(i);
-                    get_Location = get_Location.trim();
-                    int location_position = Arraylist_location_place.indexOf(get_Location);
-                    String str_location_type = Arraylist_location_type.get(location_position);
-                    String select_location_id = Arraylist_location_key.get(location_position + 1);
-                    String select_location_type = Arraylist_location_type.get(location_position + 1);
-
-                    String location = select_location_id + "-" + select_location_type;
-                    Arraylist_selected_final_location.add(location);
-
-                    for (String L : Arraylist_selected_final_location) {
-                        str_final_location_update += L + ",";
-                    }
-                    System.out.println("FINAL LOCATIONNNNNNNNNNN :: " + str_final_location_update);
-                }
-
-*/
                 str_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
                 str_mobile = edt_mobile_number.getText().toString();
@@ -408,13 +376,19 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                     edt_mobile_number.setError("Enter Mobile Number");
                     edt_mobile_number.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } /*else if (str_selected_role_id.equals("")) {
+                } else if (str_selected_role_id.equals("")) {
+                    spn_i_am.setFocusable(true);
+                    spn_i_am.setFocusableInTouchMode(true);
                     spn_i_am.requestFocus();
+                    spn_i_am.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_selected_interest_id.equals("")) {
-                    spn_interested_in.requestFocus();
+                    spn_i_am.setFocusable(true);
+                    spn_i_am.setFocusableInTouchMode(true);
+                    spn_i_am.requestFocus();
+                    spn_i_am.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Interest", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }*/ else if (str_deal_minimum.equals("")) {
+                } else if (str_deal_minimum.equals("")) {
                     edt_dealsize_minimum.setError("Enter Minimum Deal Size");
                     edt_dealsize_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -542,71 +516,9 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
             listString += s + "IMAGE:";
         }
 
-        queue = Volley.newRequestQueue(Activity_InvestorProfile_Update.this);
-        Function_Post();
-
         //System.out.println("ENCODE :: " + listString);
 
         //Log.d(":STRING:", listString);
-    }
-
-
-    /*********************************
-     *  POST
-     * *********************************/
-
-    private void Function_Post() {
-
-        String url_login = "http://epictech.in/apiawesome/index.php/apicontroller/addimage";
-
-        StringRequest request = new StringRequest(Request.Method.POST,
-                url_login, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG_LOC_KEY, response.toString());
-                Log.d("USER_LOGIN", response.toString());
-                try {
-                    JSONObject obj = new JSONObject(response);
-                    System.out.println("REG 00" + obj);
-
-                    int success = obj.getInt("status");
-
-                    System.out.println("REG" + success);
-
-                    if (success == 1) {
-
-                    } else {
-
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("image", listString);
-                System.out.println("IMG :: " + listString);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        queue.add(request);
     }
 
 
@@ -651,7 +563,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1, Arraylist_investor_role_name);
                             spn_i_am.setAdapter(adapter_i_am);
 
-
                             spn_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
@@ -662,6 +573,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                                     str_selected_role_name = t1.getText().toString();
                                     str_selected_role_id = Arraylist_investor_role_id.get(arg2);
 
+                                    txt_role.setText(str_selected_role_name);
                                     System.out.println("STEP  1111111111111" + str_selected_role_id);
                                     System.out.println("STEP  2222222222222" + str_selected_role_name);
 
@@ -672,7 +584,10 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                         }
 
+                        dialog.dismiss();
                         try {
+                            dialog = new SpotsDialog(Activity_InvestorProfile_Update.this);
+                            dialog.show();
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Interested();
                         } catch (Exception e) {
@@ -759,7 +674,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                                     System.out.println("Argument " + arg2);
                                     str_selected_interest_id = Arraylist_investor_interest_id.get(arg2);
 
-
+                                    txt_interested.setText(str_selected_interest_name);
                                 }
                             });
 
@@ -767,8 +682,11 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                         }
 
+                        dialog.dismiss();
 
                         try {
+                            dialog = new SpotsDialog(Activity_InvestorProfile_Update.this);
+                            dialog.show();
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Sector_List();
                         } catch (Exception e) {
@@ -808,6 +726,9 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         queue.add(request);
     }
 
+    /*****************************
+     * To get  Sector List
+     ***************************/
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
@@ -842,41 +763,22 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                         try {
 
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
-
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_InvestorProfile_Update.this,
+                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_InvestorProfile_Update.this,
                                     android.R.layout.simple_list_item_1, Arraylist_sector_name);
-                            chip_busineeslist.setAdapter(adapter_sector);
-
-                            chip_busineeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-                                    t1 = (TextView) view;
-                                    String str_sector_key = t1.getText().toString();
-                                    int i = Arraylist_sector_name.indexOf(str_sector_key);
-
-                                    String str_select_sector_key = Arraylist_sector_key.get(i);
-                                    String str_select_sector_type = Arraylist_sector_type.get(i);
-                                    String str_select_item = str_select_sector_key + "-" + str_select_sector_type;
-                                    Arraylist_selected_sectorkey.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_sectorkey) {
-                                        str_final_business_sector += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_business_sector);
-
-
-                                }
-                            });
+                            auto_busineeslist.setAdapter(adapter_process);
+                            auto_busineeslist
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_busineeslist.setThreshold(1);
 
                         } catch (Exception e) {
 
                         }
 
+                        dialog.dismiss();
+
                         try {
+                            dialog = new SpotsDialog(Activity_InvestorProfile_Update.this);
+                            dialog.show();
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Business_Location();
                         } catch (Exception e) {
@@ -953,45 +855,21 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                         }
                         try {
 
-                            System.out.println("ARAAAAY :: " + Arraylist_location_place);
-
-                            ArrayAdapter<String> adapter_sector = new ArrayAdapter<String>(Activity_InvestorProfile_Update.this,
+                            ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(Activity_InvestorProfile_Update.this,
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
-                            chip_business_location.setAdapter(adapter_sector);
-
-                            System.out.println("ARAAAAY :: " + 222222);
-                            chip_business_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    System.out.println("Position :::::::: " + position);
-
-
-                                    t1 = (TextView) view;
-                                    String str_location_key = t1.getText().toString();
-                                    int i = Arraylist_location_place.indexOf(str_location_key);
-
-                                    String str_select_location_key = Arraylist_location_key.get(i);
-                                    String str_select_location_type = Arraylist_location_type.get(i);
-
-                                    String str_select_item = str_select_location_key + "-" + str_select_location_type;
-                                    Arraylist_selected_location.add(str_select_item);
-
-                                    for (String s : Arraylist_selected_location) {
-                                        str_final_Business_Location += s + ",";
-                                    }
-
-                                    System.out.println("FINAL SECTORRRRRRRRRR :: " + str_final_Business_Location);
-
-
-                                }
-                            });
+                            auto_locationlist.setAdapter(adapter_location);
+                            auto_locationlist
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_locationlist.setThreshold(1);
 
                         } catch (Exception e) {
 
                         }
 
+                        dialog.dismiss();
                         try {
+                            dialog = new SpotsDialog(Activity_InvestorProfile_Update.this);
+                            dialog.show();
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_Business_Headquaters();
 
@@ -1105,7 +983,10 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                         }
 
+                        dialog.dismiss();
                         try {
+                            dialog = new SpotsDialog(Activity_InvestorProfile_Update.this);
+                            dialog.show();
                             queue = Volley.newRequestQueue(getApplicationContext());
                             Get_InvestorProfile();
                         } catch (Exception e) {
@@ -1162,73 +1043,98 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                 try {
 
-
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
 
                     if (success == 1) {
 
-
                         JSONArray arr_main;
+                        JSONArray arr_location;
+                        JSONArray arr_sector;
+                        JSONArray arr_documents;
+                        JSONArray arr_images;
+
                         arr_main = obj.getJSONArray("data");
-
                         for (int i = 0; arr_main.length() > i; i++) {
-
-                            //  String str_obj = obj.getString("data");
                             JSONObject obj_data = arr_main.getJSONObject(i);
 
-                            //   String business_id = obj_data.getString(TAG_BUSINESS_ID);
+                            String investor_id = obj_data.getString("investor_id");
+                            String investor_key = obj_data.getString("investor_key");
+                            String investor_name = obj_data.getString("investor_name");
+                            String investor_confidential_email = obj_data.getString("investor_confidential_email");
+                            String investor_confidential_mobile = obj_data.getString("investor_confidential_mobile");
+                            String investor_user_role = obj_data.getString("investor_user_role");
+                            String investor_currency_from = obj_data.getString("investor_currency_from");
+                            String investor_currency_to = obj_data.getString("investor_currency_to");
+                            String investor_currency = obj_data.getString("investor_currency");
+                            String investor_company_name = obj_data.getString("investor_company_name");
+                            String investor_designation = obj_data.getString("investor_designation");
+                            String investor_profile_url = obj_data.getString("investor_profile_url");
+                            String investor_short_description = obj_data.getString("investor_short_description");
+                            String investor_an = obj_data.getString("investor_an");
+                            String investor_about_user = obj_data.getString("investor_about_user");
+                            String investor_an_name = obj_data.getString("investor_an_name");
+                            String investor_interest_name = obj_data.getString("investor_interest_name");
+                            String investor_interest = obj_data.getString("investor_interest");
+                            String currency_name = obj_data.getString("currency_name");
+                            String investor_city = obj_data.getString("investor_city");
+                            String investor_city_type = obj_data.getString("investor_city_type");
+                            String investor_company_sector = obj_data.getString("investor_company_sector");
+                            String investor_location_name = obj_data.getString("investor_location_name");
 
+                            arr_location = obj_data.getJSONArray("location");
+                            Arraylist_update_location.clear();
+                            for (int j = 0; arr_location.length() > j; j++) {
+                                JSONObject obj_location = arr_location.getJSONObject(j);
+
+                                String location_name = obj_location.getString("location_name");
+                                String location_key = obj_location.getString("location_key");
+
+                                Arraylist_update_location.add(location_name);
+
+                            }
+                            str_final_location = TextUtils.join(", ", Arraylist_update_location);
+
+                            System.out.println("LOCATION ::: " + str_final_location);
+
+                            arr_sector = obj_data.getJSONArray("industry");
+                            Arraylist_update_industries.clear();
+                            for (int k = 0; arr_sector.length() > k; k++) {
+                                JSONObject obj_industry = arr_sector.getJSONObject(k);
+
+                                String industry_name = obj_industry.getString("industry_name");
+                                String industry_key = obj_industry.getString("industry_key");
+
+                                Arraylist_update_industries.add(industry_name);
+
+                            }
+                            str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
 
                             try {
-
-                                //   edt_name.setText("" + business_user_name);
-
-
+                                txt_role.setText(investor_user_role);
+                                txt_interested.setText(investor_interest_name);
+                                edt_name.setText("" + investor_name);
+                                edt_mobile_number.setText("" + investor_confidential_mobile);
+                                edt_email.setText("" + investor_confidential_email);
+                                edt_dealsize_minimum.setText("" + investor_currency_from);
+                                edt_dealsize_maximum.setText("" + investor_currency_to);
+                                edt_company_name.setText("" + investor_company_name);
+                                edt_designation.setText("" + investor_designation);
+                                edt_wed_linkedin.setText("" + investor_profile_url);
+                                edt_company_sector.setText("" + investor_company_sector);
+                                edt_kind_business_interested.setText("" + investor_short_description);
+                                edt_company_about.setText("" + investor_about_user);
+                                auto_headquaters.setText("" + investor_location_name);
+                                auto_busineeslist.setText("" + str_final_industries + ", ");
+                                auto_locationlist.setText("" + str_final_location + ", ");
+                                dialog.dismiss();
                             } catch (Exception e) {
 
                             }
+
                         }
 
-                        JSONArray arr;
-
-                        arr = obj.getJSONArray("location");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
-
-                        for (int j = 0; arr.length() > j; j++) {
-                            JSONObject obj_location = arr.getJSONObject(j);
-
-                           /* String prefer_location_id = obj1.getString(TAG_PREF_LOCATION_ID);
-                            String prefer_location_type = obj1.getString(TAG_PREF_LOCATION_TYPE);
-
-                            Arraylist_pref_location_id.add(prefer_location_id);
-                            Arraylist_pref_location_type.add(prefer_location_type);*/
-                        }
-
-                        try {
-                        } catch (Exception e) {
-                        }
-
-                        JSONArray arr1;
-
-                        arr1 = obj.getJSONArray("industry");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr1);
-
-                        for (int k = 0; arr1.length() > k; k++) {
-                            JSONObject obj_indus = arr1.getJSONObject(k);
-
-                          /*  String preferences_industries_id = obj_sec.getString(TAG_PREF_INDUSTRIES_ID);
-                            String preferences_industry_type = obj_sec.getString(TAG_PREF_INDUSTRIES_TYPE);
-
-                            Arraylist_pref_sector_id.add(preferences_industries_id);
-                            Arraylist_pref_sector_type.add(preferences_industry_type);*/
-                        }
-
-                        try {
-                        } catch (Exception e) {
-                        }
-
-
+                        dialog.dismiss();
                     } else if (success == 0) {
 
                         dialog.dismiss();
@@ -1279,7 +1185,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM
@@ -1387,22 +1292,3 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
 
 }
-
-
-
-
-/*
-
-
-   (isset($_POST['name_u'])) && (isset($_POST['mob_u'])) && (isset($_POST['email_u'])) &&
-				(isset($_POST['inter_u'])) && (isset($_POST['am_an'])) && (isset($_POST['indust']))
-				&& (isset($_POST['location_u'])) &&
-				(isset($_POST['user_currency'])) && (isset($_POST['invest_inr']))
-				 && (isset($_POST['invest_to'])) &&
-				(isset($_POST['location'])) && (isset($_POST['com_y'])) && (isset($_POST['desig'])) &&
-				(isset($_POST['linked'])) && (isset($_POST['com_s'])) && (isset($_POST['busi_in'])) &&
-				(isset($_POST['abt_you'])) && (isset($_POST['profile_img'])) && (isset($_POST['profile_document']))
-				 && (isset($_POST['logo_file']))&& (isset($_POST['user_id']))
-
-
-				 */

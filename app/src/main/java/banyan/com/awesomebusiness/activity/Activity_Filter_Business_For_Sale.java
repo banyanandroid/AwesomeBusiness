@@ -15,16 +15,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
-import com.libaml.android.view.chip.ChipLayout;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -32,27 +28,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import banyan.com.awesomebusiness.Activity_Register;
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.api.RetroFitApi;
 import banyan.com.awesomebusiness.global.AppConfig;
 import dmax.dialog.SpotsDialog;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by SJR on 21-Jul-17.
  */
 
-public class Activity_Filter extends AppCompatActivity {
+public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
     private Toolbar mToolbar;
     ProgressDialog pDialog;
@@ -295,7 +283,7 @@ public class Activity_Filter extends AppCompatActivity {
                 editor.putString("str_filter_selected_transaction_type_name", str_selected_transaction_type_name);
                 editor.commit();
 
-                Intent i = new Intent(Activity_Filter.this, MainActivity.class);
+                Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
                 finish();
@@ -306,9 +294,9 @@ public class Activity_Filter extends AppCompatActivity {
 
         try {
 
-            dialog = new SpotsDialog(Activity_Filter.this);
+            dialog = new SpotsDialog(Activity_Filter_Business_For_Sale.this);
             dialog.show();
-            queue = Volley.newRequestQueue(Activity_Filter.this);
+            queue = Volley.newRequestQueue(Activity_Filter_Business_For_Sale.this);
             Get_Business_For_Sale_type();
 
         } catch (Exception e) {
@@ -349,7 +337,7 @@ public class Activity_Filter extends AppCompatActivity {
                             Arraylist_business_interest_name.add(interest_name);
                         }
                         try {
-                            adapter_transaction = new ArrayAdapter<String>(Activity_Filter.this,
+                            adapter_transaction = new ArrayAdapter<String>(Activity_Filter_Business_For_Sale.this,
                                     android.R.layout.simple_list_item_1, Arraylist_business_interest_name);
                             spn_business_for_sale_type.setAdapter(adapter_transaction);
                             //  spn_business_for_sale_type.setThreshold(1);
@@ -444,7 +432,7 @@ public class Activity_Filter extends AppCompatActivity {
                             Arraylist_investor_buyer_name.add(investor_buyer_name);
                         }
                         try {
-                            adapter_investor_buyer_type = new ArrayAdapter<String>(Activity_Filter.this,
+                            adapter_investor_buyer_type = new ArrayAdapter<String>(Activity_Filter_Business_For_Sale.this,
                                     android.R.layout.simple_list_item_1, Arraylist_investor_buyer_name);
                             spn_investor_buyer_type.setAdapter(adapter_investor_buyer_type);
                             //  spn_business_for_sale_type.setThreshold(1);
@@ -543,7 +531,7 @@ public class Activity_Filter extends AppCompatActivity {
                         try {
                             System.out.println("ARAAAAY :: " + Arraylist_sector_name);
 
-                            ArrayAdapter<String> adapter_sector1 = new ArrayAdapter<String>(Activity_Filter.this,
+                            ArrayAdapter<String> adapter_sector1 = new ArrayAdapter<String>(Activity_Filter_Business_For_Sale.this,
                                     android.R.layout.simple_list_item_1, Arraylist_sector_name);
                             auto_bus_busineeslist.setAdapter(adapter_sector1);
                             auto_bus_busineeslist
@@ -625,7 +613,7 @@ public class Activity_Filter extends AppCompatActivity {
                         try {
                             System.out.println("ARAAAAY :: " + Arraylist_location_place);
 
-                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_Filter.this,
+                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_Filter_Business_For_Sale.this,
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
                             auto_bus_hq_location.setAdapter(adapter_process);
                             auto_bus_hq_location

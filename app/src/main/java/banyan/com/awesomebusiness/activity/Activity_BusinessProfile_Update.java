@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -30,7 +33,6 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.libaml.android.view.chip.ChipLayout;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -46,10 +48,14 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
+import banyan.com.awesomebusiness.adapter.Horizondal_Image_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.RecyclerTouchListener;
+import banyan.com.awesomebusiness.model.Image_Model;
 import dmax.dialog.SpotsDialog;
 
 /**
@@ -226,6 +232,14 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
             str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
 
+    /***********************
+     *  Recycler View
+     * ************************/
+
+    private List<Image_Model> movieList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private Horizondal_Image_Adapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -341,10 +355,31 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         Arraylist_fetched_industries = new ArrayList<String>();
         Arraylist_selected_final_industry = new ArrayList<String>();
 
-
         // IMG PIC
         Arraylist_image_encode = new ArrayList<String>();
         Arraylist_dummy = new ArrayList<String>();
+
+        // Recycler View
+        recyclerView = (RecyclerView) findViewById(R.id.bus_prof_recycler_view_img);
+        mAdapter = new Horizondal_Image_Adapter(getApplicationContext(),movieList);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(mAdapter);
+
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Image_Model movie = movieList.get(position);
+                Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
 
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
@@ -650,296 +685,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
             }
         });
-
-      /*  btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // String Values According to checkbox state
-                if (chb_companydetails.isChecked()) {
-                    str_ch_companydetails = "1";
-                }
-                if (chb_contatdetails.isChecked()) {
-                    str_ch_contactdetails = "1";
-                }
-                if (chb_yearly_sales_range.isChecked()) {
-                    str_ch_yearly_sales_range = "1";
-                }
-                if (chb_display_EBITDA_as_range.isChecked()) {
-                    str_ch_display_EBITDA_range = "1";
-                }
-
-                str_name = edt_name.getText().toString();
-                str_company_name = edt_company_name.getText().toString();
-                str_mobile = edt_mobile.getText().toString();
-                str_official_email = edt_official_email.getText().toString();
-                str_business_established_year = edt_business_established_year.getText().toString();
-                str_no_of_permanent_employees = edt_no_of_permanent_employees.getText().toString();
-                str_business_desc = edt_business_des.getText().toString();
-                str_business_highlights = edt_business_highlights.getText().toString();
-                str_business_all_prod_serv = edt_business_all_prod_serv.getText().toString();
-                str_business_facility_desc = edt_business_facility_desc.getText().toString();
-                str_avg_monthly_sales = edt_avg_monthly_sales.getText().toString();
-                str_latest_yearly_sales = edt_latest_yearly_sales.getText().toString();
-                str_EBITDA = edt_EBITDA.getText().toString();
-                str_physical_assests_value = edt_physical_assests_value.getText().toString();
-                str_tentative_selling_price = edt_tentative_selling_price.getText().toString();
-                str_reason_for_sale = edt_reason_for_sale.getText().toString();
-
-                str_selected_update_role_name = txt_iam.getText().toString();
-                str_selected_update_interest_name = txt_interested_in.getText().toString();
-
-                //Asset _ for sale
-                str_year_asset_purchased = edt_year_asset_purchased.getText().toString();
-                str_asset_seeking_to_sell = edt_asset_seeking_to_sell.getText().toString();
-                str_asset_features = edt_asset_features.getText().toString();
-                str_asset_selling_leasing_price = edt_asset_selling_leasing_price.getText().toString();
-                str_asset_selling_eason = edt_asset_selling_reason.getText().toString();
-                str_amount_fixed_for = spn_amount_fixed_for.getSelectedItem().toString();
-
-                // Spinner Value to String
-                str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
-
-                if (str_name.equals("")) {
-                    edt_name.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_company_name.equals("")) {
-                    edt_company_name.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_mobile.equals("")) {
-                    edt_mobile.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Mobile Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_official_email.equals("")) {
-                    edt_official_email.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }else if (str_selected_update_role_name == null || str_selected_update_role_name.isEmpty()) {
-                    spn_i_am.setFocusable(true);
-                    spn_i_am.setFocusableInTouchMode(true);
-                    spn_i_am.requestFocus();
-                    spn_i_am.performClick();
-                    TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_selected_update_interest_name == null || str_selected_update_interest_name.isEmpty()) {
-                    spn_interested_in.setFocusable(true);
-                    spn_interested_in.setFocusableInTouchMode(true);
-                    spn_interested_in.requestFocus();
-                    spn_interested_in.performClick();
-                    TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                }
-
-                if (!str_selected_update_interest_name.equals("Selling / Leasing  Assets")) {
-
-                    System.out.println("str_final_business_sector  : " + str_final_business_sector);
-                    System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
-
-                    *//*****************************
-         * Get Multi Sector Details
-         * ************************//*
-                    String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
-
-                    Arraylist_fetched_industries.clear();
-                    for (int i = 0; i < str_industries.length; i++) {
-                        Arraylist_fetched_industries.add(str_industries[i]);
-                    }
-                    System.out.println("array : " + Arraylist_fetched_industries);
-
-                    Arraylist_selected_final_industry.clear();
-                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
-
-                        String get_indestry = Arraylist_fetched_industries.get(i);
-                        get_indestry = get_indestry.trim();
-                        System.out.println("get_indestry : " + get_indestry);
-                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                        String select_sect_id = Arraylist_sector_key.get(indus_position);
-                        String select_sect_type = Arraylist_sector_type.get(indus_position);
-
-                        String sector = select_sect_id + "-" + select_sect_type;
-                        Arraylist_selected_final_industry.add(sector);
-
-                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
-
-                    }
-                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
-
-                    *//*****************************
-         * Get Multi Location Details
-         * ************************//*
-
-                    String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
-
-                    Arraylist_fetched_location.clear();
-                    for (int i = 0; i < str_location.length; i++) {
-                        Arraylist_fetched_location.add(str_location[i]);
-                    }
-                    System.out.println("array : " + Arraylist_fetched_location);
-
-                    Arraylist_selected_final_location.clear();
-                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                        String get_location = Arraylist_fetched_location.get(i);
-                        get_location = get_location.trim();
-                        System.out.println("get_location : " + get_location);
-                        int location_position = Arraylist_location_place.indexOf(get_location);
-                        String select_location_id = Arraylist_location_key.get(location_position);
-                        String select_location_type = Arraylist_location_type.get(location_position);
-
-                        String location = select_location_id + "-" + select_location_type;
-                        Arraylist_selected_final_location.add(location);
-
-                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
-
-                    }
-                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
-
-                    if (str_business_established_year.equals("")) {
-                        edt_business_established_year.setError("Enter Year");
-                        TastyToast.makeText(getApplicationContext(), "Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_industry_update.equals("") || str_final_industry_update.equals("null")) {
-                        TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_location_update.equals("")) {
-                        TastyToast.makeText(getApplicationContext(), "Select Business Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_no_of_permanent_employees.equals("")) {
-                        edt_no_of_permanent_employees.setError("Enter Permanent Employees");
-                        TastyToast.makeText(getApplicationContext(), "Permanent Employees Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_spn_business_legal_type.equals("Select Business legal entity type")) {
-                        spn_business_legal_type.setFocusable(true);
-                        spn_business_legal_type.setFocusableInTouchMode(true);
-                        spn_business_legal_type.requestFocus();
-                        spn_business_legal_type.performClick();
-                        TastyToast.makeText(getApplicationContext(), "Select Business legal entity type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_business_desc.equals("")) {
-                        edt_business_des.setError("Enter Business Description");
-                        TastyToast.makeText(getApplicationContext(), "Business Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_business_highlights.equals("")) {
-                        edt_business_highlights.setError("Enter Business Highlights");
-                        TastyToast.makeText(getApplicationContext(), "Business Highlights Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_business_all_prod_serv.equals("")) {
-                        edt_business_all_prod_serv.setError("Enter Products & Services");
-                        TastyToast.makeText(getApplicationContext(), "Products & Services Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_business_facility_desc.equals("")) {
-                        edt_business_facility_desc.setError("Enter Business Facility Description");
-                        TastyToast.makeText(getApplicationContext(), "Business Facility Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_avg_monthly_sales.equals("")) {
-                        edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
-                        TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_latest_yearly_sales.equals("")) {
-                        edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
-                        TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_EBITDA.equals("")) {
-                        edt_EBITDA.setError("Enter EBITDA");
-                        TastyToast.makeText(getApplicationContext(), "EBITDA Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_physical_assests_value.equals("")) {
-                        edt_physical_assests_value.setError("Please Enter Assets Value");
-                        TastyToast.makeText(getApplicationContext(), " Assets Value Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_tentative_selling_price.equals("")) {
-                        edt_tentative_selling_price.setError("Please Enter Tentative Selling Price");
-                        TastyToast.makeText(getApplicationContext(), " Tentative Selling Price Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_reason_for_sale.equals("")) {
-                        edt_reason_for_sale.setError("Please Enter Reason For Sale");
-                        TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else {
-                        dialog = new SpotsDialog(Activity_BusinessProfile_Update.this);
-                        dialog.show();
-                        queue = Volley.newRequestQueue(Activity_BusinessProfile_Update.this);
-                        Function_Submit_BusinessProfile();
-                    }
-
-                }else if(!str_selected_update_interest_name.equals("Selling / Leasing  Assets")){
-
-                    *//******************************
-         * Get Asset Multi Sector Details
-         * *************************//*
-                    String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
-
-                    Arraylist_fetched_industries.clear();
-                    for (int i = 0; i < str_asset_industries.length; i++) {
-                        Arraylist_fetched_industries.add(str_asset_industries[i]);
-                    }
-                    System.out.println("array : " + Arraylist_fetched_industries);
-
-                    Arraylist_selected_final_industry.clear();
-                    for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
-
-                        String get_indestry = Arraylist_fetched_industries.get(i);
-                        get_indestry = get_indestry.trim();
-                        System.out.println("get_indestry : " + get_indestry);
-                        int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                        String select_sect_id = Arraylist_sector_key.get(indus_position);
-                        String select_sect_type = Arraylist_sector_type.get(indus_position);
-
-                        String sector = select_sect_id + "-" + select_sect_type;
-                        Arraylist_selected_final_industry.add(sector);
-
-                        str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
-
-                    }
-                    System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
-
-                    *//******************************
-         * Get Asset Multi Location Details
-         * *************************//*
-
-                    String[] str_asset_location = auto_asset_loation.getText().toString().split(", ");
-
-                    for (int i = 0; i < str_asset_location.length; i++) {
-                        Arraylist_fetched_location.add(str_asset_location[i]);
-                    }
-                    System.out.println("array : " + Arraylist_fetched_location);
-
-                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                        String get_location = Arraylist_fetched_location.get(i);
-                        get_location = get_location.trim();
-                        System.out.println("get_location : " + get_location);
-                        int location_position = Arraylist_location_place.indexOf(get_location);
-                        String select_location_id = Arraylist_location_key.get(location_position);
-                        String select_location_type = Arraylist_location_type.get(location_position);
-
-                        String location = select_location_id + "-" + select_location_type;
-                        Arraylist_selected_final_location.add(location);
-
-                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
-
-                    }
-                    System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
-
-
-                    if (str_year_asset_purchased.equals("")) {
-                        edt_year_asset_purchased.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_industry_update.equals("")) {
-                        TastyToast.makeText(getApplicationContext(), "Select Assets Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_final_location_update.equals("")) {
-                        TastyToast.makeText(getApplicationContext(), "Select Assets Location", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_asset_seeking_to_sell.equals("")) {
-                        edt_asset_seeking_to_sell.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_asset_features.equals("")) {
-                        edt_asset_features.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Features Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_asset_selling_leasing_price.equals("")) {
-                        edt_asset_selling_leasing_price.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Features Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_amount_fixed_for.equals("Above Amount Is Fixed For") || str_asset_selling_leasing_price.equals("")) {
-                        spn_amount_fixed_for.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_asset_selling_eason.equals("")) {
-                        edt_asset_selling_reason.setFocusable(true);
-                        TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else {
-
-                        if (str_user_currency.equals("str_selected_currency")) {
-                            TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                        } else {
-                            dialog = new SpotsDialog(Activity_BusinessProfile_Update.this);
-                            dialog.show();
-                            queue = Volley.newRequestQueue(Activity_BusinessProfile_Update.this);
-                            Function_Submit_BusinessProfile();
-                        }
-                    }
-                }
-
-            }
-        });*/
 
         try {
             dialog = new SpotsDialog(Activity_BusinessProfile_Update.this);
@@ -1492,7 +1237,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         JSONArray arr_main;
                         JSONArray arr_location;
                         JSONArray arr_industry;
-
+                        JSONArray arr_images;
 
                         arr_main = obj.getJSONArray("data");
 
@@ -1572,6 +1317,20 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                             }
                             str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
+
+
+                            arr_images = obj_data.getJSONArray("images");
+                            if (arr_images != null) {
+                                System.out.println("Length images:: " + arr_images.length());
+                                for (int l = 0; arr_images.length() > l; l++) {
+                                    JSONObject obj_image = arr_images.getJSONObject(l);
+                                    String image_path = obj_image.getString("image_path");
+                                    String image_id = obj_image.getString("image_id");
+
+                                    Image_Model movie = new Image_Model(image_path, image_id);
+                                    movieList.add(movie);
+                                }
+                            }
 
                             try {
 

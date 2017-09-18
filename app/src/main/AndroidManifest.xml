@@ -51,7 +51,7 @@
             android:name=".Activity_Register"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
 
-        <activity android:name=".activity.Activity_Filter"></activity>
+        <activity android:name=".activity.Activity_Filter_Business_For_Sale"></activity>
 
         <activity
             android:name=".activity.Activity_Notifications"

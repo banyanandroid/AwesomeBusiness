@@ -618,8 +618,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
-
     }
 
     /*******************************
