@@ -363,7 +363,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         // Recycler View
         recyclerView = (RecyclerView) findViewById(R.id.bus_prof_recycler_view_img);
-        mAdapter = new Horizondal_Image_Adapter(getApplicationContext(),movieList);
+        mAdapter = new Horizondal_Image_Adapter(getApplicationContext(), movieList);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -1533,7 +1533,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     private void Function_Submit_BusinessProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_business_profile, new Response.Listener<String>() {
+                AppConfig.url_update_business_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

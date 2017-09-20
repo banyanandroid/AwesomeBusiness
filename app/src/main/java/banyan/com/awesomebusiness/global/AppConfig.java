@@ -33,6 +33,8 @@ public class AppConfig {
     public static String url_investor_profile_add = BASE_URL + "/index.php/Apicontroller/addinvestorprofile";
 
     // Update Businesses Profiles
+    public static String url_update_business_profile = BASE_URL + "/index.php/Apicontroller/updatebusinessprofile";
+    public static String url_update_investor_profile = BASE_URL + "/index.php/Apicontroller/updateinvestorprofile";
     public static String url_update_franchise_profile = BASE_URL + "/index.php/Apicontroller/updatefranchiseprofile";
 
     //User Profiles List
@@ -43,7 +45,7 @@ public class AppConfig {
     //User Profiles Detailed info
     public static String url_user_business_profile_update = BASE_URL + "/index.php/Apicontroller/listusersinglebusinessprofileedit";
     public static String url_user_investor_profile_update = BASE_URL + "/index.php/Apicontroller/listusersingleinvestorprofileedit";
-    public static String url_user_franchise_profile_update = BASE_URL + "/index.php/Apicontroller/listuserfranchiseprofile";
+    public static String url_user_franchise_profile_update = BASE_URL + "/index.php/Apicontroller/listusersinglefranchiseprofile";
 
     // Dashboard Search
     public static String url_dashboard_search_autofil = BASE_URL + "/index.php/Apicontroller/search";

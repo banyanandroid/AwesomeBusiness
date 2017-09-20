@@ -82,7 +82,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     TextView txt_img_count;
 
-
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
 

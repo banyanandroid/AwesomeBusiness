@@ -81,7 +81,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     //Multi Auto Complete Textview
     MultiAutoCompleteTextView auto_busineeslist, auto_locationlist;
 
-    TextView txt_role, txt_interested ;
+    TextView txt_role, txt_interested;
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
@@ -1193,7 +1193,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     private void Function_Submit_InvestorProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_investor_profile_add, new Response.Listener<String>() {
+                AppConfig.url_update_investor_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
