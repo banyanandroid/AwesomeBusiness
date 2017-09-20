@@ -240,6 +240,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Horizondal_Image_Adapter mAdapter;
 
+    private Horizondal_Image_Adapter Horizondal_Image_Adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -394,7 +396,12 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // String Values According to checkbox state
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+               String del_images = sharedPreferences.getString("str_delete_imgs", "str_delete_imgs");
+
+                System.out.println("LIST IMAGE DELETE :: " + del_images);
+
+             /*   // String Values According to checkbox state
                 if (chb_companydetails.isChecked()) {
                     str_ch_companydetails = "1";
                 }
@@ -476,9 +483,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     System.out.println("str_final_business_sector  : " + str_final_business_sector);
                     System.out.println("str_final_Business_Location  : " + str_final_Business_Location);
 
-                    /*****************************
+                    *//*****************************
                      * Get Multi Sector Details
-                     * ************************/
+                     * ************************//*
                     String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -505,9 +512,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     }
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
-                    /*****************************
+                    *//*****************************
                      * Get Multi Location Details
-                     * ************************/
+                     * ************************//*
 
                     String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
 
@@ -590,9 +597,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                 } else if (!str_selected_update_interest_name.equals("Selling / Leasing  Assets")) {
 
-                    /******************************
+                    *//******************************
                      * Get Asset Multi Sector Details
-                     * *************************/
+                     * *************************//*
                     String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -619,9 +626,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     }
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
-                    /******************************
+                    *//******************************
                      * Get Asset Multi Location Details
-                     * *************************/
+                     * *************************//*
 
                     String[] str_asset_location = auto_asset_loation.getText().toString().split(", ");
 
@@ -681,7 +688,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             Function_Submit_BusinessProfile();
                         }
                     }
-                }
+                }*/
 
             }
         });

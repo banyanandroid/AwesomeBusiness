@@ -990,7 +990,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     /*****************************
      * To get  Business Location List
      ***************************/
-
     public void Get_Business_Location() {
         String tag_json_obj = "json_obj_req";
         System.out.println("CAME 1");
