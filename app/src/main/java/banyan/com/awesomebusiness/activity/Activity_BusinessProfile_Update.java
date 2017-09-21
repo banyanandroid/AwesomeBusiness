@@ -397,7 +397,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             public void onClick(View view) {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-               String del_images = sharedPreferences.getString("str_delete_imgs", "str_delete_imgs");
+                String del_images = sharedPreferences.getString("str_delete_imgs", "str_delete_imgs");
 
                 System.out.println("LIST IMAGE DELETE :: " + del_images);
 
@@ -512,7 +512,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     }
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
-                   /****************************
+                    /****************************
                      * Get Multi Location Details
                      * ***********************/
 
@@ -1583,15 +1583,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 params.put("email", str_official_email);
                 params.put("user_contact", str_ch_contactdetails);
                 params.put("user_company", str_ch_companydetails);
-
-                // String selected from dynamic values - Auto Complete
                 params.put("role", str_selected_role_id);
                 params.put("interest_in", str_selected_interest_id);
-
-                // String selected from dynamic values - MultiSelect (chipset)
-                params.put("locations", str_final_Business_Location);
-                params.put("industry", str_final_business_sector);
-
                 params.put("year", str_business_established_year);
                 params.put("employee", str_no_of_permanent_employees);
                 params.put("entitys", str_spn_business_legal_type);
@@ -1607,11 +1600,20 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
                 params.put("reason", str_reason_for_sale);
-
-                // Strings got by shared prefrences
-                params.put("user_id", str_user_id);
+                params.put("assets_purchased", str_year_asset_purchased);
+                params.put("assets_description", str_asset_seeking_to_sell);
+                params.put("assets_features", str_asset_features);
+                params.put("sellingprice", str_asset_selling_leasing_price);
+                params.put("sellingtype", str_amount_fixed_for);
+                params.put("reasonassets", str_asset_selling_eason);
+                params.put("locations", str_final_location_update);
+                params.put("industry", str_final_industry_update);
+                params.put("images", listString);
+                params.put("documents", "documents");
+                params.put("documentstype", "documentstype");
                 params.put("user_currency", str_user_currency);
-                params.put("image", listString);
+                params.put("user_id", str_user_id);
+                params.put("business_key", str_business_key);
 
                 ////////////////
 
@@ -1624,8 +1626,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 System.out.println("user_company" + str_ch_companydetails);
                 System.out.println("role" + str_selected_role_id);
                 System.out.println("interest_in" + str_selected_interest_id);
-                System.out.println("locations" + str_final_Business_Location);
-                System.out.println("industry" + str_final_business_sector);
                 System.out.println("year" + str_business_established_year);
                 System.out.println("employee" + str_no_of_permanent_employees);
                 System.out.println("entitys" + str_spn_business_legal_type);
@@ -1641,8 +1641,20 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 System.out.println("physical_assets" + str_physical_assests_value);
                 System.out.println("tentative_price" + str_tentative_selling_price);
                 System.out.println("reason" + str_reason_for_sale);
-                System.out.println("user_id" + str_user_id);
+                System.out.println("assets_purchased" + str_year_asset_purchased);
+                System.out.println("assets_description" + str_asset_seeking_to_sell);
+                System.out.println("assets_features" + str_asset_features);
+                System.out.println("sellingprice" + str_asset_selling_leasing_price);
+                System.out.println("sellingtype" + str_amount_fixed_for);
+                System.out.println("reasonassets" + str_asset_selling_eason);
+                System.out.println("locations" + str_final_location_update);
+                System.out.println("industry" + str_final_industry_update);
+                System.out.println("images" + listString);
+                System.out.println("documents" + " documents emptyyyyyyyy");
+                System.out.println("documentstype" + "documents typeee emptyyyyyyyy");
                 System.out.println("user_currency" + str_user_currency);
+                System.out.println("user_id" + str_user_id);
+                System.out.println("business_key" + str_business_key);
 
 
                 return checkParams(params);

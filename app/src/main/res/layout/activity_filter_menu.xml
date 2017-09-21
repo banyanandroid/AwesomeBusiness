@@ -28,57 +28,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_main_filter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:text="Filter By"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/spinner_filter_main"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/layout_business_for_sale_type"

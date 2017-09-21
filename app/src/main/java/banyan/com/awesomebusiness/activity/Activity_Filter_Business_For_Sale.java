@@ -89,7 +89,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     ArrayList<String> Arraylist_investor_buyer_name = null;
     private ArrayAdapter<String> adapter_investor_buyer_type;
 
-    SearchableSpinner spn_main_filter, spn_business_for_sale_type, spn_investor_buyer_type;
+    SearchableSpinner spn_business_for_sale_type, spn_investor_buyer_type;
     String str_main_filter = "";
     String str_selected_transaction_id, str_selected_transaction_type_name = "";
     String str_selected_investor_buyer_type_id, str_selected_investor_buyer_type_name = "";
@@ -131,6 +131,62 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_main_filter = sharedPreferences.getString("profile_type", "profile_type");
+
+        txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_investment_minValue);
+        txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_investment_maxValue);
+        txt_asset_price_minimum = (TextView) findViewById(R.id.activity_filter_assetprice_minValue);
+        txt_asset_price_maximum = (TextView) findViewById(R.id.activity_filter_assetprice_maxValue);
+        txt_runrate_sales_minimum = (TextView) findViewById(R.id.activity_filter_runratesales_minValue);
+        txt_runrate_sales_maximum = (TextView) findViewById(R.id.activity_filter_runratesales_maxValue);
+        txt_monthly_sales_minimum = (TextView) findViewById(R.id.activity_filter_monthlysales_minValue);
+        txt_monthly_sales_maximum = (TextView) findViewById(R.id.activity_filter_monthlysales_maxValue);
+        txt_ebitda_minimum = (TextView) findViewById(R.id.activity_filter_ebitda_minValue);
+        txt_ebitda_maximum = (TextView) findViewById(R.id.activity_filter_ebitda_maxValue);
+        txt_established_minimum = (TextView) findViewById(R.id.activity_filter_established_minValue);
+        txt_established_maximum = (TextView) findViewById(R.id.activity_filter_established_maxValue);
+
+        LL_business_for_sale_type = (LinearLayout) findViewById(R.id.layout_business_for_sale_type);
+        LL_investor_buyer_type = (LinearLayout) findViewById(R.id.layout_investor_buyer_type);
+        LL_franchise_headquaters_location = (LinearLayout) findViewById(R.id.layout_franchise_headquaters_location);
+        LL_interested_business_locations = (LinearLayout) findViewById(R.id.layout_interested_business_locations);
+        LL_interested_industry_sectors = (LinearLayout) findViewById(R.id.layout_interested_business_industries);
+        LL_Slider_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_investment_size);
+        LL_Slider_Asset_price = (LinearLayout) findViewById(R.id.layout_slider_asset_price);
+        LL_Slider_Run_Rate_Sales = (LinearLayout) findViewById(R.id.layout_slider_run_rate_sales);
+        LL_Slider_EBITA = (LinearLayout) findViewById(R.id.layout_slider_EBITDA);
+        LL_Slider_Established = (LinearLayout) findViewById(R.id.layout_slider_established);
+        LL_Slider_MonthlySales = (LinearLayout) findViewById(R.id.layout_slider_monthly_sales);
+        LL_Checkboxes = (LinearLayout) findViewById(R.id.layout_checkboxes);
+        LL_Investor_Buyer_Investor_Location = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_location);
+        LL_Investor_Buyer_Investor_Interested_In = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_interested_in);
+
+        spn_business_for_sale_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
+        spn_investor_buyer_type = (SearchableSpinner) findViewById(R.id.spn_filter_investor_buyer_type);
+
+        LL_business_for_sale_type.setVisibility(View.GONE);
+        LL_interested_business_locations.setVisibility(View.GONE);
+        LL_interested_industry_sectors.setVisibility(View.GONE);
+        LL_Slider_Investment_size.setVisibility(View.GONE);
+        LL_Slider_Asset_price.setVisibility(View.GONE);
+        LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
+        LL_Slider_EBITA.setVisibility(View.GONE);
+        LL_Slider_Established.setVisibility(View.GONE);
+        LL_Checkboxes.setVisibility(View.GONE);
+        LL_Slider_MonthlySales.setVisibility(View.GONE);
+        LL_investor_buyer_type.setVisibility(View.GONE);
+        LL_franchise_headquaters_location.setVisibility(View.GONE);
+        LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
+        LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+
+        auto_bus_hq_location = (MultiAutoCompleteTextView) findViewById(R.id.filter_profile_multi_businesheadquaters__location);
+        auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_location);
+        auto_bus_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_industry);
+
+        btn_clear_all = (Button) findViewById(R.id.btn_filter_clear);
+        btn_done = (Button) findViewById(R.id.btn_filter_done);
+
         seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
         seekbar_investment_size.setMinStartValue(10);
         seekbar_investment_size.setMaxValue(500);
@@ -154,19 +210,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
         seekbar_established.setMinStartValue(10);
         seekbar_established.setMaxValue(5000);
-
-        txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_investment_minValue);
-        txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_investment_maxValue);
-        txt_asset_price_minimum = (TextView) findViewById(R.id.activity_filter_assetprice_minValue);
-        txt_asset_price_maximum = (TextView) findViewById(R.id.activity_filter_assetprice_maxValue);
-        txt_runrate_sales_minimum = (TextView) findViewById(R.id.activity_filter_runratesales_minValue);
-        txt_runrate_sales_maximum = (TextView) findViewById(R.id.activity_filter_runratesales_maxValue);
-        txt_monthly_sales_minimum = (TextView) findViewById(R.id.activity_filter_monthlysales_minValue);
-        txt_monthly_sales_maximum = (TextView) findViewById(R.id.activity_filter_monthlysales_maxValue);
-        txt_ebitda_minimum = (TextView) findViewById(R.id.activity_filter_ebitda_minValue);
-        txt_ebitda_maximum = (TextView) findViewById(R.id.activity_filter_ebitda_maxValue);
-        txt_established_minimum = (TextView) findViewById(R.id.activity_filter_established_minValue);
-        txt_established_maximum = (TextView) findViewById(R.id.activity_filter_established_maxValue);
 
         seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -216,43 +259,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             }
         });
 
-
-        // get seekbar from view
-        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar1);
-
-        // get min and max text view
-        final TextView tvMin = (TextView) findViewById(R.id.textMin1);
-        final TextView tvMax = (TextView) findViewById(R.id.textMax1);
-
-        rangeSeekbar.setMinStartValue(1000);
-        rangeSeekbar.setMaxValue(5000);
-        // tvMin.setText("5000");
-        // tvMax.setText("10000");
-
-        // set listener
-        rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                tvMin.setText(String.valueOf(minValue));
-                tvMax.setText(String.valueOf(maxValue));
-            }
-        });
-
-        // set final value listener
-        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
-            @Override
-            public void finalValue(Number minValue, Number maxValue) {
-                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
-            }
-        });
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rangeSeekbar.setMinValue(5000).setMaxValue(10000).setMinStartValue(5500).setMaxStartValue(7000).apply();
-            }
-        }, 5000);
-
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
         Arraylist_sector_type = new ArrayList<String>();
@@ -270,121 +276,66 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         Arraylist_investor_buyer_id = new ArrayList<String>();
         Arraylist_investor_buyer_name = new ArrayList<String>();
 
-        LL_business_for_sale_type = (LinearLayout) findViewById(R.id.layout_business_for_sale_type);
-        LL_investor_buyer_type = (LinearLayout) findViewById(R.id.layout_investor_buyer_type);
-        LL_franchise_headquaters_location = (LinearLayout) findViewById(R.id.layout_franchise_headquaters_location);
-        LL_interested_business_locations = (LinearLayout) findViewById(R.id.layout_interested_business_locations);
-        LL_interested_industry_sectors = (LinearLayout) findViewById(R.id.layout_interested_business_industries);
-        LL_Slider_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_investment_size);
-        LL_Slider_Asset_price = (LinearLayout) findViewById(R.id.layout_slider_asset_price);
-        LL_Slider_Run_Rate_Sales = (LinearLayout) findViewById(R.id.layout_slider_run_rate_sales);
-        LL_Slider_EBITA = (LinearLayout) findViewById(R.id.layout_slider_EBITDA);
-        LL_Slider_Established = (LinearLayout) findViewById(R.id.layout_slider_established);
-        LL_Slider_MonthlySales = (LinearLayout) findViewById(R.id.layout_slider_monthly_sales);
-        LL_Checkboxes = (LinearLayout) findViewById(R.id.layout_checkboxes);
-        LL_Investor_Buyer_Investor_Location = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_location);
-        LL_Investor_Buyer_Investor_Interested_In = (LinearLayout) findViewById(R.id.layout_investor_buyer_investor_interested_in);
+        try {
+            if (str_main_filter.equals("Business For sale")) {
+                LL_business_for_sale_type.setVisibility(View.VISIBLE);
+                LL_interested_business_locations.setVisibility(View.VISIBLE);
+                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
+                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
+                LL_Slider_Asset_price.setVisibility(View.VISIBLE);
+                LL_Slider_Run_Rate_Sales.setVisibility(View.VISIBLE);
+                LL_Slider_EBITA.setVisibility(View.VISIBLE);
+                LL_Slider_Established.setVisibility(View.VISIBLE);
+                LL_Checkboxes.setVisibility(View.VISIBLE);
 
-        LL_business_for_sale_type.setVisibility(View.GONE);
-        LL_interested_business_locations.setVisibility(View.GONE);
-        LL_interested_industry_sectors.setVisibility(View.GONE);
-        LL_Slider_Investment_size.setVisibility(View.GONE);
-        LL_Slider_Asset_price.setVisibility(View.GONE);
-        LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-        LL_Slider_EBITA.setVisibility(View.GONE);
-        LL_Slider_Established.setVisibility(View.GONE);
-        LL_Checkboxes.setVisibility(View.GONE);
-        LL_Slider_MonthlySales.setVisibility(View.GONE);
-        LL_investor_buyer_type.setVisibility(View.GONE);
-        LL_franchise_headquaters_location.setVisibility(View.GONE);
-        LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-        LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+                LL_Slider_MonthlySales.setVisibility(View.GONE);
+                LL_investor_buyer_type.setVisibility(View.GONE);
+                LL_franchise_headquaters_location.setVisibility(View.GONE);
+                LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
+                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
 
 
-        auto_bus_hq_location = (MultiAutoCompleteTextView) findViewById(R.id.filter_profile_multi_businesheadquaters__location);
-        auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_location);
-        auto_bus_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_industry);
+            } else if (str_main_filter.equals("Investor/Buyers")) {
+                LL_investor_buyer_type.setVisibility(View.VISIBLE);
+                LL_interested_business_locations.setVisibility(View.VISIBLE);
+                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
+                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
+                LL_Investor_Buyer_Investor_Location.setVisibility(View.VISIBLE);
+                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.VISIBLE);
 
-        spn_main_filter = (SearchableSpinner) findViewById(R.id.spn_filter_main);
-
-        spn_business_for_sale_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
-        spn_investor_buyer_type = (SearchableSpinner) findViewById(R.id.spn_filter_investor_buyer_type);
-
-        spn_main_filter.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(
-                            AdapterView<?> parent, View view, int position, long id) {
-
-                        str_main_filter = spn_main_filter.getSelectedItem().toString();
-
-                        if (str_main_filter.equals("Business For sale")) {
-
-                            LL_business_for_sale_type.setVisibility(View.VISIBLE);
-                            LL_interested_business_locations.setVisibility(View.VISIBLE);
-                            LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                            LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                            LL_Slider_Asset_price.setVisibility(View.VISIBLE);
-                            LL_Slider_Run_Rate_Sales.setVisibility(View.VISIBLE);
-                            LL_Slider_EBITA.setVisibility(View.VISIBLE);
-                            LL_Slider_Established.setVisibility(View.VISIBLE);
-                            LL_Checkboxes.setVisibility(View.VISIBLE);
-
-                            LL_Slider_MonthlySales.setVisibility(View.GONE);
-                            LL_investor_buyer_type.setVisibility(View.GONE);
-                            LL_franchise_headquaters_location.setVisibility(View.GONE);
-                            LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-                            LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+                LL_business_for_sale_type.setVisibility(View.GONE);
+                LL_Slider_Asset_price.setVisibility(View.GONE);
+                LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
+                LL_Slider_EBITA.setVisibility(View.GONE);
+                LL_Slider_MonthlySales.setVisibility(View.GONE);
+                LL_franchise_headquaters_location.setVisibility(View.GONE);
+                LL_Slider_Established.setVisibility(View.GONE);
+                LL_Checkboxes.setVisibility(View.GONE);
 
 
-                        } else if (str_main_filter.equals("Investor/Buyers")) {
+            } else if (str_main_filter.equals("Franchises")) {
+                LL_interested_business_locations.setVisibility(View.VISIBLE);
+                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
+                LL_Slider_MonthlySales.setVisibility(View.VISIBLE);
+                LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
+                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
+                LL_Slider_EBITA.setVisibility(View.VISIBLE);
+                LL_Checkboxes.setVisibility(View.VISIBLE);
 
-                            LL_investor_buyer_type.setVisibility(View.VISIBLE);
-                            LL_interested_business_locations.setVisibility(View.VISIBLE);
-                            LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                            LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                            LL_Investor_Buyer_Investor_Location.setVisibility(View.VISIBLE);
-                            LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.VISIBLE);
+                LL_business_for_sale_type.setVisibility(View.GONE);
+                LL_investor_buyer_type.setVisibility(View.GONE);
+                LL_Slider_Asset_price.setVisibility(View.GONE);
+                LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
+                LL_Slider_Established.setVisibility(View.GONE);
+                LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
+                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
 
-                            LL_business_for_sale_type.setVisibility(View.GONE);
-                            LL_Slider_Asset_price.setVisibility(View.GONE);
-                            LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                            LL_Slider_EBITA.setVisibility(View.GONE);
-                            LL_Slider_MonthlySales.setVisibility(View.GONE);
-                            LL_franchise_headquaters_location.setVisibility(View.GONE);
-                            LL_Slider_Established.setVisibility(View.GONE);
-                            LL_Checkboxes.setVisibility(View.GONE);
+            }
 
+        } catch (Exception e) {
 
-                        } else if (str_main_filter.equals("Franchises")) {
+        }
 
-
-                            LL_interested_business_locations.setVisibility(View.VISIBLE);
-                            LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                            LL_Slider_MonthlySales.setVisibility(View.VISIBLE);
-                            LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
-                            LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                            LL_Slider_EBITA.setVisibility(View.VISIBLE);
-                            LL_Checkboxes.setVisibility(View.VISIBLE);
-
-                            LL_business_for_sale_type.setVisibility(View.GONE);
-                            LL_investor_buyer_type.setVisibility(View.GONE);
-                            LL_Slider_Asset_price.setVisibility(View.GONE);
-                            LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                            LL_Slider_Established.setVisibility(View.GONE);
-                            LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-                            LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
-
-
-                        }
-
-                    }
-
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-        btn_clear_all = (Button) findViewById(R.id.btn_filter_clear);
         btn_clear_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -407,7 +358,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             }
         });
 
-        btn_done = (Button) findViewById(R.id.btn_filter_done);
+
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

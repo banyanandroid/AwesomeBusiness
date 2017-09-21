@@ -20,9 +20,11 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -41,6 +43,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -1239,7 +1242,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-
                 str_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
                 str_mobile = edt_mobile_number.getText().toString();
@@ -1277,16 +1279,55 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                 params.put("busi_in", str_kindof_business_interested);
                 params.put("abt_you", str_company_about);
 
-                params.put("profile_img", empty);
-                params.put("profile_document", empty);
+                params.put("profile_img", "IMAGEEEEEEEEEEE emptyyy");
+                params.put("profile_document", "DOCUMENTTTTTTT emptyyy");
                 params.put("logo_file", listString);
 
                 params.put("user_currency", str_user_currency);
                 params.put("user_id", str_user_id);
+                params.put("investor_key", str_investor_key);
 
-                return params;
+                //////////////////////////////
+
+                System.out.println("name_u" + str_name);
+                System.out.println("mob_u" + str_mobile);
+                System.out.println("email_u" + str_email);
+                System.out.println("inter_u" + str_selected_interest_id);
+                System.out.println("am_an" + str_selected_role_id);
+                System.out.println("indust" + str_final_industry_update);
+                System.out.println("location_u" + str_final_location_update);
+                System.out.println("invest_inr" + str_deal_minimum);
+                System.out.println("invest_to" + str_deal_maximum);
+                System.out.println("location" + str_final_headquaters);
+                System.out.println("com_y" + str_company_name);
+                System.out.println("desig" + str_designation);
+                System.out.println("linked" + str_web_linkedin);
+                System.out.println("com_s" + str_company_sector);
+                System.out.println("busi_in" + str_kindof_business_interested);
+                System.out.println("abt_you" + str_company_about);
+                System.out.println("user_currency" + str_user_currency);
+                System.out.println("user_id" + str_user_id);
+                System.out.println("investor_key" + str_investor_key);
+
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
             }
         };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        // Adding request to request queue
         queue.add(request);
     }
 
