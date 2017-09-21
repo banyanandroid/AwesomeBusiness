@@ -103,6 +103,14 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             LL_Slider_Asset_price, LL_Slider_Run_Rate_Sales, LL_Slider_EBITA, LL_Slider_Established, LL_Slider_MonthlySales,
             LL_Checkboxes, LL_Investor_Buyer_Investor_Location, LL_Investor_Buyer_Investor_Interested_In;
 
+    CrystalRangeSeekbar seekbar_investment_size, seekbar_asset_price,
+            seekbar_runrate_sales, seekbar_monthly_sales, seekbar_ebitda, seekbar_established;
+
+    TextView txt_investment_size_minimum, txt_investment_size_maximum, txt_asset_price_minimum, txt_asset_price_maximum,
+            txt_runrate_sales_minimum, txt_runrate_sales_maximum, txt_monthly_sales_minimum, txt_monthly_sales_maximum,
+            txt_ebitda_minimum, txt_ebitda_maximum,
+            txt_established_minimum, txt_established_maximum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +131,92 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             }
         });
 
+        seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
+        seekbar_investment_size.setMinStartValue(10);
+        seekbar_investment_size.setMaxValue(500);
+
+        seekbar_asset_price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_assetprice_range_slider);
+        seekbar_asset_price.setMinStartValue(100);
+        seekbar_asset_price.setMaxValue(5000);
+
+        seekbar_runrate_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_runratesales_range_slider);
+        seekbar_runrate_sales.setMinStartValue(100);
+        seekbar_runrate_sales.setMaxValue(500);
+
+        seekbar_monthly_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthlysales_range_slider);
+        seekbar_monthly_sales.setMinStartValue(1);
+        seekbar_monthly_sales.setMaxValue(50);
+
+        seekbar_ebitda = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_ebitda_range_slider);
+        seekbar_ebitda.setMinStartValue(1);
+        seekbar_ebitda.setMaxValue(200);
+
+        seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
+        seekbar_established.setMinStartValue(10);
+        seekbar_established.setMaxValue(5000);
+
+        txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_investment_minValue);
+        txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_investment_maxValue);
+        txt_asset_price_minimum = (TextView) findViewById(R.id.activity_filter_assetprice_minValue);
+        txt_asset_price_maximum = (TextView) findViewById(R.id.activity_filter_assetprice_maxValue);
+        txt_runrate_sales_minimum = (TextView) findViewById(R.id.activity_filter_runratesales_minValue);
+        txt_runrate_sales_maximum = (TextView) findViewById(R.id.activity_filter_runratesales_maxValue);
+        txt_monthly_sales_minimum = (TextView) findViewById(R.id.activity_filter_monthlysales_minValue);
+        txt_monthly_sales_maximum = (TextView) findViewById(R.id.activity_filter_monthlysales_maxValue);
+        txt_ebitda_minimum = (TextView) findViewById(R.id.activity_filter_ebitda_minValue);
+        txt_ebitda_maximum = (TextView) findViewById(R.id.activity_filter_ebitda_maxValue);
+        txt_established_minimum = (TextView) findViewById(R.id.activity_filter_established_minValue);
+        txt_established_maximum = (TextView) findViewById(R.id.activity_filter_established_maxValue);
+
+        seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_investment_size_minimum.setText(String.valueOf(minValue));
+                txt_investment_size_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+        seekbar_asset_price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_asset_price_minimum.setText(String.valueOf(minValue));
+                txt_asset_price_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+        seekbar_runrate_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_runrate_sales_minimum.setText(String.valueOf(minValue));
+                txt_runrate_sales_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+        seekbar_monthly_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_monthly_sales_minimum.setText(String.valueOf(minValue));
+                txt_monthly_sales_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+        seekbar_ebitda.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_ebitda_minimum.setText(String.valueOf(minValue));
+                txt_ebitda_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+        seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                txt_established_minimum.setText(String.valueOf(minValue));
+                txt_established_maximum.setText(String.valueOf(maxValue));
+            }
+        });
+
+
         // get seekbar from view
         final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar1);
 
@@ -132,8 +226,8 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         rangeSeekbar.setMinStartValue(1000);
         rangeSeekbar.setMaxValue(5000);
-       // tvMin.setText("5000");
-       // tvMax.setText("10000");
+        // tvMin.setText("5000");
+        // tvMax.setText("10000");
 
         // set listener
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
@@ -205,6 +299,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         LL_franchise_headquaters_location.setVisibility(View.GONE);
         LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
         LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+
 
         auto_bus_hq_location = (MultiAutoCompleteTextView) findViewById(R.id.filter_profile_multi_businesheadquaters__location);
         auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_location);
