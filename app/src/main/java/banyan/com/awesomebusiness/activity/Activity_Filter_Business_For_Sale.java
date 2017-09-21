@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -103,6 +107,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_menu);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -117,6 +122,42 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 finish();
             }
         });
+
+        // get seekbar from view
+        final CrystalRangeSeekbar rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar1);
+
+        // get min and max text view
+        final TextView tvMin = (TextView) findViewById(R.id.textMin1);
+        final TextView tvMax = (TextView) findViewById(R.id.textMax1);
+
+        rangeSeekbar.setMinStartValue(1000);
+        rangeSeekbar.setMaxValue(5000);
+       // tvMin.setText("5000");
+       // tvMax.setText("10000");
+
+        // set listener
+        rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                tvMin.setText(String.valueOf(minValue));
+                tvMax.setText(String.valueOf(maxValue));
+            }
+        });
+
+        // set final value listener
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rangeSeekbar.setMinValue(5000).setMaxValue(10000).setMinStartValue(5500).setMaxStartValue(7000).apply();
+            }
+        }, 5000);
 
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
