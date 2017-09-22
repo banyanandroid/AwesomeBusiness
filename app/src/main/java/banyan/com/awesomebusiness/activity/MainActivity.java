@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     TextView popup_txt_notification;
 
     String str_previous_selected_country_name, str_previous_selected_currency;
-
+    String str_filter_pos = "" ;
     String ip_currency, ip_country_id, ip_country = "";
 
     // CART
@@ -114,13 +114,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerFragment.setDrawerListener(this);
 
         // display the first navigation drawer view on app launch
-        displayView(0);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        str_filter_pos = sharedPreferences.getString("str_filter_pos", "str_filter_pos");
+
+        if (str_filter_pos.equals("str_filter_pos")){
+            displayView(0);
+        }else if (str_filter_pos.equals("1")){
+            displayView(1);
+        }else {
+            displayView(0);
+        }
 
         /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_previous_selected_country_name = sharedPreferences.getString("str_selected_country_position", "str_selected_country_position");
         str_previous_selected_currency = sharedPreferences.getString("str_selected_currency_position", "str_selected_currency_position");
 */
-
         try {
             dialog = new SpotsDialog(MainActivity.this);
             dialog.show();
@@ -233,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new Fragment_Home();
                 title = getString(R.string.title_home);
                 break;
+
             case 1:
                 fragment = new Fragment_BusinessForSale();
                 title = getString(R.string.title_bus_sale);

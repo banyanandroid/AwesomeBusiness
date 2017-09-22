@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -214,76 +213,11 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         btn_done = (Button) findViewById(R.id.btn_filter_done);
 
         seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
-       /* seekbar_investment_size.setMinStartValue(10);
-        seekbar_investment_size.setMaxValue(500);*/
-
         seekbar_asset_price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_assetprice_range_slider);
-       /* seekbar_asset_price.setMinStartValue(100);
-        seekbar_asset_price.setMaxValue(5000);*/
-
         seekbar_runrate_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_runratesales_range_slider);
-       /* seekbar_runrate_sales.setMinStartValue(100);
-        seekbar_runrate_sales.setMaxValue(500);*/
-
         seekbar_monthly_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthlysales_range_slider);
-       /* seekbar_monthly_sales.setMinStartValue(1);
-        seekbar_monthly_sales.setMaxValue(50);*/
-
         seekbar_ebitda = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_ebitda_range_slider);
-       /* seekbar_ebitda.setMinStartValue(1);
-        seekbar_ebitda.setMaxValue(200);*/
-
         seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
-      /*  seekbar_established.setMinStartValue(10);
-        seekbar_established.setMaxValue(5000);*/
-
-        seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_investment_size_minimum.setText(String.valueOf(minValue));
-                txt_investment_size_maximum.setText(String.valueOf(maxValue));
-            }
-        });
-
-        seekbar_asset_price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_asset_price_minimum.setText(String.valueOf(minValue));
-                txt_asset_price_maximum.setText(String.valueOf(maxValue));
-            }
-        });
-
-        seekbar_runrate_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_runrate_sales_minimum.setText(String.valueOf(minValue));
-                txt_runrate_sales_maximum.setText(String.valueOf(maxValue));
-            }
-        });
-
-        seekbar_monthly_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_monthly_sales_minimum.setText(String.valueOf(minValue));
-                txt_monthly_sales_maximum.setText(String.valueOf(maxValue));
-            }
-        });
-
-        seekbar_ebitda.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_ebitda_minimum.setText(String.valueOf(minValue));
-                txt_ebitda_maximum.setText(String.valueOf(maxValue));
-            }
-        });
-
-        seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                txt_established_minimum.setText(String.valueOf(minValue));
-                txt_established_maximum.setText(String.valueOf(maxValue));
-            }
-        });
 
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
@@ -393,6 +327,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("str_filter_final_Business_Location", str_final_Business_Location);
                 editor.putString("str_filter_final_business_sector", str_final_business_sector);
+                editor.putString("str_filter_pos", "1");
                 editor.putString("str_filter_selected_transaction_type_name", str_selected_transaction_type_name);
                 editor.commit();
 
@@ -400,8 +335,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 startActivity(i);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
                 finish();
-
-
             }
         });
 
@@ -806,7 +739,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                     if (success == 1) {
 
-
                         JSONObject obj1 = obj.getJSONObject("data");
                         String min_buisness_investment = obj1.getString(TAG_MIN_BUISNESS_INVESTMENT);
                         String max_buisness_investment = obj1.getString(TAG_MAX_BUISNESS_INVESTMENT);
@@ -850,30 +782,51 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                         float flt_franchise_min_established = Float.parseFloat(franchise_min_established);
                         float flt_franchise_max_established = Float.parseFloat(franchise_max_established);
 
-                        System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
-
-                        System.out.println("CAME 33333");
-
                         if (str_main_filter.equals("Business For sale")) {
 
-                            System.out.println("CAME Inside  Business For sale");
-
-                            seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
+                            // Investment Size
                             seekbar_investment_size.setMinStartValue(flt_min_buisness_investment);
                             seekbar_investment_size.setMaxValue(flt_max_buisness_investment);
+                            seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_investment_size_minimum.setText(String.valueOf(minValue));
+                                    txt_investment_size_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
-                            seekbar_runrate_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_runratesales_range_slider);
+                            // Runrate Sales
                             seekbar_runrate_sales.setMinStartValue(flt_min_sales);
                             seekbar_runrate_sales.setMaxValue(flt_max_sales);
+                            seekbar_runrate_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_runrate_sales_minimum.setText(String.valueOf(minValue));
+                                    txt_runrate_sales_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
-                            seekbar_ebitda = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_ebitda_range_slider);
+                            // EBITA
                             seekbar_ebitda.setMinStartValue(flt_min_business_ebitda);
                             seekbar_ebitda.setMaxValue(flt_max_business_ebitda);
+                            seekbar_ebitda.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_ebitda_minimum.setText(String.valueOf(minValue));
+                                    txt_ebitda_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
-                            seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
+                            // ESTABLISED
                             seekbar_established.setMinStartValue(flt_min_user_established);
                             seekbar_established.setMaxValue(flt_max_user_established);
-
+                            seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_established_minimum.setText(String.valueOf(minValue));
+                                    txt_established_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
                         } else if (str_main_filter.equals("Investor/Buyers")) {
 
