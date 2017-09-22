@@ -52,6 +52,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "reg";
     TextView t1;
+    String str_user_currency = "";
 
     Button btn_done, btn_clear_all;
 
@@ -68,6 +69,27 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     public static final String TAG_LOC_PLACE = "place";
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
+
+    public static final String TAG_MIN_BUISNESS_INVESTMENT = "min_buisness_investment";
+    public static final String TAG_MAX_BUISNESS_INVESTMENT = "max_buisness_investment";
+    public static final String TAG_MIN_BUSINESS_EBITDA = "min_business_ebitda";
+    public static final String TAG_MAX_BUSINESS_EBITDA = "max_business_ebitda";
+    public static final String TAG_MIN_USER_ESTABLISHED = "min_user_established";
+    public static final String TAG_MAX_USER_ESTABLISHED = "max_user_established";
+    public static final String TAG_MIN_ASSETS_PURCHASED = "min_assets_purchased";
+    public static final String TAG_MAX_ASSETS_PURCHASED = "max_assets_purchased";
+    public static final String TAG_MIN_SELL_LEASE_PRICE = "min_sell_lease_price";
+    public static final String TAG_MAX_SELL_LEASE_PRICE = "max_sell_lease_price";
+    public static final String TAG_MIN_SALES = "min_sales";
+    public static final String TAG_MAX_SALES = "max_sales";
+    public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
+    public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
+    public static final String TAG_FRANCHISE_MIN_INVESTMENT = "franchise_min_investment";
+    public static final String TAG_FRANCHISE_MAX_INVESTMENT = "franchise_max_investment";
+    public static final String TAG_FRANCHISE_MIN_REVENUE = "franchise_min_revenue";
+    public static final String TAG_FRANCHISE_MAX_REVENUE = "franchise_max_revenue";
+    public static final String TAG_FRANCHISE_MIN_ESTABLISHED = "franchise_min_established";
+    public static final String TAG_FRANCHISE_MAX_ESTABLISHED = "franchise_max_established";
 
     ArrayList<String> Arraylist_sector_name = null;
     ArrayList<String> Arraylist_sector_key = null;
@@ -133,6 +155,10 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_main_filter = sharedPreferences.getString("profile_type", "profile_type");
+        str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+
+        System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
+        System.out.println(" USER CURRENCY TYPE:::::::  " + str_user_currency);
 
         txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_investment_minValue);
         txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_investment_maxValue);
@@ -188,28 +214,28 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         btn_done = (Button) findViewById(R.id.btn_filter_done);
 
         seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
-        seekbar_investment_size.setMinStartValue(10);
-        seekbar_investment_size.setMaxValue(500);
+       /* seekbar_investment_size.setMinStartValue(10);
+        seekbar_investment_size.setMaxValue(500);*/
 
         seekbar_asset_price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_assetprice_range_slider);
-        seekbar_asset_price.setMinStartValue(100);
-        seekbar_asset_price.setMaxValue(5000);
+       /* seekbar_asset_price.setMinStartValue(100);
+        seekbar_asset_price.setMaxValue(5000);*/
 
         seekbar_runrate_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_runratesales_range_slider);
-        seekbar_runrate_sales.setMinStartValue(100);
-        seekbar_runrate_sales.setMaxValue(500);
+       /* seekbar_runrate_sales.setMinStartValue(100);
+        seekbar_runrate_sales.setMaxValue(500);*/
 
         seekbar_monthly_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthlysales_range_slider);
-        seekbar_monthly_sales.setMinStartValue(1);
-        seekbar_monthly_sales.setMaxValue(50);
+       /* seekbar_monthly_sales.setMinStartValue(1);
+        seekbar_monthly_sales.setMaxValue(50);*/
 
         seekbar_ebitda = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_ebitda_range_slider);
-        seekbar_ebitda.setMinStartValue(1);
-        seekbar_ebitda.setMaxValue(200);
+       /* seekbar_ebitda.setMinStartValue(1);
+        seekbar_ebitda.setMaxValue(200);*/
 
         seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
-        seekbar_established.setMinStartValue(10);
-        seekbar_established.setMaxValue(5000);
+      /*  seekbar_established.setMinStartValue(10);
+        seekbar_established.setMaxValue(5000);*/
 
         seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -678,9 +704,13 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
+
+                    System.out.println("CAME 2" + response);
+
                     int success = obj.getInt("status");
 
                     if (success == 1) {
+
 
                         JSONArray arr;
 
@@ -716,6 +746,13 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                         }
 
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Filter_Seekbar_Values();
+                        } catch (Exception e) {
+
+                        }
+
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
@@ -739,6 +776,150 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+    /*****************************
+     * To get  Filter Seekbar Values
+     ***************************/
+
+    public void Get_Filter_Seekbar_Values() {
+        String tag_json_obj = "json_obj_req";
+        System.out.println("CAME 11111");
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_filter_seekbar_values, new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("CAME 22222");
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+
+                        JSONObject obj1 = obj.getJSONObject("data");
+                        String min_buisness_investment = obj1.getString(TAG_MIN_BUISNESS_INVESTMENT);
+                        String max_buisness_investment = obj1.getString(TAG_MAX_BUISNESS_INVESTMENT);
+                        String min_business_ebitda = obj1.getString(TAG_MIN_BUSINESS_EBITDA);
+                        String max_business_ebitda = obj1.getString(TAG_MAX_BUSINESS_EBITDA);
+                        String min_user_established = obj1.getString(TAG_MIN_USER_ESTABLISHED);
+                        String max_user_established = obj1.getString(TAG_MAX_USER_ESTABLISHED);
+                        String min_assets_purchased = obj1.getString(TAG_MIN_ASSETS_PURCHASED);
+                        String max_assets_purchased = obj1.getString(TAG_MAX_ASSETS_PURCHASED);
+                        String min_sell_lease_price = obj1.getString(TAG_MIN_SELL_LEASE_PRICE);
+                        String max_sell_lease_price = obj1.getString(TAG_MAX_SELL_LEASE_PRICE);
+                        String min_sales = obj1.getString(TAG_MIN_SALES);
+                        String max_sales = obj1.getString(TAG_MAX_SALES);
+                        String investor_currency_from = obj1.getString(TAG_INVESTOR_CURRENCY_FROM);
+                        String investor_currency_to = obj1.getString(TAG_INVESTOR_CURRENCY_TO);
+                        String franchise_min_investment = obj1.getString(TAG_FRANCHISE_MIN_INVESTMENT);
+                        String franchise_max_investment = obj1.getString(TAG_FRANCHISE_MAX_INVESTMENT);
+                        String franchise_min_revenue = obj1.getString(TAG_FRANCHISE_MIN_REVENUE);
+                        String franchise_max_revenue = obj1.getString(TAG_FRANCHISE_MAX_REVENUE);
+                        String franchise_min_established = obj1.getString(TAG_FRANCHISE_MIN_ESTABLISHED);
+                        String franchise_max_established = obj1.getString(TAG_FRANCHISE_MAX_ESTABLISHED);
+
+                        float flt_min_buisness_investment = Float.parseFloat(min_buisness_investment);
+                        float flt_max_buisness_investment = Float.parseFloat(max_buisness_investment);
+                        float flt_min_business_ebitda = Float.parseFloat(min_business_ebitda);
+                        float flt_max_business_ebitda = Float.parseFloat(max_business_ebitda);
+                        float flt_min_user_established = Float.parseFloat(min_user_established);
+                        float flt_max_user_established = Float.parseFloat(max_user_established);
+                        float flt_min_assets_purchased = Float.parseFloat(min_assets_purchased);
+                        float flt_max_assets_purchased = Float.parseFloat(max_assets_purchased);
+                        float flt_min_sell_lease_price = Float.parseFloat(min_sell_lease_price);
+                        float flt_max_sell_lease_price = Float.parseFloat(max_sell_lease_price);
+                        float flt_min_sales = Float.parseFloat(min_sales);
+                        float flt_max_sales = Float.parseFloat(max_sales);
+                        float flt_investor_currency_from = Float.parseFloat(investor_currency_from);
+                        float flt_investor_currency_to = Float.parseFloat(investor_currency_to);
+                        float flt_franchise_min_investment = Float.parseFloat(franchise_min_investment);
+                        float flt_franchise_max_investment = Float.parseFloat(franchise_max_investment);
+                        float flt_franchise_min_revenue = Float.parseFloat(franchise_min_revenue);
+                        float flt_franchise_max_revenue = Float.parseFloat(franchise_max_revenue);
+                        float flt_franchise_min_established = Float.parseFloat(franchise_min_established);
+                        float flt_franchise_max_established = Float.parseFloat(franchise_max_established);
+
+                        System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
+
+                        System.out.println("CAME 33333");
+
+                        if (str_main_filter.equals("Business For sale")) {
+
+                            System.out.println("CAME Inside  Business For sale");
+
+                            seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
+                            seekbar_investment_size.setMinStartValue(flt_min_buisness_investment);
+                            seekbar_investment_size.setMaxValue(flt_max_buisness_investment);
+
+                            seekbar_runrate_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_runratesales_range_slider);
+                            seekbar_runrate_sales.setMinStartValue(flt_min_sales);
+                            seekbar_runrate_sales.setMaxValue(flt_max_sales);
+
+                            seekbar_ebitda = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_ebitda_range_slider);
+                            seekbar_ebitda.setMinStartValue(flt_min_business_ebitda);
+                            seekbar_ebitda.setMaxValue(flt_max_business_ebitda);
+
+                            seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
+                            seekbar_established.setMinStartValue(flt_min_user_established);
+                            seekbar_established.setMaxValue(flt_max_user_established);
+
+
+                        } else if (str_main_filter.equals("Investor/Buyers")) {
+
+                            System.out.println("CAME Inside Investor/Buyers");
+
+                            seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
+                            seekbar_investment_size.setMinStartValue(flt_investor_currency_from);
+                            seekbar_investment_size.setMaxValue(flt_investor_currency_to);
+
+
+                        } else if (str_main_filter.equals("Franchises")) {
+
+                            System.out.println("CAME Inside Investor/Buyers");
+
+
+                        }
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    System.out.println("CAME Outside");
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("currencye", str_user_currency);
+
+                System.out.println("currencye" + str_user_currency);
 
                 return params;
             }

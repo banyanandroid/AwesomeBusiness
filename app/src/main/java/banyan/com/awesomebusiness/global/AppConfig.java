@@ -16,6 +16,8 @@ public class AppConfig {
 
     //Filter Menu
     public static String url_investor_buyer_type = BASE_URL + "/index.php/Apicontroller/listallinvestoran";
+    public static String url_filter_seekbar_values = BASE_URL + "/index.php/Apicontroller/filters";
+
 
     //Autocomplete
     public static String url_iam = BASE_URL + "/index.php/apicontroller/listallbusinessrole";

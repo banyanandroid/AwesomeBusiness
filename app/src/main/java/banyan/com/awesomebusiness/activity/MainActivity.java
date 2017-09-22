@@ -529,8 +529,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("str_selected_country_name", str_selected_country_name);
-                        editor.putString("str_selected_country_id", ip_currency);
-                        editor.putString("str_selected_currency", ip_country_id);
+                        editor.putString("str_selected_country_id", ip_currency); // Country Name i.e INDIA
+                        editor.putString("str_selected_currency", ip_country); // Currency Name i.e INR
                         editor.commit();
 
                         /*txt_select_country.setText("" + ip_country);

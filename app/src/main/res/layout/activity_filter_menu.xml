@@ -720,47 +720,6 @@
                 </LinearLayout>
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:clipChildren="false">
-
-                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                        android:id="@+id/rangeSeekbar1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_color="@color/txt_grey"
-                        app:bar_highlight_color="@color/colorAccent1"
-                        app:corner_radius="10"
-                        app:left_thumb_color="@color/colorPrimary"
-                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
-                        app:right_thumb_color="@color/colorPrimary"
-                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
-                        app:steps="10" />
-
-                    <TextView
-                        android:id="@+id/textMin1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rangeSeekbar1"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/textMax1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/rangeSeekbar1"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#000"
-                        android:textSize="16dp" />
-
-                </RelativeLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
