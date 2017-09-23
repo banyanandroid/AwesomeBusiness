@@ -115,12 +115,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_filter_pos = sharedPreferences.getString("str_filter_pos", "str_filter_pos");
+        str_filter_pos = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
 
-        if (str_filter_pos.equals("str_filter_pos")){
+        if (str_filter_pos.equals("str_main_filter_type")){
             displayView(0);
-        }else if (str_filter_pos.equals("1")){
-            displayView(1);
+        }else if (str_filter_pos.equals("Business For sale")){
+            displayView(0);
         }else {
             displayView(0);
         }

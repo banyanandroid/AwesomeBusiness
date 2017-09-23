@@ -185,9 +185,10 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // str_main_filter = sharedPreferences.getString("profile_type", "profile_type");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_main_filter = sharedPreferences.getString("profile_type_from", "profile_type_from");
 
         ///////////////////////TEMP FOR TESTING PURPOSE////////////////////////////////////////////////////////////////
-        str_main_filter = "Franchises";
+        //str_main_filter = "Franchises";
 
         System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
         System.out.println(" USER CURRENCY TYPE:::::::  " + str_user_currency);
