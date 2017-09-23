@@ -4,7 +4,8 @@ public class AppConfig {
     public static String BASE_URL = "http://www.epictech.in/api_awesome";
 
     public static String url_ip_registration = BASE_URL + "/index.php/Apicontroller/";
-    public static String url_registration = BASE_URL + "/index.php/apicontroller/createUsers";
+
+    // public static String url_registration = BASE_URL + "/index.php/apicontroller/createUsers";
     public static String url_login = BASE_URL + "/index.php/apicontroller/loginusers";
     public static String url_social_login = BASE_URL + "/index.php/apicontroller/sociallogin";
     public static String url_user_profile = BASE_URL + "/index.php/apicontroller/detailusersedit";
@@ -30,7 +31,7 @@ public class AppConfig {
     public static String url_investor_interested = BASE_URL + "/index.php/Apicontroller/listallinvestorinterest";
 
     // Add Businesses Profiles
-    public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
+    //public static String url_add_business_profile = BASE_URL + "/index.php/Apicontroller/addbusinessprofile";
     public static String url_add_franchise_profile = BASE_URL + "/index.php/Apicontroller/addfranchiseprofile";
     public static String url_investor_profile_add = BASE_URL + "/index.php/Apicontroller/addinvestorprofile";
 
@@ -52,6 +53,12 @@ public class AppConfig {
     // Dashboard Search
     public static String url_dashboard_search_autofil = BASE_URL + "/index.php/Apicontroller/search";
 
+
+    ///////////testing purpose
+
+    public static String url_registration = "http://awesomebusinesses.com/api/index.php?Apicontroller/createusers";
+
+    public static String url_add_business_profile = "http://awesomebusinesses.com/api/index.php?Apicontroller/addbusinessprofile";
 
 }
 

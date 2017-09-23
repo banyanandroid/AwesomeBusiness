@@ -247,7 +247,9 @@
                         android:ems="10"
                         android:inputType="text"
                         android:textColor="@color/black"
-                        android:textSize="16sp"></MultiAutoCompleteTextView>
+                        android:textSize="16sp">
+
+                    </MultiAutoCompleteTextView>
 
                 </LinearLayout>
 
@@ -1001,21 +1003,18 @@
 
                     </LinearLayout>
 
-
-                    <com.libaml.android.view.chip.ChipLayout
-                        android:id="@+id/filter_profile_chipText_investor_location"
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/filter_profile_multi_auto_investor_location"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        custom:chipDrawable_="@drawable/round_corner_drawable"
-                        custom:chipLayoutDrawable_="@drawable/round_corner_drawable"
-                        custom:chipPadding_="4dp"
-                        custom:chipTextPadding_="2dp"
-                        custom:deleteIcon_="@android:drawable/presence_offline"
-                        custom:labelPosition_="left"
-                        custom:textColor_="@android:color/black">
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textSize="16sp">
 
-                    </com.libaml.android.view.chip.ChipLayout>
+                    </MultiAutoCompleteTextView>
 
                 </LinearLayout>
 
@@ -1065,7 +1064,8 @@
                         android:entries="@array/spinner_filter_main"
                         android:gravity="left|center_vertical"
                         android:text="Industry"
-                        android:textColor="@color/textColorPrimary" />
+                        android:textColor="@color/textColorPrimary"
+                        app:hintText="Select Your Interest" />
 
                 </LinearLayout>
 

@@ -7,17 +7,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -69,6 +72,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
 
+    public static final String TAG_INTEREST_ID = "investor_interest_id";
+    public static final String TAG_INTEREST_NAME = "investor_interest_name";
+
     public static final String TAG_MIN_BUISNESS_INVESTMENT = "min_buisness_investment";
     public static final String TAG_MAX_BUISNESS_INVESTMENT = "max_buisness_investment";
     public static final String TAG_MIN_BUSINESS_EBITDA = "min_business_ebitda";
@@ -104,20 +110,35 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
     ArrayList<String> Arraylist_business_interest_id = null;
     ArrayList<String> Arraylist_business_interest_name = null;
-    private ArrayAdapter<String> adapter_transaction;
 
     ArrayList<String> Arraylist_investor_buyer_id = null;
     ArrayList<String> Arraylist_investor_buyer_name = null;
-    private ArrayAdapter<String> adapter_investor_buyer_type;
 
-    SearchableSpinner spn_business_for_sale_type, spn_investor_buyer_type;
+    ArrayList<String> Arraylist_investor_interest_id = null;
+    ArrayList<String> Arraylist_investor_interest_name = null;
+
+    /* Arralist fetched Location list */
+    ArrayList<String> Arraylist_fetched_location = null;
+    ArrayList<String> Arraylist_selected_final_location = null;
+
+    /* Arralist fetched indestries list */
+    ArrayList<String> Arraylist_fetched_industries = null;
+    ArrayList<String> Arraylist_selected_final_industry = null;
+
+    private ArrayAdapter<String> adapter_transaction;
+    private ArrayAdapter<String> adapter_investor_buyer_type;
+    private ArrayAdapter<String> adapter_interested;
+
+    SearchableSpinner spn_business_for_sale_type, spn_investor_buyer_type, spn_investor_buyer_interested_in;
     String str_main_filter = "";
+    String str_selected_interest_id, str_selected_interest_name = "";
     String str_selected_transaction_id, str_selected_transaction_type_name = "";
     String str_selected_investor_buyer_type_id, str_selected_investor_buyer_type_name = "";
 
-    MultiAutoCompleteTextView auto_bus_busineeslist, auto_bus_locationlist, auto_bus_hq_location;
+    MultiAutoCompleteTextView auto_bus_busineeslist, auto_bus_locationlist, auto_bus_hq_location, auto_investor_location;
 
     String str_final_business_sector, str_final_Business_Location = "";
+    String str_final_industry_update, str_final_location_update, str_Investor_location, str_franchise_headquaters_location = "";
 
     LinearLayout LL_business_for_sale_type, LL_investor_buyer_type, LL_franchise_headquaters_location,
             LL_interested_business_locations, LL_interested_industry_sectors, LL_Slider_Investment_size,
@@ -126,6 +147,15 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
     CrystalRangeSeekbar seekbar_investment_size, seekbar_asset_price,
             seekbar_runrate_sales, seekbar_monthly_sales, seekbar_ebitda, seekbar_established;
+
+    //LEGAL ENTITY CHECKBOXES
+    CheckBox chb_limited_liability_company, chb_public_limited_company, chb_partnership,
+            chb_S_corporation, chb_private_limited_company, chb_C_corporation, chb_limited_liability_partnership,
+            chb_sole_proprietorship, chb_others;
+    //LEGAL ENTITY CHECKBOX STRINGS
+    String str_limited_liability_company, str_public_limited_company, str_partnership,
+            str_S_corporation, str_private_limited_company, str_C_corporation, str_limited_liability_partnership,
+            str_sole_proprietorship, str_others = "0";
 
     TextView txt_investment_size_minimum, txt_investment_size_maximum, txt_asset_price_minimum, txt_asset_price_maximum,
             txt_runrate_sales_minimum, txt_runrate_sales_maximum, txt_monthly_sales_minimum, txt_monthly_sales_maximum,
@@ -153,11 +183,24 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         });
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_main_filter = sharedPreferences.getString("profile_type", "profile_type");
+        // str_main_filter = sharedPreferences.getString("profile_type", "profile_type");
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+
+        ///////////////////////TEMP FOR TESTING PURPOSE////////////////////////////////////////////////////////////////
+        str_main_filter = "Franchises";
 
         System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
         System.out.println(" USER CURRENCY TYPE:::::::  " + str_user_currency);
+
+        chb_limited_liability_company = (CheckBox) findViewById(R.id.chbx_Limited_Liability_Company);
+        chb_public_limited_company = (CheckBox) findViewById(R.id.chbx_Public_Limited_Company);
+        chb_partnership = (CheckBox) findViewById(R.id.chbx_Partnership);
+        chb_S_corporation = (CheckBox) findViewById(R.id.chbx_SCorporation);
+        chb_private_limited_company = (CheckBox) findViewById(R.id.chbx_private_limited_company);
+        chb_C_corporation = (CheckBox) findViewById(R.id.chbx_C_Corporation);
+        chb_limited_liability_partnership = (CheckBox) findViewById(R.id.chbx_Limited_Liability_Partnership);
+        chb_sole_proprietorship = (CheckBox) findViewById(R.id.chbx_sole_proprietorship);
+        chb_others = (CheckBox) findViewById(R.id.chbx_others);
 
         txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_investment_minValue);
         txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_investment_maxValue);
@@ -189,6 +232,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         spn_business_for_sale_type = (SearchableSpinner) findViewById(R.id.spn_filter_transtype);
         spn_investor_buyer_type = (SearchableSpinner) findViewById(R.id.spn_filter_investor_buyer_type);
+        spn_investor_buyer_interested_in = (SearchableSpinner) findViewById(R.id.spn_filter_investor_interested);
 
         LL_business_for_sale_type.setVisibility(View.GONE);
         LL_interested_business_locations.setVisibility(View.GONE);
@@ -208,6 +252,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         auto_bus_hq_location = (MultiAutoCompleteTextView) findViewById(R.id.filter_profile_multi_businesheadquaters__location);
         auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_location);
         auto_bus_busineeslist = (MultiAutoCompleteTextView) findViewById(R.id.business_profile_multi_business_industry);
+        auto_investor_location = (MultiAutoCompleteTextView) findViewById(R.id.filter_profile_multi_auto_investor_location);
 
         btn_clear_all = (Button) findViewById(R.id.btn_filter_clear);
         btn_done = (Button) findViewById(R.id.btn_filter_done);
@@ -235,6 +280,16 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         Arraylist_investor_buyer_id = new ArrayList<String>();
         Arraylist_investor_buyer_name = new ArrayList<String>();
+
+        Arraylist_investor_interest_id = new ArrayList<String>();
+        Arraylist_investor_interest_name = new ArrayList<String>();
+
+        Arraylist_fetched_location = new ArrayList<String>();
+        Arraylist_selected_final_location = new ArrayList<String>();
+
+        Arraylist_fetched_industries = new ArrayList<String>();
+        Arraylist_selected_final_industry = new ArrayList<String>();
+
 
         try {
             if (str_main_filter.equals("Business For sale")) {
@@ -274,19 +329,19 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
 
             } else if (str_main_filter.equals("Franchises")) {
+                LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
                 LL_interested_business_locations.setVisibility(View.VISIBLE);
                 LL_interested_industry_sectors.setVisibility(View.VISIBLE);
                 LL_Slider_MonthlySales.setVisibility(View.VISIBLE);
-                LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
                 LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                LL_Slider_EBITA.setVisibility(View.VISIBLE);
+                LL_Slider_Established.setVisibility(View.VISIBLE);
                 LL_Checkboxes.setVisibility(View.VISIBLE);
 
                 LL_business_for_sale_type.setVisibility(View.GONE);
                 LL_investor_buyer_type.setVisibility(View.GONE);
                 LL_Slider_Asset_price.setVisibility(View.GONE);
                 LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                LL_Slider_Established.setVisibility(View.GONE);
+                LL_Slider_EBITA.setVisibility(View.GONE);
                 LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
                 LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
 
@@ -323,6 +378,413 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                System.out.println("SELECTED FILTER TYPE:-" + str_main_filter);
+
+                /********************************************************
+                 * Get Multiple Location Details From Searchable Spinner
+                 * ******************************************************/
+                String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
+                Arraylist_fetched_location.clear();
+                for (int i = 0; i < str_location.length; i++) {
+                    Arraylist_fetched_location.add(str_location[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_location);
+                Arraylist_selected_final_location.clear();
+                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                    String get_location = Arraylist_fetched_location.get(i);
+                    get_location = get_location.trim();
+                    System.out.println("get_location : " + get_location);
+                    int location_position = Arraylist_location_place.indexOf(get_location);
+                    String select_location_id = Arraylist_location_key.get(location_position);
+                    String select_location_type = Arraylist_location_type.get(location_position);
+                    String location = select_location_id + "-" + select_location_type;
+                    Arraylist_selected_final_location.add(location);
+                    str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                }
+                System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
+
+                /********************************************************
+                 * Get Multiple Industry Sector Details From Searchable Spinner
+                 * ******************************************************/
+                String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
+                Arraylist_fetched_industries.clear();
+                for (int i = 0; i < str_industries.length; i++) {
+                    Arraylist_fetched_industries.add(str_industries[i]);
+                }
+                System.out.println("array : " + Arraylist_fetched_industries);
+                Arraylist_selected_final_industry.clear();
+                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+
+                    String get_indestry = Arraylist_fetched_industries.get(i);
+                    get_indestry = get_indestry.trim();
+                    System.out.println("get_indestry : " + get_indestry);
+                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
+                    String select_sect_id = Arraylist_sector_key.get(indus_position);
+                    String select_sect_type = Arraylist_sector_type.get(indus_position);
+                    String sector = select_sect_id + "-" + select_sect_type;
+                    Arraylist_selected_final_industry.add(sector);
+                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+
+                }
+                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+
+                //IF STATEMENT TO POST VALUES ACCORING TO MAIN FILTER TYPE
+                if (str_main_filter.equals("Business For sale")) {
+
+                    // BUSINESS FOR SALE - TYPE
+                    String str_business_for_sale_trans_type = spn_business_for_sale_type.getSelectedItem().toString();
+
+                    // String Values According to checkbox state  - ENTITY TYPE
+                    if (chb_limited_liability_company.isChecked()) {
+                        str_limited_liability_company = "1";
+                    } else {
+                        str_limited_liability_company = "0";
+                    }
+
+                    if (chb_public_limited_company.isChecked()) {
+                        str_public_limited_company = "1";
+                    } else {
+                        str_public_limited_company = "0";
+                    }
+
+                    if (chb_partnership.isChecked()) {
+                        str_partnership = "1";
+                    } else {
+                        str_partnership = "0";
+                    }
+
+                    if (chb_S_corporation.isChecked()) {
+                        str_S_corporation = "1";
+                    } else {
+                        str_S_corporation = "0";
+                    }
+
+                    if (chb_private_limited_company.isChecked()) {
+                        str_private_limited_company = "1";
+                    } else {
+                        str_private_limited_company = "0";
+                    }
+
+                    if (chb_C_corporation.isChecked()) {
+                        str_C_corporation = "1";
+                    } else {
+                        str_C_corporation = "0";
+                    }
+
+                    if (chb_limited_liability_partnership.isChecked()) {
+                        str_limited_liability_partnership = "1";
+                    } else {
+                        str_limited_liability_partnership = "0";
+                    }
+
+                    if (chb_sole_proprietorship.isChecked()) {
+                        str_sole_proprietorship = "1";
+                    } else {
+                        str_sole_proprietorship = "0";
+                    }
+
+                    if (chb_others.isChecked()) {
+                        str_others = "1";
+                    } else {
+                        str_others = "0";
+                    }
+
+
+                    //SEEKBAR VALUES TO STRING
+                    String str_investment_size_minimum = txt_investment_size_minimum.getText().toString();
+                    String str_investment_size_maximum = txt_investment_size_maximum.getText().toString();
+                    String str_runrate_sales_minimum = txt_runrate_sales_minimum.getText().toString();
+                    String str_runrate_sales_maximum = txt_runrate_sales_maximum.getText().toString();
+                    String str_ebitda_minimum = txt_ebitda_minimum.getText().toString();
+                    String str_ebitda_maximum = txt_ebitda_maximum.getText().toString();
+                    String str_established_minimum = txt_established_minimum.getText().toString();
+                    String str_established_maximum = txt_established_maximum.getText().toString();
+                    // String str_asset_purchased_year_minimum = txt_asset_price_minimum.getText().toString();
+                    // String str_asset_purchased_year_minimum_maximum = txt_asset_price_maximum.getText().toString();
+
+                    //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
+                    editor.putString("str_main_filter_type", str_main_filter);
+                    editor.putString("str_business_for_sale_transaction_type", str_business_for_sale_trans_type);
+                    editor.putString("str_interested_business_locations", str_final_location_update);
+                    editor.putString("str_interested_industries", str_final_industry_update);
+                    //SEEKBAR VALUES
+                    editor.putString("str_investment_size_minimum", str_investment_size_minimum);
+                    editor.putString("str_investment_size_maximum", str_investment_size_maximum);
+                    editor.putString("str_runrate_sales_minimum", str_runrate_sales_minimum);
+                    editor.putString("str_runrate_sales_maximum", str_runrate_sales_maximum);
+                    editor.putString("str_ebitda_minimum", str_ebitda_minimum);
+                    editor.putString("str_ebitda_maximum", str_ebitda_maximum);
+                    editor.putString("str_established_minimum", str_established_minimum);
+                    editor.putString("str_established_maximum", str_established_maximum);
+                    //LEGAL ENTITY TYPE
+                    editor.putString("str_limited_liability_company", str_limited_liability_company);
+                    editor.putString("str_public_limited_company", str_public_limited_company);
+                    editor.putString("str_partnership", str_partnership);
+                    editor.putString("str_S_corporation", str_S_corporation);
+                    editor.putString("str_private_limited_company", str_private_limited_company);
+                    editor.putString("str_C_corporation", str_C_corporation);
+                    editor.putString("str_limited_liability_partnership", str_limited_liability_partnership);
+                    editor.putString("str_sole_proprietorship", str_sole_proprietorship);
+                    editor.putString("str_others", str_others);
+                    editor.commit();
+
+                    System.out.println("investment_size_minimum :: " + str_investment_size_minimum);
+                    System.out.println("investment_size_maximum :: " + str_investment_size_maximum);
+                    System.out.println("runrate_sales_minimum :: " + str_runrate_sales_minimum);
+                    System.out.println("runrate_sales_maximum :: " + str_runrate_sales_maximum);
+                    System.out.println("ebitda_minimum :: " + str_ebitda_minimum);
+                    System.out.println("ebitda_maximum :: " + str_ebitda_maximum);
+                    System.out.println("established_minimum :: " + str_established_minimum);
+                    System.out.println("established_maximum :: " + str_established_maximum);
+                    System.out.println("str_limited_liability_company :: " + str_limited_liability_company);
+                    System.out.println("str_public_limited_company :: " + str_public_limited_company);
+                    System.out.println("str_partnership :: " + str_partnership);
+                    System.out.println("str_S_corporation :: " + str_S_corporation);
+                    System.out.println("str_private_limited_company :: " + str_private_limited_company);
+                    System.out.println("str_C_corporation :: " + str_C_corporation);
+                    System.out.println("str_limited_liability_partnership :: " + str_limited_liability_partnership);
+                    System.out.println("str_sole_proprietorship :: " + str_sole_proprietorship);
+                    System.out.println("str_others :: " + str_others);
+
+
+                } else if (str_main_filter.equals("Investor/Buyers")) {
+
+                    // INVESTOR / BUYER - ROLE
+                    String str_investor_buyer_role_type = spn_investor_buyer_type.getSelectedItem().toString();
+
+                    //SEEKBAR VALUES TO STRING
+                    String str_investor_investment_size_minimum = txt_investment_size_minimum.getText().toString();
+                    String str_investor_investment_size_maximum = txt_investment_size_maximum.getText().toString();
+
+
+
+
+                /*
+                    // FOR GETTING ENTERED INVESTOR HEADQUATERS TYPE AND ID
+                    String str_investor_loccations = auto_investor_location.getText().toString();
+                    int Location_position = Arraylist_location_place.indexOf(str_investor_loccations);
+                    String select_Location_id = Arraylist_location_key.get(Location_position + 1);
+                    String select_Location_type = Arraylist_location_type.get(Location_position + 1);
+                    str_Investor_location = select_Location_id + "-" + select_Location_type;
+                    System.out.println("INVESTOR LOCATION" + str_Investor_location);
+
+                    */
+
+
+                    /********************************************************
+                     * Get Multiple Location Details From Searchable Spinner
+                     * ******************************************************/
+                    String[] str_investor_loccations = auto_investor_location.getText().toString().split(", ");
+                    Arraylist_fetched_location.clear();
+                    for (int i = 0; i < str_investor_loccations.length; i++) {
+                        Arraylist_fetched_location.add(str_investor_loccations[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+                    Arraylist_selected_final_location.clear();
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+                        str_Investor_location = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_Investor_location);
+
+
+                    //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
+                    editor.putString("str_main_filter_type", str_main_filter);
+                    editor.putString("str_investor_buyer_role_type", str_investor_buyer_role_type);
+                    editor.putString("str_interested_business_locations", str_final_location_update);
+                    editor.putString("str_interested_industries", str_final_industry_update);
+                    //SEEKBAR VALUES
+                    editor.putString("str_investor_investment_size_minimum", str_investor_investment_size_minimum);
+                    editor.putString("str_investor_investment_size_maximum", str_investor_investment_size_maximum);
+                    editor.putString("str_investor_location", str_Investor_location);
+                    editor.putString("str_investor_interested_in", str_selected_interest_id);
+                    editor.commit();
+
+                    System.out.println("str_main_filter_type" + str_main_filter);
+                    System.out.println("str_investor_buyer_role_type" + str_investor_buyer_role_type);
+                    System.out.println("str_final_location_update" + str_final_location_update);
+                    System.out.println("str_final_industry_update" + str_final_industry_update);
+                    System.out.println("str_investor_investment_size_minimum" + str_investor_investment_size_minimum);
+                    System.out.println("str_investor_investment_size_maximum" + str_investor_investment_size_maximum);
+                    System.out.println("str_Investor_location" + str_Investor_location);
+                    System.out.println("str_selected_interest_id" + str_selected_interest_id);
+
+
+                } else if (str_main_filter.equals("Franchises")) {
+
+                    System.out.println(" Button Clicked & Came inside Franchises ");
+
+               /*
+                    // FOR GETTING ENTERED INVESTOR HEADQUATERS TYPE AND ID
+                    String str_Franchise_loccations = auto_bus_hq_location.getText().toString();
+                    int Location_position = Arraylist_location_place.indexOf(str_Franchise_loccations);
+                    String select_Location_id = Arraylist_location_key.get(Location_position + 1);
+                    String select_Location_type = Arraylist_location_type.get(Location_position + 1);
+                    str_franchise_headquaters_location = select_Location_id + "-" + select_Location_type;
+                    System.out.println("INVESTOR LOCATION" + str_Investor_location);
+
+*/
+
+
+                    /********************************************************
+                     * Get Multiple Location Details From Searchable Spinner
+                     * ******************************************************/
+                    String[] str_Franchise_loccations = auto_bus_hq_location.getText().toString().split(", ");
+                    Arraylist_fetched_location.clear();
+                    for (int i = 0; i < str_Franchise_loccations.length; i++) {
+                        Arraylist_fetched_location.add(str_Franchise_loccations[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+                    Arraylist_selected_final_location.clear();
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+                        str_franchise_headquaters_location = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+                    System.out.println("FINAL SELECTED LOCATION :: " + str_franchise_headquaters_location);
+
+
+                    //SEEKBAR VALUES TO STRING
+                    String str_franchise_investment_size_minimum = txt_investment_size_minimum.getText().toString();
+                    String str_franchise_investment_size_maximum = txt_investment_size_maximum.getText().toString();
+
+                    String str_franchise_monthly_sales_minimum = txt_monthly_sales_minimum.getText().toString();
+                    String str_franchise_monthly_sales_maximum = txt_monthly_sales_maximum.getText().toString();
+
+                    String str_franchise_established_minimum = txt_established_minimum.getText().toString();
+                    String str_franchise_established_maximum = txt_established_maximum.getText().toString();
+
+                    // String Values According to checkbox state  - ENTITY TYPE
+                    if (chb_limited_liability_company.isChecked()) {
+                        str_limited_liability_company = "1";
+                    } else {
+                        str_limited_liability_company = "0";
+                    }
+
+                    if (chb_public_limited_company.isChecked()) {
+                        str_public_limited_company = "1";
+                    } else {
+                        str_public_limited_company = "0";
+                    }
+
+                    if (chb_partnership.isChecked()) {
+                        str_partnership = "1";
+                    } else {
+                        str_partnership = "0";
+                    }
+
+                    if (chb_S_corporation.isChecked()) {
+                        str_S_corporation = "1";
+                    } else {
+                        str_S_corporation = "0";
+                    }
+
+                    if (chb_private_limited_company.isChecked()) {
+                        str_private_limited_company = "1";
+                    } else {
+                        str_private_limited_company = "0";
+                    }
+
+                    if (chb_C_corporation.isChecked()) {
+                        str_C_corporation = "1";
+                    } else {
+                        str_C_corporation = "0";
+                    }
+
+                    if (chb_limited_liability_partnership.isChecked()) {
+                        str_limited_liability_partnership = "1";
+                    } else {
+                        str_limited_liability_partnership = "0";
+                    }
+
+                    if (chb_sole_proprietorship.isChecked()) {
+                        str_sole_proprietorship = "1";
+                    } else {
+                        str_sole_proprietorship = "0";
+                    }
+
+                    if (chb_others.isChecked()) {
+                        str_others = "1";
+                    } else {
+                        str_others = "0";
+                    }
+
+
+                    //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
+                    editor.putString("str_main_filter_type", str_main_filter);
+                    editor.putString("str_franchise_headquaters_location", str_franchise_headquaters_location);
+                    editor.putString("str_interested_business_locations", str_final_location_update);
+                    editor.putString("str_interested_industries", str_final_industry_update);
+                    //SEEKBAR VALUES
+                    editor.putString("str_franchise_investment_size_minimum", str_franchise_investment_size_minimum);
+                    editor.putString("str_franchise_investment_size_maximum", str_franchise_investment_size_maximum);
+                    editor.putString("str_franchise_monthly_sales_minimum", str_franchise_monthly_sales_minimum);
+                    editor.putString("str_franchise_monthly_sales_maximum", str_franchise_monthly_sales_maximum);
+                    editor.putString("str_franchise_established_minimum", str_franchise_established_minimum);
+                    editor.putString("str_franchise_established_maximum", str_franchise_established_maximum);
+                    //LEGAL ENTITY TYPE
+                    editor.putString("str_limited_liability_company", str_limited_liability_company);
+                    editor.putString("str_public_limited_company", str_public_limited_company);
+                    editor.putString("str_partnership", str_partnership);
+                    editor.putString("str_S_corporation", str_S_corporation);
+                    editor.putString("str_private_limited_company", str_private_limited_company);
+                    editor.putString("str_C_corporation", str_C_corporation);
+                    editor.putString("str_limited_liability_partnership", str_limited_liability_partnership);
+                    editor.putString("str_sole_proprietorship", str_sole_proprietorship);
+                    editor.putString("str_others", str_others);
+                    editor.commit();
+
+                    System.out.println("str_main_filter_type" + str_main_filter);
+                    System.out.println("str_franchise_headquaters_location" + str_franchise_headquaters_location);
+                    System.out.println("str_final_location_update" + str_final_location_update);
+                    System.out.println("str_final_industry_update" + str_final_industry_update);
+                    System.out.println("str_franchise_investment_size_minimum :: " + str_franchise_investment_size_minimum);
+                    System.out.println("str_franchise_investment_size_maximum :: " + str_franchise_investment_size_maximum);
+                    System.out.println("str_franchise_monthly_sales_minimum :: " + str_franchise_monthly_sales_minimum);
+                    System.out.println("str_franchise_monthly_sales_maximum :: " + str_franchise_monthly_sales_maximum);
+                    System.out.println("str_franchise_established_minimum :: " + str_franchise_established_minimum);
+                    System.out.println("str_franchise_established_maximum :: " + str_franchise_established_maximum);
+                    System.out.println("str_limited_liability_company :: " + str_limited_liability_company);
+                    System.out.println("str_public_limited_company :: " + str_public_limited_company);
+                    System.out.println("str_partnership :: " + str_partnership);
+                    System.out.println("str_S_corporation :: " + str_S_corporation);
+                    System.out.println("str_private_limited_company :: " + str_private_limited_company);
+                    System.out.println("str_C_corporation :: " + str_C_corporation);
+                    System.out.println("str_limited_liability_partnership :: " + str_limited_liability_partnership);
+                    System.out.println("str_sole_proprietorship :: " + str_sole_proprietorship);
+                    System.out.println("str_others :: " + str_others);
+
+                }
+
+
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("str_filter_final_Business_Location", str_final_Business_Location);
@@ -331,10 +793,12 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 editor.putString("str_filter_selected_transaction_type_name", str_selected_transaction_type_name);
                 editor.commit();
 
+
                 Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
                 finish();
+
             }
         });
 
@@ -675,9 +1139,113 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                                     .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                             auto_bus_locationlist.setThreshold(1);
 
+                            auto_investor_location.setAdapter(adapter_process);
+                            auto_investor_location
+                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                            auto_investor_location.setThreshold(1);
+
                         } catch (Exception e) {
 
                         }
+
+                        try {
+                            queue = Volley.newRequestQueue(getApplicationContext());
+                            Get_Interested();
+                        } catch (Exception e) {
+
+                        }
+
+                    } else if (success == 0) {
+                        TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * To get  Interested in  Details
+     ***************************/
+
+    public void Get_Interested() {
+        String tag_json_obj = "json_obj_req";
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_investor_interested, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+
+                        arr = obj.getJSONArray("data");
+
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj1 = arr.getJSONObject(i);
+
+                            String interest_key = obj1.getString(TAG_INTEREST_ID);
+                            String interest_name = obj1.getString(TAG_INTEREST_NAME);
+
+                            Arraylist_investor_interest_id.add(interest_key);
+                            Arraylist_investor_interest_name.add(interest_name);
+                        }
+                        try {
+                            adapter_interested = new ArrayAdapter<String>(Activity_Filter_Business_For_Sale.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_investor_interest_name);
+                            spn_investor_buyer_interested_in.setAdapter(adapter_interested);
+
+                            spn_investor_buyer_interested_in.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                                    t1 = (TextView) view;
+                                    str_selected_interest_name = t1.getText().toString();
+                                    str_selected_interest_id = Arraylist_investor_interest_id.get(position);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
+
+
+                        } catch (Exception e) {
+
+                        }
+
 
                         try {
                             queue = Volley.newRequestQueue(getApplicationContext());
@@ -696,7 +1264,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+        }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -784,7 +1352,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                         if (str_main_filter.equals("Business For sale")) {
 
+
                             // Investment Size
+                            seekbar_investment_size.setSteps(10);
                             seekbar_investment_size.setMinStartValue(flt_min_buisness_investment);
                             seekbar_investment_size.setMaxValue(flt_max_buisness_investment);
                             seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
@@ -830,17 +1400,54 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                         } else if (str_main_filter.equals("Investor/Buyers")) {
 
-                            System.out.println("CAME Inside Investor/Buyers");
-
-                            seekbar_investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_investment_range_slider);
+                            // Investment Size
                             seekbar_investment_size.setMinStartValue(flt_investor_currency_from);
                             seekbar_investment_size.setMaxValue(flt_investor_currency_to);
-
+                            seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_investment_size_minimum.setText(String.valueOf(minValue));
+                                    txt_investment_size_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
                         } else if (str_main_filter.equals("Franchises")) {
 
-                            System.out.println("CAME Inside Investor/Buyers");
+                            System.out.println("CAME Inside Franchises");
 
+                            // Investment Size
+                            seekbar_investment_size.setSteps(10);
+                            seekbar_investment_size.setMinStartValue(flt_franchise_min_investment);
+                            seekbar_investment_size.setMaxValue(flt_franchise_max_investment);
+                            seekbar_investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_investment_size_minimum.setText(String.valueOf(minValue));
+                                    txt_investment_size_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
+
+                            // MONTHLY SALES
+                            seekbar_monthly_sales.setMinStartValue(flt_franchise_min_revenue);
+                            seekbar_monthly_sales.setMaxValue(flt_franchise_max_revenue);
+                            seekbar_monthly_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_monthly_sales_minimum.setText(String.valueOf(minValue));
+                                    txt_monthly_sales_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
+
+                            // ESTABLISED
+                            seekbar_established.setMinStartValue(flt_franchise_min_established);
+                            seekbar_established.setMaxValue(flt_franchise_max_established);
+                            seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_established_minimum.setText(String.valueOf(minValue));
+                                    txt_established_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
 
                         }
 
