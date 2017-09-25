@@ -52,7 +52,8 @@ public class AppConfig {
 
     // Dashboard Search
     public static String url_dashboard_search_autofil = BASE_URL + "/index.php/Apicontroller/search";
-    public static String url_dashboard_search_result = BASE_URL + "/index.php/Apicontroller/listallbusinessprofile";
+    public static String url_dashboard_search_result_business_profile = BASE_URL + "/index.php/Apicontroller/listallbusinessprofile";
+    public static String url_dashboard_search_result_business_profile_detail = BASE_URL + "/index.php/Apicontroller/listbusinessprofile";
 
 
     ///////////testing purpose
