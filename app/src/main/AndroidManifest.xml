@@ -82,6 +82,10 @@
             android:name=".activity.Activity_InvestorProfile_Update"
             android:label="Update Investor Profile"></activity>
 
+        <activity
+            android:name=".activity.Activity_DetailedView_Business_For_Sale"
+            android:label="Business Details"></activity>
+
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

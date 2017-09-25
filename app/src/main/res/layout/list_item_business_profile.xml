@@ -32,8 +32,8 @@
                     android:id="@+id/list_business_prof_profile"
                     android:layout_width="match_parent"
                     android:layout_height="142dp"
-                    android:src="@drawable/placeholder"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:src="@drawable/placeholder" />
             </LinearLayout>
 
             <LinearLayout
