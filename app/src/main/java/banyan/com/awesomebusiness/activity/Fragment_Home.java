@@ -63,7 +63,7 @@ public class Fragment_Home extends Fragment {
     TextView t1;
     AutoCompleteTextView auto_search_suggest;
 
-    String str_final_search = "";
+    String str_final_search, str_search_txt = "";
 
     private ListView List;
     public List_BusinessProfiles_Adapter adapter;
@@ -164,6 +164,11 @@ public class Fragment_Home extends Fragment {
         str_filter_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
         str_filter_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
 
+        //Fragment Transition
+        str_final_search = sharedPreferences.getString("search_id", "search_id");
+        str_search_txt = sharedPreferences.getString("search_key", "search_key");
+
+        // From Filter
         str_filter_investment_size_minimum = sharedPreferences.getString("str_investment_size_minimum", "str_investment_size_minimum");
         str_filter_investment_size_maximum = sharedPreferences.getString("str_investment_size_maximum", "str_investment_size_maximum");
         str_filter_runrate_sales_minimum = sharedPreferences.getString("str_runrate_sales_minimum", "str_runrate_sales_minimum");
@@ -186,6 +191,19 @@ public class Fragment_Home extends Fragment {
         str_con_runrate_sales = str_filter_runrate_sales_minimum + "," + str_filter_runrate_sales_maximum;
         str_con_ebitda = str_filter_ebitda_minimum + "," + str_filter_ebitda_maximum;
         str_con_established = str_filter_established_minimum + "," + str_filter_established_maximum;
+
+        try {
+
+            if (str_search_txt.equals("search_key")){
+                System.out.println("Default Search key : " + str_search_txt);
+            }else {
+                System.out.println("Default Search key : " + str_search_txt);
+                auto_search_suggest.setText(str_search_txt);
+            }
+
+        }catch (Exception e) {
+
+        }
 
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,15 +243,46 @@ public class Fragment_Home extends Fragment {
 
                     str_final_search = str_search_key + "-" + str_search_type + "-" + str_search_main_type;
                     System.out.println("User Location :: " + str_final_search);
+                    System.out.println("TITLE :: " + str_search_title);
 
-                    try {
-                        dialog = new SpotsDialog(getActivity());
-                        dialog.show();
-                        Business_profile_list.clear();
-                        queue = Volley.newRequestQueue(getActivity());
-                        Get_Business_Profile();
-                    } catch (Exception e) {
-                        // TODO: handle exception
+                    if (str_search_title.equals("Business for sale")) {
+                        try {
+                            dialog = new SpotsDialog(getActivity());
+                            dialog.show();
+                            Business_profile_list.clear();
+                            queue = Volley.newRequestQueue(getActivity());
+                            Get_Business_Profile();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                    } else if (str_search_title.equals("Investment Oppourtinites")) {
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("str_main_filter_type", "Investment Oppourtinites");
+                        editor.putString("search_key", str_search_txt);
+                        editor.putString("search_id", str_final_search);
+                        editor.commit();
+
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        i.putExtra("type", "Investment Oppourtinites");
+                        startActivity(i);
+
+                    } else if (str_search_title.equals("Franchise Oppourtinites")) {
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                       // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
+                        editor.putString("search_key", str_search_txt);
+                        editor.putString("search_id", str_final_search);
+                        editor.commit();
+
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        i.putExtra("type", "Franchise Oppourtinites");
+                        startActivity(i);
+
+                    } else {
+
                     }
 
                 } else {
@@ -315,19 +364,19 @@ public class Fragment_Home extends Fragment {
 
     private void performAction(String title) {
 
-        if (title.equals("Recently Listed")){
+        if (title.equals("Recently Listed")) {
             str_sort_by = "1";
-        }else if (title.equals("Established Year(oldest first)")){
+        } else if (title.equals("Established Year(oldest first)")) {
             str_sort_by = "2";
-        }else if (title.equals("Established Year(newest first)")){
+        } else if (title.equals("Established Year(newest first)")) {
             str_sort_by = "3";
-        }else if (title.equals("EBITDA")){
+        } else if (title.equals("EBITDA")) {
             str_sort_by = "4";
-        }else if (title.equals("Investment size(low to high)")){
+        } else if (title.equals("Investment size(low to high)")) {
             str_sort_by = "5";
-        }else if (title.equals("Investment size( high to low)")){
+        } else if (title.equals("Investment size( high to low)")) {
             str_sort_by = "6";
-        }else {
+        } else {
             str_sort_by = "";
         }
 
@@ -549,6 +598,16 @@ public class Fragment_Home extends Fragment {
         } else {
 
         }
+        if (str_final_search.equals("search_id")) {
+            str_final_search = "";
+        } else {
+
+        }
+        if (str_search_txt.equals("search_key")) {
+            str_search_txt = "";
+        } else {
+
+        }
 
         System.out.println("CC" + str_filter_C_corporation);
         System.out.println("plc" + str_filter_public_limited_company);
@@ -667,7 +726,7 @@ public class Fragment_Home extends Fragment {
                                     Arraylist_update_images.add(image_path);
                                 }
 
-                                if (Arraylist_update_images.size() > 0){
+                                if (Arraylist_update_images.size() > 0) {
                                     str_final_image = Arraylist_update_images.get(0);
                                     System.out.println("IMAGE : " + str_final_image);
                                 }

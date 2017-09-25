@@ -115,6 +115,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
+        try {
+            Bundle extras = getIntent().getExtras();
+            if(extras !=null) {
+                String value = extras.getString("type");
+            }
+        }catch (Exception e) {
+
+        }
+
         // display the first navigation drawer view on app launch
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_filter_pos = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
@@ -134,6 +143,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             displayView(0);
         }else if (str_filter_pos.equals("Business For sale")){
             displayView(0);
+        }else if (str_filter_pos.equals("Investment Oppourtinites")){
+            displayView(1);
+        }else if (str_filter_pos.equals("Franchise Oppourtinites")){
+            displayView(2);
         }else {
             displayView(0);
         }
@@ -242,18 +255,22 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
+                Clear_SharedPref();
                 fragment = new Fragment_Home();
                 title = getString(R.string.title_home);
                 break;
             case 1:
+                Clear_SharedPref();
                 fragment = new Fragment_BusinessForSale();
                 title = getString(R.string.title_bus_sale);
                 break;
             case 2:
+                Clear_SharedPref();
                 fragment = new Fragment_InvestorsandBuyers();
                 title = getString(R.string.title_investors);
                 break;
             case 3:
+                Clear_SharedPref();
                 fragment = new Fragment_Franchise();
                 title = getString(R.string.title_franchies);
                 break;
@@ -591,30 +608,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             this.moveTaskToBack(true);
         } else {
-            SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
-            sharedPreferences_filter.edit().remove("str_main_filter_type").commit();
-            sharedPreferences_filter.edit().remove("str_business_for_sale_transaction_type").commit();
-            sharedPreferences_filter.edit().remove("str_interested_business_locations").commit();
-            sharedPreferences_filter.edit().remove("str_interested_industries").commit();
-            sharedPreferences_filter.edit().remove("str_investment_size_minimum").commit();
-            sharedPreferences_filter.edit().remove("str_investment_size_maximum").commit();
-            sharedPreferences_filter.edit().remove("str_runrate_sales_minimum").commit();
-            sharedPreferences_filter.edit().remove("str_runrate_sales_maximum").commit();
-            sharedPreferences_filter.edit().remove("str_ebitda_minimum").commit();
-            sharedPreferences_filter.edit().remove("str_ebitda_maximum").commit();
-            sharedPreferences_filter.edit().remove("str_established_minimum").commit();
-            sharedPreferences_filter.edit().remove("str_established_maximum").commit();
-            sharedPreferences_filter.edit().remove("str_limited_liability_company").commit();
-            sharedPreferences_filter.edit().remove("str_public_limited_company").commit();
-            sharedPreferences_filter.edit().remove("str_partnership").commit();
-            sharedPreferences_filter.edit().remove("str_S_corporation").commit();
-            sharedPreferences_filter.edit().remove("str_private_limited_company").commit();
-            sharedPreferences_filter.edit().remove("str_C_corporation").commit();
-            sharedPreferences_filter.edit().remove("str_limited_liability_partnership").commit();
-            sharedPreferences_filter.edit().remove("str_sole_proprietorship").commit();
-            sharedPreferences_filter.edit().remove("str_others").commit();
 
+            Clear_SharedPref_Exit();
             Toast.makeText(getBaseContext(), "Press once again to exit!",
                     Toast.LENGTH_SHORT).show();
             finishAffinity();
@@ -623,5 +618,59 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         back_pressed = System.currentTimeMillis();
     }
 
+
+    public void Clear_SharedPref_Exit() {
+        SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
+        sharedPreferences_filter.edit().remove("str_main_filter_type").commit();
+        sharedPreferences_filter.edit().remove("str_business_for_sale_transaction_type").commit();
+        sharedPreferences_filter.edit().remove("str_interested_business_locations").commit();
+        sharedPreferences_filter.edit().remove("str_interested_industries").commit();
+        sharedPreferences_filter.edit().remove("str_investment_size_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_investment_size_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_runrate_sales_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_runrate_sales_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_ebitda_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_ebitda_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_established_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_established_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_limited_liability_company").commit();
+        sharedPreferences_filter.edit().remove("str_public_limited_company").commit();
+        sharedPreferences_filter.edit().remove("str_partnership").commit();
+        sharedPreferences_filter.edit().remove("str_S_corporation").commit();
+        sharedPreferences_filter.edit().remove("str_private_limited_company").commit();
+        sharedPreferences_filter.edit().remove("str_C_corporation").commit();
+        sharedPreferences_filter.edit().remove("str_limited_liability_partnership").commit();
+        sharedPreferences_filter.edit().remove("str_sole_proprietorship").commit();
+        sharedPreferences_filter.edit().remove("str_others").commit();
+        sharedPreferences_filter.edit().remove("search_key").commit();
+        sharedPreferences_filter.edit().remove("search_id").commit();
+    }
+
+    public void Clear_SharedPref() {
+        SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
+        sharedPreferences_filter.edit().remove("str_main_filter_type").commit();
+        sharedPreferences_filter.edit().remove("str_business_for_sale_transaction_type").commit();
+        sharedPreferences_filter.edit().remove("str_interested_business_locations").commit();
+        sharedPreferences_filter.edit().remove("str_interested_industries").commit();
+        sharedPreferences_filter.edit().remove("str_investment_size_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_investment_size_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_runrate_sales_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_runrate_sales_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_ebitda_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_ebitda_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_established_minimum").commit();
+        sharedPreferences_filter.edit().remove("str_established_maximum").commit();
+        sharedPreferences_filter.edit().remove("str_limited_liability_company").commit();
+        sharedPreferences_filter.edit().remove("str_public_limited_company").commit();
+        sharedPreferences_filter.edit().remove("str_partnership").commit();
+        sharedPreferences_filter.edit().remove("str_S_corporation").commit();
+        sharedPreferences_filter.edit().remove("str_private_limited_company").commit();
+        sharedPreferences_filter.edit().remove("str_C_corporation").commit();
+        sharedPreferences_filter.edit().remove("str_limited_liability_partnership").commit();
+        sharedPreferences_filter.edit().remove("str_sole_proprietorship").commit();
+        sharedPreferences_filter.edit().remove("str_others").commit();
+    }
 
 }

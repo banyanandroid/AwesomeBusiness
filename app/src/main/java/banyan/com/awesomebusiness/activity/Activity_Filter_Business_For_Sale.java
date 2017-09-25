@@ -312,7 +312,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
 
 
-            } else if (str_main_filter.equals("Investor/Buyers")) {
+            } else if (str_main_filter.equals("Investment Oppourtinites")) {
                 LL_investor_buyer_type.setVisibility(View.VISIBLE);
                 LL_interested_business_locations.setVisibility(View.VISIBLE);
                 LL_interested_industry_sectors.setVisibility(View.VISIBLE);
@@ -330,7 +330,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 LL_Checkboxes.setVisibility(View.GONE);
 
 
-            } else if (str_main_filter.equals("Franchises")) {
+            } else if (str_main_filter.equals("Franchise Oppourtinites")) {
                 LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
                 LL_interested_business_locations.setVisibility(View.VISIBLE);
                 LL_interested_industry_sectors.setVisibility(View.VISIBLE);
@@ -546,7 +546,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     System.out.println("str_others :: " + str_others);
 
 
-                } else if (str_main_filter.equals("Investor/Buyers")) {
+                } else if (str_main_filter.equals("Investment Oppourtinites")) {
 
                     // INVESTOR / BUYER - ROLE
                     String str_investor_buyer_role_type = spn_investor_buyer_type.getSelectedItem().toString();
@@ -607,7 +607,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     System.out.println("str_selected_interest_id" + str_selected_interest_id);
 
 
-                } else if (str_main_filter.equals("Franchises")) {
+                } else if (str_main_filter.equals("Franchise Oppourtinites")) {
 
                     System.out.println(" Button Clicked & Came inside Franchises ");
 
