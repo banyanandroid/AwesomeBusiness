@@ -492,7 +492,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                         str_others = "0";
                     }
 
-
                     //SEEKBAR VALUES TO STRING
                     String str_investment_size_minimum = txt_investment_size_minimum.getText().toString();
                     String str_investment_size_maximum = txt_investment_size_maximum.getText().toString();
