@@ -461,6 +461,23 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/windowBackground"
+                        android:text="REASON :"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/ativity_details_txt_business_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/windowBackground"
+                        android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
 
                 </LinearLayout>
 
