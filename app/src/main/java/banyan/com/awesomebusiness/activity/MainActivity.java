@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private FragmentDrawer drawerFragment;
     TextView t1;
     TextView popup_country, popup_currency;
+    private static long back_pressed;
 
     public static final String TAG_COUNTRY_ID = "country_id";
     public static final String TAG_COUNTRY_NAME = "country_name";
@@ -577,5 +578,33 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // Adding request to request queue
         queue.add(request);
     }
+
+    /****************************
+     * Exit Event
+     * ****************************/
+
+    @Override
+    public void onBackPressed() {
+
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+
+            this.moveTaskToBack(true);
+        } else {
+
+            SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
+            sharedPreferences_filter.edit().remove("str_main_filter_type").commit();
+            sharedPreferences_filter.edit().remove("str_business_for_sale_transaction_type").commit();
+
+
+            Toast.makeText(getBaseContext(), "Press once again to exit!",
+                    Toast.LENGTH_SHORT).show();
+
+            finishAffinity();
+
+        }
+        back_pressed = System.currentTimeMillis();
+    }
+
 
 }

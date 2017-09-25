@@ -506,33 +506,33 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     // String str_asset_purchased_year_minimum_maximum = txt_asset_price_maximum.getText().toString();
 
                     //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
-                    editor.putString("str_main_filter_type", str_main_filter);
-                    editor.putString("str_business_for_sale_transaction_type", str_business_for_sale_trans_type);
-                    editor.putString("str_interested_business_locations", str_final_location_update);
-                    editor.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_main_filter_type", str_main_filter);
+                    editor_filter.putString("str_business_for_sale_transaction_type", str_business_for_sale_trans_type);
+                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
+                    editor_filter.putString("str_interested_industries", str_final_industry_update);
                     //SEEKBAR VALUES
-                    editor.putString("str_investment_size_minimum", str_investment_size_minimum);
-                    editor.putString("str_investment_size_maximum", str_investment_size_maximum);
-                    editor.putString("str_runrate_sales_minimum", str_runrate_sales_minimum);
-                    editor.putString("str_runrate_sales_maximum", str_runrate_sales_maximum);
-                    editor.putString("str_ebitda_minimum", str_ebitda_minimum);
-                    editor.putString("str_ebitda_maximum", str_ebitda_maximum);
-                    editor.putString("str_established_minimum", str_established_minimum);
-                    editor.putString("str_established_maximum", str_established_maximum);
+                    editor_filter.putString("str_investment_size_minimum", str_investment_size_minimum);
+                    editor_filter.putString("str_investment_size_maximum", str_investment_size_maximum);
+                    editor_filter.putString("str_runrate_sales_minimum", str_runrate_sales_minimum);
+                    editor_filter.putString("str_runrate_sales_maximum", str_runrate_sales_maximum);
+                    editor_filter.putString("str_ebitda_minimum", str_ebitda_minimum);
+                    editor_filter.putString("str_ebitda_maximum", str_ebitda_maximum);
+                    editor_filter.putString("str_established_minimum", str_established_minimum);
+                    editor_filter.putString("str_established_maximum", str_established_maximum);
                     //LEGAL ENTITY TYPE
-                    editor.putString("str_limited_liability_company", str_limited_liability_company);
-                    editor.putString("str_public_limited_company", str_public_limited_company);
-                    editor.putString("str_partnership", str_partnership);
-                    editor.putString("str_S_corporation", str_S_corporation);
-                    editor.putString("str_private_limited_company", str_private_limited_company);
-                    editor.putString("str_C_corporation", str_C_corporation);
-                    editor.putString("str_limited_liability_partnership", str_limited_liability_partnership);
-                    editor.putString("str_sole_proprietorship", str_sole_proprietorship);
-                    editor.putString("str_others", str_others);
-                    editor.commit();
+                    editor_filter.putString("str_limited_liability_company", str_limited_liability_company);
+                    editor_filter.putString("str_public_limited_company", str_public_limited_company);
+                    editor_filter.putString("str_partnership", str_partnership);
+                    editor_filter.putString("str_S_corporation", str_S_corporation);
+                    editor_filter.putString("str_private_limited_company", str_private_limited_company);
+                    editor_filter.putString("str_C_corporation", str_C_corporation);
+                    editor_filter.putString("str_limited_liability_partnership", str_limited_liability_partnership);
+                    editor_filter.putString("str_sole_proprietorship", str_sole_proprietorship);
+                    editor_filter.putString("str_others", str_others);
+                    editor_filter.commit();
 
                     System.out.println("investment_size_minimum :: " + str_investment_size_minimum);
                     System.out.println("investment_size_maximum :: " + str_investment_size_maximum);
@@ -604,19 +604,19 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
 
                     //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
-                    editor.putString("str_main_filter_type", str_main_filter);
-                    editor.putString("str_investor_buyer_role_type", str_investor_buyer_role_type);
-                    editor.putString("str_interested_business_locations", str_final_location_update);
-                    editor.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_main_filter_type", str_main_filter);
+                    editor_filter.putString("str_investor_buyer_role_type", str_investor_buyer_role_type);
+                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
+                    editor_filter.putString("str_interested_industries", str_final_industry_update);
                     //SEEKBAR VALUES
-                    editor.putString("str_investor_investment_size_minimum", str_investor_investment_size_minimum);
-                    editor.putString("str_investor_investment_size_maximum", str_investor_investment_size_maximum);
-                    editor.putString("str_investor_location", str_Investor_location);
-                    editor.putString("str_investor_interested_in", str_selected_interest_id);
-                    editor.commit();
+                    editor_filter.putString("str_investor_investment_size_minimum", str_investor_investment_size_minimum);
+                    editor_filter.putString("str_investor_investment_size_maximum", str_investor_investment_size_maximum);
+                    editor_filter.putString("str_investor_location", str_Investor_location);
+                    editor_filter.putString("str_investor_interested_in", str_selected_interest_id);
+                    editor_filter.commit();
 
                     System.out.println("str_main_filter_type" + str_main_filter);
                     System.out.println("str_investor_buyer_role_type" + str_investor_buyer_role_type);
@@ -737,31 +737,31 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
 
                     //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
-                    editor.putString("str_main_filter_type", str_main_filter);
-                    editor.putString("str_franchise_headquaters_location", str_franchise_headquaters_location);
-                    editor.putString("str_interested_business_locations", str_final_location_update);
-                    editor.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_main_filter_type", str_main_filter);
+                    editor_filter.putString("str_franchise_headquaters_location", str_franchise_headquaters_location);
+                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
+                    editor_filter.putString("str_interested_industries", str_final_industry_update);
                     //SEEKBAR VALUES
-                    editor.putString("str_franchise_investment_size_minimum", str_franchise_investment_size_minimum);
-                    editor.putString("str_franchise_investment_size_maximum", str_franchise_investment_size_maximum);
-                    editor.putString("str_franchise_monthly_sales_minimum", str_franchise_monthly_sales_minimum);
-                    editor.putString("str_franchise_monthly_sales_maximum", str_franchise_monthly_sales_maximum);
-                    editor.putString("str_franchise_established_minimum", str_franchise_established_minimum);
-                    editor.putString("str_franchise_established_maximum", str_franchise_established_maximum);
+                    editor_filter.putString("str_franchise_investment_size_minimum", str_franchise_investment_size_minimum);
+                    editor_filter.putString("str_franchise_investment_size_maximum", str_franchise_investment_size_maximum);
+                    editor_filter.putString("str_franchise_monthly_sales_minimum", str_franchise_monthly_sales_minimum);
+                    editor_filter.putString("str_franchise_monthly_sales_maximum", str_franchise_monthly_sales_maximum);
+                    editor_filter.putString("str_franchise_established_minimum", str_franchise_established_minimum);
+                    editor_filter.putString("str_franchise_established_maximum", str_franchise_established_maximum);
                     //LEGAL ENTITY TYPE
-                    editor.putString("str_limited_liability_company", str_limited_liability_company);
-                    editor.putString("str_public_limited_company", str_public_limited_company);
-                    editor.putString("str_partnership", str_partnership);
-                    editor.putString("str_S_corporation", str_S_corporation);
-                    editor.putString("str_private_limited_company", str_private_limited_company);
-                    editor.putString("str_C_corporation", str_C_corporation);
-                    editor.putString("str_limited_liability_partnership", str_limited_liability_partnership);
-                    editor.putString("str_sole_proprietorship", str_sole_proprietorship);
-                    editor.putString("str_others", str_others);
-                    editor.commit();
+                    editor_filter.putString("str_limited_liability_company", str_limited_liability_company);
+                    editor_filter.putString("str_public_limited_company", str_public_limited_company);
+                    editor_filter.putString("str_partnership", str_partnership);
+                    editor_filter.putString("str_S_corporation", str_S_corporation);
+                    editor_filter.putString("str_private_limited_company", str_private_limited_company);
+                    editor_filter.putString("str_C_corporation", str_C_corporation);
+                    editor_filter.putString("str_limited_liability_partnership", str_limited_liability_partnership);
+                    editor_filter.putString("str_sole_proprietorship", str_sole_proprietorship);
+                    editor_filter.putString("str_others", str_others);
+                    editor_filter.commit();
 
                     System.out.println("str_main_filter_type" + str_main_filter);
                     System.out.println("str_franchise_headquaters_location" + str_franchise_headquaters_location);
@@ -794,22 +794,18 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 editor.putString("str_filter_selected_transaction_type_name", str_selected_transaction_type_name);
                 editor.commit();
 
-
                 Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.pull_in_left);
                 finish();
-
             }
         });
 
         try {
-
             dialog = new SpotsDialog(Activity_Filter_Business_For_Sale.this);
             dialog.show();
             queue = Volley.newRequestQueue(Activity_Filter_Business_For_Sale.this);
             Get_Business_For_Sale_type();
-
         } catch (Exception e) {
 
         }
