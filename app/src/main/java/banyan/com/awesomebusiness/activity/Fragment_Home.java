@@ -6,6 +6,7 @@ package banyan.com.awesomebusiness.activity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -227,6 +229,7 @@ public class Fragment_Home extends Fragment {
                     try {
                         dialog = new SpotsDialog(getActivity());
                         dialog.show();
+                        Business_profile_list.clear();
                         queue = Volley.newRequestQueue(getActivity());
                         Get_Business_Profile();
                     } catch (Exception e) {
@@ -235,7 +238,7 @@ public class Fragment_Home extends Fragment {
 
                 } else {
 
-                    TastyToast.makeText(getActivity(), "Please Enter Your Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    TastyToast.makeText(getActivity(), "Please Enter Valid Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
                 }
 
@@ -327,8 +330,17 @@ public class Fragment_Home extends Fragment {
         }else {
             str_sort_by = "";
         }
-        Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
 
+        Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
+        try {
+            dialog = new SpotsDialog(getActivity());
+            dialog.show();
+            Business_profile_list.clear();
+            queue = Volley.newRequestQueue(getActivity());
+            Get_Business_Profile();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     @Override
@@ -390,6 +402,9 @@ public class Fragment_Home extends Fragment {
                             auto_search_suggest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    in.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                                     t1 = (TextView) view;
                                     String str_location_name = t1.getText().toString();
@@ -554,7 +569,7 @@ public class Fragment_Home extends Fragment {
         System.out.println("locations" + str_filter_interested_business_locations);
         System.out.println("purchased" + "");
         System.out.println("asset_investment" + "");
-        System.out.println("sort_by" + "");
+        System.out.println("sort_by" + str_sort_by);
         System.out.println("currency" + str_user_currency);
         try {
             dialog = new SpotsDialog(getActivity());
@@ -750,9 +765,8 @@ public class Fragment_Home extends Fragment {
                 System.out.println("locations" + str_filter_interested_business_locations);
                 System.out.println("purchased" + "");
                 System.out.println("asset_investment" + "");
-                System.out.println("sort_by" + "");
+                System.out.println("sort_by" + str_sort_by);
                 System.out.println("currency" + str_user_currency);
-
 
                 return checkParams(params);
             }
