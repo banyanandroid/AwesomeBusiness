@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -384,58 +385,51 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 /********************************************************
                  * Get Multiple Location Details From Searchable Spinner
                  * ******************************************************/
-                String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
-                Arraylist_fetched_location.clear();
-                for (int i = 0; i < str_location.length; i++) {
-                    Arraylist_fetched_location.add(str_location[i]);
-                }
-                System.out.println("array : " + Arraylist_fetched_location);
-                Arraylist_selected_final_location.clear();
-                for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+                String[] str_valid_location = auto_bus_locationlist.getText().toString().split(", ");
 
-                    String get_location = Arraylist_fetched_location.get(i);
-                    get_location = get_location.trim();
-                    System.out.println("get_location : " + get_location);
-                    int location_position = Arraylist_location_place.indexOf(get_location);
-                    String select_location_id = Arraylist_location_key.get(location_position);
-                    String select_location_type = Arraylist_location_type.get(location_position);
-                    String location = select_location_id + "-" + select_location_type;
-                    Arraylist_selected_final_location.add(location);
-                    str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+                if (!str_valid_location.equals("") && str_valid_location == null) {
 
+                    String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
+                    Arraylist_fetched_location.clear();
+                    for (int i = 0; i < str_location.length; i++) {
+                        Arraylist_fetched_location.add(str_location[i]);
+                    }
+                    System.out.println("array : " + Arraylist_fetched_location);
+                    Arraylist_selected_final_location.clear();
+                    for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
+
+                        String get_location = Arraylist_fetched_location.get(i);
+                        get_location = get_location.trim();
+                        System.out.println("get_location : " + get_location);
+                        int location_position = Arraylist_location_place.indexOf(get_location);
+                        String select_location_id = Arraylist_location_key.get(location_position);
+                        String select_location_type = Arraylist_location_type.get(location_position);
+                        String location = select_location_id + "-" + select_location_type;
+                        Arraylist_selected_final_location.add(location);
+                        str_final_location_update = TextUtils.join(", ", Arraylist_selected_final_location);
+
+                    }
+
+                }else {
+                    Toast.makeText(getApplicationContext(), "PLease Select Location", Toast.LENGTH_LONG).show();
                 }
                 System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
 
                 /********************************************************
                  * Get Multiple Industry Sector Details From Searchable Spinner
                  * ******************************************************/
-                String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
-                Arraylist_fetched_industries.clear();
-                for (int i = 0; i < str_industries.length; i++) {
-                    Arraylist_fetched_industries.add(str_industries[i]);
-                }
-                System.out.println("array : " + Arraylist_fetched_industries);
-                Arraylist_selected_final_industry.clear();
-                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
+                String[] str_valid_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
-                    String get_indestry = Arraylist_fetched_industries.get(i);
-                    get_indestry = get_indestry.trim();
-                    System.out.println("get_indestry : " + get_indestry);
-                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                    String select_sect_id = Arraylist_sector_key.get(indus_position);
-                    String select_sect_type = Arraylist_sector_type.get(indus_position);
-                    String sector = select_sect_id + "-" + select_sect_type;
-                    Arraylist_selected_final_industry.add(sector);
-                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
+                if (!str_valid_industries.equals("") && str_valid_industries == null){
 
+
+
+                }else {
+                    Toast.makeText(getApplicationContext(), "PLease Select Industry", Toast.LENGTH_LONG).show();
                 }
-                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
                 //IF STATEMENT TO POST VALUES ACCORING TO MAIN FILTER TYPE
                 if (str_main_filter.equals("Business For sale")) {
-
-                    // BUSINESS FOR SALE - TYPE
-                    String str_business_for_sale_trans_type = spn_business_for_sale_type.getSelectedItem().toString();
 
                     // String Values According to checkbox state  - ENTITY TYPE
                     if (chb_limited_liability_company.isChecked()) {
@@ -509,7 +503,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
                     editor_filter.putString("str_main_filter_type", str_main_filter);
-                    editor_filter.putString("str_business_for_sale_transaction_type", str_business_for_sale_trans_type);
+                    editor_filter.putString("str_business_for_sale_transaction_type", str_selected_transaction_id);
                     editor_filter.putString("str_interested_business_locations", str_final_location_update);
                     editor_filter.putString("str_interested_industries", str_final_industry_update);
                     //SEEKBAR VALUES
@@ -560,20 +554,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     //SEEKBAR VALUES TO STRING
                     String str_investor_investment_size_minimum = txt_investment_size_minimum.getText().toString();
                     String str_investor_investment_size_maximum = txt_investment_size_maximum.getText().toString();
-
-
-
-
-                /*
-                    // FOR GETTING ENTERED INVESTOR HEADQUATERS TYPE AND ID
-                    String str_investor_loccations = auto_investor_location.getText().toString();
-                    int Location_position = Arraylist_location_place.indexOf(str_investor_loccations);
-                    String select_Location_id = Arraylist_location_key.get(Location_position + 1);
-                    String select_Location_type = Arraylist_location_type.get(Location_position + 1);
-                    str_Investor_location = select_Location_id + "-" + select_Location_type;
-                    System.out.println("INVESTOR LOCATION" + str_Investor_location);
-
-                    */
 
 
                     /********************************************************

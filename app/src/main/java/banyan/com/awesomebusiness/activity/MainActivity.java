@@ -87,8 +87,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     TextView popup_txt_notification;
 
     String str_previous_selected_country_name, str_previous_selected_currency;
-    String str_filter_pos = "";
+    String str_filter_pos = "" ;
     String ip_currency, ip_country_id, ip_country = "";
+    String str_check_currency = "";
 
     // CART
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
@@ -117,30 +118,34 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // display the first navigation drawer view on app launch
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_filter_pos = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
+        str_check_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
 
-        if (str_filter_pos.equals("str_main_filter_type")) {
+        if (str_check_currency.equals("str_selected_currency")){
+            Function_AlertDialog();
+        }else if (str_check_currency.equals("")){
+
+            Function_AlertDialog();
+
+        }else {
+
+        }
+
+        if (str_filter_pos.equals("str_main_filter_type")){
             displayView(0);
-        } else if (str_filter_pos.equals("Business For sale")) {
+        }else if (str_filter_pos.equals("Business For sale")){
             displayView(0);
-        } else {
+        }else {
             displayView(0);
         }
 
-        /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_previous_selected_country_name = sharedPreferences.getString("str_selected_country_position", "str_selected_country_position");
-        str_previous_selected_currency = sharedPreferences.getString("str_selected_currency_position", "str_selected_currency_position");
-*/
         try {
             dialog = new SpotsDialog(MainActivity.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
             Get_Currency_Country();
-
-
         } catch (Exception e) {
             // TODO: handle exception
         }
-
 
     }
 
@@ -203,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             return true;
         }
         if (id == R.id.action_add_investor_profile) {
-            /*Toast.makeText(getApplicationContext(), "Investor Profile", Toast.LENGTH_LONG).show();
-            return true;*/
             Intent i = new Intent(getApplicationContext(), Activity_InvestorProfile.class);
             startActivity(i);
         }
@@ -242,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new Fragment_Home();
                 title = getString(R.string.title_home);
                 break;
-
             case 1:
                 fragment = new Fragment_BusinessForSale();
                 title = getString(R.string.title_bus_sale);
@@ -420,6 +422,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                                 editor.putString("str_selected_currency", str_selected_currency_id);
                                 editor.commit();
 
+                                System.out.println("str_selected_country_name : " + str_selected_country_name);
+                                System.out.println("str_selected_country_id : " + str_selected_country_id);
+                                System.out.println("str_selected_currency_id : " + str_selected_currency_id);
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -457,8 +462,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         JSONArray arr;
 
                         arr = obj.getJSONArray("data");
-                        System.out.println("Arrayyyyyyyyyyyyyy ::::::::::::::: " + arr);
-
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
@@ -543,8 +546,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         editor.putString("str_selected_currency", ip_country); // Currency Name i.e INR
                         editor.commit();
 
-                        /*txt_select_country.setText("" + ip_country);
-                        txt_select_currency.setText("" + ip_currency);*/
                         dialog.dismiss();
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -590,7 +591,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             this.moveTaskToBack(true);
         } else {
-
             SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
             sharedPreferences_filter.edit().remove("str_main_filter_type").commit();
@@ -617,7 +617,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             Toast.makeText(getBaseContext(), "Press once again to exit!",
                     Toast.LENGTH_SHORT).show();
-
             finishAffinity();
 
         }

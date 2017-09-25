@@ -106,6 +106,7 @@ public class Fragment_Home extends Fragment {
     ArrayList<String> Arraylist_search_main_type = null;
 
     String str_user_currency = "";
+    String str_sort_by = "";
 
     String str_filter_sale_transaction_type, str_filter_interested_business_locations, str_filter_interested_industries,
             str_filter_investment_size_minimum, str_filter_investment_size_maximum, str_filter_runrate_sales_minimum,
@@ -259,14 +260,14 @@ public class Fragment_Home extends Fragment {
         ActionSheet actionSheet = new ActionSheet(getActivity());
         actionSheet.setTitle("sort by");
         actionSheet.setSourceView(anchor);
-        actionSheet.addAction("Newest", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Recently Listed", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
                 actionSheet.dismiss();
             }
         });
-        actionSheet.addAction("Oldest", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Established Year(oldest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -274,7 +275,31 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        actionSheet.addAction("Relevant", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Established Year(newest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("EBITDA", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Investment size(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Investment size( high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -287,6 +312,21 @@ public class Fragment_Home extends Fragment {
 
     private void performAction(String title) {
 
+        if (title.equals("Recently Listed")){
+            str_sort_by = "1";
+        }else if (title.equals("Established Year(oldest first)")){
+            str_sort_by = "2";
+        }else if (title.equals("Established Year(newest first)")){
+            str_sort_by = "3";
+        }else if (title.equals("EBITDA")){
+            str_sort_by = "4";
+        }else if (title.equals("Investment size(low to high)")){
+            str_sort_by = "5";
+        }else if (title.equals("Investment size( high to low)")){
+            str_sort_by = "6";
+        }else {
+            str_sort_by = "";
+        }
         Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
 
     }
@@ -688,7 +728,7 @@ public class Fragment_Home extends Fragment {
                 params.put("locations", str_filter_interested_business_locations);
                 params.put("purchased", "");
                 params.put("asset_investment", "");
-                params.put("sort_by", "");
+                params.put("sort_by", str_sort_by);
                 params.put("currency", str_user_currency);
 
                 System.out.println("CC" + str_filter_C_corporation);
