@@ -205,6 +205,31 @@ public class Fragment_Home extends Fragment {
 
         }
 
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String business_id = Business_profile_list.get(position).get(TAG_BUSINESS_PROF_ID);
+                String business_key = Business_profile_list.get(position).get(TAG_BUSINESS_PROF_KEY);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("business_id", business_id);
+                editor.putString("business_key", business_key);
+                editor.commit();
+
+                Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+                startActivity(i);
+
+            }
+
+        });
+
+
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -55,7 +55,7 @@ import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
 
 /**
- * Created by CHANDRU on 24-Jul-17.
+ * Created by SJR on 24-Jul-17.
  */
 
 public class Activity_BusinessProfile extends AppCompatActivity {

@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
     TextView tv_notification, tv_message;
     int i = 0;
+    String value = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         try {
             Bundle extras = getIntent().getExtras();
             if(extras !=null) {
-                String value = extras.getString("type");
+                value = extras.getString("type");
             }
         }catch (Exception e) {
 
@@ -139,17 +140,24 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         }
 
-        if (str_filter_pos.equals("str_main_filter_type")){
-            displayView(0);
-        }else if (str_filter_pos.equals("Business For sale")){
-            displayView(0);
-        }else if (str_filter_pos.equals("Investment Oppourtinites")){
-            displayView(1);
-        }else if (str_filter_pos.equals("Franchise Oppourtinites")){
-            displayView(2);
+        if (!value.equals("") && !value.isEmpty() && value != null ) {
+
+            if (value.equals("str_main_filter_type")){
+                displayView(0);
+            }else if (value.equals("Business For sale")){
+                displayView(0);
+            }else if (value.equals("Investment Oppourtinites")){
+                displayView(1);
+            }else if (value.equals("Franchise Oppourtinites")){
+                displayView(2);
+            }else {
+                displayView(0);
+            }
         }else {
             displayView(0);
         }
+
+
 
         try {
             dialog = new SpotsDialog(MainActivity.this);
@@ -261,32 +269,27 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 1:
                 Clear_SharedPref();
-                fragment = new Fragment_BusinessForSale();
-                title = getString(R.string.title_bus_sale);
-                break;
-            case 2:
-                Clear_SharedPref();
                 fragment = new Fragment_InvestorsandBuyers();
                 title = getString(R.string.title_investors);
                 break;
-            case 3:
+            case 2:
                 Clear_SharedPref();
                 fragment = new Fragment_Franchise();
                 title = getString(R.string.title_franchies);
                 break;
-            case 4:
+            case 3:
                 fragment = new Fragment_Messsage();
                 title = getString(R.string.title_message);
                 break;
-            case 5:
+            case 4:
                 fragment = new Fragment_How_To();
                 title = getString(R.string.title_howto);
                 break;
-            case 6:
+            case 5:
                 fragment = new Fragment_QA();
                 title = getString(R.string.title_qa);
                 break;
-            case 7:
+            case 6:
                 fragment = new Fragment_Company();
                 title = getString(R.string.title_company);
                 break;
@@ -671,6 +674,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         sharedPreferences_filter.edit().remove("str_limited_liability_partnership").commit();
         sharedPreferences_filter.edit().remove("str_sole_proprietorship").commit();
         sharedPreferences_filter.edit().remove("str_others").commit();
+        sharedPreferences_filter.edit().remove("search_key").commit();
+        sharedPreferences_filter.edit().remove("search_id").commit();
     }
 
 }

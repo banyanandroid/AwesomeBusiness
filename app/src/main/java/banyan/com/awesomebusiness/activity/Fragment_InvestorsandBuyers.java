@@ -2,6 +2,7 @@ package banyan.com.awesomebusiness.activity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -43,6 +45,7 @@ import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.adapter.List_BusinessProfiles_Adapter;
+import banyan.com.awesomebusiness.adapter.List_InvestorProfiles_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import dmax.dialog.SpotsDialog;
 
@@ -59,10 +62,10 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     TextView t1;
     AutoCompleteTextView auto_search_suggest;
 
-    String str_final_search = "";
+    String str_final_search, str_search_txt = "";
 
     private ListView List;
-    public List_BusinessProfiles_Adapter adapter;
+    public List_InvestorProfiles_Adapter adapter;
 
     public static final String TAG_SEARCH_NAME = "name";
     public static final String TAG_SEARCH_KEY = "key";
@@ -70,18 +73,23 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     public static final String TAG_SEARCH_TITLE = "title";
     public static final String TAG_SEARCH_MAIN_TYPE = "main_type";
 
-    public static final String TAG_BUSINESS_PROF_ID = "business_id";
-    public static final String TAG_BUSINESS_PROF_KEY = "business_key";
-    public static final String TAG_BUSINESS_PROF_SHORT_DES = "buisness_short_description";
-    public static final String TAG_BUSINESS_PROF_YEARLY_SALES = "business_yearly_sales";
-    public static final String TAG_BUSINESS_PROF_EBITDA = "business_ebitda";
-    public static final String TAG_BUSINESS_PROF_EBITDA_RANGE = "business_ebitda_range";
-    public static final String TAG_BUISNESS_PROF_INVESTMENT = "buisness_investment";
-    public static final String TAG_BUISNESS_PROF_DESCRIPTION = "buisness_description";
-    public static final String TAG_BUSINESS_PROF_INTEREST_NAME = "business_interest_name";
-    public static final String TAG_BUSINESS_PROF_ROLE_NAME = "business_role_name";
-    public static final String TAG_COUNTRY_PROF_CURRENCY = "country_currency";
-    public static final String TAG_BUSINESS_PROF_TENTATIVE_PRICE = "business_tentative_price";
+    public static final String TAG_INVESTOR_ID = "investor_id";
+    public static final String TAG_INVESTOR_KEY = "investor_key";
+    public static final String TAG_INVESTOR_NAME = "investor_name";
+    public static final String TAG_INVESTOR_CONFIDENTIAL_EMAIL = "investor_confidential_email";
+    public static final String TAG_INVESTOR_CONFIDENTIAL_MOBILE = "investor_confidential_mobile";
+    public static final String TAG_INVESTOR_USER_ROLE = "investor_user_role";
+    public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
+    public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
+    public static final String TAG_INVESTOR_CURRENCY = "investor_currency";
+    public static final String TAG_INVESTOR_COMPANY_NAME = "investor_company_name";
+    public static final String TAG_INVESTOR_DESIGNATION = "investor_designation";
+    public static final String TAG_INVESTO_PROFILE_URL = "investo_profile_url";
+    public static final String TAG_INVESTOR_SHORT_DESCRIPTION = "investor_short_description";
+    public static final String TAG_INVESTOR_ABOUT_USER = "investor_about_user";
+    public static final String TAG_INVESTOR_AN_NAME = "investor_an_name";
+    public static final String TAG_INVESTOR_INTEREST_NAME = "investor_interest_name";
+    public static final String TAG_INVESTOR_STATUS = "investor_status";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -104,6 +112,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     ArrayList<String> Arraylist_search_main_type = null;
 
     String str_user_currency = "";
+    String str_sort_by = "";
 
     String str_filter_sale_transaction_type, str_filter_interested_business_locations, str_filter_interested_industries,
             str_filter_investment_size_minimum, str_filter_investment_size_maximum, str_filter_runrate_sales_minimum,
@@ -114,7 +123,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
     String str_con_investment, str_con_runrate_sales, str_con_ebitda, str_con_established = "";
 
-    static ArrayList<HashMap<String, String>> Business_profile_list;
+    static ArrayList<HashMap<String, String>> Investor_profile_list;
 
     HashMap<String, String> params = new HashMap<String, String>();
 
@@ -138,7 +147,6 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         btn_sort = (Button) rootView.findViewById(R.id.frag_investor_btn_sort);
         btn_filter = (Button) rootView.findViewById(R.id.frag_investor_btn_filter);
         btn_search = (Button) rootView.findViewById(R.id.frag_investor_btn_search);
-
         Arraylist_search_name = new ArrayList<String>();
         Arraylist_search_key = new ArrayList<String>();
         Arraylist_search_type = new ArrayList<String>();
@@ -150,7 +158,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         Arraylist_update_images = new ArrayList<String>();
 
         // Hashmap for ListView
-        Business_profile_list = new ArrayList<HashMap<String, String>>();
+        Investor_profile_list = new ArrayList<HashMap<String, String>>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
@@ -158,6 +166,11 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         str_filter_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
         str_filter_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
 
+        //Fragment Transition
+        str_final_search = sharedPreferences.getString("search_id", "search_id");
+        str_search_txt = sharedPreferences.getString("search_key", "search_key");
+
+        // From Filter
         str_filter_investment_size_minimum = sharedPreferences.getString("str_investment_size_minimum", "str_investment_size_minimum");
         str_filter_investment_size_maximum = sharedPreferences.getString("str_investment_size_maximum", "str_investment_size_maximum");
         str_filter_runrate_sales_minimum = sharedPreferences.getString("str_runrate_sales_minimum", "str_runrate_sales_minimum");
@@ -181,6 +194,19 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         str_con_ebitda = str_filter_ebitda_minimum + "," + str_filter_ebitda_maximum;
         str_con_established = str_filter_established_minimum + "," + str_filter_established_maximum;
 
+        try {
+
+            if (str_search_txt.equals("search_key")){
+                System.out.println("Default Search key : " + str_search_txt);
+            }else {
+                System.out.println("Default Search key : " + str_search_txt);
+                auto_search_suggest.setText(str_search_txt);
+            }
+
+        }catch (Exception e) {
+
+        }
+
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,7 +220,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("profile_type_from", "Business For sale");
+                editor.putString("profile_type_from", "Investment Oppourtinites");
                 editor.commit();
 
                 Intent i = new Intent(getActivity(), Activity_Filter_Business_For_Sale.class);
@@ -219,19 +245,55 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
                     str_final_search = str_search_key + "-" + str_search_type + "-" + str_search_main_type;
                     System.out.println("User Location :: " + str_final_search);
+                    System.out.println("TITLE :: " + str_search_title);
 
-                    try {
-                        dialog = new SpotsDialog(getActivity());
-                        dialog.show();
-                        queue = Volley.newRequestQueue(getActivity());
-                        Get_Business_Profile();
-                    } catch (Exception e) {
-                        // TODO: handle exception
+                    if (str_search_title.equals("Business for sale")) {
+
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("str_main_filter_type", "Investment Oppourtinites");
+                        editor.putString("search_key", str_search_txt);
+                        editor.putString("search_id", str_final_search);
+                        editor.commit();
+
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        i.putExtra("type", "Business for sale");
+                        startActivity(i);
+
+
+                    } else if (str_search_title.equals("Investment Oppourtinites")) {
+
+                        try {
+                            dialog = new SpotsDialog(getActivity());
+                            dialog.show();
+                            Investor_profile_list.clear();
+                            queue = Volley.newRequestQueue(getActivity());
+                            Get_Investor_Profile();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+                    } else if (str_search_title.equals("Franchise Oppourtinites")) {
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
+                        editor.putString("search_key", str_search_txt);
+                        editor.putString("search_id", str_final_search);
+                        editor.commit();
+
+                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        i.putExtra("type", "Franchise Oppourtinites");
+                        startActivity(i);
+
+                    } else {
+
                     }
 
                 } else {
 
-                    TastyToast.makeText(getActivity(), "Please Enter Your Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    TastyToast.makeText(getActivity(), "Please Enter Valid Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
                 }
 
@@ -256,14 +318,14 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         ActionSheet actionSheet = new ActionSheet(getActivity());
         actionSheet.setTitle("sort by");
         actionSheet.setSourceView(anchor);
-        actionSheet.addAction("Newest", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Recently Listed", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
                 actionSheet.dismiss();
             }
         });
-        actionSheet.addAction("Oldest", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Established Year(oldest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -271,7 +333,31 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             }
         });
 
-        actionSheet.addAction("Relevant", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Established Year(newest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("EBITDA", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Investment size(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Investment size( high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -284,8 +370,32 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
     private void performAction(String title) {
 
-        Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
+        if (title.equals("Recently Listed")) {
+            str_sort_by = "1";
+        } else if (title.equals("Established Year(oldest first)")) {
+            str_sort_by = "2";
+        } else if (title.equals("Established Year(newest first)")) {
+            str_sort_by = "3";
+        } else if (title.equals("EBITDA")) {
+            str_sort_by = "4";
+        } else if (title.equals("Investment size(low to high)")) {
+            str_sort_by = "5";
+        } else if (title.equals("Investment size( high to low)")) {
+            str_sort_by = "6";
+        } else {
+            str_sort_by = "";
+        }
 
+        Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
+        try {
+            dialog = new SpotsDialog(getActivity());
+            dialog.show();
+            Investor_profile_list.clear();
+            queue = Volley.newRequestQueue(getActivity());
+            Get_Investor_Profile();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     @Override
@@ -347,6 +457,9 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                             auto_search_suggest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    in.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                                     t1 = (TextView) view;
                                     String str_location_name = t1.getText().toString();
@@ -491,6 +604,16 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         } else {
 
         }
+        if (str_final_search.equals("search_id")) {
+            str_final_search = "";
+        } else {
+
+        }
+        if (str_search_txt.equals("search_key")) {
+            str_search_txt = "";
+        } else {
+
+        }
 
         System.out.println("CC" + str_filter_C_corporation);
         System.out.println("plc" + str_filter_public_limited_company);
@@ -511,13 +634,13 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         System.out.println("locations" + str_filter_interested_business_locations);
         System.out.println("purchased" + "");
         System.out.println("asset_investment" + "");
-        System.out.println("sort_by" + "");
+        System.out.println("sort_by" + str_sort_by);
         System.out.println("currency" + str_user_currency);
         try {
             dialog = new SpotsDialog(getActivity());
             dialog.show();
             queue = Volley.newRequestQueue(getActivity());
-            Get_Business_Profile();
+            Get_Investor_Profile();
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -528,10 +651,10 @@ public class Fragment_InvestorsandBuyers extends Fragment {
      * To get Business Profiles
      ***************************/
 
-    public void Get_Business_Profile() {
+    public void Get_Investor_Profile() {
         String tag_json_obj = "json_obj_req";
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_dashboard_search_result_business_profile, new Response.Listener<String>() {
+                AppConfig.url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -554,19 +677,22 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String business_id = obj1.getString(TAG_BUSINESS_PROF_ID);
-                            String business_key = obj1.getString(TAG_BUSINESS_PROF_KEY);
-                            String buisness_short_description = obj1.getString(TAG_BUSINESS_PROF_SHORT_DES);
-                            String business_yearly_sales = obj1.getString(TAG_BUSINESS_PROF_YEARLY_SALES);
-                            String business_ebitda = obj1.getString(TAG_BUSINESS_PROF_EBITDA);
-                            String business_ebitda_range = obj1.getString(TAG_BUSINESS_PROF_EBITDA_RANGE);
-                            String buisness_investment = obj1.getString(TAG_BUISNESS_PROF_INVESTMENT);
-                            String buisness_description = obj1.getString(TAG_BUISNESS_PROF_DESCRIPTION);
-                            String business_interest_name = obj1.getString(TAG_BUSINESS_PROF_INTEREST_NAME);
-                            String business_role_name = obj1.getString(TAG_BUSINESS_PROF_ROLE_NAME);
-                            String country_currency = obj1.getString(TAG_COUNTRY_PROF_CURRENCY);
-                            String tentative_price = obj1.getString(TAG_BUSINESS_PROF_TENTATIVE_PRICE);
-
+                            String investor_id = obj1.getString(TAG_INVESTOR_ID);
+                            String investor_key = obj1.getString(TAG_INVESTOR_KEY);
+                            String investor_name = obj1.getString(TAG_INVESTOR_NAME);
+                            String investor_confidential_email = obj1.getString(TAG_INVESTOR_CONFIDENTIAL_EMAIL);
+                            String investor_confidential_mobile = obj1.getString(TAG_INVESTOR_CONFIDENTIAL_MOBILE);
+                            String investor_user_role = obj1.getString(TAG_INVESTOR_USER_ROLE);
+                            String investor_currency_from = obj1.getString(TAG_INVESTOR_CURRENCY_FROM);
+                            String investor_currency_to = obj1.getString(TAG_INVESTOR_CURRENCY_TO);
+                            String investor_currency = obj1.getString(TAG_INVESTOR_CURRENCY);
+                            String investor_company_name = obj1.getString(TAG_INVESTOR_COMPANY_NAME);
+                            String investor_designation = obj1.getString(TAG_INVESTOR_DESIGNATION);
+                            String investo_profile_url = obj1.getString(TAG_INVESTO_PROFILE_URL);
+                            String investor_short_description = obj1.getString(TAG_INVESTOR_SHORT_DESCRIPTION);
+                            String investor_about_user = obj1.getString(TAG_INVESTOR_ABOUT_USER);
+                            String investor_an_name = obj1.getString(TAG_INVESTOR_AN_NAME);
+                            String investor_interest_name = obj1.getString(TAG_INVESTOR_INTEREST_NAME);
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -615,30 +741,37 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                                 }
                             }
 
+
                             // creating new HashMap
                             HashMap<String, String> map = new HashMap<String, String>();
+
                             // adding each child node to HashMap key => value
-                            map.put(TAG_BUSINESS_PROF_ID, business_id);
-                            map.put(TAG_BUSINESS_PROF_KEY, business_key);
-                            map.put(TAG_BUSINESS_PROF_SHORT_DES, buisness_short_description);
-                            map.put(TAG_BUSINESS_PROF_YEARLY_SALES, business_yearly_sales);
-                            map.put(TAG_BUSINESS_PROF_EBITDA, business_ebitda);
-                            map.put(TAG_BUSINESS_PROF_EBITDA_RANGE, business_ebitda_range);
-                            map.put(TAG_BUISNESS_PROF_INVESTMENT, buisness_investment);
-                            map.put(TAG_BUISNESS_PROF_DESCRIPTION, buisness_description);
-                            map.put(TAG_BUSINESS_PROF_INTEREST_NAME, business_interest_name);
-                            map.put(TAG_BUSINESS_PROF_ROLE_NAME, business_role_name);
-                            map.put(TAG_COUNTRY_PROF_CURRENCY, country_currency);
-                            map.put(TAG_BUSINESS_PROF_TENTATIVE_PRICE, tentative_price);
+                            map.put(TAG_INVESTOR_ID, investor_id);
+                            map.put(TAG_INVESTOR_KEY, investor_key);
+                            map.put(TAG_INVESTOR_NAME, investor_name);
+                            map.put(TAG_INVESTOR_CONFIDENTIAL_EMAIL, investor_confidential_email);
+                            map.put(TAG_INVESTOR_CONFIDENTIAL_MOBILE, investor_confidential_mobile);
+                            map.put(TAG_INVESTOR_USER_ROLE, investor_user_role);
+                            map.put(TAG_INVESTOR_CURRENCY_FROM, investor_currency_from);
+                            map.put(TAG_INVESTOR_CURRENCY_TO, investor_currency_to);
+                            map.put(TAG_INVESTOR_CURRENCY, investor_currency);
+                            map.put(TAG_INVESTOR_COMPANY_NAME, investor_company_name);
+                            map.put(TAG_INVESTOR_DESIGNATION, investor_designation);
+                            map.put(TAG_INVESTO_PROFILE_URL, investo_profile_url);
+                            map.put(TAG_INVESTOR_SHORT_DESCRIPTION, investor_short_description);
+                            map.put(TAG_INVESTOR_ABOUT_USER, investor_about_user);
+                            map.put(TAG_INVESTOR_AN_NAME, investor_an_name);
+                            map.put(TAG_INVESTOR_INTEREST_NAME, investor_interest_name);
+
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
                             map.put(TAG_IMAGE_PATH, str_final_image);
 
-                            Business_profile_list.add(map);
-                            adapter = new List_BusinessProfiles_Adapter(getActivity(),
-                                    Business_profile_list);
+                            Investor_profile_list.add(map);
+                            adapter = new List_InvestorProfiles_Adapter(getActivity(),
+                                    Investor_profile_list);
                             List.setAdapter(adapter);
-                            System.out.println("HASHMAP ARRAY" + Business_profile_list);
+                            System.out.println("HASHMAP ARRAY" + Investor_profile_list);
                         }
 
                         dialog.dismiss();
@@ -666,50 +799,23 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("CC", str_filter_C_corporation);
-                params.put("plc", str_filter_public_limited_company);
-                params.put("Other", str_filter_others);
-                params.put("llp", str_filter_limited_liability_partnership);
-                params.put("sp", str_filter_sole_proprietorship);
-                params.put("sc", str_filter_S_corporation);
-                params.put("partner", str_filter_partnership);
-                params.put("plp", str_filter_private_limited_company);
-                params.put("llc", str_filter_limited_liability_company);
+                params.put("investor_current_locations", "");
+                params.put("investment", str_filter_public_limited_company);
+                params.put("interest", "");
                 params.put("transactions", str_filter_sale_transaction_type);
-                params.put("investment", str_con_investment);
-                params.put("run_rate_sales", str_con_runrate_sales);
-                params.put("EBITDA", str_con_ebitda);
-                params.put("established", str_con_established);
                 params.put("industries", str_filter_interested_industries);
-                params.put("keyword", str_final_search);
                 params.put("locations", str_filter_interested_business_locations);
-                params.put("purchased", "");
-                params.put("asset_investment", "");
-                params.put("sort_by", "");
+                params.put("keyword", str_final_search);
                 params.put("currency", str_user_currency);
 
-                System.out.println("CC" + str_filter_C_corporation);
-                System.out.println("plc" + str_filter_public_limited_company);
-                System.out.println("Other" + str_filter_others);
-                System.out.println("llp" + str_filter_limited_liability_partnership);
-                System.out.println("sp" + str_filter_sole_proprietorship);
-                System.out.println("sc" + str_filter_S_corporation);
-                System.out.println("partner" + str_filter_partnership);
-                System.out.println("plp" + str_filter_private_limited_company);
-                System.out.println("llc" + str_filter_limited_liability_company);
+                System.out.println("investor_current_locations" + "");
+                System.out.println("investment" + str_filter_public_limited_company);
+                System.out.println("interest" + "");
                 System.out.println("transactions" + str_filter_sale_transaction_type);
-                System.out.println("investment" + str_con_investment);
-                System.out.println("run_rate_sales" + str_con_runrate_sales);
-                System.out.println("EBITDA" + str_con_ebitda);
-                System.out.println("established" + str_con_established);
                 System.out.println("industries" + str_filter_interested_industries);
-                System.out.println("keyword" + str_final_search);
                 System.out.println("locations" + str_filter_interested_business_locations);
-                System.out.println("purchased" + "");
-                System.out.println("asset_investment" + "");
-                System.out.println("sort_by" + "");
+                System.out.println("keyword" + str_final_search);
                 System.out.println("currency" + str_user_currency);
-
 
                 return checkParams(params);
             }

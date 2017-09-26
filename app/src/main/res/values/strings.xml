@@ -9,8 +9,7 @@
 
     <string name="font_awesome">&#xf1fe;</string>
 
-    <string name="nav_item_home">Home</string>
-    <string name="nav_item_business_sale">Business for Sale</string>
+    <string name="nav_item_home">Business for Sale</string>
     <string name="nav_item_investors_buyer">Inverstors &amp; Buyers</string>
     <string name="nav_item_franchies">Franchies</string>
     <string name="nav_item_message">Messages</string>
@@ -21,7 +20,6 @@
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>
-        <item>@string/nav_item_business_sale</item>
         <item>@string/nav_item_investors_buyer</item>
         <item>@string/nav_item_franchies</item>
         <item>@string/nav_item_message</item>
@@ -30,8 +28,7 @@
         <item>@string/nav_item_company</item>
     </string-array>
 
-    <string name="title_home">Home</string>
-    <string name="title_bus_sale">Business for Sale</string>
+    <string name="title_home">Business for Sale</string>
     <string name="title_investors">Investors and Buyers</string>
     <string name="title_franchies">Franchies</string>
     <string name="title_message">Message</string>

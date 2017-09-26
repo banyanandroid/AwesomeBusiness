@@ -52,9 +52,13 @@ public class AppConfig {
 
     // Dashboard Search
     public static String url_dashboard_search_autofil = BASE_URL + "/index.php/Apicontroller/search";
+    /*********  Business Profile *********/
     public static String url_dashboard_search_result_business_profile = BASE_URL + "/index.php/Apicontroller/listallbusinessprofile";
     public static String url_dashboard_search_result_business_profile_detail = BASE_URL + "/index.php/Apicontroller/listbusinessprofile";
-
+    /*********  Franchise Profile *********/
+    public static String url_dashboard_search_result_franchise_profile = BASE_URL + "/index.php/Apicontroller/listallfranchiseprofile";
+    /*********  Investor Profile *********/
+    public static String url_dashboard_search_result_investor_profile = BASE_URL + "/index.php/Apicontroller/listallinvestorprofile";
 
     ///////////testing purpose
 
