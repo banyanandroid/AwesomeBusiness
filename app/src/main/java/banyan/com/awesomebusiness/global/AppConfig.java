@@ -59,6 +59,7 @@ public class AppConfig {
     public static String url_dashboard_search_result_franchise_profile = BASE_URL + "/index.php/Apicontroller/listallfranchiseprofile";
     /*********  Investor Profile *********/
     public static String url_dashboard_search_result_investor_profile = BASE_URL + "/index.php/Apicontroller/listallinvestorprofile";
+    public static String url_dashboard_search_result_investor_profile_detail = BASE_URL + "/index.php/Apicontroller/listsingleinvestorprofile";
 
     ///////////testing purpose
 

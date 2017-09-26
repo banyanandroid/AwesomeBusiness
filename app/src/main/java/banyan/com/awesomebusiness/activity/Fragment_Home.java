@@ -158,6 +158,33 @@ public class Fragment_Home extends Fragment {
         // Hashmap for ListView
         Business_profile_list = new ArrayList<HashMap<String, String>>();
 
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                System.out.println("ITEM CLICKED");
+
+                String business_id = Business_profile_list.get(position).get(TAG_BUSINESS_PROF_ID);
+                String business_key = Business_profile_list.get(position).get(TAG_BUSINESS_PROF_KEY);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("business_id", business_id);
+                editor.putString("business_key", business_key);
+
+                editor.commit();
+
+                Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+                startActivity(i);
+
+            }
+
+        });
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_filter_sale_transaction_type = sharedPreferences.getString("str_business_for_sale_transaction_type", "str_business_for_sale_transaction_type");
@@ -194,14 +221,14 @@ public class Fragment_Home extends Fragment {
 
         try {
 
-            if (str_search_txt.equals("search_key")){
+            if (str_search_txt.equals("search_key")) {
                 System.out.println("Default Search key : " + str_search_txt);
-            }else {
+            } else {
                 System.out.println("Default Search key : " + str_search_txt);
                 auto_search_suggest.setText(str_search_txt);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -222,7 +249,11 @@ public class Fragment_Home extends Fragment {
                 editor.putString("business_key", business_key);
                 editor.commit();
 
-                Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+               /* Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+                startActivity(i);
+*/
+
+                Intent i = new Intent(getActivity(), Activity_DetailedView_Investors_Buyers.class);
                 startActivity(i);
 
             }
@@ -297,7 +328,7 @@ public class Fragment_Home extends Fragment {
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                       // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
+                        // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
                         editor.putString("search_key", str_search_txt);
                         editor.putString("search_id", str_final_search);
                         editor.commit();

@@ -196,14 +196,14 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
         try {
 
-            if (str_search_txt.equals("search_key")){
+            if (str_search_txt.equals("search_key")) {
                 System.out.println("Default Search key : " + str_search_txt);
-            }else {
+            } else {
                 System.out.println("Default Search key : " + str_search_txt);
                 auto_search_suggest.setText(str_search_txt);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -656,6 +656,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
 
+
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
@@ -735,7 +736,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                                     Arraylist_update_images.add(image_path);
                                 }
 
-                                if (Arraylist_update_images.size() > 0){
+                                if (Arraylist_update_images.size() > 0) {
                                     str_final_image = Arraylist_update_images.get(0);
                                     System.out.println("IMAGE : " + str_final_image);
                                 }

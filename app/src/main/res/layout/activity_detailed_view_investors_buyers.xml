@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -21,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ativity_details_txt_title"
+                android:id="@+id/ativity_investor_details_txt_designation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
@@ -31,9 +30,10 @@
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/windowBackground"
-                android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
+                android:text="PHP Developer"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -48,7 +48,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/ativity_details_image_view"
+                    android:id="@+id/ativity_investor_details_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="142dp"
                     android:layout_weight="1"
@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/ativity_details_card_view_one"
+                android:id="@+id/ativity_investor_details_card_view_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -93,18 +93,18 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Established From"
+                            android:text="Name"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_txt_established_year"
+                            android:id="@+id/ativity_investor_details_name"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="2017"
+                            android:text="Ramesh Raj"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -124,18 +124,50 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Employees"
+                            android:text="Phone"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_txt_employees"
+                            android:id="@+id/ativity_investor_details_mobilenumber"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="12"
+                            android:text="9811980045"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Email"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/ativity_investor_details_email"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="rameshraj@gmail.com"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -155,18 +187,18 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Legal Entity"
+                            android:text="Company"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_legal_entity"
+                            android:id="@+id/ativity_investor_details_company"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="General Partnership"
+                            android:text="The Banyan Infotech"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -186,18 +218,18 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Reported sales"
+                            android:text="Professional Summary"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_reported_sales"
+                            android:id="@+id/ativity_investor_details_professionalsummary"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="INR 1 Crores"
+                            android:text="Test professional summary"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -217,18 +249,18 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Run Rate Sales"
+                            android:text="Transaction Preference"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_run_rate_sales"
+                            android:id="@+id/ativity_investor_details_transaction_preference"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="INR 10 Lakhs"
+                            android:text="Acquiring / Buying a Business"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -248,51 +280,48 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="EBITDA Margin"
+                            android:text="Investment Size"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
-                        <TextView
-                            android:id="@+id/ativity_details_ebitda_margin"
+
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="10"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:orientation="vertical"
+                            android:weightSum="3">
 
+                            <TextView
+                                android:id="@+id/ativity_investor_details_investment_size_from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text="50000"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text="To"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                            <TextView
+                                android:id="@+id/ativity_investor_details_investment_size_to"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text="100000"
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:text="Industries"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/ativity_details_industries"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -311,12 +340,12 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Locations"
+                            android:text="Location Preference"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_locations"
+                            android:id="@+id/ativity_investor_details_prefered_locations"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -342,18 +371,49 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Listed By"
+                            android:text="Preferred Industry"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_listed_by"
+                            android:id="@+id/ativity_investor_details_prefered_industries"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Business Broker"
+                            android:text="Building Construction and Maintenance"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Local Time"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/ativity_investor_details_local_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="15:52 PM"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -378,7 +438,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_details_status"
+                            android:id="@+id/ativity_investor_details_status"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -396,253 +456,9 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/ativity_details_card_view_two"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="@color/windowBackground2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="SEEKING INVESTMENT"
-                        android:textColor="@color/txt_black"
-                        android:textSize="18dp" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:id="@+id/ativity_details_txt_seeking_amount_currency_type"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:text="INR"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/ativity_details_txt_seeking_amount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="2017"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/windowBackground"
-                        android:text="REASON :"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/ativity_details_txt_business_reason"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/windowBackground"
-                        android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ativity_details_card_view_business_overview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="@color/windowBackground2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="BUSINESS OVERVIEW"
-                        android:textColor="@color/black"
-                        android:textSize="18dp" />
-
-
-                    <TextView
-                        android:id="@+id/ativity_details_txt_business_overview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/windowBackground"
-                        android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ativity_details_card_view_prod_serv_overview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="@color/windowBackground2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="PRODUCTS &amp; SERVICES OVERVIEW"
-                        android:textColor="@color/txt_black"
-                        android:textSize="18dp" />
-
-
-                    <TextView
-                        android:id="@+id/ativity_details_txt_prod_serv_overview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/windowBackground"
-                        android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ativity_details_card_view_facilities_overview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:layout_marginRight="@dimen/activity_vertical_margin"
-                android:layout_marginStart="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="@color/windowBackground2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:layout_marginStart="@dimen/activity_vertical_margin"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="FACILITIES OVERVIEW"
-                        android:textColor="@color/txt_black"
-                        android:textSize="18dp" />
-
-
-                    <TextView
-                        android:id="@+id/ativity_details_txt_facilities_overview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/windowBackground"
-                        android:text="A car (or automobile) is a wheeled motor vehicle used for transportation."
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
 
             <Button
-                android:id="@+id/btn_contact_business"
+                android:id="@+id/btn_ativity_investor_details_contact_business"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
@@ -658,6 +474,10 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
 
 </LinearLayout>
