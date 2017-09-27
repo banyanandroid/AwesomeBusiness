@@ -138,9 +138,10 @@ public class FragmentDrawer extends Fragment {
 
             try {
                 String str_img_path = str_photo;
-                Glide.with(getActivity()).load(str_img_path)
-                        .thumbnail(0.5f)
-                        .crossFade()
+
+                Glide.with(getApplicationContext())
+                        .load(str_img_path)
+                        .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(img_profile);
 
