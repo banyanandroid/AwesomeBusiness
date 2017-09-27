@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             Bundle extras = getIntent().getExtras();
             if(extras !=null) {
                 value = extras.getString("type");
+            }else {
+                value = "nothing";
             }
         }catch (Exception e) {
 

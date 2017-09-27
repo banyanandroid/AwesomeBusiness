@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 
@@ -94,8 +95,11 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
     public static final String TAG_INDUSTRY_NAME = "industry_name";
     public static final String TAG_INDUSTRY_KEY = "industry_key";
 
+    public static final String TAG_IMAGE_PATH = "image_path";
+
     ArrayList<String> Arraylist_update_location = null;
     ArrayList<String> Arraylist_update_industries = null;
+    ArrayList<String> Arraylist_update_images = null;
 
 
     Button btn_contact_business;
@@ -107,7 +111,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
             txt_seeking_investment_currency_type, txt_seeking_investment_amount, txt_reason,
             txt_business_overview, txt_products_services_overview, txt_facilities_overview;
 
-    String str_final_location, str_final_industries = "";
+    String str_final_location, str_final_industries, str_final_image = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +150,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
+        Arraylist_update_images = new ArrayList<String>();
 
         img_business_for_sale = (ImageView) findViewById(R.id.ativity_details_image_view);
 
@@ -188,11 +193,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
-
     }
-
-
     /*****************************
      * GET Details
      ***************************/
@@ -216,13 +217,12 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                         JSONArray arr_data;
                         JSONArray arr_location;
                         JSONArray arr_industry;
+                        JSONArray arr_images;
 
                         arr_data = obj.getJSONArray("data");
 
                         for (int i = 0; arr_data.length() > i; i++) {
-
                             JSONObject obj_data = arr_data.getJSONObject(i);
-
 
                             String business_id = obj_data.getString(TAG_BUSINESS_ID);
                             String business_key = obj_data.getString(TAG_BUSINESS_KEY);
@@ -289,9 +289,31 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                             }
                             str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
 
+                            arr_images = obj_data.getJSONArray("images");
+                            if (arr_images != null) {
+                                System.out.println("Length images:: " + arr_images.length());
+                                Arraylist_update_images.clear();
+                                for (int l = 0; arr_images.length() > l; l++) {
+                                    JSONObject obj_image = arr_images.getJSONObject(l);
+                                    String image_path = obj_image.getString(TAG_IMAGE_PATH);
+
+                                    Arraylist_update_images.add(image_path);
+                                }
+
+                                if (Arraylist_update_images.size() > 0) {
+                                    str_final_image = Arraylist_update_images.get(0);
+                                    System.out.println("IMAGE : " + str_final_image);
+                                }
+                            }
+
                             System.out.println("INDUSTRIES ::: " + str_final_industries);
 
                             try {
+
+                                Glide.with(getApplicationContext())
+                                        .load(str_final_image)
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(img_business_for_sale);
 
                                 txt_title.setText("" + buisness_short_description);
                                 txt_established.setText("" + business_established);
@@ -311,10 +333,14 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
 
+                                dialog.dismiss();
 
                             } catch (Exception e) {
 
+                                dialog.dismiss();
                             }
+
+                            dialog.dismiss();
                         }
 
                     } else if (success == 0) {
