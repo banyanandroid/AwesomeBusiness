@@ -3,6 +3,7 @@ package banyan.com.awesomebusiness.activity;
 /**
  * Created by Jo on 19/07/17.
  */
+
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -204,16 +205,44 @@ public class Fragment_Franchise extends Fragment {
 
         try {
 
-            if (str_search_txt.equals("search_key")){
+            if (str_search_txt.equals("search_key")) {
                 System.out.println("Default Search key : " + str_search_txt);
-            }else {
+            } else {
                 System.out.println("Default Search key : " + str_search_txt);
                 auto_search_suggest.setText(str_search_txt);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
+
+
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                System.out.println("ITEM CLICKED");
+
+                String franchise_id = Franchise_profile_list.get(position).get(TAG_FRANCHISE_ID);
+                String franchise_key = Franchise_profile_list.get(position).get(TAG_FRANCHISE_KEY);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("franchise_id", franchise_id);
+                editor.putString("franchise_key", franchise_key);
+
+                editor.commit();
+
+                Intent i = new Intent(getActivity(), Activity_DetailedView_Franchise.class);
+                startActivity(i);
+
+            }
+
+        });
 
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +278,7 @@ public class Fragment_Franchise extends Fragment {
 
                     if (txt_pos == -1) {
                         TastyToast.makeText(getActivity(), "Please Enter Valid Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }else {
+                    } else {
 
                         String str_search_key = Arraylist_search_key.get(txt_pos);
                         String str_search_type = Arraylist_search_type.get(txt_pos);
@@ -753,7 +782,7 @@ public class Fragment_Franchise extends Fragment {
                                     Arraylist_update_images.add(image_path);
                                 }
 
-                                if (Arraylist_update_images.size() > 0){
+                                if (Arraylist_update_images.size() > 0) {
                                     str_final_image = Arraylist_update_images.get(0);
                                     System.out.println("IMAGE : " + str_final_image);
                                 }

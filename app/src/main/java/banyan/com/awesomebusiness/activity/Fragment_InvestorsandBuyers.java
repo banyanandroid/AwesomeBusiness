@@ -210,6 +210,35 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
         }
 
+
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                System.out.println("ITEM CLICKED");
+
+                String investor_id = Investor_profile_list.get(position).get(TAG_INVESTOR_ID);
+                String investor_key = Investor_profile_list.get(position).get(TAG_INVESTOR_KEY);
+
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString("investor_id", investor_id);
+                editor.putString("investor_key", investor_key);
+
+                editor.commit();
+
+                Intent i = new Intent(getActivity(), Activity_DetailedView_Investors_Buyers.class);
+                startActivity(i);
+
+            }
+
+        });
+
+
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

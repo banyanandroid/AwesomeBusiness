@@ -60,6 +60,8 @@ public class AppConfig {
     public static String url_dashboard_search_result_business_profile_detail = BASE_URL + "/index.php/Apicontroller/listbusinessprofile";
     /*********  Franchise Profile *********/
     public static String url_dashboard_search_result_franchise_profile = BASE_URL + "/index.php/Apicontroller/listallfranchiseprofile";
+    public static String url_dashboard_search_result_franchise_profile_detail = BASE_URL + "/index.php/Apicontroller/listfranchiseprofile";
+
     /*********  Investor Profile *********/
     public static String url_dashboard_search_result_investor_profile = BASE_URL + "/index.php/Apicontroller/listallinvestorprofile";
     public static String url_dashboard_search_result_investor_profile_detail = BASE_URL + "/index.php/Apicontroller/listsingleinvestorprofile";

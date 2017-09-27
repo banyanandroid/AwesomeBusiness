@@ -2268,6 +2268,59 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
                                 } else if (franchise_format.equals("2")) {
 
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
+
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    edt_format_name_1.setText("" + franchise_format_name1);
+                                    edt_format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    edt_format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    edt_format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    edt_format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    edt_format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    edt_format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    edt_format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    edt_format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    edt_format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    edt_format_name_2.setText("" + franchise_format_name2);
+                                    edt_format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    edt_format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    edt_format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    edt_format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    edt_format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    edt_format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    edt_format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    edt_format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    edt_format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
 
                                 } else if (franchise_format.equals("3")) {
 
