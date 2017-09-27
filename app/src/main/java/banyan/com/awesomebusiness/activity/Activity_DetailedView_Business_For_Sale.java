@@ -194,6 +194,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
             // TODO: handle exception
         }
     }
+
     /*****************************
      * GET Details
      ***************************/
@@ -381,6 +382,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
                 params.put("user_id", str_user_id);
                 params.put("business_key", str_business_key);
+                params.put("currency", str_user_currency);
 
                 System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
                 System.out.println("BUSINESS KEYYYYYYYYYYYYY ::: " + str_business_key);

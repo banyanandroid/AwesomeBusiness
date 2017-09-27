@@ -88,7 +88,11 @@
 
         <activity
             android:name=".activity.Activity_DetailedView_Investors_Buyers"
-            android:label="Details"></activity>
+            android:label="Investor Buyer Details"></activity>
+
+        <activity
+            android:name=".activity.Activity_DetailedView_Franchise"
+            android:label="Franchise Details"></activity>
 
 
         <receiver

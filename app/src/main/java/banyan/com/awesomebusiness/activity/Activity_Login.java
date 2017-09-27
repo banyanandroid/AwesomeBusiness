@@ -113,9 +113,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
     String str_signin_email, str_signin_pass, str_signup_email, str_signup_pass, str_signup_repeat_pass;
     String str_social_email, str_social_name, str_social_image, str_social_type;
-    String str_user_name,str_user_email, str_user_id,str_user_photo;
+    String str_user_name, str_user_email, str_user_id, str_user_photo;
 
-    SpotsDialog dialog,dialog_popup;
+    SpotsDialog dialog, dialog_popup;
 
     private static final String TAG_EMAIL = "user_email";
     private static final String TAG_NAME = "user_name";
@@ -123,8 +123,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     private static final String TAG_ID = "id";
 
     Button btn_fb;
+
     @Override
-     protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -185,10 +186,14 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         profile_image = profile.getProfilePictureUri(400, 400).toString();
                         Log.e("profile_image", profile_image);
 
+                        System.out.println("FB Profile Pic : : : " + profile_image);
+
 
                         str_social_name = full_name;
                         str_social_image = profile_image;
                         str_social_type = "2";
+
+                        System.out.println("FB User Pic : : : " + str_social_image);
 
                     }
 
@@ -493,7 +498,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_user_id = obj.getString(TAG_ID);
                         str_user_photo = obj.getString(TAG_PHOTO);
 
-                        session.createLoginSession(str_user_name,str_user_id, str_user_email,str_user_photo);
+                        session.createLoginSession(str_user_name, str_user_id, str_user_email, str_user_photo);
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -575,7 +580,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         str_user_id = obj.getString(TAG_ID);
                         str_user_photo = obj.getString(TAG_PHOTO);
 
-                        session.createLoginSession(str_user_name,str_user_id, str_user_email,str_user_photo);
+                        session.createLoginSession(str_user_name, str_user_id, str_user_email, str_user_photo);
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -584,6 +589,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         editor.putString("str_user_email", str_user_email);
                         editor.putString("str_user_id", str_user_id);
                         editor.commit();
+
+                        System.out.println("USER PHOTO" + str_user_photo);
 
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
@@ -672,7 +679,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                         dialog_popup.dismiss();
 
 
-
                     } else {
                         TastyToast.makeText(getApplicationContext(), "Oops...! Failed to Retrive:(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
@@ -734,7 +740,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 context);
         alertDialogBuilder.setView(promptsView);
 
-        edt_pwd  = (EditText) promptsView.findViewById(R.id.edt_forgot_pwd_email);
+        edt_pwd = (EditText) promptsView.findViewById(R.id.edt_forgot_pwd_email);
 
         alertDialogBuilder
                 .setCancelable(false)
@@ -744,10 +750,10 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                                 str_forgot_pwd = edt_pwd.getText().toString();
 
-                                if (str_forgot_pwd.equals("")){
+                                if (str_forgot_pwd.equals("")) {
                                     edt_pwd.setError("Please Enter Email ID");
                                     TastyToast.makeText(getApplicationContext(), "Please Enter Email ID", TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                                }else {
+                                } else {
                                     try {
                                         dialog_popup = new SpotsDialog(Activity_Login.this);
                                         dialog_popup.show();
@@ -773,8 +779,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         // show it
         alertDialog.show();
     }
-
-
 
 
     @Override

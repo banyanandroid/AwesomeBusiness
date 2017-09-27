@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 
@@ -84,7 +85,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
     Button btn_contact_business;
 
-    ImageView img_business_for_sale;
+    ImageView img_investor;
 
     TextView txt_designation, txt_name, txt_phone, txt_email, txt_company, txt_professonal_summary, txt_transaction_preference,
             txt_investment_size_from, txt_investment_size_to, txt_locations, txt_industries, txt_local_time, txt_status;
@@ -130,7 +131,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
         Arraylist_update_industries = new ArrayList<String>();
 
 
-        img_business_for_sale = (ImageView) findViewById(R.id.ativity_details_image_view);
+        img_investor = (ImageView) findViewById(R.id.ativity_details_image_view);
 
         txt_designation = (TextView) findViewById(R.id.ativity_investor_details_txt_designation);
         txt_name = (TextView) findViewById(R.id.ativity_investor_details_name);
@@ -195,6 +196,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                         JSONArray arr_data;
                         JSONArray arr_location;
                         JSONArray arr_industry;
+                        JSONArray arr_images;
 
                         arr_data = obj.getJSONArray("data");
 
@@ -253,9 +255,15 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                             System.out.println("INDUSTRIES ::: " + str_final_industries);
 
+
+
                             try {
 
-
+                                Glide.with(getApplicationContext())
+                                        .load(investor_logo)
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(img_investor);
+                                
                                 txt_designation.setText("" + investor_designation);
                                 txt_name.setText("" + investor_name);
                                 txt_phone.setText("" + investor_confidential_mobile);
@@ -316,10 +324,9 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                //  params.put("investor_key", str_investor_key);
-
-                //This is static , Remove Later
-                params.put("investor_key", "MEVhGt");
+                params.put("user_id", str_user_id);
+                params.put("investor_key", str_investor_key);
+                params.put("currency", str_user_currency);
 
 
                 System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
