@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -34,6 +35,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
+import banyan.com.awesomebusiness.adapter.List_BusinessProfiles_Adapter;
+import banyan.com.awesomebusiness.adapter.List_RecentActivities_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,7 +60,6 @@ public class Activity_UserProfile extends AppCompatActivity {
     EditText edt_new_password, edt_repeat_new_password;
     String str_new_password, str_repeat_new_password = "";
 
-
     // Session Manager Class
     SessionManager session;
     SpotsDialog dialog;
@@ -69,6 +71,13 @@ public class Activity_UserProfile extends AppCompatActivity {
             str_user_business_proposalNotify, str_user_photo, str_user_created_on = "";
 
     public static RequestQueue queue;
+
+    static ArrayList<HashMap<String, String>> Recent_Activities_List;
+
+    HashMap<String, String> params = new HashMap<String, String>();
+
+    private ListView List;
+    public List_RecentActivities_Adapter adapter;
 
     String TAG = "";
 
@@ -89,7 +98,6 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static final String TAG_USER_PHOTO = "user_photo";
     public static final String TAG_USER_CREATEDON = "user_createdon";
 
-
     public static final String TAG_PREF_LOCATION_ID = "prefer_location_id";
     public static final String TAG_PREF_LOCATION_TYPE = "prefer_location_type";
     public static final String TAG_PREF_USER_ID = "prefer_user_id";
@@ -102,6 +110,10 @@ public class Activity_UserProfile extends AppCompatActivity {
     public static final String TAG_PREF_CREATEON = "preferences_createdon";
     public static final String TAG_PREF_ACT = "preferences_act";
 
+    public static final String TAG_DETAILS = "details";
+    public static final String TAG_TYPE = "type";
+    public static final String TAG_KEY = "key";
+    public static final String TAG_CREATED_ON = "created_on";
 
     ArrayList<String> Arraylist_sector = null;
     ArrayList<String> Arraylist_location = null;
@@ -140,7 +152,6 @@ public class Activity_UserProfile extends AppCompatActivity {
 
 
         img_profile_picture = (CircleImageView) findViewById(R.id.user_profile_picture);
-        // img_edit = (ImageView) findViewById(R.id.profile_img_edit);
         txt_edit = (TextView) findViewById(R.id.profile_txt_edit);
 
         txt_username = (TextView) findViewById(R.id.userprofile_txt_username);
@@ -148,8 +159,13 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_user_mobile = (TextView) findViewById(R.id.userprofile_txt_user_mobile);
         txt_user_current_role = (TextView) findViewById(R.id.userprofile_txt_user_role);
         txt_user_company = (TextView) findViewById(R.id.userprofile_txt_user_company);
-
+        txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
         txt_myprofile = (TextView) findViewById(R.id.profile_txt_myprofile);
+
+        List = (ListView) findViewById(R.id.user_activity_listview);
+
+        // Hashmap for ListView
+        Recent_Activities_List = new ArrayList<HashMap<String, String>>();
 
         //ON CLICKING THIS WILL DIRECT TO TAB LAYOUT OF USER PROFILES
         txt_myprofile.setOnClickListener(new View.OnClickListener() {
@@ -162,18 +178,6 @@ public class Activity_UserProfile extends AppCompatActivity {
 
             }
         });
-
-
-        txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
-        // img_change_password = (ImageView) findViewById(R.id.profile_img_editpassword);
-
-
-        /*img_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Function_Edit_profile();
-            }
-        });*/
 
         txt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,12 +192,7 @@ public class Activity_UserProfile extends AppCompatActivity {
                 Function_AlertDialog();
             }
         });
-        /*img_change_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Function_AlertDialog();
-            }
-        });*/
+
 
         try {
             dialog = new SpotsDialog(Activity_UserProfile.this);
@@ -204,7 +203,6 @@ public class Activity_UserProfile extends AppCompatActivity {
         } catch (Exception e) {
             // TODO: handle exceptions
         }
-
 
     }
 
@@ -256,23 +254,31 @@ public class Activity_UserProfile extends AppCompatActivity {
                         str_user_created_on = obj_data.getString(TAG_USER_CREATEDON);
 
                         try {
-
-                            Glide.with(getApplicationContext()).load(str_user_photo)
-                                    .thumbnail(0.5f)
-                                    .crossFade()
+                            Glide.with(getApplicationContext())
+                                    .load(str_user_photo)
+                                    .placeholder(R.drawable.placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .into(img_profile_picture);
 
                             txt_username.setText("" + str_profile_user_name);
                             txt_user_email.setText("" + str_profile_user_email);
                             txt_user_mobile.setText("" + str_user_mobile);
-                            txt_user_current_role.setText("" + str_user_designation);
-                            txt_user_company.setText("" + str_user_company_name);
+                            txt_user_current_role.setText("" + str_user_designation + " | ");
+                            txt_user_company.setText(" " + str_user_company_name);
 
                         } catch (Exception e) {
 
                         }
                         dialog.dismiss();
+                        try{
+                            dialog = new SpotsDialog(Activity_UserProfile.this);
+                            dialog.show();
+                            queue = Volley.newRequestQueue(Activity_UserProfile.this);
+                            Get_Recent_Activities();
+                        }catch (Exception e) {
+
+                        }
+
                     } else if (success == 0) {
 
                         dialog.dismiss();
@@ -323,11 +329,9 @@ public class Activity_UserProfile extends AppCompatActivity {
         queue.add(request);
     }
 
-
     /*****************************
      * Alert Dialog To Chande Password
      ***************************/
-
 
     public void Function_AlertDialog() {
 
@@ -405,7 +409,6 @@ public class Activity_UserProfile extends AppCompatActivity {
 
     }
 
-
     /******************************************
      *    Change User Password
      * *******************************************/
@@ -478,5 +481,98 @@ public class Activity_UserProfile extends AppCompatActivity {
         queue.add(request);
     }
 
+
+    /*****************************
+     * GET User Profile
+     ***************************/
+
+    public void Get_Recent_Activities() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_recent_activities, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+
+                        JSONArray arr;
+                        arr = obj.getJSONArray("data");
+                        for (int i = 0; arr.length() > i; i++) {
+                            JSONObject obj_data = arr.getJSONObject(i);
+
+                            String str_details = obj_data.getString(TAG_DETAILS);
+                            String str_type = obj_data.getString(TAG_TYPE);
+                            String str_key = obj_data.getString(TAG_KEY);
+                            String str_created_on = obj_data.getString(TAG_CREATED_ON);
+
+                            // creating new HashMap
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            // adding each child node to HashMap key => value
+                            map.put(TAG_DETAILS, str_details);
+                            map.put(TAG_TYPE, str_type);
+                            map.put(TAG_KEY, str_key);
+                            map.put(TAG_CREATED_ON, str_created_on);
+
+                            Recent_Activities_List.add(map);
+
+                            adapter = new List_RecentActivities_Adapter(Activity_UserProfile.this,
+                                    Recent_Activities_List);
+                            List.setAdapter(adapter);
+                            System.out.println("HASHMAP ARRAY" + Recent_Activities_List);
+                        }
+                        dialog.dismiss();
+                    } else if (success == 0) {
+
+                        dialog.dismiss();
+
+                        Alerter.create(Activity_UserProfile.this)
+                                .setTitle("AWESOME BUSINESSES")
+                                .setText("Oops! Something went wrong :( \n Try Again")
+                                .setBackgroundColor(R.color.red)
+                                .show();
+                    }
+
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+                Alerter.create(Activity_UserProfile.this)
+                        .setTitle("AWESOME BUSINESSES")
+                        .setText("Internal Error :(\n" + error.getMessage())
+                        .setBackgroundColor(R.color.colorPrimaryDark)
+                        .show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+
+                System.out.println("USER_ID ::: " + str_user_id);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        queue.add(request);
+    }
 
 }

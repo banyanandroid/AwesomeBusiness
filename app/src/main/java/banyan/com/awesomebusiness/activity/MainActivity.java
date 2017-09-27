@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     RelativeLayout notification_Count, notification_batch, message_Count, message_batch;
     TextView tv_notification, tv_message;
     int i = 0;
-    String value = "";
+    String value = "nothing";
+    String search_key, search_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             Bundle extras = getIntent().getExtras();
             if(extras !=null) {
                 value = extras.getString("type");
+                search_key = extras.getString("search_key");
+                search_id = extras.getString("search_id");
+
+                if (value !=null  &&  !value.isEmpty()){
+
+                }else {
+                    value = "nothing";
+                }
+
             }else {
                 value = "nothing";
             }
@@ -145,15 +155,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         if (!value.equals("") && !value.isEmpty() && value != null ) {
 
             if (value.equals("str_main_filter_type")){
-                displayView(0);
+                displayView_awesome(0);
             }else if (value.equals("Business For sale")){
-                displayView(0);
+                displayView_awesome(0);
             }else if (value.equals("Investment Oppourtinites")){
-                displayView(1);
+                displayView_awesome(1);
             }else if (value.equals("Franchise Oppourtinites")){
-                displayView(2);
+                displayView_awesome(2);
             }else {
-                displayView(0);
+                displayView_awesome(0);
             }
         }else {
             displayView(0);
@@ -276,6 +286,53 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 Clear_SharedPref();
+                fragment = new Fragment_Franchise();
+                title = getString(R.string.title_franchies);
+                break;
+            case 3:
+                fragment = new Fragment_Messsage();
+                title = getString(R.string.title_message);
+                break;
+            case 4:
+                fragment = new Fragment_How_To();
+                title = getString(R.string.title_howto);
+                break;
+            case 5:
+                fragment = new Fragment_QA();
+                title = getString(R.string.title_qa);
+                break;
+            case 6:
+                fragment = new Fragment_Company();
+                title = getString(R.string.title_company);
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    private void displayView_awesome(int position) {
+        Fragment fragment = null;
+        String title = getString(R.string.app_name);
+        switch (position) {
+            case 0:
+                fragment = new Fragment_Home();
+                title = getString(R.string.title_home);
+                break;
+            case 1:
+                fragment = new Fragment_InvestorsandBuyers();
+                title = getString(R.string.title_investors);
+                break;
+            case 2:
                 fragment = new Fragment_Franchise();
                 title = getString(R.string.title_franchies);
                 break;
@@ -535,7 +592,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /******************************************
      * To get  Currency and Country By IP

@@ -246,54 +246,61 @@ public class Fragment_Franchise extends Fragment {
 
                     String str_search_txt = auto_search_suggest.getText().toString();
                     int txt_pos = Arraylist_search_name.indexOf(str_search_txt);
-                    String str_search_key = Arraylist_search_key.get(txt_pos);
-                    String str_search_type = Arraylist_search_type.get(txt_pos);
-                    String str_search_title = Arraylist_search_title.get(txt_pos);
-                    String str_search_main_type = Arraylist_search_main_type.get(txt_pos);
 
-                    str_final_search = str_search_key + "-" + str_search_type + "-" + str_search_main_type;
-                    System.out.println("User Location :: " + str_final_search);
-                    System.out.println("TITLE :: " + str_search_title);
+                    if (txt_pos == -1) {
+                        TastyToast.makeText(getActivity(), "Please Enter Valid Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    }else {
 
-                    if (str_search_title.equals("Business for sale")) {
+                        String str_search_key = Arraylist_search_key.get(txt_pos);
+                        String str_search_type = Arraylist_search_type.get(txt_pos);
+                        String str_search_title = Arraylist_search_title.get(txt_pos);
+                        String str_search_main_type = Arraylist_search_main_type.get(txt_pos);
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
-                        editor.putString("search_key", str_search_txt);
-                        editor.putString("search_id", str_final_search);
-                        editor.commit();
+                        str_final_search = str_search_key + "-" + str_search_type + "-" + str_search_main_type;
+                        System.out.println("User Location :: " + str_final_search);
+                        System.out.println("TITLE :: " + str_search_title);
 
-                        Intent i = new Intent(getActivity(), MainActivity.class);
-                        i.putExtra("type", "Business for sale");
-                        startActivity(i);
+                        if (str_search_title.equals("Business for sale")) {
 
-                    } else if (str_search_title.equals("Investment Oppourtinites")) {
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            // editor.putString("str_main_filter_type", "Franchise Oppourtinites");
+                            editor.putString("search_key", str_search_txt);
+                            editor.putString("search_id", str_final_search);
+                            editor.commit();
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            i.putExtra("type", "Business for sale");
+                            startActivity(i);
+
+                        } else if (str_search_title.equals("Investment Oppourtinites")) {
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
 //                        editor.putString("str_main_filter_type", "Investment Oppourtinites");
-                        editor.putString("search_key", str_search_txt);
-                        editor.putString("search_id", str_final_search);
-                        editor.commit();
+                            editor.putString("search_key", str_search_txt);
+                            editor.putString("search_id", str_final_search);
+                            editor.commit();
 
-                        Intent i = new Intent(getActivity(), MainActivity.class);
-                        i.putExtra("type", "Investment Oppourtinites");
-                        startActivity(i);
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            i.putExtra("type", "Investment Oppourtinites");
+                            startActivity(i);
 
-                    } else if (str_search_title.equals("Franchise Oppourtinites")) {
+                        } else if (str_search_title.equals("Franchise Oppourtinites")) {
 
-                        try {
-                            dialog = new SpotsDialog(getActivity());
-                            dialog.show();
-                            Franchise_profile_list.clear();
-                            queue = Volley.newRequestQueue(getActivity());
-                            Get_Franchise_Profile();
-                        } catch (Exception e) {
-                            // TODO: handle exception
+                            try {
+                                dialog = new SpotsDialog(getActivity());
+                                dialog.show();
+                                Franchise_profile_list.clear();
+                                queue = Volley.newRequestQueue(getActivity());
+                                Get_Franchise_Profile();
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                            }
+
+                        } else {
+
                         }
-
-                    } else {
 
                     }
 

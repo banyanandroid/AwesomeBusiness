@@ -6,21 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.activity.Activity_UserProfile;
+import banyan.com.awesomebusiness.activity.Fragment_Home;
 
+/**
+ * Created by Jo on 9/7/2017.
+ */
 
-
-public class Search_Adapter extends BaseAdapter {
+public class List_RecentActivities_Adapter extends BaseAdapter {
     private Activity activity;
     private Context context;
     private LinearLayout singleMessageContainer;
@@ -30,10 +33,10 @@ public class Search_Adapter extends BaseAdapter {
 
     private String[] bgColors;
 
-    public Search_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
+    public List_RecentActivities_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
         data = d;
-//        bgColors = activity.getApplicationContext().getResources().getStringArray(R.array.movie_serial_bg);
+        bgColors = activity.getApplicationContext().getResources().getStringArray(R.array.movie_serial_bg);
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -54,21 +57,22 @@ public class Search_Adapter extends BaseAdapter {
         if (convertView == null)
             v = inflater.inflate(R.layout.list_user_latest_activity, null);
 
-        TextView user_activity_title = (TextView) v.findViewById(R.id.useractivity_txtview_activity_title);
-        TextView user_activity_desc = (TextView) v.findViewById(R.id.useractivity_txtview__activity_description);
+        TextView title = (TextView) v.findViewById(R.id.useractivity_txtview_activity_title);
+        TextView description = (TextView) v.findViewById(R.id.useractivity_txtview__activity_description);
+        TextView date = (TextView) v.findViewById(R.id.useractivity_txtview__date);
 
 
 
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-        try {
-           // user_activity_title.setText(result.get(Activity_UserProfile.TAG_COLLEGE_NAME));
-          //  user_activity_desc.setText(result.get(Activity_UserProfile.TAG_COLLEGE_FOUNDED_YEAR));
+        String str_title = result.get(Activity_UserProfile.TAG_TYPE);
+        String str_des = result.get(Activity_UserProfile.TAG_DETAILS);
+        String str_date = result.get(Activity_UserProfile.TAG_CREATED_ON);
 
-        } catch (Exception e) {
-
-        }
+        title.setText("New activity in Place and Search " + str_title);
+        description.setText(str_des);
+        date.setText(str_date);
 
         return v;
 

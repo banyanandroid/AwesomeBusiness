@@ -11,6 +11,10 @@ public class AppConfig {
     public static String url_user_profile = BASE_URL + "/index.php/apicontroller/detailusersedit";
     public static String url_user_profile_update = BASE_URL + "/index.php/Apicontroller/updateprofile";
     public static String url_change_password = BASE_URL + "/index.php/apicontroller/userchangepassword";
+    public static String url_recent_activities = BASE_URL + "/index.php/apicontroller/usersactivity";
+
+    // Notification Deatails..
+    public static String url_notifications = BASE_URL + "/index.php/apicontroller/getusernotification";
 
     //Country & Currency
     public static String url_country = BASE_URL + "/index.php/Apicontroller/allcountry";
@@ -18,7 +22,6 @@ public class AppConfig {
     //Filter Menu
     public static String url_investor_buyer_type = BASE_URL + "/index.php/Apicontroller/listallinvestoran";
     public static String url_filter_seekbar_values = BASE_URL + "/index.php/Apicontroller/filters";
-
 
     //Autocomplete
     public static String url_iam = BASE_URL + "/index.php/apicontroller/listallbusinessrole";
