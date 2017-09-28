@@ -52,7 +52,6 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
     String str_user_currency, str_investor_key = "";
 
-
     public static final String TAG_INVESTOR_ID = "investor_id";
     public static final String TAG_INVESTOR_KEY = "investor_key";
     public static final String TAG_INVESTOR_NAME = "investor_name";
@@ -259,10 +258,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                             try {
 
-                                Glide.with(getApplicationContext())
-                                        .load(investor_logo)
-                                        .placeholder(R.drawable.placeholder)
-                                        .into(img_investor);
+                               /* */
                                 
                                 txt_designation.setText("" + investor_designation);
                                 txt_name.setText("" + investor_name);
@@ -274,19 +270,26 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                 txt_investment_size_from.setText("" + investor_currency_from);
                                 txt_investment_size_to.setText("" + investor_currency_to);
 
-
                                 //txt_local_time.setText(dt.toString());
                                 // txt_status.setText("" + fgdgfdgdfgdfgdfgf);
-
 
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
 
+                                Glide.with(getApplicationContext())
+                                        .load(investor_logo)
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(img_investor);
+
+                                dialog.dismiss();
 
                             } catch (Exception e) {
 
                             }
+                            dialog.dismiss();
                         }
+
+                        dialog.dismiss();
 
                     } else if (success == 0) {
 

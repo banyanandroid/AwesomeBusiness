@@ -259,7 +259,7 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_view_business_for_sale);
+        setContentView(R.layout.activity_detailed_view_franchise);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -305,23 +305,19 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
         txt_support = (TextView) findViewById(R.id.activity_franchise_details_txt_support);
 
         cv_format_one = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_one);
-        cv_format_one.setVisibility(View.GONE);
-
         cv_format_two = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_two);
-        cv_format_two.setVisibility(View.GONE);
-
         cv_format_three = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_three);
-        cv_format_three.setVisibility(View.GONE);
-
         cv_format_four = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_four);
-        cv_format_four.setVisibility(View.GONE);
-
         cv_format_five = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_five);
-        cv_format_five.setVisibility(View.GONE);
-
         cv_format_six = (CardView) findViewById(R.id.ativity_franchise_details_card_view_format_six);
-        cv_format_six.setVisibility(View.GONE);
 
+
+        cv_format_one.setVisibility(View.GONE);
+        cv_format_two.setVisibility(View.GONE);
+        cv_format_three.setVisibility(View.GONE);
+        cv_format_four.setVisibility(View.GONE);
+        cv_format_five.setVisibility(View.GONE);
+        cv_format_six.setVisibility(View.GONE);
 
         //// NO.OF SALES PARTNER FORMATS TextView'S
         ////
@@ -506,11 +502,6 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
 
                             try {
 
-                                Glide.with(getApplicationContext())
-                                        .load(franchise_logo)
-                                        .placeholder(R.drawable.placeholder)
-                                        .into(img_franchise_logo);
-
                                 txt_brand_name.setText("" + franchise_brand_name);
                                 txt_about_brand.setText("" + franchise_brand_company);
                                 txt_prod_serv_overview.setText("" + franchise_brand_services);
@@ -602,7 +593,6 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
 
                                 }
 
-
                                 //GETTING FORMATS AND THERIR VALUES AND SETTING IT IN STRINGS
                                 arr_formats = obj_data.getJSONArray("format");
                                 System.out.println("INSIDE FORMAT ARRAYYYYY" + arr_formats);
@@ -636,9 +626,63 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                     format_operating_profitmargin_1.setText("" + franchise_format_profit1);
 
 
+                                    dialog.dismiss();
                                 } else if (franchise_format.equals("2")) {
 
+                                    JSONObject obj_format1 = arr_formats.getJSONObject(0);
 
+                                    String franchise_id1 = obj_format1.getString(TAG_FRANCHISE_ID1);
+                                    String franchise_format_name1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NAME1);
+                                    String franchise_format_min_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT1);
+                                    String franchise_format_max_investment1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT1);
+                                    String franchise_format_fee1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_FEE1);
+                                    String franchise_format_no_of_staffs1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS1);
+                                    String franchise_format_royality1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ROYALITY1);
+                                    String franchise_format_revenue1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_REVENUE1);
+                                    String franchise_format_profit1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_PROFIT1);
+                                    String franchise_format_act1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_ACT1);
+                                    String franchise_format_min_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT1);
+                                    String franchise_format_max_sqft1 = obj_format1.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT1);
+
+
+                                    format_name_1.setText("" + franchise_format_name1);
+                                    format_spaceneeded_minimum_1.setText("" + franchise_format_min_sqft1);
+                                    format_spaceneeded_maximum_1.setText("" + franchise_format_max_sqft1);
+                                    format_investment_needed_minimum_1.setText("" + franchise_format_min_investment1);
+                                    format_investment_needed_maximum_1.setText("" + franchise_format_max_investment1);
+                                    format_brand_fee_1.setText("" + franchise_format_fee1);
+                                    format_staff_required_1.setText("" + franchise_format_no_of_staffs1);
+                                    format_royalty_commission_1.setText("" + franchise_format_royality1);
+                                    format_salespartner_monthly_revenue_1.setText("" + franchise_format_revenue1);
+                                    format_operating_profitmargin_1.setText("" + franchise_format_profit1);
+
+                                    JSONObject obj_format2 = arr_formats.getJSONObject(1);
+
+                                    String franchise_id2 = obj_format2.getString(TAG_FRANCHISE_ID2);
+                                    String franchise_format_name2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NAME2);
+                                    String franchise_format_min_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_INVESTMENT2);
+                                    String franchise_format_max_investment2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_INVESTMENT2);
+                                    String franchise_format_fee2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_FEE2);
+                                    String franchise_format_no_of_staffs2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_NO_OF_STAFFS2);
+                                    String franchise_format_royality2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ROYALITY2);
+                                    String franchise_format_revenue2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_REVENUE2);
+                                    String franchise_format_profit2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_PROFIT2);
+                                    String franchise_format_act2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_ACT2);
+                                    String franchise_format_min_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MIN_SQFT2);
+                                    String franchise_format_max_sqft2 = obj_format2.getString(TAG_FRANCHISE_FORMAT_MAX_SQFT2);
+
+                                    format_name_2.setText("" + franchise_format_name2);
+                                    format_spaceneeded_minimum_2.setText("" + franchise_format_min_sqft2);
+                                    format_spaceneeded_maximum_2.setText("" + franchise_format_max_sqft2);
+                                    format_investment_needed_minimum_2.setText("" + franchise_format_min_investment2);
+                                    format_investment_needed_maximum_2.setText("" + franchise_format_max_investment2);
+                                    format_brand_fee_2.setText("" + franchise_format_fee2);
+                                    format_staff_required_2.setText("" + franchise_format_no_of_staffs2);
+                                    format_royalty_commission_2.setText("" + franchise_format_royality2);
+                                    format_salespartner_monthly_revenue_2.setText("" + franchise_format_revenue2);
+                                    format_operating_profitmargin_2.setText("" + franchise_format_profit2);
+
+                                    dialog.dismiss();
                                 } else if (franchise_format.equals("3")) {
 
                                     JSONObject obj_format1 = arr_formats.getJSONObject(0);
@@ -721,6 +765,7 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                     format_salespartner_monthly_revenue_3.setText("" + franchise_format_revenue3);
                                     format_operating_profitmargin_3.setText("" + franchise_format_profit3);
 
+                                    dialog.dismiss();
                                 } else if (franchise_format.equals("4")) {
 
                                     JSONObject obj_format1 = arr_formats.getJSONObject(0);
@@ -829,6 +874,7 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                     format_salespartner_monthly_revenue_4.setText("" + franchise_format_revenue4);
                                     format_operating_profitmargin_4.setText("" + franchise_format_profit4);
 
+                                    dialog.dismiss();
                                 } else if (franchise_format.equals("5")) {
 
                                     JSONObject obj_format1 = arr_formats.getJSONObject(0);
@@ -963,6 +1009,7 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                     format_salespartner_monthly_revenue_5.setText("" + franchise_format_revenue5);
                                     format_operating_profitmargin_5.setText("" + franchise_format_profit5);
 
+                                    dialog.dismiss();
                                 } else if (franchise_format.equals("6")) {
 
                                     JSONObject obj_format1 = arr_formats.getJSONObject(0);
@@ -1123,13 +1170,21 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                     format_salespartner_monthly_revenue_6.setText("" + franchise_format_revenue6);
                                     format_operating_profitmargin_6.setText("" + franchise_format_profit6);
 
+                                    dialog.dismiss();
                                 }
+                                Glide.with(getApplicationContext())
+                                        .load(franchise_logo)
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(img_franchise_logo);
 
-
+                                dialog.dismiss();
                             } catch (Exception e) {
 
                             }
+                            dialog.dismiss();
                         }
+
+                        dialog.dismiss();
 
                     } else if (success == 0) {
 
