@@ -148,6 +148,11 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_business_key = sharedPreferences.getString("business_key", "business_key");
 
+        System.out.println("USER_ID-----" + str_user_id);
+        System.out.println("BUSINESS KEY-----" + str_business_key);
+        System.out.println("USER CURRENCY-----" + str_user_currency);
+
+
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
         Arraylist_update_images = new ArrayList<String>();
@@ -171,6 +176,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
         txt_business_overview = (TextView) findViewById(R.id.ativity_details_txt_business_overview);
         txt_products_services_overview = (TextView) findViewById(R.id.ativity_details_txt_prod_serv_overview);
         txt_facilities_overview = (TextView) findViewById(R.id.ativity_details_txt_facilities_overview);
+
 
         btn_contact_business = (Button) findViewById(R.id.btn_contact_business);
 
@@ -311,11 +317,6 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
                             try {
 
-                                Glide.with(getApplicationContext())
-                                        .load(str_final_image)
-                                        .placeholder(R.drawable.placeholder)
-                                        .into(img_business_for_sale);
-
                                 txt_title.setText("" + buisness_short_description);
                                 txt_established.setText("" + business_established);
                                 txt_employees.setText("" + business_employee_count);
@@ -333,6 +334,11 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
+
+                                Glide.with(getApplicationContext())
+                                        .load(str_final_image)
+                                        .placeholder(R.drawable.placeholder)
+                                        .into(img_business_for_sale);
 
                                 dialog.dismiss();
 
@@ -384,8 +390,10 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                 params.put("business_key", str_business_key);
                 params.put("currency", str_user_currency);
 
-                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
-                System.out.println("BUSINESS KEYYYYYYYYYYYYY ::: " + str_business_key);
+                System.out.println("USER_ID ::: " + str_user_id);
+                System.out.println("BUSINESS KEY ::: " + str_business_key);
+                System.out.println("USER CURRENCY ::: " + str_user_currency);
+
 
                 return params;
             }

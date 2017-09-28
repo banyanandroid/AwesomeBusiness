@@ -30,7 +30,7 @@
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/windowBackground"
-                android:text="PHP Developer"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Ramesh Raj"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -135,7 +135,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="9811980045"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -167,7 +167,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="rameshraj@gmail.com"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -198,7 +198,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="The Banyan Infotech"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -229,7 +229,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Test professional summary"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -260,7 +260,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Acquiring / Buying a Business"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -298,7 +298,7 @@
                                 android:layout_height="0dp"
                                 android:layout_gravity="end"
                                 android:layout_weight="1"
-                                android:text="50000"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="16dp" />
 
@@ -317,7 +317,7 @@
                                 android:layout_height="0dp"
                                 android:layout_gravity="end"
                                 android:layout_weight="1"
-                                android:text="100000"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="16dp" />
 
@@ -351,7 +351,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="India"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -382,7 +382,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Building Construction and Maintenance"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
@@ -413,7 +413,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="15:52 PM"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
