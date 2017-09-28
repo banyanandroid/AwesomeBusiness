@@ -159,6 +159,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +194,11 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_get_user_name = sharedPreferences.getString("str_profile_user_name", "str_profile_user_name");
+        str_get_user_email = sharedPreferences.getString("str_profile_user_email", "str_profile_user_email");
+        str_get_user_mobile = sharedPreferences.getString("str_user_mobile", "str_user_mobile");
+        str_get_user_desigination = sharedPreferences.getString("str_user_designation", "str_user_designation");
+        str_get_user_company = sharedPreferences.getString("str_user_company_name", "str_user_company_name");
 
         Arraylist_investor_role_id = new ArrayList<String>();
         Arraylist_investor_role_name = new ArrayList<String>();
@@ -237,6 +243,10 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
 
         auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_profile_edt_user_location);
+
+        edt_name.setText("" + str_get_user_name);
+        edt_mobile_number.setText("" + str_get_user_mobile);
+        edt_email.setText("" + str_get_user_email);
 
         // Searchable Spinner
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_spn_i_am);

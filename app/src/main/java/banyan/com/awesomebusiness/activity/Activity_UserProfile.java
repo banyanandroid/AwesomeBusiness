@@ -3,7 +3,9 @@ package banyan.com.awesomebusiness.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -265,6 +267,16 @@ public class Activity_UserProfile extends AppCompatActivity {
                             txt_user_mobile.setText("" + str_user_mobile);
                             txt_user_current_role.setText("" + str_user_designation + " | ");
                             txt_user_company.setText(" " + str_user_company_name);
+
+                            SharedPreferences sharedPreferences = PreferenceManager
+                                    .getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("str_profile_user_name", str_profile_user_name);
+                            editor.putString("str_profile_user_email", str_profile_user_email);
+                            editor.putString("str_user_mobile", str_user_mobile);
+                            editor.putString("str_user_designation", str_user_designation);
+                            editor.putString("str_user_company_name", str_user_company_name);
+                            editor.commit();
 
                         } catch (Exception e) {
 

@@ -52,7 +52,6 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
     String str_user_currency, str_investor_key = "";
 
-
     public static final String TAG_INVESTOR_ID = "investor_id";
     public static final String TAG_INVESTOR_KEY = "investor_key";
     public static final String TAG_INVESTOR_NAME = "investor_name";
@@ -126,10 +125,6 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_investor_key = sharedPreferences.getString("investor_key", "investor_key");
-
-        System.out.println("USER_ID-----" + str_user_id);
-        System.out.println("INVESTOR KEY-----" + str_investor_key);
-        System.out.println("INVESTOR CURRENCY-----" + str_user_currency);
 
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
@@ -260,8 +255,11 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                             System.out.println("INDUSTRIES ::: " + str_final_industries);
 
 
+
                             try {
 
+                               /* */
+                                
                                 txt_designation.setText("" + investor_designation);
                                 txt_name.setText("" + investor_name);
                                 txt_phone.setText("" + investor_confidential_mobile);
@@ -271,8 +269,10 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                 txt_transaction_preference.setText("" + investor_interest_name);
                                 txt_investment_size_from.setText("" + investor_currency_from);
                                 txt_investment_size_to.setText("" + investor_currency_to);
+
                                 //txt_local_time.setText(dt.toString());
                                 // txt_status.setText("" + fgdgfdgdfgdfgdfgf);
+
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
 
@@ -281,12 +281,16 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                         .placeholder(R.drawable.placeholder)
                                         .into(img_investor);
 
+                                dialog.dismiss();
 
                             } catch (Exception e) {
 
                             }
+                            dialog.dismiss();
                         }
+
                         dialog.dismiss();
+
                     } else if (success == 0) {
 
                         dialog.dismiss();
@@ -328,9 +332,8 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                 params.put("currency", str_user_currency);
 
 
-                System.out.println("USER_ID ::: " + str_user_id);
-                System.out.println("INVESTOR KEY ::: " + str_investor_key);
-                System.out.println("INVESTOR CURRENCY ::: " + str_user_currency);
+                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
+                System.out.println("BUSINESS KEYYYYYYYYYYYYY ::: " + str_investor_key);
 
                 return params;
             }

@@ -75,6 +75,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
 
     //FOR IMAGE UPLOAD
     private int REQUEST_CODE_PICKER = 2000;
@@ -272,6 +273,11 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_get_user_name = sharedPreferences.getString("str_profile_user_name", "str_profile_user_name");
+        str_get_user_email = sharedPreferences.getString("str_profile_user_email", "str_profile_user_email");
+        str_get_user_mobile = sharedPreferences.getString("str_user_mobile", "str_user_mobile");
+        str_get_user_desigination = sharedPreferences.getString("str_user_designation", "str_user_designation");
+        str_get_user_company = sharedPreferences.getString("str_user_company_name", "str_user_company_name");
 
 
         Arraylist_industry_name = new ArrayList<String>();
@@ -438,6 +444,11 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+
+        edt_name.setText("" + str_get_user_name);
+        edt_email.setText("" + str_get_user_email);
+        edt_mobile_num.setText("" + str_get_user_mobile);
+        edt_designation.setText("" + str_get_user_desigination);
 
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
             @Override

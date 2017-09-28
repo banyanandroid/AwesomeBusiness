@@ -171,6 +171,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
 
     // Condition String
 
@@ -210,6 +211,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
+        str_get_user_name = sharedPreferences.getString("str_profile_user_name", "str_profile_user_name");
+        str_get_user_email = sharedPreferences.getString("str_profile_user_email", "str_profile_user_email");
+        str_get_user_mobile = sharedPreferences.getString("str_user_mobile", "str_user_mobile");
+        str_get_user_desigination = sharedPreferences.getString("str_user_designation", "str_user_designation");
+        str_get_user_company = sharedPreferences.getString("str_user_company_name", "str_user_company_name");
 
         btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -294,8 +300,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         // Default Setter Function
 
-        edt_name.setText("" + str_user_name);
-        edt_official_email.setText("" + str_user_email);
+        edt_name.setText("" + str_get_user_name);
+        edt_official_email.setText("" + str_get_user_email);
+        edt_mobile.setText("" + str_get_user_mobile);
+        edt_company_name.setText("" + str_get_user_company);
 
 
         Cardview_spn_others.setVisibility(View.GONE);
