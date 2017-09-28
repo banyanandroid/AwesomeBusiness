@@ -187,66 +187,39 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
             format_investment_needed_minimum_1, format_investment_needed_maximum_1,
             format_brand_fee_1, format_staff_required_1, format_royalty_commission_1,
             format_salespartner_monthly_revenue_1, format_operating_profitmargin_1;
-    // FORMAT 1 - STRINGS
-    String str_format_name_1, str_format_spaceneeded_minimum_1, str_format_spaceneeded_maximum_1,
-            str_format_investment_needed_minimum_1, str_format_investment_needed_maximum_1,
-            str_format_brand_fee_1, str_format_staff_required_1, str_format_royalty_commission_1,
-            str_format_salespartner_monthly_revenue_1, str_format_operating_profitmargin_1 = "";
 
     // FORMAT 2
     TextView format_name_2, format_spaceneeded_minimum_2, format_spaceneeded_maximum_2,
             format_investment_needed_minimum_2, format_investment_needed_maximum_2,
             format_brand_fee_2, format_staff_required_2, format_royalty_commission_2,
             format_salespartner_monthly_revenue_2, format_operating_profitmargin_2;
-    // FORMAT 2 - STRINGS
-    String str_format_name_2, str_format_spaceneeded_minimum_2, str_format_spaceneeded_maximum_2,
-            str_format_investment_needed_minimum_2, str_format_investment_needed_maximum_2,
-            str_format_brand_fee_2, str_format_staff_required_2, str_format_royalty_commission_2,
-            str_format_salespartner_monthly_revenue_2, str_format_operating_profitmargin_2 = "";
 
     // FORMAT 3
     TextView format_name_3, format_spaceneeded_minimum_3, format_spaceneeded_maximum_3,
             format_investment_needed_minimum_3, format_investment_needed_maximum_3,
             format_brand_fee_3, format_staff_required_3, format_royalty_commission_3,
             format_salespartner_monthly_revenue_3, format_operating_profitmargin_3;
-    // FORMAT 3 - STRINGS
-    String str_format_name_3, str_format_spaceneeded_minimum_3, str_format_spaceneeded_maximum_3,
-            str_format_investment_needed_minimum_3, str_format_investment_needed_maximum_3,
-            str_format_brand_fee_3, str_format_staff_required_3, str_format_royalty_commission_3,
-            str_format_salespartner_monthly_revenue_3, str_format_operating_profitmargin_3 = "";
 
     // FORMAT 4
     TextView format_name_4, format_spaceneeded_minimum_4, format_spaceneeded_maximum_4,
             format_investment_needed_minimum_4, format_investment_needed_maximum_4,
             format_brand_fee_4, format_staff_required_4, format_royalty_commission_4,
             format_salespartner_monthly_revenue_4, format_operating_profitmargin_4;
-    // FORMAT 4 - STRINGS
-    String str_format_name_4, str_format_spaceneeded_minimum_4, str_format_spaceneeded_maximum_4,
-            str_format_investment_needed_minimum_4, str_format_investment_needed_maximum_4,
-            str_format_brand_fee_4, str_format_staff_required_4, str_format_royalty_commission_4,
-            str_format_salespartner_monthly_revenue_4, str_format_operating_profitmargin_4 = "";
+
 
     // FORMAT 5
     TextView format_name_5, format_spaceneeded_minimum_5, format_spaceneeded_maximum_5,
             format_investment_needed_minimum_5, format_investment_needed_maximum_5,
             format_brand_fee_5, format_staff_required_5, format_royalty_commission_5,
             format_salespartner_monthly_revenue_5, format_operating_profitmargin_5;
-    // FORMAT 5 - STRINGS
-    String str_format_name_5, str_format_spaceneeded_minimum_5, str_format_spaceneeded_maximum_5,
-            str_format_investment_needed_minimum_5, str_format_investment_needed_maximum_5,
-            str_format_brand_fee_5, str_format_staff_required_5, str_format_royalty_commission_5,
-            str_format_salespartner_monthly_revenue_5, str_format_operating_profitmargin_5 = "";
+
 
     // FORMAT 6
     TextView format_name_6, format_spaceneeded_minimum_6, format_spaceneeded_maximum_6,
             format_investment_needed_minimum_6, format_investment_needed_maximum_6,
             format_brand_fee_6, format_staff_required_6, format_royalty_commission_6,
             format_salespartner_monthly_revenue_6, format_operating_profitmargin_6;
-    // FORMAT 6 - STRINGS
-    String str_format_name_6, str_format_spaceneeded_minimum_6, str_format_spaceneeded_maximum_6,
-            str_format_investment_needed_minimum_6, str_format_investment_needed_maximum_6,
-            str_format_brand_fee_6, str_format_staff_required_6, str_format_royalty_commission_6,
-            str_format_salespartner_monthly_revenue_6, str_format_operating_profitmargin_6 = "";
+
 
     Button btn_contact_business;
 
@@ -290,6 +263,11 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
         str_franchise_key = sharedPreferences.getString("franchise_key", "franchise_key");
+
+        System.out.println("USER_ID----" + str_user_id);
+        System.out.println("FRANCHISE KEY-----" + str_franchise_key);
+        System.out.println("CURRENCY-----" + str_user_currency);
+
 
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
@@ -1226,9 +1204,8 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                 params.put("franchise_key", str_franchise_key);
                 params.put("currency", str_user_currency);
 
-                System.out.println("USER_IDDDDDDDDDDDDDDDDDD ::: " + str_user_id);
-                System.out.println("BUSINESS KEYYYYYYYYYYYYY ::: " + str_franchise_key);
-
+                System.out.println("USER_ID ::: " + str_user_id);
+                System.out.println("FRANCHISE KEY ::: " + str_franchise_key);
                 return params;
             }
 
