@@ -612,7 +612,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                         }
 
-                    }else {
+                    } else {
 
                     }
 
@@ -1453,7 +1453,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                 params.put("currencye", str_user_currency);
 
-                System.out.println("currencye" + str_user_currency);
+                System.out.println("USER CURRENCY :::" + str_user_currency);
 
                 return params;
             }

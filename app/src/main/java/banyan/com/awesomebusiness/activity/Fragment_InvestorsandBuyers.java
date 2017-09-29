@@ -114,14 +114,19 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     String str_user_currency = "";
     String str_sort_by = "";
 
-    String str_filter_sale_transaction_type, str_filter_interested_business_locations, str_filter_interested_industries,
+  /*  String str_filter_sale_transaction_type, str_filter_interested_business_locations, str_filter_interested_industries,
             str_filter_investment_size_minimum, str_filter_investment_size_maximum, str_filter_runrate_sales_minimum,
             str_filter_runrate_sales_maximum, str_filter_ebitda_minimum, str_filter_ebitda_maximum, str_filter_established_minimum,
             str_filter_established_maximum, str_filter_limited_liability_company, str_filter_public_limited_company, str_filter_partnership,
             str_filter_S_corporation, str_filter_private_limited_company, str_filter_C_corporation, str_filter_limited_liability_partnership,
             str_filter_sole_proprietorship, str_filter_others = "";
+*/
 
-    String str_con_investment, str_con_runrate_sales, str_con_ebitda, str_con_established = "";
+    String str_main_filter_type, str_investor_buyer_role_type, str_interested_business_locations,
+            str_interested_industries, str_investor_investment_size_minimum,
+            str_investor_investment_size_maximum, str_investor_location, str_investor_interested_in;
+
+    String str_con_investment = "";
 
     static ArrayList<HashMap<String, String>> Investor_profile_list;
 
@@ -162,10 +167,6 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-        str_filter_sale_transaction_type = sharedPreferences.getString("str_business_for_sale_transaction_type", "str_business_for_sale_transaction_type");
-        str_filter_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
-        str_filter_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
-
         //Fragment Transition
         str_final_search = sharedPreferences.getString("search_id", "search_id");
         str_search_txt = sharedPreferences.getString("search_key", "search_key");
@@ -174,28 +175,18 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         System.out.println("SHARED Search str_search_txt : " + str_search_txt);
 
         // From Filter
-        str_filter_investment_size_minimum = sharedPreferences.getString("str_investment_size_minimum", "str_investment_size_minimum");
-        str_filter_investment_size_maximum = sharedPreferences.getString("str_investment_size_maximum", "str_investment_size_maximum");
-        str_filter_runrate_sales_minimum = sharedPreferences.getString("str_runrate_sales_minimum", "str_runrate_sales_minimum");
-        str_filter_runrate_sales_maximum = sharedPreferences.getString("str_runrate_sales_maximum", "str_runrate_sales_maximum");
-        str_filter_ebitda_minimum = sharedPreferences.getString("str_ebitda_minimum", "str_ebitda_minimum");
-        str_filter_ebitda_maximum = sharedPreferences.getString("str_ebitda_maximum", "str_ebitda_maximum");
-        str_filter_established_minimum = sharedPreferences.getString("str_established_minimum", "str_established_minimum");
-        str_filter_established_maximum = sharedPreferences.getString("str_established_maximum", "str_established_maximum");
-        str_filter_limited_liability_company = sharedPreferences.getString("str_limited_liability_company", "str_limited_liability_company");
-        str_filter_public_limited_company = sharedPreferences.getString("str_public_limited_company", "str_public_limited_company");
-        str_filter_partnership = sharedPreferences.getString("str_partnership", "str_partnership");
-        str_filter_S_corporation = sharedPreferences.getString("str_S_corporation", "str_S_corporation");
-        str_filter_private_limited_company = sharedPreferences.getString("str_private_limited_company", "str_private_limited_company");
-        str_filter_C_corporation = sharedPreferences.getString("str_C_corporation", "str_C_corporation");
-        str_filter_limited_liability_partnership = sharedPreferences.getString("str_limited_liability_partnership", "str_limited_liability_partnership");
-        str_filter_sole_proprietorship = sharedPreferences.getString("str_sole_proprietorship", "str_sole_proprietorship");
-        str_filter_others = sharedPreferences.getString("str_others", "str_others");
+        str_main_filter_type = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
+        str_investor_buyer_role_type = sharedPreferences.getString("str_investor_buyer_role_type", "str_investor_buyer_role_type");
+        str_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
+        str_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
+        str_investor_investment_size_minimum = sharedPreferences.getString("str_investor_investment_size_minimum", "str_investor_investment_size_minimum");
+        str_investor_investment_size_maximum = sharedPreferences.getString("str_investor_investment_size_maximum", "str_investor_investment_size_maximum");
+        str_investor_location = sharedPreferences.getString("str_investor_location", "str_investor_location");
+        str_investor_interested_in = sharedPreferences.getString("str_investor_interested_in", "str_investor_interested_in");
 
-        str_con_investment = str_filter_investment_size_minimum + "," + str_filter_investment_size_maximum;
-        str_con_runrate_sales = str_filter_runrate_sales_minimum + "," + str_filter_runrate_sales_maximum;
-        str_con_ebitda = str_filter_ebitda_minimum + "," + str_filter_ebitda_maximum;
-        str_con_established = str_filter_established_minimum + "," + str_filter_established_maximum;
+
+        str_con_investment = str_investor_investment_size_minimum + "," + str_investor_investment_size_maximum;
+
 
         try {
 
@@ -273,7 +264,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
                     if (txt_pos == -1) {
                         TastyToast.makeText(getActivity(), "Please Enter Valid Search key", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    }else {
+                    } else {
                         String str_search_key = Arraylist_search_key.get(txt_pos);
                         String str_search_type = Arraylist_search_type.get(txt_pos);
                         String str_search_title = Arraylist_search_title.get(txt_pos);
@@ -327,7 +318,6 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
                         }
                     }
-
 
 
                 } else {
@@ -565,84 +555,41 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
     private void Params_check() {
 
-        if (str_filter_C_corporation.equals("str_C_corporation")) {
-            str_filter_C_corporation = "";
-        } else {
 
-        }
-        if (str_filter_public_limited_company.equals("str_public_limited_company")) {
-            str_filter_public_limited_company = "";
-        } else {
-
-        }
-        if (str_filter_others.equals("str_others")) {
-            str_filter_others = "";
-        }
-        if (str_filter_limited_liability_partnership.equals("str_limited_liability_partnership")) {
-            str_filter_limited_liability_partnership = "";
-        } else {
-
-        }
-        if (str_filter_sole_proprietorship.equals("str_sole_proprietorship")) {
-            str_filter_sole_proprietorship = "";
-        } else {
-
-        }
-        if (str_filter_S_corporation.equals("str_S_corporation")) {
-            str_filter_S_corporation = "";
-        } else {
-
-        }
-        if (str_filter_partnership.equals("str_partnership")) {
-            str_filter_partnership = "";
-        } else {
-
-        }
-        if (str_filter_private_limited_company.equals("str_private_limited_company")) {
-            str_filter_private_limited_company = "";
-        } else {
-
-        }
-        if (str_filter_limited_liability_company.equals("str_limited_liability_company")) {
-            str_filter_limited_liability_company = "";
-        } else {
-
-        }
-        if (str_filter_sale_transaction_type.equals("str_business_for_sale_transaction_type")) {
-            str_filter_sale_transaction_type = "";
-        } else {
-
-        }
-        if (str_con_investment.equals("str_investment_size_minimum,str_investment_size_maximum")) {
+        if (str_con_investment.equals("str_investor_investment_size_minimum,str_investor_investment_size_maximum")) {
             str_con_investment = "";
         } else {
 
         }
-        if (str_con_runrate_sales.equals("str_runrate_sales_minimum,str_runrate_sales_maximum")) {
-            str_con_runrate_sales = "";
+        if (str_investor_buyer_role_type.equals("str_investor_buyer_role_type")) {
+            str_investor_buyer_role_type = "";
         } else {
 
         }
-        if (str_con_ebitda.equals("str_ebitda_minimum,str_ebitda_maximum")) {
-            str_con_ebitda = "";
+        if (str_interested_business_locations.equals("str_interested_business_locations")) {
+            str_interested_business_locations = "";
         } else {
 
         }
-        if (str_con_established.equals("str_established_minimum,str_established_maximum")) {
-            str_con_established = "";
+
+        if (str_interested_industries.equals("str_interested_industries")) {
+            str_interested_industries = "";
         } else {
 
         }
-        if (str_filter_interested_industries.equals("str_interested_industries")) {
-            str_filter_interested_industries = "";
+
+        if (str_investor_location.equals("str_investor_location")) {
+            str_investor_location = "";
         } else {
 
         }
-        if (str_filter_interested_business_locations.equals("str_interested_business_locations")) {
-            str_filter_interested_business_locations = "";
+
+        if (str_investor_interested_in.equals("str_investor_interested_in")) {
+            str_investor_interested_in = "";
         } else {
 
         }
+
         if (str_final_search.equals("search_id")) {
             str_final_search = "";
         } else {
@@ -654,25 +601,9 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
         }
 
-        System.out.println("CC" + str_filter_C_corporation);
-        System.out.println("plc" + str_filter_public_limited_company);
-        System.out.println("Other" + str_filter_others);
-        System.out.println("llp" + str_filter_limited_liability_partnership);
-        System.out.println("sp" + str_filter_sole_proprietorship);
-        System.out.println("sc" + str_filter_S_corporation);
-        System.out.println("partner" + str_filter_partnership);
-        System.out.println("plp" + str_filter_private_limited_company);
-        System.out.println("llc" + str_filter_limited_liability_company);
-        System.out.println("transactions" + str_filter_sale_transaction_type);
+
         System.out.println("investment" + str_con_investment);
-        System.out.println("run_rate_sales" + str_con_runrate_sales);
-        System.out.println("EBITDA" + str_con_ebitda);
-        System.out.println("established" + str_con_established);
-        System.out.println("industries" + str_filter_interested_industries);
         System.out.println("keyword" + str_final_search);
-        System.out.println("locations" + str_filter_interested_business_locations);
-        System.out.println("purchased" + "");
-        System.out.println("asset_investment" + "");
         System.out.println("sort_by" + str_sort_by);
         System.out.println("currency" + str_user_currency);
         try {
@@ -839,21 +770,22 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("investor_current_locations", "");
-                params.put("investment", str_filter_public_limited_company);
-                params.put("interest", "");
-                params.put("transactions", str_filter_sale_transaction_type);
-                params.put("industries", str_filter_interested_industries);
-                params.put("locations", str_filter_interested_business_locations);
+                params.put("investor_current_locations", str_investor_location);
+                params.put("investment", str_con_investment);
+                params.put("interest", str_investor_interested_in);
+                params.put("transactions", str_investor_buyer_role_type);
+                params.put("industries", str_interested_industries);
+                params.put("locations", str_interested_business_locations);
                 params.put("keyword", str_final_search);
                 params.put("currency", str_user_currency);
 
-                System.out.println("investor_current_locations" + "");
-                System.out.println("investment" + str_filter_public_limited_company);
-                System.out.println("interest" + "");
-                System.out.println("transactions" + str_filter_sale_transaction_type);
-                System.out.println("industries" + str_filter_interested_industries);
-                System.out.println("locations" + str_filter_interested_business_locations);
+
+                System.out.println("investor_current_locations" + str_investor_location);
+                System.out.println("investment" + str_con_investment);
+                System.out.println("interest" + str_investor_interested_in);
+                System.out.println("transactions" + str_investor_buyer_role_type);
+                System.out.println("industries" + str_interested_industries);
+                System.out.println("locations" + str_interested_business_locations);
                 System.out.println("keyword" + str_final_search);
                 System.out.println("currency" + str_user_currency);
 
