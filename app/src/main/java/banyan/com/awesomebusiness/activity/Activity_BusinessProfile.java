@@ -171,7 +171,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
-    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile, str_get_user_desigination, str_get_user_company;
 
     // Condition String
 
@@ -631,7 +631,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
      *  PIC UPLOADER
      * ***************************/
 
-    // Recomended builder
+// Recomended builder
     public void ImagePicker() {
         ImagePicker.create(this)
                 .folderMode(true) // set folder mode (false by default)

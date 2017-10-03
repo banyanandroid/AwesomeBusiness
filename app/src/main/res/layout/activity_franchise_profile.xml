@@ -214,7 +214,9 @@
                         android:ems="10"
                         android:inputType="text"
                         android:textColor="@color/black"
-                        android:textSize="16sp"></MultiAutoCompleteTextView>
+                        android:textSize="16sp">
+
+                    </MultiAutoCompleteTextView>
 
 
                     <EditText

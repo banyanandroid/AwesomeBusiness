@@ -94,7 +94,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -125,7 +125,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Phone"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -157,7 +157,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Email"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -188,7 +188,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Company"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -219,7 +219,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Professional Summary"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -250,7 +250,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Transaction Preference"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -281,7 +281,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Investment Size"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
 
@@ -308,7 +308,7 @@
                                 android:layout_gravity="end"
                                 android:layout_weight="1"
                                 android:text="To"
-                                android:textColor="@color/black"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="16dp" />
 
                             <TextView
@@ -341,7 +341,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Location Preference"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -372,7 +372,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Preferred Industry"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -403,7 +403,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Local Time"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -434,7 +434,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Status"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView

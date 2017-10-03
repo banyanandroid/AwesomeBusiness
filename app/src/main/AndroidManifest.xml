@@ -94,6 +94,10 @@
             android:name=".activity.Activity_DetailedView_Franchise"
             android:label="Franchise Details"></activity>
 
+        <activity
+            android:name=".activity.Activity_Contact_Business_For_Sale"
+            android:label="Contact Business"></activity>
+
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

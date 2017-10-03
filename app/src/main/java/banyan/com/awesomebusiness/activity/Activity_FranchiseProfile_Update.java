@@ -95,7 +95,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     public static final String TAG_FRANCHISE_BRAND_COMPANY = "franchise_brand_company";
     public static final String TAG_FRANCHISE_BRAND_SERVICES = "franchise_brand_services";
     public static final String TAG_FRANCHISE_BRAND_ESTABLISHED = "franchise_brand_established";
-    public static final String TAG_FRANCHISE_BRAND_HEADQUATERS = "franchise_brand_headquaters";
+    public static final String TAG_FRANCHISE_BRAND_HEADQUATERS = "franchise_brand_headquaters_name";
     public static final String TAG_BRAND_SALEPARTNER_COUNT = "brand_salepartner_count";
     public static final String TAG_BRAND_SALEPARTNER_BEFORE_PARTNERING = "brand_salepartner_before_partnering";
     public static final String TAG_BRAND_SALEPARTNER_EXPECT = "brand_salepartner_expect";

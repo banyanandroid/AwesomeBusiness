@@ -93,7 +93,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Established From"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -124,7 +124,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Employees"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -155,7 +155,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Legal Entity"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -186,7 +186,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Reported sales"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -217,7 +217,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Run Rate Sales"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -248,7 +248,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="EBITDA Margin"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -279,7 +279,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Industries"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -311,7 +311,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Locations"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -342,7 +342,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Listed By"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -373,7 +373,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text="Status"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -444,7 +444,7 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:text=""
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
                         <TextView
@@ -458,7 +458,6 @@
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
-
                     </LinearLayout>
 
                     <TextView
@@ -466,7 +465,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/windowBackground"
                         android:text="REASON :"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="14dp" />
 
                     <TextView
@@ -517,7 +516,7 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:text="BUSINESS OVERVIEW"
-                        android:textColor="@color/black"
+                        android:textColor="@color/txt_black"
                         android:textSize="18dp" />
 
 

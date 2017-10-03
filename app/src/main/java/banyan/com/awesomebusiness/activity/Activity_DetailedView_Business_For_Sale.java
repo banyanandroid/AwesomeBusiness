@@ -113,6 +113,8 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
     String str_final_location, str_final_industries, str_final_image = "";
 
+    String business_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,7 +186,14 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                TastyToast.makeText(getApplicationContext(), "Button Clicked...!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("str_business_id", business_id);
+                editor.commit();
+
+                Intent i = new Intent(getApplicationContext(), Activity_Contact_Business_For_Sale.class);
+                startActivity(i);
+                finish();
 
             }
 
@@ -231,7 +240,8 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                         for (int i = 0; arr_data.length() > i; i++) {
                             JSONObject obj_data = arr_data.getJSONObject(i);
 
-                            String business_id = obj_data.getString(TAG_BUSINESS_ID);
+                            //only this business_id string is declared above inorder to put it in shared preferences
+                            business_id = obj_data.getString(TAG_BUSINESS_ID);
                             String business_key = obj_data.getString(TAG_BUSINESS_KEY);
                             String buisness_short_description = obj_data.getString(TAG_BUISNESS_SHORT_DESCRIPTION);
                             String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES);
