@@ -91,6 +91,8 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
     String str_final_location, str_final_industries = "";
 
+    String investor_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +158,12 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("str_investor_id", investor_id);
+                editor.commit();
+
                 Intent i = new Intent(getApplicationContext(), Activity_Contact_Business_Investors_Buyers.class);
                 startActivity(i);
                 finish();
@@ -209,7 +217,8 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                             JSONObject obj_data = arr_data.getJSONObject(i);
 
-                            String investor_id = obj_data.getString(TAG_INVESTOR_ID);
+                            //only this business_id string is declared above inorder to put it in shared preferences
+                            investor_id = obj_data.getString(TAG_INVESTOR_ID);
                             String investor_key = obj_data.getString(TAG_INVESTOR_KEY);
                             String investor_name = obj_data.getString(TAG_INVESTOR_NAME);
                             String investor_confidential_email = obj_data.getString(TAG_INVESTOR_CONFIDENTIAL_EMAIL);

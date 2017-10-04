@@ -72,7 +72,7 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
 
     String str_name, str_business_name, str_contact_number, str_business_desc = "";
 
-    String str_business_id;
+    String str_investor_id;
 
     Button btn_submit;
 
@@ -110,8 +110,8 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
         Arraylist_sector_type = new ArrayList<String>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_business_id = sharedPreferences.getString("str_business_id", "str_business_id");
-        System.out.println("Business_ID::: " + str_business_id);
+        str_investor_id = sharedPreferences.getString("str_investor_id", "str_investor_id");
+        System.out.println("Investor_ID::: " + str_investor_id);
 
         edt_name = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_name);
         edt_contact_number = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_mobile_number);
@@ -267,7 +267,7 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
     private void Function_Contact_Business_Investors_Buyers() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_contact_business_for_sale, new Response.Listener<String>() {
+                AppConfig.url_contact_business_investors_buyers, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -315,17 +315,17 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
                 params.put("busname", str_business_name);
               //  params.put("indust", str_);
                 params.put("yourself", str_business_desc);
-              //  params.put("investor_id", str_);
-              //  params.put("investor_proposal_user_id", str_);
+                params.put("investor_id", str_investor_id);
+                params.put("investor_proposal_user_id", str_user_id);
 
                 ////////////////
                 System.out.println("user_name" + str_name);
-                System.out.println("contact number" + str_name);
-                System.out.println("business name" + str_name);
+                System.out.println("contact number" + str_contact_number);
+                System.out.println("business name" + str_business_name);
                 System.out.println("industries" + str_name);
-                System.out.println("description" + str_name);
-                System.out.println("Investor Id" + str_name);
-                System.out.println("investor_proposal_user_id" + str_name);
+                System.out.println("description" + str_business_desc);
+                System.out.println("Investor Id" + str_investor_id);
+                System.out.println("investor_proposal_user_id" + str_user_id);
 
                 return checkParams(params);
             }
