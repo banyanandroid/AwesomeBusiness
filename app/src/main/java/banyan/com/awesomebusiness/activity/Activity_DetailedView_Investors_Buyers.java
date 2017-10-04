@@ -156,7 +156,9 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                TastyToast.makeText(getApplicationContext(), "Button Clicked...!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                Intent i = new Intent(getApplicationContext(), Activity_Contact_Business_Investors_Buyers.class);
+                startActivity(i);
+                finish();
 
             }
 

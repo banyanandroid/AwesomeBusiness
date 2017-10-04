@@ -179,7 +179,6 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
         txt_products_services_overview = (TextView) findViewById(R.id.ativity_details_txt_prod_serv_overview);
         txt_facilities_overview = (TextView) findViewById(R.id.ativity_details_txt_facilities_overview);
 
-
         btn_contact_business = (Button) findViewById(R.id.btn_contact_business);
 
         btn_contact_business.setOnClickListener(new View.OnClickListener() {
