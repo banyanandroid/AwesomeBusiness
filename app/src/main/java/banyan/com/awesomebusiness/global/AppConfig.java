@@ -55,8 +55,8 @@ public class AppConfig {
 
     //Contact Business
     public static String url_contact_business_for_sale = BASE_URL + "/index.php/apicontroller/contactbusinessform";
-    public static String url_contact_business_investors_buyers = BASE_URL + "/index.php/apicontroller/contactbusinessform";
-
+    public static String url_contact_business_investors_buyers = BASE_URL + "/index.php/apicontroller/investorform";
+    public static String url_contact_business_franchise = BASE_URL + "/index.php/apicontroller/franchisform";
 
     // Dashboard Search
     public static String url_dashboard_search_autofil = BASE_URL + "/index.php/Apicontroller/search";

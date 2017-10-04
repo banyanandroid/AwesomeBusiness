@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -46,45 +44,42 @@ import dmax.dialog.SpotsDialog;
  * Created by Banyan on 10/4/2017.
  */
 
-public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivity {
+public class Activity_Contact_Business_Franchise extends AppCompatActivity {
 
     private Toolbar mToolbar;
     SpotsDialog dialog;
     public static RequestQueue queue;
     String TAG = "Auto_Res";
+    String str_user_currency = "";
     TextView t1;
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email;
 
-    public static final String TAG_SECTOR_NAME = "name";
-    public static final String TAG_SECTOR_KEY = "key";
-    public static final String TAG_SECTOR_TYPE = "type";
+    public static final String TAG_INTEREST_ID = "investor_interest_id";
+    public static final String TAG_INTEREST_NAME = "investor_interest_name";
 
-    ArrayList<String> Arraylist_sector_name = null;
-    ArrayList<String> Arraylist_sector_key = null;
-    ArrayList<String> Arraylist_sector_type = null;
+    ArrayList<String> Arraylist_investor_interest_id = null;
+    ArrayList<String> Arraylist_investor_interest_name = null;
 
-    /* Arralist fetched indestries list */
-    ArrayList<String> Arraylist_fetched_industries = null;
-    ArrayList<String> Arraylist_selected_final_industry = null;
+    private ArrayAdapter<String> adapter_interested;
 
-    String str_final_industry_update = "";
+    SearchableSpinner spn_interested_in;
 
-    MultiAutoCompleteTextView auto_industries;
+    String str_selected_interest_id, str_selected_interest_name = "empty";
 
-    EditText edt_name, edt_contact_number, edt_business_name,
-            edt_business_desc;
+    EditText edt_name, edt_contact_number, edt_company_name, edt_designation,
+            edt_about;
 
-    String str_name, str_business_name, str_contact_number, str_business_desc = "";
+    String str_name, str_company_name, str_contact_number, str_interested_in, str_designation, str_about = "";
 
-    String str_investor_id = "";
+    String str_franchise_id;
 
     Button btn_submit;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_business_investors_buyers);
+        setContentView(R.layout.activity_contact_business_franchise);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -111,91 +106,65 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
         str_user_email = user.get(SessionManager.KEY_USER_EMAIL);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
 
-        Arraylist_sector_name = new ArrayList<String>();
-        Arraylist_sector_key = new ArrayList<String>();
-        Arraylist_sector_type = new ArrayList<String>();
-
-        Arraylist_fetched_industries = new ArrayList<String>();
-        Arraylist_selected_final_industry = new ArrayList<String>();
+        Arraylist_investor_interest_id = new ArrayList<String>();
+        Arraylist_investor_interest_name = new ArrayList<String>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        str_investor_id = sharedPreferences.getString("str_investor_id", "str_investor_id");
-        System.out.println("Investor_ID::: " + str_investor_id);
+        str_franchise_id = sharedPreferences.getString("str_franchise_id", "str_franchise_id");
+        System.out.println("Fanchise_ID::: " + str_franchise_id);
 
-        edt_name = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_name);
-        edt_contact_number = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_mobile_number);
-        edt_business_name = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_business_name);
-        edt_business_desc = (EditText) findViewById(R.id.activity_contact_investors_buyers_edt_business_desc);
+        edt_name = (EditText) findViewById(R.id.activity_contact_business_franchise_edt_name);
+        edt_contact_number = (EditText) findViewById(R.id.activity_contact_business_franchise_edt_mobile_number);
+        edt_company_name = (EditText) findViewById(R.id.activity_contact_business_franchise_edt_company_name);
+        edt_designation = (EditText) findViewById(R.id.activity_contact_business_franchise_edt_user_designation);
+        edt_about = (EditText) findViewById(R.id.activity_contact_business_franchise_edt_about);
 
-        auto_industries = (MultiAutoCompleteTextView) findViewById(R.id.activity_contact_investors_buyers_multi_busi_industry);
+        spn_interested_in = (SearchableSpinner) findViewById(R.id.activity_contact_business_franchise_spn_intersted);
+        spn_interested_in.setTitle("Select Your Interest");
 
-        btn_submit = (Button) findViewById(R.id.activity_contact_investors_buyers_btn_submit);
+        btn_submit = (Button) findViewById(R.id.activity_contact_business_franchise_btn_submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 str_name = edt_name.getText().toString();
-                str_business_name = edt_business_name.getText().toString();
+                str_company_name = edt_company_name.getText().toString();
                 str_contact_number = edt_contact_number.getText().toString();
-                str_business_desc = edt_business_desc.getText().toString();
-
-                /*****************************
-                 * Get Multi Sector Details
-                 * ************************/
-
-                String[] str_industries = auto_industries.getText().toString().split(", ");
-
-                Arraylist_fetched_industries.clear();
-                for (int i = 0; i < str_industries.length; i++) {
-                    Arraylist_fetched_industries.add(str_industries[i]);
-                }
-                System.out.println("array : " + Arraylist_fetched_industries);
-
-                Arraylist_selected_final_industry.clear();
-                for (int i = 0; i < Arraylist_fetched_industries.size(); i++) {
-
-                    String get_indestry = Arraylist_fetched_industries.get(i);
-                    get_indestry = get_indestry.trim();
-                    System.out.println("get_indestry : " + get_indestry);
-                    int indus_position = Arraylist_sector_name.indexOf(get_indestry);
-                    String select_sect_id = Arraylist_sector_key.get(indus_position);
-                    String select_sect_type = Arraylist_sector_type.get(indus_position);
-
-                    String sector = select_sect_id + "-" + select_sect_type;
-                    Arraylist_selected_final_industry.add(sector);
-
-                    str_final_industry_update = TextUtils.join(", ", Arraylist_selected_final_industry);
-
-                }
-                System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
+                str_designation = edt_designation.getText().toString();
+                str_about = edt_about.getText().toString();
 
 
                 if (str_name.equals("")) {
                     edt_name.setError("Enter Name");
                     edt_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_name.equals("")) {
-                    edt_business_name.setError("Enter Business Name");
-                    edt_business_name.setFocusable(true);
-                    TastyToast.makeText(getApplicationContext(), "Business Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_company_name.equals("")) {
+                    edt_company_name.setError("Enter Company Name");
+                    edt_company_name.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Company Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_contact_number.equals("")) {
                     edt_contact_number.setError("Enter Contact Number");
                     edt_contact_number.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Contact Number Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_industry_update.equals("") || str_final_industry_update.equals("null")) {
-                    TastyToast.makeText(getApplicationContext(), "Select Business Sector", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_business_desc.equals("")) {
-                    edt_business_desc.setError("Enter Business Description");
-                    edt_business_desc.setFocusable(true);
+                } else if (str_designation.equals("")) {
+                    edt_designation.setError("Enter Designation");
+                    edt_designation.setFocusable(true);
+                    TastyToast.makeText(getApplicationContext(), "Designation Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_about.equals("")) {
+                    edt_about.setError("Enter About You");
+                    edt_about.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_selected_interest_id == null || str_selected_interest_id.isEmpty()) {
+                    spn_interested_in.setFocusable(true);
+                    spn_interested_in.setFocusableInTouchMode(true);
+                    spn_interested_in.requestFocus();
+                    spn_interested_in.performClick();
+                    TastyToast.makeText(getApplicationContext(), "Select Your Interest Type", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
-
-                    TastyToast.makeText(getApplicationContext(), "Button Clicked", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-                    dialog = new SpotsDialog(Activity_Contact_Business_Investors_Buyers.this);
+                    dialog = new SpotsDialog(Activity_Contact_Business_Franchise.this);
                     dialog.show();
-                    queue = Volley.newRequestQueue(Activity_Contact_Business_Investors_Buyers.this);
-                    Function_Contact_Business_Investors_Buyers();
-
+                    queue = Volley.newRequestQueue(Activity_Contact_Business_Franchise.this);
+                    Function_Contact_Business();
                 }
 
 
@@ -204,10 +173,10 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
 
 
         try {
-            dialog = new SpotsDialog(Activity_Contact_Business_Investors_Buyers.this);
+            dialog = new SpotsDialog(Activity_Contact_Business_Franchise.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
-            Get_Sector_List();
+            Get_Interested();
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -218,13 +187,13 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
 
 
     /*****************************
-     * To get  Business sector List
+     * To get  Interested in  Details
      ***************************/
-    public void Get_Sector_List() {
+
+    public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_business, new Response.Listener<String>() {
+                AppConfig.url_investor_interested, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -237,34 +206,43 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
 
                         JSONArray arr;
 
-                        arr = obj.getJSONArray("datas");
+                        arr = obj.getJSONArray("data");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String interest_key = obj1.getString(TAG_INTEREST_ID);
+                            String interest_name = obj1.getString(TAG_INTEREST_NAME);
 
-                            Arraylist_sector_name.add(sector_name);
-                            Arraylist_sector_key.add(sector_key);
-                            Arraylist_sector_type.add(sector_type);
+                            Arraylist_investor_interest_id.add(interest_key);
+                            Arraylist_investor_interest_name.add(interest_name);
                         }
                         try {
+                            adapter_interested = new ArrayAdapter<String>(Activity_Contact_Business_Franchise.this,
+                                    android.R.layout.simple_list_item_1, Arraylist_investor_interest_name);
+                            spn_interested_in.setAdapter(adapter_interested);
 
-                            System.out.println("ARAAAAY :: " + Arraylist_sector_name);
+                            spn_interested_in.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            ArrayAdapter<String> adapter_process = new ArrayAdapter<String>(Activity_Contact_Business_Investors_Buyers.this,
-                                    android.R.layout.simple_list_item_1, Arraylist_sector_name);
-                            auto_industries.setAdapter(adapter_process);
-                            auto_industries
-                                    .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                            auto_industries.setThreshold(1);
+                                    t1 = (TextView) view;
+                                    str_selected_interest_name = t1.getText().toString();
+                                    str_selected_interest_id = Arraylist_investor_interest_id.get(position);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+
+                                }
+                            });
 
 
                         } catch (Exception e) {
 
                         }
+
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -286,7 +264,6 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
             }
         }) {
 
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -300,15 +277,14 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
         queue.add(request);
     }
 
-
     /******************************************
      *    CONTACT BUSINESS
      * *******************************************/
 
-    private void Function_Contact_Business_Investors_Buyers() {
+    private void Function_Contact_Business() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_contact_business_investors_buyers, new Response.Listener<String>() {
+                AppConfig.url_contact_business_franchise, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -320,7 +296,7 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
                     int success = obj.getInt("status");
                     if (success == 1) {
                         dialog.dismiss();
-                        Alerter.create(Activity_Contact_Business_Investors_Buyers.this)
+                        Alerter.create(Activity_Contact_Business_Franchise.this)
                                 .setTitle("Success")
                                 .setText("Email has been sent Successfully")
                                 .setBackgroundColor(R.color.colorAccent)
@@ -353,20 +329,23 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
 
                 params.put("fname", str_name);
                 params.put("contact", str_contact_number);
-                params.put("busname", str_business_name);
-                params.put("industry", str_final_industry_update);
-                params.put("yourself", str_business_desc);
-                params.put("investor_id", str_investor_id);
-                params.put("investor_proposal_user_id", str_user_id);
+                params.put("inter_u", str_selected_interest_id);
+                params.put("company", str_company_name);
+                params.put("designation", str_designation);
+                params.put("yourself", str_about);
+                params.put("franchise_id", str_franchise_id);
+                params.put("franchise_contact_user_id", str_user_id);
 
                 ////////////////
                 System.out.println("user_name" + str_name);
-                System.out.println("contact number" + str_contact_number);
-                System.out.println("business name" + str_business_name);
-                System.out.println("industries" + str_final_industry_update);
-                System.out.println("description" + str_business_desc);
-                System.out.println("Investor Id" + str_investor_id);
-                System.out.println("investor_proposal_user_id" + str_user_id);
+                System.out.println("Contact_number" + str_contact_number);
+                System.out.println("interest_in" + str_selected_interest_id);
+                System.out.println("Company_name" + str_company_name);
+                System.out.println("Designation" + str_designation);
+                System.out.println("About" + str_about);
+                System.out.println("franchise_id" + str_franchise_id);
+                System.out.println("user_id" + str_user_id);
+
 
                 return checkParams(params);
             }

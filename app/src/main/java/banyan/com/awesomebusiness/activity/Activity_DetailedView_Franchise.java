@@ -229,6 +229,8 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
 
     String str_final_location, str_final_industries, str_final_image = "";
 
+    String franchise_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -380,7 +382,15 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                TastyToast.makeText(getApplicationContext(), "Button Clicked...!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("str_franchise_id", franchise_id);
+                editor.commit();
+
+                Intent i = new Intent(getApplicationContext(), Activity_Contact_Business_Franchise.class);
+                startActivity(i);
+                finish();
+
 
             }
 
@@ -428,8 +438,8 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                         for (int i = 0; arr_main.length() > i; i++) {
 
                             JSONObject obj_data = arr_main.getJSONObject(i);
-
-                            String franchise_id = obj_data.getString(TAG_FRANCHISE_ID);
+                            //only this business_id string is declared above inorder to put it in shared preferences
+                            franchise_id = obj_data.getString(TAG_FRANCHISE_ID);
                             String franchise_key = obj_data.getString(TAG_FRANCHISE_KEY);
                             String franchise_user_name = obj_data.getString(TAG_FRANCHISE_USER_NAME);
                             String franchise_email = obj_data.getString(TAG_FRANCHISE_EMAIL);

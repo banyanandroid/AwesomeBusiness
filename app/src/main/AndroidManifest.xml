@@ -102,6 +102,10 @@
             android:name=".activity.Activity_Contact_Business_Investors_Buyers"
             android:label="Contact Business"></activity>
 
+        <activity
+            android:name=".activity.Activity_Contact_Business_Franchise"
+            android:label="Contact Business"></activity>
+
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
