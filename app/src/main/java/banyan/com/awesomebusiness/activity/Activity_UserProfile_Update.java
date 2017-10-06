@@ -189,8 +189,8 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
     //To get the previously entered parameters and set it in the edit text
     String str_prev_profile_user_name, str_prev_user_mobile,
             str_prev_user_gst_num, str_prev_user_company_name, str_prev_user_address,
-            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities,str_prof_image,
-            str_location_id= "";
+            str_prev_user_designation, str_prev_user_location, str_prev_email_business_proposals, str_prev_email_new_opportunities, str_prof_image,
+            str_location_id = "";
 
     //To Post the newly entered parameters and update it to JSON
     String str_up_profile_user_name, str_up_user_mobile,
@@ -401,8 +401,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                 String loc_id = Arraylist_location_key.get(pos);
                 String loc_type = Arraylist_location_type.get(pos);
 
-                str_up_user_location = loc_id+"-"+loc_type;
-
+                str_up_user_location = loc_id + "-" + loc_type;
 
 
                 str_selected_phone_code = spn_country_code.getSelectedItem().toString();
@@ -614,7 +613,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         str_prof_image = obj_data.getString(TAG_USER_PHOTO);
                         String user_location_id = obj_data.getString(TAG_USER_LOCATION_ID);
                         String user_location_type = obj_data.getString(TAG_USER_LOCATION_TYPE);
-                        str_location_id = user_location_id+"-"+user_location_type;
+                        str_location_id = user_location_id + "-" + user_location_type;
 
 
                         try {
@@ -662,7 +661,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         str_final_location = TextUtils.join(", ", Arraylist_pref_location_id);
 
                         try {
-                            auto_prof_location.setText(str_final_location+", ");
+                            auto_prof_location.setText(str_final_location + ", ");
                         } catch (Exception e) {
 
                         }
@@ -684,7 +683,7 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         str_final_industries = TextUtils.join(", ", Arraylist_pref_sector_id);
 
                         try {
-                            auto_prof_industry.setText(str_final_industries+", ");
+                            auto_prof_industry.setText(str_final_industries + ", ");
                         } catch (Exception e) {
 
                         }
@@ -773,9 +772,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String sector_name = obj1.optString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.optString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.optString(TAG_SECTOR_TYPE);
 
                             if (sector_type.equals("sector")) {
                                 Arraylist_sector_name_industry.add(sector_name);
@@ -868,9 +867,9 @@ public class Activity_UserProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String location_place = obj1.getString(TAG_LOC_PLACE);
-                            String location_key = obj1.getString(TAG_LOC_KEY);
-                            String location_type = obj1.getString(TAG_LOC_TYPE);
+                            String location_place = obj1.optString(TAG_LOC_PLACE);
+                            String location_key = obj1.optString(TAG_LOC_KEY);
+                            String location_type = obj1.optString(TAG_LOC_TYPE);
 
                             Arraylist_location_place.add(location_place);
 

@@ -335,6 +335,7 @@ public class Activity_Contact_Business_Franchise extends AppCompatActivity {
                 params.put("yourself", str_about);
                 params.put("franchise_id", str_franchise_id);
                 params.put("franchise_contact_user_id", str_user_id);
+                params.put("email_id", str_user_email);
 
                 ////////////////
                 System.out.println("user_name" + str_name);

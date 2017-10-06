@@ -576,7 +576,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     }
                     System.out.println("FINAL SELECTED LOCATION :: " + str_final_location_update);
 
-
                     if (str_year_asset_purchased.equals("")) {
                         edt_year_asset_purchased.setFocusable(true);
                         TastyToast.makeText(getApplicationContext(), "Purchased Year Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -698,10 +697,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("STEP  1111111111111");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_iam, new Response.Listener<String>() {
-
 
             @Override
             public void onResponse(String response) {
@@ -710,14 +707,11 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
-                    System.out.println("STEP  22222222222");
 
                     if (success == 1) {
 
                         JSONArray arr;
-
                         arr = obj.getJSONArray("data");
-                        System.out.println("STEP  33333333");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
@@ -924,9 +918,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String sector_name = obj1.optString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.optString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.optString(TAG_SECTOR_TYPE);
 
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
@@ -1019,9 +1013,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String location_place = obj1.getString(TAG_LOC_PLACE);
-                            String location_key = obj1.getString(TAG_LOC_KEY);
-                            String location_type = obj1.getString(TAG_LOC_TYPE);
+                            String location_place = obj1.optString(TAG_LOC_PLACE);
+                            String location_key = obj1.optString(TAG_LOC_KEY);
+                            String location_type = obj1.optString(TAG_LOC_TYPE);
 
                             Arraylist_location_place.add(location_place);
                             Arraylist_location_key.add(location_key);
@@ -1080,7 +1074,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM

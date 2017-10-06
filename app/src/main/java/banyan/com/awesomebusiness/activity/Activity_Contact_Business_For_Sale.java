@@ -335,7 +335,7 @@ public class Activity_Contact_Business_For_Sale extends AppCompatActivity {
                 params.put("yourself", str_about);
                 params.put("business_id", str_business_id);
                 params.put("business_contact_user_id", str_user_id);
-
+                params.put("email_id", str_user_email);
                 ////////////////
                 System.out.println("user_name" + str_name);
                 System.out.println("Contact_number" + str_contact_number);

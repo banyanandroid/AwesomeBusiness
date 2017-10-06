@@ -141,7 +141,7 @@
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="About yourself &amp; a message to the business"
                             android:inputType="textMultiLine"
-                            android:maxLines="15"
+                            android:maxLines="10"
                             android:paddingLeft="5dp"
                             android:scrollbars="vertical"
                             android:textColor="@color/textColorPrimary"

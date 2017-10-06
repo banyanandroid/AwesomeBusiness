@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -49,11 +51,15 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
+import banyan.com.awesomebusiness.adapter.Franchise_Image_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
+import banyan.com.awesomebusiness.global.RecyclerTouchListener;
 import banyan.com.awesomebusiness.global.SessionManager;
+import banyan.com.awesomebusiness.model.Image_Model;
 import dmax.dialog.SpotsDialog;
 
 /**
@@ -354,6 +360,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
             int_format_6_investment_needed_minimum, int_format_6_investment_needed_maximum = 0;
 
 
+    String str_delete_images = "";
+    /***********************
+     *  Recycler View
+     * ************************/
+    private List<Image_Model> movieList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private banyan.com.awesomebusiness.adapter.Franchise_Image_Adapter mAdapter;
+
+    private Franchise_Image_Adapter Franchise_Image_Adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -557,6 +573,28 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
+        // Recycler View
+        recyclerView = (RecyclerView) findViewById(R.id.franchise_recycler_view_img);
+        mAdapter = new Franchise_Image_Adapter(getApplicationContext(), movieList);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(mAdapter);
+
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Image_Model movie = movieList.get(position);
+                Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -663,6 +701,11 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                str_delete_images = sharedPreferences.getString("str_delete_images", "str_delete_images");
+
+                System.out.println("LIST IMAGE DELETE :: " + str_delete_images);
 
 
                 /*****************************
@@ -1727,9 +1770,9 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String industry_name = obj1.getString(TAG_INDUSTRT_NAME);
-                            String industry_key = obj1.getString(TAG_INDUSTRY_KEY);
-                            String industry_type = obj1.getString(TAG_INDUSTRY_TYPE);
+                            String industry_name = obj1.optString(TAG_INDUSTRT_NAME);
+                            String industry_key = obj1.optString(TAG_INDUSTRY_KEY);
+                            String industry_type = obj1.optString(TAG_INDUSTRY_TYPE);
 
                             Arraylist_industry_name.add(industry_name);
                             Arraylist_industry_key.add(industry_key);
@@ -1821,9 +1864,9 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String headquaters_place = obj1.getString(TAG_HEADQUATERS_PLACE);
-                            String headquaters_key = obj1.getString(TAG_HEADQUATERS_KEY);
-                            String headquaters_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+                            String headquaters_place = obj1.optString(TAG_HEADQUATERS_PLACE);
+                            String headquaters_key = obj1.optString(TAG_HEADQUATERS_KEY);
+                            String headquaters_type = obj1.optString(TAG_HEADQUATERS_TYPE);
 
                             Arraylist_location_place.add(headquaters_place);
                             Arraylist_location_key.add(headquaters_key);
@@ -1934,9 +1977,9 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String expand_location_place = obj1.getString(TAG_HEADQUATERS_PLACE);
-                            String expand_location_key = obj1.getString(TAG_HEADQUATERS_KEY);
-                            String expand_location_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+                            String expand_location_place = obj1.optString(TAG_HEADQUATERS_PLACE);
+                            String expand_location_key = obj1.optString(TAG_HEADQUATERS_KEY);
+                            String expand_location_type = obj1.optString(TAG_HEADQUATERS_TYPE);
 
                             Arraylist_expand_location_place.add(expand_location_place);
                             Arraylist_expand_location_key.add(expand_location_key);
@@ -2028,6 +2071,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         JSONArray arr_main;
                         JSONArray arr_location;
                         JSONArray arr_industry;
+                        JSONArray arr_images;
                         JSONArray arr_formats;
 
 
@@ -2063,8 +2107,8 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                             for (int j = 0; arr_location.length() > j; j++) {
                                 JSONObject obj_location = arr_location.getJSONObject(j);
 
-                                String location_name = obj_location.getString(TAG_LOCATION_NAME);
-                                String location_key = obj_location.getString(TAG_LOCATION_KEY);
+                                String location_name = obj_location.optString(TAG_LOCATION_NAME);
+                                String location_key = obj_location.optString(TAG_LOCATION_KEY);
 
                                 Arraylist_update_location.add(location_name);
 
@@ -2078,13 +2122,26 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                             for (int k = 0; arr_industry.length() > k; k++) {
                                 JSONObject obj_industry = arr_industry.getJSONObject(k);
 
-                                String industry_name = obj_industry.getString(TAG_INDUSTRY_NAMEE);
-                                String industry_key = obj_industry.getString(TAG_INDUSTRY_KEYY);
+                                String industry_name = obj_industry.optString(TAG_INDUSTRY_NAMEE);
+                                String industry_key = obj_industry.optString(TAG_INDUSTRY_KEYY);
 
                                 Arraylist_update_industries.add(industry_name);
 
                             }
                             str_final_industries = TextUtils.join(", ", Arraylist_update_industries);
+
+                            arr_images = obj_data.getJSONArray("images");
+                            if (arr_images != null) {
+                                System.out.println("Length images:: " + arr_images.length());
+                                for (int l = 0; arr_images.length() > l; l++) {
+                                    JSONObject obj_image = arr_images.getJSONObject(l);
+                                    String image_path = obj_image.getString("image_path");
+                                    String image_id = obj_image.getString("image_id");
+
+                                    Image_Model movie = new Image_Model(image_path, image_id);
+                                    movieList.add(movie);
+                                }
+                            }
 
                             try {
                                 //setting editext values
@@ -3052,6 +3109,8 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                 params.put("currency_change", str_user_currency);
                 params.put("user_id", str_user_id);
                 params.put("franchise_key", str_franchise_key);
+                params.put("deleteddocs", "");
+                params.put("delete_image", str_delete_images);
 
 
                 //FORMAT 1

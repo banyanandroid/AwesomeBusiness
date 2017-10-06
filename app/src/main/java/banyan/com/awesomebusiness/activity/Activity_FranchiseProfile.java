@@ -71,11 +71,12 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     public static RequestQueue queue;
     String TAG = "FRANCHISE PROFILE";
     TextView t1;
+    TextView txt_img_count;
     String str_user_currency = "";
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
-    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile, str_get_user_desigination, str_get_user_company;
 
     //FOR IMAGE UPLOAD
     private int REQUEST_CODE_PICKER = 2000;
@@ -440,7 +441,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         edt_format_salespartner_monthly_revenue_6 = (EditText) findViewById(R.id.edt_format_six_avg_monthly_revenue);
         edt_format_operating_profitmargin_6 = (EditText) findViewById(R.id.edt_format_six_avg_profit_margin);
 
-
+        txt_img_count = (TextView) findViewById(R.id.franch_prof_txt_img_count);
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -1620,9 +1621,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String industry_name = obj1.getString(TAG_INDUSTRT_NAME);
-                            String industry_key = obj1.getString(TAG_INDUSTRY_KEY);
-                            String industry_type = obj1.getString(TAG_INDUSTRY_TYPE);
+                            String industry_name = obj1.optString(TAG_INDUSTRT_NAME);
+                            String industry_key = obj1.optString(TAG_INDUSTRY_KEY);
+                            String industry_type = obj1.optString(TAG_INDUSTRY_TYPE);
 
                             Arraylist_industry_name.add(industry_name);
                             Arraylist_industry_key.add(industry_key);
@@ -1714,9 +1715,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String headquaters_place = obj1.getString(TAG_HEADQUATERS_PLACE);
-                            String headquaters_key = obj1.getString(TAG_HEADQUATERS_KEY);
-                            String headquaters_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+                            String headquaters_place = obj1.optString(TAG_HEADQUATERS_PLACE);
+                            String headquaters_key = obj1.optString(TAG_HEADQUATERS_KEY);
+                            String headquaters_type = obj1.optString(TAG_HEADQUATERS_TYPE);
 
                             Arraylist_location_place.add(headquaters_place);
                             Arraylist_location_key.add(headquaters_key);
@@ -1827,9 +1828,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String expand_location_place = obj1.getString(TAG_HEADQUATERS_PLACE);
-                            String expand_location_key = obj1.getString(TAG_HEADQUATERS_KEY);
-                            String expand_location_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+                            String expand_location_place = obj1.optString(TAG_HEADQUATERS_PLACE);
+                            String expand_location_key = obj1.optString(TAG_HEADQUATERS_KEY);
+                            String expand_location_type = obj1.optString(TAG_HEADQUATERS_TYPE);
 
                             Arraylist_expand_location_place.add(expand_location_place);
                             Arraylist_expand_location_key.add(expand_location_key);
@@ -1945,6 +1946,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 if (image_type.equals("store_pics")) {
 
                     Arraylist_image_encode.add(encodedstring);
+
+                    txt_img_count.setText("(" + Arraylist_image_encode.size() + ")" + " Images Added");
+                    btn_add_faility_stores_pics.setText("Change Images");
 
                 } else if (image_type.equals("logo")) {
                     encoded_logo = encodedstring;

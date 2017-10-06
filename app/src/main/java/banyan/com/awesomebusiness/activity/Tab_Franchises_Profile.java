@@ -312,8 +312,8 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                                 for (int j = 0; arr_location.length() > j; j++) {
                                     JSONObject obj_location = arr_location.getJSONObject(j);
 
-                                    String location_name = obj_location.getString(TAG_LOCATION_NAME);
-                                    String location_key = obj_location.getString(TAG_LOCATION_KEY);
+                                    String location_name = obj_location.optString(TAG_LOCATION_NAME);
+                                    String location_key = obj_location.optString(TAG_LOCATION_KEY);
 
                                     Arraylist_update_location.add(location_name);
 
@@ -328,8 +328,8 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                                 for (int k = 0; arr_industry.length() > k; k++) {
                                     JSONObject obj_indus = arr_industry.getJSONObject(k);
                                     System.out.println("INDUS :: " + obj_indus);
-                                    String industry_name = obj_indus.getString(TAG_INDUSTRY_NAME);
-                                    String industry_key = obj_indus.getString(TAG_INDUSTRY_KEY);
+                                    String industry_name = obj_indus.optString(TAG_INDUSTRY_NAME);
+                                    String industry_key = obj_indus.optString(TAG_INDUSTRY_KEY);
 
                                     Arraylist_update_industries.add(industry_name);
                                 }

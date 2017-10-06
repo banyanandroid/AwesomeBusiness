@@ -282,8 +282,8 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                             for (int j = 0; arr_location.length() > j; j++) {
                                 JSONObject obj_location = arr_location.getJSONObject(j);
 
-                                String location_name = obj_location.getString(TAG_LOCATION_NAME);
-                                String location_key = obj_location.getString(TAG_LOCATION_KEY);
+                                String location_name = obj_location.optString(TAG_LOCATION_NAME);
+                                String location_key = obj_location.optString(TAG_LOCATION_KEY);
 
                                 Arraylist_update_location.add(location_name);
 
@@ -297,8 +297,8 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                             for (int k = 0; arr_industry.length() > k; k++) {
                                 JSONObject obj_industry = arr_industry.getJSONObject(k);
 
-                                String industry_name = obj_industry.getString(TAG_INDUSTRY_NAME);
-                                String industry_key = obj_industry.getString(TAG_INDUSTRY_KEY);
+                                String industry_name = obj_industry.optString(TAG_INDUSTRY_NAME);
+                                String industry_key = obj_industry.optString(TAG_INDUSTRY_KEY);
 
                                 Arraylist_update_industries.add(industry_name);
 

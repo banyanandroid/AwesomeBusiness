@@ -159,7 +159,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
-    public static String str_get_user_name, str_get_user_email, str_get_user_mobile,str_get_user_desigination,str_get_user_company;
+    public static String str_get_user_name, str_get_user_email, str_get_user_mobile, str_get_user_desigination, str_get_user_company;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -832,9 +832,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String sector_name = obj1.optString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.optString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.optString(TAG_SECTOR_TYPE);
 
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
@@ -923,9 +923,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String location_place = obj1.getString(TAG_LOC_PLACE);
-                            String location_key = obj1.getString(TAG_LOC_KEY);
-                            String location_type = obj1.getString(TAG_LOC_TYPE);
+                            String location_place = obj1.optString(TAG_LOC_PLACE);
+                            String location_key = obj1.optString(TAG_LOC_KEY);
+                            String location_type = obj1.optString(TAG_LOC_TYPE);
 
                             Arraylist_location_place.add(location_place);
                             Arraylist_location_key.add(location_key);
@@ -1014,9 +1014,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String headquaters_place = obj1.getString(TAG_HEADQUATERS_PLACE);
-                            String headquaters_key = obj1.getString(TAG_HEADQUATERS_KEY);
-                            String headquaters_type = obj1.getString(TAG_HEADQUATERS_TYPE);
+                            String headquaters_place = obj1.optString(TAG_HEADQUATERS_PLACE);
+                            String headquaters_key = obj1.optString(TAG_HEADQUATERS_KEY);
+                            String headquaters_type = obj1.optString(TAG_HEADQUATERS_TYPE);
 
                             Arraylist_location_place.add(headquaters_place);
                             Arraylist_location_key.add(headquaters_key);

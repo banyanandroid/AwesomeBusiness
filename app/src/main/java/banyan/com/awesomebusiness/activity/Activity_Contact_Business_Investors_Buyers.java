@@ -242,9 +242,9 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String sector_name = obj1.optString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.optString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.optString(TAG_SECTOR_TYPE);
 
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
@@ -358,6 +358,7 @@ public class Activity_Contact_Business_Investors_Buyers extends AppCompatActivit
                 params.put("yourself", str_business_desc);
                 params.put("investor_id", str_investor_id);
                 params.put("investor_proposal_user_id", str_user_id);
+                params.put("email_id", str_user_email);
 
                 ////////////////
                 System.out.println("user_name" + str_name);

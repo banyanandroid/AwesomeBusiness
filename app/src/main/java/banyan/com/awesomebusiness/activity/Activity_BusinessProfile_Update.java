@@ -232,6 +232,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
             str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
 
+    String del_images = "";
     /***********************
      *  Recycler View
      * ************************/
@@ -397,7 +398,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             public void onClick(View view) {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String del_images = sharedPreferences.getString("str_delete_imgs", "str_delete_imgs");
+                del_images = sharedPreferences.getString("str_delete_imgs", "str_delete_imgs");
 
                 System.out.println("LIST IMAGE DELETE :: " + del_images);
 
@@ -1054,9 +1055,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String sector_name = obj1.getString(TAG_SECTOR_NAME);
-                            String sector_key = obj1.getString(TAG_SECTOR_KEY);
-                            String sector_type = obj1.getString(TAG_SECTOR_TYPE);
+                            String sector_name = obj1.optString(TAG_SECTOR_NAME);
+                            String sector_key = obj1.optString(TAG_SECTOR_KEY);
+                            String sector_type = obj1.optString(TAG_SECTOR_TYPE);
 
                             Arraylist_sector_name.add(sector_name);
                             Arraylist_sector_key.add(sector_key);
@@ -1150,9 +1151,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
-                            String location_place = obj1.getString(TAG_LOC_PLACE);
-                            String location_key = obj1.getString(TAG_LOC_KEY);
-                            String location_type = obj1.getString(TAG_LOC_TYPE);
+                            String location_place = obj1.optString(TAG_LOC_PLACE);
+                            String location_key = obj1.optString(TAG_LOC_KEY);
+                            String location_type = obj1.optString(TAG_LOC_TYPE);
 
                             Arraylist_location_place.add(location_place);
                             Arraylist_location_key.add(location_key);
@@ -1302,8 +1303,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             for (int j = 0; arr_location.length() > j; j++) {
                                 JSONObject obj_location = arr_location.getJSONObject(j);
 
-                                String location_name = obj_location.getString(TAG_LOCATION_NAME);
-                                String location_key = obj_location.getString(TAG_LOCATION_KEY);
+                                String location_name = obj_location.optString(TAG_LOCATION_NAME);
+                                String location_key = obj_location.optString(TAG_LOCATION_KEY);
 
                                 Arraylist_update_location.add(location_name);
 
@@ -1317,8 +1318,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             for (int k = 0; arr_industry.length() > k; k++) {
                                 JSONObject obj_industry = arr_industry.getJSONObject(k);
 
-                                String industry_name = obj_industry.getString(TAG_INDUSTRY_NAME);
-                                String industry_key = obj_industry.getString(TAG_INDUSTRY_KEY);
+                                String industry_name = obj_industry.optString(TAG_INDUSTRY_NAME);
+                                String industry_key = obj_industry.optString(TAG_INDUSTRY_KEY);
 
                                 Arraylist_update_industries.add(industry_name);
 
@@ -1614,9 +1615,10 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 params.put("user_currency", str_user_currency);
                 params.put("user_id", str_user_id);
                 params.put("business_key", str_business_key);
+                params.put("deleteddocs", "");
+                params.put("delete_image", del_images);
 
                 ////////////////
-
 
                 System.out.println("user_name" + str_name);
                 System.out.println("company_name" + str_company_name);
