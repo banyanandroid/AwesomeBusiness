@@ -68,7 +68,7 @@
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="Name"
                             android:inputType="text"
-                            android:textColor="@color/textColorPrimary"/>
+                            android:textColor="@color/textColorPrimary" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -317,13 +317,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:hint=""
                         android:background="@drawable/bg_parent_rounded_corner"
+                        android:ems="10"
+                        android:hint=""
+                        android:inputType="text"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -339,12 +338,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
                         android:inputType="text"
-                        android:background="@drawable/bg_parent_rounded_corner"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -496,40 +494,6 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="6">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="3"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="italic" />
-
-                        <CheckBox
-                            android:id="@+id/chb_yearly_sales_range"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.5" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:text="Display as Range"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-
-                    </LinearLayout>
-
-
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -541,46 +505,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
-                            android:hint="EBITDA / Operating Profit Margin ( % )"
+                            android:hint="Average monthly Cashflow/Profit at present"
                             android:inputType="number"
                             android:maxLength="2"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:weightSum="6">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="3"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textStyle="italic" />
-
-                        <CheckBox
-                            android:id="@+id/chb_editba_range"
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.5" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:text="Display as Range"
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-                    </LinearLayout>
-
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -703,12 +634,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
                         android:inputType="text"
-                        android:background="@drawable/bg_parent_rounded_corner"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -724,12 +654,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
                         android:inputType="text"
-                        android:background="@drawable/bg_parent_rounded_corner"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
@@ -874,8 +803,8 @@
                                 android:id="@+id/bus_prof_txt_img_count"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=""
                                 android:layout_marginTop="5dp"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="16dp" />
 

@@ -129,8 +129,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
 
-    String str_ch_companydetails, str_ch_contactdetails, str_ch_yearly_sales_range,
-            str_ch_display_EBITDA_range = "0";
+    String str_ch_companydetails, str_ch_contactdetails = "0";
 
     String str_final_business_sector, str_final_Business_Location = "";
 
@@ -142,7 +141,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
             edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
-    CheckBox chb_companydetails, chb_contatdetails, chb_display_EBITDA_as_range, chb_yearly_sales_range;
+    CheckBox chb_companydetails, chb_contatdetails;
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
@@ -249,8 +248,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
         chb_companydetails = (CheckBox) findViewById(R.id.chbx_display_company_details);
         chb_contatdetails = (CheckBox) findViewById(R.id.chbx_display_contact_details);
-        chb_yearly_sales_range = (CheckBox) findViewById(R.id.chb_yearly_sales_range);
-        chb_display_EBITDA_as_range = (CheckBox) findViewById(R.id.chb_editba_range);
 
         spn_business_legal_type = (Spinner) findViewById(R.id.spn_business_legel_entity);
 
@@ -305,7 +302,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_mobile.setText("" + str_get_user_mobile);
         edt_company_name.setText("" + str_get_user_company);
 
-
         Cardview_spn_others.setVisibility(View.GONE);
         Cardview_spn_selling_leasing.setVisibility(View.GONE);
 
@@ -316,7 +312,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 ImagePicker();
             }
         });
-
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,16 +327,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     str_ch_contactdetails = "1";
                 } else {
                     str_ch_contactdetails = "0";
-                }
-                if (chb_yearly_sales_range.isChecked()) {
-                    str_ch_yearly_sales_range = "1";
-                } else {
-                    str_ch_yearly_sales_range = "0";
-                }
-                if (chb_display_EBITDA_as_range.isChecked()) {
-                    str_ch_display_EBITDA_range = "1";
-                } else {
-                    str_ch_display_EBITDA_range = "0";
                 }
 
                 str_name = edt_name.getText().toString();
@@ -360,7 +345,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_physical_assests_value = edt_physical_assests_value.getText().toString();
                 str_tentative_selling_price = edt_tentative_selling_price.getText().toString();
                 str_reason_for_sale = edt_reason_for_sale.getText().toString();
-
 
                 //Asset _ for sale
                 str_year_asset_purchased = edt_year_asset_purchased.getText().toString();
@@ -499,8 +483,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
                         TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_EBITDA.equals("")) {
-                        edt_EBITDA.setError("Enter EBITDA");
-                        TastyToast.makeText(getApplicationContext(), "EBITDA Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        edt_EBITDA.setError("Enter Monthly Cashflow/Profit");
+                        TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_physical_assests_value.equals("")) {
                         edt_physical_assests_value.setError("Please Enter Assets Value");
                         TastyToast.makeText(getApplicationContext(), " Assets Value Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -1143,9 +1127,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("business_facility", str_business_facility_desc);
                 params.put("monthly_expected_sales", str_avg_monthly_sales);
                 params.put("yearly_expected_sales", str_latest_yearly_sales);
-                params.put("yearly_sales_range", str_ch_yearly_sales_range);
                 params.put("ebitda", str_EBITDA);
-                params.put("display", str_ch_display_EBITDA_range);
+                params.put("display", "");
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
                 params.put("reason", str_reason_for_sale);
@@ -1182,9 +1165,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("business_facility" + str_business_facility_desc);
                 System.out.println("monthly_expected_sales" + str_avg_monthly_sales);
                 System.out.println("yearly_expected_sales" + str_latest_yearly_sales);
-                System.out.println("yearly_sales_range" + str_ch_yearly_sales_range);
                 System.out.println("ebitda" + str_EBITDA);
-                System.out.println("display" + str_ch_display_EBITDA_range);
                 System.out.println("physical_assets" + str_physical_assests_value);
                 System.out.println("tentative_price" + str_tentative_selling_price);
                 System.out.println("reason" + str_reason_for_sale);
