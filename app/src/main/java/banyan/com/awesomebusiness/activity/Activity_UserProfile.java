@@ -282,12 +282,12 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                         }
                         dialog.dismiss();
-                        try{
+                        try {
                             dialog = new SpotsDialog(Activity_UserProfile.this);
                             dialog.show();
                             queue = Volley.newRequestQueue(Activity_UserProfile.this);
                             Get_Recent_Activities();
-                        }catch (Exception e) {
+                        } catch (Exception e) {
 
                         }
 
@@ -296,7 +296,7 @@ public class Activity_UserProfile extends AppCompatActivity {
                         dialog.dismiss();
 
                         Alerter.create(Activity_UserProfile.this)
-                                .setTitle("AWESOME BUSINESSES")
+                                .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
                                 .setBackgroundColor(R.color.red)
                                 .show();
@@ -316,7 +316,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                 dialog.dismiss();
                 Alerter.create(Activity_UserProfile.this)
-                        .setTitle("AWESOME BUSINESSES")
+                        .setTitle("WORLD BUSINESSES FOR SALE")
                         .setText("Internal Error :(\n" + error.getMessage())
                         .setBackgroundColor(R.color.colorPrimaryDark)
                         .show();
@@ -543,7 +543,7 @@ public class Activity_UserProfile extends AppCompatActivity {
                         dialog.dismiss();
 
                         Alerter.create(Activity_UserProfile.this)
-                                .setTitle("AWESOME BUSINESSES")
+                                .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
                                 .setBackgroundColor(R.color.red)
                                 .show();
@@ -563,7 +563,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                 dialog.dismiss();
                 Alerter.create(Activity_UserProfile.this)
-                        .setTitle("AWESOME BUSINESSES")
+                        .setTitle("WORLD BUSINESSES FOR SALE")
                         .setText("Internal Error :(\n" + error.getMessage())
                         .setBackgroundColor(R.color.colorPrimaryDark)
                         .show();

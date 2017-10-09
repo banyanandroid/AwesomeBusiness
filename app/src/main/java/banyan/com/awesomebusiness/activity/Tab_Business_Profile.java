@@ -380,13 +380,13 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                                     Arraylist_update_images.add(image_path);
                                 }
 
-                                if (Arraylist_update_images.size() > 0){
+                                if (Arraylist_update_images.size() > 0) {
                                     str_final_image = Arraylist_update_images.get(0);
                                     System.out.println("IMAGE : " + str_final_image);
                                 }
                             }
 
-                           // creating new HashMap
+                            // creating new HashMap
                             HashMap<String, String> map = new HashMap<String, String>();
                             // adding each child node to HashMap key => value
                             map.put(TAG_BUSINESS_ID, business_id);
@@ -445,7 +445,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                         List.setAdapter(adapter);
 
                         Alerter.create(getActivity())
-                                .setTitle("Awesome Businesses")
+                                .setTitle("World Businesses For Sale")
                                 .setText("Data Not Found \n Try Again")
                                 .setBackgroundColor(R.color.Alert_Fail)
                                 .show();
@@ -467,7 +467,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 swipeRefreshLayout.setRefreshing(false);
 
                 Alerter.create(getActivity())
-                        .setTitle("Awesome Businesses")
+                        .setTitle("World Businesses For Sale")
                         .setText("Internal Error !")
                         .setBackgroundColor(R.color.Alert_Warning)
                         .show();

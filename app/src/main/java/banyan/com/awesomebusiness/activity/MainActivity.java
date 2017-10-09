@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     TextView popup_txt_notification;
 
     String str_previous_selected_country_name, str_previous_selected_currency;
-    String str_filter_pos = "" ;
+    String str_filter_pos = "";
     String ip_currency, ip_country_id, ip_country = "";
     String str_check_currency = "";
 
@@ -119,21 +119,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         try {
             Bundle extras = getIntent().getExtras();
-            if(extras !=null) {
+            if (extras != null) {
                 value = extras.getString("type");
                 search_key = extras.getString("search_key");
                 search_id = extras.getString("search_id");
 
-                if (value !=null  &&  !value.isEmpty()){
+                if (value != null && !value.isEmpty()) {
 
-                }else {
+                } else {
                     value = "nothing";
                 }
 
-            }else {
+            } else {
                 value = "nothing";
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
@@ -142,33 +142,32 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         str_filter_pos = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
         str_check_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
 
-        if (str_check_currency.equals("str_selected_currency")){
+        if (str_check_currency.equals("str_selected_currency")) {
             Function_AlertDialog();
-        }else if (str_check_currency.equals("")){
+        } else if (str_check_currency.equals("")) {
 
             Function_AlertDialog();
 
-        }else {
+        } else {
 
         }
 
-        if (!value.equals("") && !value.isEmpty() && value != null ) {
+        if (!value.equals("") && !value.isEmpty() && value != null) {
 
-            if (value.equals("str_main_filter_type")){
+            if (value.equals("str_main_filter_type")) {
                 displayView_awesome(0);
-            }else if (value.equals("Business For sale")){
+            } else if (value.equals("Business For sale")) {
                 displayView_awesome(0);
-            }else if (value.equals("Investment Oppourtinites")){
+            } else if (value.equals("Investment Oppourtinites")) {
                 displayView_awesome(1);
-            }else if (value.equals("Franchise Oppourtinites")){
+            } else if (value.equals("Franchise Oppourtinites")) {
                 displayView_awesome(2);
-            }else {
+            } else {
                 displayView_awesome(0);
             }
-        }else {
+        } else {
             displayView(0);
         }
-
 
 
         try {

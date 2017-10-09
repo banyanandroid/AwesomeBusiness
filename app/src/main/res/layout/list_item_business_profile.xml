@@ -102,6 +102,33 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_star" />
+
+
+                    <TextView
+                        android:id="@+id/list_bus_prof_rating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="8.5"
+                        android:textColor="@color/txt_black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="0.5dp"
@@ -168,8 +195,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView

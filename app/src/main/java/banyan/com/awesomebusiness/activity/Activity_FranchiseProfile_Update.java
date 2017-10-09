@@ -2876,7 +2876,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
                         dialog.dismiss();
 
                         Alerter.create(Activity_FranchiseProfile_Update.this)
-                                .setTitle("AWESOME BUSINESSES")
+                                .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
                                 .setBackgroundColor(R.color.red)
                                 .show();

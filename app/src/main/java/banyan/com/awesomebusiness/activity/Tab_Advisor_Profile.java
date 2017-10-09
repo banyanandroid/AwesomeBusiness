@@ -11,7 +11,7 @@ import banyan.com.awesomebusiness.R;
 /**
  * Created by Jo on 9/4/2017.
  */
-public class Tab_Advisor_Profile extends Fragment{
+public class Tab_Advisor_Profile extends Fragment {
 
     public Tab_Advisor_Profile() {
         // Required empty public constructor

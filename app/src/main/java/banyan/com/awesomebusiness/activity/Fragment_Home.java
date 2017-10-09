@@ -78,6 +78,7 @@ public class Fragment_Home extends Fragment {
     public static final String TAG_BUSINESS_PROF_KEY = "business_key";
     public static final String TAG_BUSINESS_PROF_SHORT_DES = "buisness_short_description";
     public static final String TAG_BUSINESS_PROF_YEARLY_SALES = "business_yearly_sales";
+    public static final String TAG_BUSINESS_PROF_RATING = "rating";
     public static final String TAG_BUSINESS_PROF_EBITDA = "business_ebitda";
     public static final String TAG_BUSINESS_PROF_EBITDA_RANGE = "business_ebitda_range";
     public static final String TAG_BUISNESS_PROF_INVESTMENT = "buisness_investment";
@@ -675,6 +676,7 @@ public class Fragment_Home extends Fragment {
 
     public void Get_Business_Profile() {
         String tag_json_obj = "json_obj_req";
+        System.out.println("PRINT 111");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_dashboard_search_result_business_profile, new Response.Listener<String>() {
 
@@ -683,9 +685,7 @@ public class Fragment_Home extends Fragment {
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
-
                     System.out.println("RESPONSE OBJ : " + obj);
-
                     int success = obj.getInt("status");
 
                     if (success == 1) {
@@ -695,14 +695,18 @@ public class Fragment_Home extends Fragment {
                         JSONArray arr_industry;
                         JSONArray arr_images;
 
+                        System.out.println("PRINT 555");
+
                         arr = obj.getJSONArray("data");
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 
+                            System.out.println("PRINT 666");
                             String business_id = obj1.getString(TAG_BUSINESS_PROF_ID);
                             String business_key = obj1.getString(TAG_BUSINESS_PROF_KEY);
                             String buisness_short_description = obj1.getString(TAG_BUSINESS_PROF_SHORT_DES);
                             String business_yearly_sales = obj1.getString(TAG_BUSINESS_PROF_YEARLY_SALES);
+                            String rating = obj1.getString(TAG_BUSINESS_PROF_RATING);
                             String business_ebitda = obj1.getString(TAG_BUSINESS_PROF_EBITDA);
                             String business_ebitda_range = obj1.getString(TAG_BUSINESS_PROF_EBITDA_RANGE);
                             String buisness_investment = obj1.getString(TAG_BUISNESS_PROF_INVESTMENT);
@@ -767,6 +771,7 @@ public class Fragment_Home extends Fragment {
                             map.put(TAG_BUSINESS_PROF_KEY, business_key);
                             map.put(TAG_BUSINESS_PROF_SHORT_DES, buisness_short_description);
                             map.put(TAG_BUSINESS_PROF_YEARLY_SALES, business_yearly_sales);
+                            map.put(TAG_BUSINESS_PROF_RATING, rating);
                             map.put(TAG_BUSINESS_PROF_EBITDA, business_ebitda);
                             map.put(TAG_BUSINESS_PROF_EBITDA_RANGE, business_ebitda_range);
                             map.put(TAG_BUISNESS_PROF_INVESTMENT, buisness_investment);
@@ -786,7 +791,7 @@ public class Fragment_Home extends Fragment {
                             System.out.println("HASHMAP ARRAY" + Business_profile_list);
                         }
 
-                        dialog.dismiss();
+                        //dialog.dismiss();
                     } else if (success == 0) {
                         TastyToast.makeText(getActivity(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }

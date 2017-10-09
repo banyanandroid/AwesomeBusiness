@@ -306,7 +306,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                         dialog.dismiss();
 
                         Alerter.create(Activity_DetailedView_Investors_Buyers.this)
-                                .setTitle("AWESOME BUSINESSES")
+                                .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
                                 .setBackgroundColor(R.color.red)
                                 .show();
@@ -326,7 +326,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                 dialog.dismiss();
                 Alerter.create(Activity_DetailedView_Investors_Buyers.this)
-                        .setTitle("AWESOME BUSINESSES")
+                        .setTitle("WORLD BUSINESSES FOR SALE")
                         .setText("Internal Error :(\n" + error.getMessage())
                         .setBackgroundColor(R.color.colorPrimaryDark)
                         .show();

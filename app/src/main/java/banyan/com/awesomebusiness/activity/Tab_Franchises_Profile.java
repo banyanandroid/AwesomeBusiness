@@ -448,7 +448,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                         List.setAdapter(adapter);
 
                         Alerter.create(getActivity())
-                                .setTitle("Awesome Businesses")
+                                .setTitle("World Businesses For Sale")
                                 .setText("Data Not Found \n Try Again")
                                 .setBackgroundColor(R.color.Alert_Fail)
                                 .show();
@@ -470,7 +470,7 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                 swipeRefreshLayout.setRefreshing(false);
 
                 Alerter.create(getActivity())
-                        .setTitle("Awesome Businesses")
+                        .setTitle("World Businesses For Sale")
                         .setText("Internal Error !")
                         .setBackgroundColor(R.color.Alert_Warning)
                         .show();
