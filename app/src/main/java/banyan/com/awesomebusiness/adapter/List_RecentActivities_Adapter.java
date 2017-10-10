@@ -18,6 +18,7 @@ import java.util.HashMap;
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.activity.Activity_UserProfile;
 import banyan.com.awesomebusiness.activity.Fragment_Home;
+import banyan.com.awesomebusiness.activity.Tab_Profile_Viewed;
 
 /**
  * Created by Jo on 9/7/2017.
@@ -66,9 +67,9 @@ public class List_RecentActivities_Adapter extends BaseAdapter {
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-        String str_title = result.get(Activity_UserProfile.TAG_TYPE);
-        String str_des = result.get(Activity_UserProfile.TAG_DETAILS);
-        String str_date = result.get(Activity_UserProfile.TAG_CREATED_ON);
+        String str_title = result.get(Tab_Profile_Viewed.TAG_TYPE);
+        String str_des = result.get(Tab_Profile_Viewed.TAG_DETAILS);
+        String str_date = result.get(Tab_Profile_Viewed.TAG_CREATED_ON);
 
         title.setText("New activity in Place and Search " + str_title);
         description.setText(str_des);

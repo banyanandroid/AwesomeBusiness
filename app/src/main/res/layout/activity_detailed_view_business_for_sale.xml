@@ -185,7 +185,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Reported sales"
+                            android:text="Reported Yearly sales"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
@@ -216,7 +216,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="Run Rate Sales"
+                            android:text="Monthly Sales"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
@@ -247,7 +247,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="start"
-                            android:text="EBITDA Margin"
+                            android:text="Profit"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16dp" />
 
@@ -280,7 +280,8 @@
                             android:gravity="start"
                             android:text="Industries"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="16dp" />
+                            android:textSize="16dp"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/ativity_details_industries"
@@ -291,7 +292,8 @@
                             android:gravity="end"
                             android:text=""
                             android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:textSize="16dp"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>

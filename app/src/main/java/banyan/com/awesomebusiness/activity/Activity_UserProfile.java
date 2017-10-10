@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -78,7 +83,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
     HashMap<String, String> params = new HashMap<String, String>();
 
-    private ListView List;
+   // private ListView List;
     public List_RecentActivities_Adapter adapter;
 
     String TAG = "";
@@ -120,6 +125,10 @@ public class Activity_UserProfile extends AppCompatActivity {
     ArrayList<String> Arraylist_sector = null;
     ArrayList<String> Arraylist_location = null;
 
+    public static TabLayout tabLayout;
+    public static ViewPager viewPager;
+    public static int int_items = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +161,27 @@ public class Activity_UserProfile extends AppCompatActivity {
             }
         });
 
+        tabLayout = (TabLayout) findViewById(R.id.tabs_profile);
+        viewPager = (ViewPager) findViewById(R.id.viewpager_profile);
+
+        /**
+         *Set an Apater for the View Pager
+         */
+        viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+
+        /**
+         * Now , this is a workaround ,
+         * The setupWithViewPager dose't works without the runnable .
+         * Maybe a Support Library Bug .
+         */
+
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+
 
         img_profile_picture = (CircleImageView) findViewById(R.id.user_profile_picture);
         txt_edit = (TextView) findViewById(R.id.profile_txt_edit);
@@ -164,7 +194,7 @@ public class Activity_UserProfile extends AppCompatActivity {
         txt_change_password = (TextView) findViewById(R.id.profile_txt_editpassword);
         txt_myprofile = (TextView) findViewById(R.id.profile_txt_myprofile);
 
-        List = (ListView) findViewById(R.id.user_activity_listview);
+      //  List = (ListView) findViewById(R.id.user_activity_listview);
 
         // Hashmap for ListView
         Recent_Activities_List = new ArrayList<HashMap<String, String>>();
@@ -207,6 +237,60 @@ public class Activity_UserProfile extends AppCompatActivity {
         }
 
     }
+
+    class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        /**
+         * Return fragment with respect to Position .
+         */
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new Tab_Profile_Viewed();
+                case 1:
+                    return new Tab_Profile_Contacted();
+                case 2:
+                    return new Tab_Profile_Bookmarks();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+
+            return int_items;
+
+        }
+
+        /**
+         * This method returns the title of the tab according to the position.
+         */
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position) {
+                case 0:
+                    return "Viewed";
+                case 1:
+                    return "Contacted";
+                case 2:
+                    return "Bookmarks";
+
+            }
+            return null;
+        }
+    }
+
+    /*****************************
+     * Edit Profile
+     ***************************/
 
     public void Function_Edit_profile() {
 
@@ -282,14 +366,14 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                         }
                         dialog.dismiss();
-                        try {
+                       /* try {
                             dialog = new SpotsDialog(Activity_UserProfile.this);
                             dialog.show();
                             queue = Volley.newRequestQueue(Activity_UserProfile.this);
                             Get_Recent_Activities();
                         } catch (Exception e) {
 
-                        }
+                        }*/
 
                     } else if (success == 0) {
 
@@ -534,7 +618,7 @@ public class Activity_UserProfile extends AppCompatActivity {
 
                             adapter = new List_RecentActivities_Adapter(Activity_UserProfile.this,
                                     Recent_Activities_List);
-                            List.setAdapter(adapter);
+                          //  List.setAdapter(adapter);
                             System.out.println("HASHMAP ARRAY" + Recent_Activities_List);
                         }
                         dialog.dismiss();

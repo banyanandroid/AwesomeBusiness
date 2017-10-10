@@ -342,14 +342,10 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
                             map.put(TAG_IMAGE_PATH, str_final_image);
 
-                            //    map.put(TAG_LOCATION_NAME, location_name);
-                            //    map.put(TAG_LOCATION_KEY, location_key);
-                            //   map.put(TAG_INDUSTRY_NAME, industry_name);
-                            //   map.put(TAG_INDUSTRY_KEY, industry_key);
 
                             Investor_profile_list.add(map);
 
-                            System.out.println("HASHMAP ARRAY" + Investor_profile_list);
+                            System.out.println("woooooooooooow ARRAY" + Investor_profile_list);
 
 
                             adapter = new InvestorProfiles_Adapter(getActivity(),
@@ -400,7 +396,7 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
 
                 params.put("user_id", str_user_id);
 
-                System.out.println("user_id" + str_user_id);
+                System.out.println("useR ID CAME" + str_user_id);
 
                 return params;
             }
