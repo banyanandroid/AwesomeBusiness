@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -102,7 +105,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
     ArrayList<String> Arraylist_update_images = null;
 
 
-    Button btn_contact_business;
+    Button btn_bookmark_business, btn_contact_business;
 
     ImageView img_business_for_sale;
 
@@ -180,6 +183,9 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
         txt_facilities_overview = (TextView) findViewById(R.id.ativity_details_txt_facilities_overview);
 
         btn_contact_business = (Button) findViewById(R.id.btn_contact_business);
+        btn_bookmark_business = (Button) findViewById(R.id.btn_bookmark);
+        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
 
         btn_contact_business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +204,20 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
         });
 
+        btn_bookmark_business.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog = new SpotsDialog(Activity_DetailedView_Business_For_Sale.this);
+                dialog.show();
+                queue = Volley.newRequestQueue(getApplicationContext());
+                Function_Bookmark();
+
+            }
+
+        });
+
+
         try {
             dialog = new SpotsDialog(Activity_DetailedView_Business_For_Sale.this);
             dialog.show();
@@ -208,6 +228,91 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
             // TODO: handle exception
         }
     }
+
+
+    /*****************************
+     * Bookmark Business
+     ***************************/
+
+    private void Function_Bookmark() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_add_bookmark, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE::: " + response);
+                    int success = obj.getInt("status");
+                    if (success == 1) {
+                        dialog.dismiss();
+                        Alerter.create(Activity_DetailedView_Business_For_Sale.this)
+                                .setTitle("Success")
+                                .setText("Business Bookmarked")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+                        btn_bookmark_business.setText("Bookmarked");
+                        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.colorAccent2));
+                    } else {
+                        dialog.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Oops...! Unable to Bookmark :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("business_id", business_id);
+
+                ////////////////
+
+                System.out.println("user_id" + str_user_id);
+                System.out.println("business_id" + business_id);
+
+
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
+            }
+        };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        // Adding request to request queue
+        queue.add(request);
+    }
+
 
     /*****************************
      * GET Details

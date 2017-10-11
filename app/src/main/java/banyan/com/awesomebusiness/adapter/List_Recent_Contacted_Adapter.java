@@ -6,25 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.activity.Activity_UserProfile;
-import banyan.com.awesomebusiness.activity.Fragment_Home;
+import banyan.com.awesomebusiness.activity.Tab_Profile_Contacted;
 import banyan.com.awesomebusiness.activity.Tab_Profile_Viewed;
 
 /**
- * Created by Jo on 9/7/2017.
+ * Created by Banyan on 10/11/2017.
  */
 
-public class List_RecentActivities_Adapter extends BaseAdapter {
+public class List_Recent_Contacted_Adapter extends BaseAdapter {
     private Activity activity;
     private Context context;
     private LinearLayout singleMessageContainer;
@@ -34,7 +30,7 @@ public class List_RecentActivities_Adapter extends BaseAdapter {
 
     private String[] bgColors;
 
-    public List_RecentActivities_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
+    public List_Recent_Contacted_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
         data = d;
         bgColors = activity.getApplicationContext().getResources().getStringArray(R.array.movie_serial_bg);
@@ -56,20 +52,18 @@ public class List_RecentActivities_Adapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (convertView == null)
-            v = inflater.inflate(R.layout.list_user_latest_activity, null);
+            v = inflater.inflate(R.layout.list_user_contacted_activity, null);
 
         TextView title = (TextView) v.findViewById(R.id.useractivity_txtview_activity_title);
         TextView description = (TextView) v.findViewById(R.id.useractivity_txtview__activity_description);
         TextView date = (TextView) v.findViewById(R.id.useractivity_txtview__date);
 
-
-
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
-        String str_title = result.get(Tab_Profile_Viewed.TAG_TYPE);
-        String str_des = result.get(Tab_Profile_Viewed.TAG_DETAILS);
-        String str_date = result.get(Tab_Profile_Viewed.TAG_CREATED_ON);
+        String str_title = result.get(Tab_Profile_Contacted.TAG_TYPE);
+        String str_des = result.get(Tab_Profile_Contacted.TAG_DETAILS);
+        String str_date = result.get(Tab_Profile_Contacted.TAG_CREATED_ON);
 
         title.setText("In - " + str_title);
         description.setText(str_des);

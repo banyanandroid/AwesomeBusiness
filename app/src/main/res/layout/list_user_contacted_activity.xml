@@ -38,7 +38,7 @@
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/ativity_view_business_btn_contact"
+                    android:id="@+id/ativity_contacted_business_btn_contact"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"

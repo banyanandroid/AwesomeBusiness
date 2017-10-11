@@ -182,9 +182,7 @@ public class Activity_Contact_Business_For_Sale extends AppCompatActivity {
             // TODO: handle exception
         }
 
-
     }
-
 
     /*****************************
      * To get  Interested in  Details

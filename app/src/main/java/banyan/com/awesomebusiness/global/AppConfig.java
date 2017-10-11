@@ -15,6 +15,11 @@ public class AppConfig {
     public static String url_user_profile_update = BASE_URL + "/index.php?Apicontroller/updateprofile";
     public static String url_change_password = BASE_URL + "/index.php?apicontroller/userchangepassword";
     public static String url_recent_activities = BASE_URL + "/index.php?apicontroller/usersactivity";
+    public static String url_recent_contacted_activities = BASE_URL + "/index.php?Apicontroller/listusercontact";
+
+    /*********  Bookmark activities *********/
+    public static String url_add_bookmark = BASE_URL + "/index.php?Apicontroller/add_bookmarks";
+    public static String url_list_bookmarks = BASE_URL + "/index.php?Apicontroller/list_bookmarks";
 
     // Notification Deatails..
     public static String url_notifications = BASE_URL + "/index.php?apicontroller/getusernotification";
@@ -73,6 +78,7 @@ public class AppConfig {
     /*********  Investor Profile *********/
     public static String url_dashboard_search_result_investor_profile = BASE_URL + "/index.php?Apicontroller/listallinvestorprofile";
     public static String url_dashboard_search_result_investor_profile_detail = BASE_URL + "/index.php?Apicontroller/listsingleinvestorprofile";
+
 
     ///////////testing purpose
 

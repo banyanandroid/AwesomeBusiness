@@ -42,7 +42,6 @@ public class Tab_Profile_Viewed extends Fragment implements SwipeRefreshLayout.O
         // Required empty public constructor
     }
 
-
     String TAG = "";
     public static final String TAG_DETAILS = "details";
     public static final String TAG_TYPE = "type";
@@ -71,7 +70,7 @@ public class Tab_Profile_Viewed extends Fragment implements SwipeRefreshLayout.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview =  inflater.inflate(R.layout.tab_profile_viewed, container, false);
+        View rootview = inflater.inflate(R.layout.tab_profile_viewed, container, false);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -159,7 +158,7 @@ public class Tab_Profile_Viewed extends Fragment implements SwipeRefreshLayout.O
 
                             adapter = new List_RecentActivities_Adapter(getActivity(),
                                     Recent_Activities_List);
-                              List.setAdapter(adapter);
+                            List.setAdapter(adapter);
                             System.out.println("hgjhghjgjhgjhgjhg ARRAY" + Recent_Activities_List);
                         }
                     } else if (success == 0) {
