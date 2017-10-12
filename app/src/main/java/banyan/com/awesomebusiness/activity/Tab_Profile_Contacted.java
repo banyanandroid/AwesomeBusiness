@@ -1,12 +1,19 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -61,6 +68,10 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
     // private ListView List;
     public List_Recent_Contacted_Adapter adapter;
 
+    // Popup
+    EditText edt_message;
+    String str_message = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,23 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
         swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.tab_prof_contacted_swipe);
 
         Recent_Contacted_List = new ArrayList<HashMap<String, String>>();
+
+
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String str_type = Recent_Contacted_List.get(position).get(TAG_TYPE);
+                String str_key = Recent_Contacted_List.get(position).get(TAG_KEY);
+
+                Function_AlertDialog();
+
+            }
+
+        });
+
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -163,7 +191,6 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
                         }
                     } else if (success == 0) {
 
-
                         Alerter.create(getActivity())
                                 .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
@@ -208,6 +235,49 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
 
         // Adding request to request queue
         queue.add(request);
+    }
+
+
+    /*****************************
+     * Alert Dialog Function
+     ***************************/
+    public void Function_AlertDialog() {
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View promptsView = li.inflate(R.layout.popup_contacted_business_message, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+        alertDialogBuilder.setView(promptsView);
+
+        edt_message = (EditText) promptsView.findViewById(R.id.popup_contact_business_edt_message);
+
+        str_message = edt_message.getText().toString();
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Send",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to result
+                                // edit text
+
+
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
 }

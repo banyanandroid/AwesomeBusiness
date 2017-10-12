@@ -184,8 +184,6 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
 
         btn_contact_business = (Button) findViewById(R.id.btn_contact_business);
         btn_bookmark_business = (Button) findViewById(R.id.btn_bookmark);
-        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
 
         btn_contact_business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,10 +253,19 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                                 .setBackgroundColor(R.color.colorAccent)
                                 .show();
                         btn_bookmark_business.setText("Bookmarked");
-                        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.colorAccent2));
+                        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
+                    } else if (success == 2) {
+                        dialog.dismiss();
+                        Alerter.create(Activity_DetailedView_Business_For_Sale.this)
+                                .setTitle("Already Exists")
+                                .setText("Business Already Bookmarked")
+                                .setBackgroundColor(R.color.Alert_Warning)
+                                .show();
+                        btn_bookmark_business.setText("Bookmarked");
+                        btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
                     } else {
                         dialog.dismiss();
-                        TastyToast.makeText(getApplicationContext(), "Oops...! Unable to Bookmark :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                        TastyToast.makeText(getApplicationContext(), "Unable to Bookmark", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
                     dialog.dismiss();

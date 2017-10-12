@@ -20,40 +20,22 @@
             android:orientation="vertical"
             android:weightSum="10">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/useractivity_txtview__activity_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:text="Description"
+                android:textColor="@color/txt_black"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/useractivity_txtview__activity_description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1.5"
-                    android:ellipsize="end"
-                    android:text="Description"
-                    android:textColor="@color/txt_black"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/ativity_contacted_business_btn_contact"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    android:background="@color/colorPrimaryDark"
-                    android:gravity="center"
-                    android:text="Contact"
-                    android:textColor="@color/textColorlight" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
                 android:weightSum="2">

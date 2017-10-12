@@ -1,13 +1,25 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tapadoo.alerter.Alerter;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +77,7 @@ public class Tab_Profile_Bookmarks extends Fragment implements SwipeRefreshLayou
     public List_Bookmarks_Adapter adapter;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +103,64 @@ public class Tab_Profile_Bookmarks extends Fragment implements SwipeRefreshLayou
 
         Bookmarks_List = new ArrayList<HashMap<String, String>>();
 
-        swipeRefreshLayout.setOnRefreshListener(this);
 
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String str_type = Bookmarks_List.get(position).get(TAG_TYPE);
+                String str_key = Bookmarks_List.get(position).get(TAG_KEY);
+
+                if (str_type.equals("Business")) {
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("business_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+                    startActivity(i);
+
+
+                } else if (str_type.equals("Investor")) {
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("investor_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Investors_Buyers.class);
+                    startActivity(i);
+
+
+                } else if (str_type.equals("Franchise")) {
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("franchise_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Franchise.class);
+                    startActivity(i);
+
+
+                }
+
+
+            }
+
+        });
+
+
+        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -213,6 +283,8 @@ public class Tab_Profile_Bookmarks extends Fragment implements SwipeRefreshLayou
         // Adding request to request queue
         queue.add(request);
     }
+
+
 
 
 }

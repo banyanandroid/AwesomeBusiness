@@ -531,7 +531,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("STEP  1111111111111");
+        System.out.println("CAME Get_Iam_an");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_investor_iam, new Response.Listener<String>() {
 
@@ -542,14 +542,12 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
-                    System.out.println("STEP  22222222222");
 
                     if (success == 1) {
 
                         JSONArray arr;
 
                         arr = obj.getJSONArray("data");
-                        System.out.println("STEP  33333333");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
@@ -569,8 +567,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                             spn_i_am.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                                         long arg3) {
-
-                                    System.out.println("CLICKEEEEDDDDD");
 
                                     t1 = (TextView) arg1;
                                     str_selected_role_name = t1.getText().toString();
@@ -638,8 +634,10 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
+        System.out.println("CAME Interested");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_investor_interested, new Response.Listener<String>() {
+
 
             @Override
             public void onResponse(String response) {
@@ -735,7 +733,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Sector_List");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business, new Response.Listener<String>() {
 
@@ -828,7 +826,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Location() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business_Location");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business_location, new Response.Listener<String>() {
 
@@ -920,7 +918,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Headquaters() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business_Headquaters");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business_location, new Response.Listener<String>() {
 
@@ -1036,7 +1034,7 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
      ***************************/
 
     public void Get_InvestorProfile() {
-
+        System.out.println("CAME InvestorProfile");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_user_investor_profile_update, new Response.Listener<String>() {
             @Override
@@ -1046,8 +1044,11 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                 try {
 
+                    System.out.println("CAME 1111");
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
+
+                    System.out.println("CAME 1111" + obj);
 
                     if (success == 1) {
 
@@ -1057,9 +1058,20 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                         JSONArray arr_documents;
                         JSONArray arr_images;
 
+                        System.out.println("CAME 2222");
+
                         arr_main = obj.getJSONArray("data");
+
+                        System.out.println("CAME 3333");
+                        System.out.println("CAME 3333" + arr_main);
+
                         for (int i = 0; arr_main.length() > i; i++) {
+
+                            System.out.println("CAME 4444");
+
                             JSONObject obj_data = arr_main.getJSONObject(i);
+
+                            System.out.println("CAME 4444" + obj_data);
 
                             String investor_id = obj_data.getString("investor_id");
                             String investor_key = obj_data.getString("investor_key");
@@ -1134,7 +1146,6 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
                             } catch (Exception e) {
 
                             }
-
                         }
 
                         dialog.dismiss();
@@ -1144,8 +1155,8 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
 
                         Alerter.create(Activity_InvestorProfile_Update.this)
                                 .setTitle("WORLD BUSINESSES FOR SALE")
-                                .setText("Oops! Something went wrong :( \n Try Again")
-                                .setBackgroundColor(R.color.red)
+                                .setText("No Data Found ")
+                                .setBackgroundColor(R.color.Alert_Warning)
                                 .show();
                     }
 

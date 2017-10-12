@@ -1750,7 +1750,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
     public void Get_Business_industry() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business_industry");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business, new Response.Listener<String>() {
 
@@ -1844,7 +1844,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Headquaters() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business_Headquaters");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business_location, new Response.Listener<String>() {
 
@@ -1957,7 +1957,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Expand_Location() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business_Expand_Location");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business_location, new Response.Listener<String>() {
 
@@ -2054,6 +2054,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
 
     public void Get_Franchise_Profile() {
 
+        System.out.println("CAME Franchise_Profile ");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_user_franchise_profile_update, new Response.Listener<String>() {
             @Override

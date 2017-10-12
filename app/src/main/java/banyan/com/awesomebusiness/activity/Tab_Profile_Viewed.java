@@ -1,12 +1,16 @@
 package banyan.com.awesomebusiness.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -85,6 +89,68 @@ public class Tab_Profile_Viewed extends Fragment implements SwipeRefreshLayout.O
         swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.tab_prof_view_swipe);
 
         Recent_Activities_List = new ArrayList<HashMap<String, String>>();
+
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String str_type = Recent_Activities_List.get(position).get(TAG_TYPE);
+                String str_key = Recent_Activities_List.get(position).get(TAG_KEY);
+
+                System.out.println("LIST CLICKEDDDDDDDDDDDDDD 11111");
+                System.out.println("LIST CLICKEDDDDDDDDDDDDDD 11111");
+
+
+                if (str_type.equals("Business")) {
+
+                    System.out.println("LIST CLICKEDDDDDDDDDDDDDD 22222");
+                    System.out.println("LIST CLICKEDDDDDDDDDDDDDD 22222");
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("business_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Business_For_Sale.class);
+                    startActivity(i);
+
+
+                } else if (str_type.equals("Investor")) {
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("investor_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Investors_Buyers.class);
+                    startActivity(i);
+
+
+                } else if (str_type.equals("Franchise")) {
+
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("franchise_key", str_key);
+                    editor.commit();
+
+                    Intent i = new Intent(getActivity(), Activity_DetailedView_Franchise.class);
+                    startActivity(i);
+
+
+                }
+
+
+            }
+
+        });
 
         swipeRefreshLayout.setOnRefreshListener(this);
 

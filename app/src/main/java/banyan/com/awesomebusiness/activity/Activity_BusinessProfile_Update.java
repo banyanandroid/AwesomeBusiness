@@ -826,7 +826,6 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     public void Get_Iam_an() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("STEP  1111111111111");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_iam, new Response.Listener<String>() {
 
@@ -837,14 +836,12 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
-                    System.out.println("STEP  22222222222");
 
                     if (success == 1) {
 
                         JSONArray arr;
 
                         arr = obj.getJSONArray("data");
-                        System.out.println("STEP  33333333");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
@@ -1026,7 +1023,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME SECTOR LIST");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business, new Response.Listener<String>() {
 
@@ -1122,7 +1119,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Location() {
         String tag_json_obj = "json_obj_req";
-        System.out.println("CAME 1");
+        System.out.println("CAME Business Location");
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_business_location, new Response.Listener<String>() {
 
@@ -1219,6 +1216,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     public void Get_Business_Profile() {
 
+        System.out.println("GET BUSINESS_PROFILE 11111 ");
+
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_user_business_profile_update, new Response.Listener<String>() {
             @Override
@@ -1226,12 +1225,20 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 Log.d(TAG, response.toString());
                 System.out.println("CAME RESPONSE ::: " + response.toString());
 
+                System.out.println("GET BUSINESS_PROFILE 2222 ");
+
                 try {
+
+                    System.out.println("GET BUSINESS_PROFILE 3333 ");
 
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
 
+                    System.out.println("GET BUSINESS_PROFILE 4444 ");
+
                     if (success == 1) {
+
+                        System.out.println("GET BUSINESS_PROFILE 5555 ");
 
                         JSONArray arr_main;
                         JSONArray arr_location;
@@ -1240,9 +1247,15 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
                         arr_main = obj.getJSONArray("data");
 
+                        System.out.println("GET BUSINESS_PROFILE 6666 " + arr_main);
+
                         for (int i = 0; arr_main.length() > i; i++) {
 
+                            System.out.println("GET BUSINESS_PROFILE 7777 ");
+
                             JSONObject obj_data = arr_main.getJSONObject(i);
+
+                            System.out.println("GET BUSINESS_PROFILE 8888 " + obj_data);
 
                             String business_id = obj_data.getString(TAG_BUSINESS_ID);
                             String business_key = obj_data.getString(TAG_BUSINESS_KEY);
@@ -1284,7 +1297,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE); // what price u selling / leasing
                             String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON); //Reason for selling this asset
 
-                            String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE); // spn amount fixed for
+                               String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE); // spn amount fixed for
 
                             String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE); // unknown -null -no need to set
                             String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST); //unknown null -no need to set
@@ -1460,6 +1473,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         }
 
                     } else if (success == 0) {
+
+                        System.out.println("GET BUSINESS_PROFILE 9999 ");
 
                         dialog.dismiss();
 
