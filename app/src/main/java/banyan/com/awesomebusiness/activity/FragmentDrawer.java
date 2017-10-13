@@ -47,9 +47,9 @@ public class FragmentDrawer extends Fragment {
     private static String TAG = FragmentDrawer.class.getSimpleName();
 
     Button btn_login;
-    TextView txt_user_name, txt_user_email_id;
+    TextView txt_user_name, txt_user_email_id, txt_logout;
     CircleImageView img_profile;
-    String str_name, str_id,str_email,str_photo = "empty";
+    String str_name, str_id, str_email, str_photo = "empty";
 
     // Session Manager Class
     SessionManager session;
@@ -103,6 +103,9 @@ public class FragmentDrawer extends Fragment {
         img_profile = (CircleImageView) layout.findViewById(R.id.nav_draw_img_profile);
 
         btn_login = (Button) layout.findViewById(R.id.nav_draw_btn_login);
+        txt_logout = (TextView) layout.findViewById(R.id.nav_draw_txt_logout);
+
+        session = new SessionManager(getApplicationContext());
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_name = sharedPreferences.getString("str_user_name", "str_user_name");
@@ -115,26 +118,28 @@ public class FragmentDrawer extends Fragment {
         if (str_id.equals("str_user_id")) {
 
             btn_login.setVisibility(View.VISIBLE);
-        } else if (str_name.equals("str_user_name")){
+        } else if (str_name.equals("str_user_name")) {
 
             txt_user_name.setVisibility(View.GONE);
+            txt_logout.setVisibility(View.GONE);
 
-        } else if (str_name.equals("str_user_email")){
+        } else if (str_name.equals("str_user_email")) {
 
             txt_user_email_id.setVisibility(View.GONE);
-
-        }else {
+            txt_logout.setVisibility(View.GONE);
+        } else {
             txt_user_name.setVisibility(View.VISIBLE);
             txt_user_email_id.setVisibility(View.VISIBLE);
+            txt_logout.setVisibility(View.VISIBLE);
             btn_login.setVisibility(View.GONE);
 
             txt_user_name.setText("" + str_name);
-            txt_user_email_id.setText(""+ str_email);
+            txt_user_email_id.setText("" + str_email);
         }
 
-        if (str_photo.equals("str_user_photo")){
+        if (str_photo.equals("str_user_photo")) {
 
-        }else {
+        } else {
 
             try {
                 String str_img_path = str_photo;
@@ -173,6 +178,13 @@ public class FragmentDrawer extends Fragment {
 
                 Intent i = new Intent(getActivity(), Activity_Login.class);
                 startActivity(i);
+            }
+        });
+
+        txt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                session.logoutUser();
             }
         });
 

@@ -789,9 +789,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     }
 
 
-    /*****************************
+    /************************************
      * To get  Business For sale Type
-     ***************************/
+     ***********************************/
 
     public void Get_Business_For_Sale_type() {
         String tag_json_obj = "json_obj_req";
@@ -884,9 +884,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     }
 
 
-    /*****************************
+    /**********************************
      * To get  Business For sale Type
-     ***************************/
+     **********************************/
 
     public void Get_InvestorBuyer_type() {
         String tag_json_obj = "json_obj_req";
@@ -978,9 +978,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         queue.add(request);
     }
 
-    /*****************************
+    /**********************************
      * To get  Business sector List
-     ***************************/
+     *********************************/
 
     public void Get_Sector_List() {
         String tag_json_obj = "json_obj_req";
@@ -1060,9 +1060,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         queue.add(request);
     }
 
-    /*****************************
+    /************************************
      * To get  Business Location List
-     ***************************/
+     ***********************************/
 
     public void Get_Business_Location() {
         String tag_json_obj = "json_obj_req";
@@ -1162,9 +1162,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     }
 
 
-    /*****************************
+    /**********************************
      * To get  Interested in  Details
-     ***************************/
+     *********************************/
 
     public void Get_Interested() {
         String tag_json_obj = "json_obj_req";
@@ -1260,9 +1260,9 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         queue.add(request);
     }
 
-    /*****************************
+    /*********************************
      * To get  Filter Seekbar Values
-     ***************************/
+     *********************************/
 
     public void Get_Filter_Seekbar_Values() {
         String tag_json_obj = "json_obj_req";

@@ -55,8 +55,8 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
         // Required empty public constructor
     }
 
-    SpotsDialog dialog;
     SpotsDialog dialog1;
+    SpotsDialog dialog2;
     String TAG = "";
     public static final String TAG_DETAILS = "details";
     public static final String TAG_TYPE = "type";
@@ -128,9 +128,6 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
 
 
                 try {
-                    dialog = new SpotsDialog(getActivity());
-                    dialog.show();
-                    queue = Volley.newRequestQueue(getActivity());
                     Function_AlertDialog();
                 } catch (Exception e) {
                     // TODO: handle exceptions

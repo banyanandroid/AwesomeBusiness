@@ -49,7 +49,7 @@
                     android:elevation="40dp"
                     android:src="@mipmap/ic_user" />
 
-               <!-- <TextView
+                <!-- <TextView
                     android:id="@+id/nav_draw_txt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,6 +89,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="email@gmail.com"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/nav_draw_txt_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:gravity="right"
+                android:text="Logout"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/Alert_Fail"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
             <Button

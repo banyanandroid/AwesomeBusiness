@@ -9,9 +9,9 @@ public class AppConfig {
     public static String url_ip_registration = BASE_URL + "/index.php?Apicontroller/";
 
     // public static String url_registration = BASE_URL + "/index.php?apicontroller/createUsers";
-    public static String url_login = BASE_URL + "/index.php?apicontroller/loginusers";
-    public static String url_social_login = BASE_URL + "/index.php?apicontroller/sociallogin";
-    public static String url_user_profile = BASE_URL + "/index.php?apicontroller/detailusersedit";
+    public static String url_login = BASE_URL + "/index.php?Apicontroller/loginusers";
+    public static String url_social_login = BASE_URL + "/index.php?Apicontroller/sociallogin";
+    public static String url_user_profile = BASE_URL + "/index.php?Apicontroller/detailusersedit";
     public static String url_user_profile_update = BASE_URL + "/index.php?Apicontroller/updateprofile";
     public static String url_change_password = BASE_URL + "/index.php?apicontroller/userchangepassword";
     public static String url_recent_activities = BASE_URL + "/index.php?apicontroller/usersactivity";

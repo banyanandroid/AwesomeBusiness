@@ -176,7 +176,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
     String str_profile_type = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

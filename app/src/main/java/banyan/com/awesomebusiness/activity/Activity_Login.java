@@ -96,6 +96,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     EditText edt_pwd;
     String str_forgot_pwd = "";
 
+    private static long back_pressed;
+
     private static final String TAG = Activity_Login.class.getSimpleName();
     private static final String TAG_login = "Login";
     private static final int RC_SIGN_IN = 100;
@@ -844,5 +846,23 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
         btnSignin.startAnimation(clockwise);
     }
 
+    /****************************
+     * Exit Event
+     * ****************************/
 
+    @Override
+    public void onBackPressed() {
+
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+
+            this.moveTaskToBack(true);
+        } else {
+
+            Toast.makeText(getBaseContext(), "Press once again to exit!",
+                    Toast.LENGTH_SHORT).show();
+            finishAffinity();
+
+        }
+        back_pressed = System.currentTimeMillis();
+    }
 }
