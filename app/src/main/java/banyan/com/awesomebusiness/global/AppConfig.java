@@ -16,6 +16,8 @@ public class AppConfig {
     public static String url_change_password = BASE_URL + "/index.php?apicontroller/userchangepassword";
     public static String url_recent_activities = BASE_URL + "/index.php?apicontroller/usersactivity";
     public static String url_recent_contacted_activities = BASE_URL + "/index.php?Apicontroller/listusercontact";
+    public static String url_popup_contact_business_again = BASE_URL + "/index.php?apicontroller/contactbusinessagain";
+
 
     /*********  Bookmark activities *********/
     public static String url_add_bookmark = BASE_URL + "/index.php?Apicontroller/add_bookmarks";

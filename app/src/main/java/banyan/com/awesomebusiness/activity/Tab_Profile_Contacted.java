@@ -13,15 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
@@ -30,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -37,6 +42,7 @@ import banyan.com.awesomebusiness.adapter.List_RecentActivities_Adapter;
 import banyan.com.awesomebusiness.adapter.List_Recent_Contacted_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
+import dmax.dialog.SpotsDialog;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -49,6 +55,8 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
         // Required empty public constructor
     }
 
+    SpotsDialog dialog;
+    SpotsDialog dialog1;
     String TAG = "";
     public static final String TAG_DETAILS = "details";
     public static final String TAG_TYPE = "type";
@@ -71,6 +79,12 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
     // Popup
     EditText edt_message;
     String str_message = "";
+
+    CheckBox chb_share_data, chb_share_email;
+    String str_share_data, str_share_email = "";
+
+    String str_type, str_key = "";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,10 +118,23 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                String str_type = Recent_Contacted_List.get(position).get(TAG_TYPE);
-                String str_key = Recent_Contacted_List.get(position).get(TAG_KEY);
+                str_type = Recent_Contacted_List.get(position).get(TAG_TYPE);
+                str_key = Recent_Contacted_List.get(position).get(TAG_KEY);
 
-                Function_AlertDialog();
+                System.out.println("user_iddddddddddddd" + str_user_id);
+                System.out.println("email_idddddddddddddddd" + str_user_email);
+                System.out.println("typeeeeeeeeeeeeeee" + str_type);
+                System.out.println("keyyyyyyyyyyyyyyyyyy" + str_key);
+
+
+                try {
+                    dialog = new SpotsDialog(getActivity());
+                    dialog.show();
+                    queue = Volley.newRequestQueue(getActivity());
+                    Function_AlertDialog();
+                } catch (Exception e) {
+                    // TODO: handle exceptions
+                }
 
             }
 
@@ -251,8 +278,21 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
         alertDialogBuilder.setView(promptsView);
 
         edt_message = (EditText) promptsView.findViewById(R.id.popup_contact_business_edt_message);
+        chb_share_data = (CheckBox) promptsView.findViewById(R.id.popup_chbx_share_data);
+        chb_share_email = (CheckBox) promptsView.findViewById(R.id.popup_chbx_share_email);
 
-        str_message = edt_message.getText().toString();
+
+        // String Values According to checkbox state
+        if (chb_share_data.isChecked()) {
+            str_share_data = "1";
+        } else {
+            str_share_data = "0";
+        }
+        if (chb_share_email.isChecked()) {
+            str_share_email = "1";
+        } else {
+            str_share_email = "0";
+        }
 
         // set dialog message
         alertDialogBuilder
@@ -260,9 +300,18 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
                 .setPositiveButton("Send",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+
+                                str_message = edt_message.getText().toString().trim();
                                 // get user input and set it to result
                                 // edit text
-
+                                try {
+                                    dialog1 = new SpotsDialog(getActivity());
+                                    dialog1.show();
+                                    queue = Volley.newRequestQueue(getActivity());
+                                    Function_Contact_Business_Again();
+                                } catch (Exception e) {
+                                    // TODO: handle exceptions
+                                }
 
                             }
                         })
@@ -278,6 +327,102 @@ public class Tab_Profile_Contacted extends Fragment implements SwipeRefreshLayou
 
         // show it
         alertDialog.show();
+    }
+
+
+    /*****************************
+     * CONTACT_BUSINESS_AGAIN
+     ***************************/
+
+    private void Function_Contact_Business_Again() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_popup_contact_business_again, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE::: " + response);
+                    System.out.println("CAMEEEEEEE CONTACT BUSINESS FUNCTION");
+                    int success = obj.getInt("status");
+                    if (success == 1) {
+                        dialog1.dismiss();
+                        Alerter.create(getActivity())
+                                .setTitle("Success")
+                                .setText("Message Sent")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+
+                    } else {
+                        dialog1.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Oops! Try Again", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog1.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                dialog1.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog1.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("email_id", str_user_email);
+                params.put("type", str_type);
+                params.put("key", str_key);
+                params.put("yourself", str_message);
+                params.put("share_email", str_share_email);
+                params.put("share_contact", str_share_data);
+
+                ////////////////
+
+                System.out.println("user_id" + str_user_id);
+                System.out.println("email_id" + str_user_email);
+                System.out.println("type" + str_type);
+                System.out.println("key" + str_key);
+                System.out.println("yourself" + str_message);
+                System.out.println("share_email" + str_share_email);
+                System.out.println("share_contact" + str_share_data);
+
+
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
+            }
+        };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
+        // Adding request to request queue
+        queue.add(request);
     }
 
 }
