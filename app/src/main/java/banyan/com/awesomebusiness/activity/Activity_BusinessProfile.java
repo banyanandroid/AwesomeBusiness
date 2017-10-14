@@ -124,7 +124,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     // Strings To Post For JSON
     String str_name, str_company_name, str_mobile, str_official_email,
             str_business_established_year, str_no_of_permanent_employees, str_business_desc,
-            str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales,
+            str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales, str_avg_monthly_expenses,
             str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
@@ -138,7 +138,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     //Common
     EditText edt_name, edt_mobile, edt_company_name, edt_official_email,
             edt_business_established_year, edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
-            edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
+            edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_monthly_expenses, edt_latest_yearly_sales,
             edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
     CheckBox chb_companydetails, chb_contatdetails;
@@ -239,6 +239,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_business_all_prod_serv = (EditText) findViewById(R.id.edt_list_product_services);
         edt_business_facility_desc = (EditText) findViewById(R.id.edt_facility_desc);
         edt_avg_monthly_sales = (EditText) findViewById(R.id.edt_avg_mnthly_sales);
+        edt_monthly_expenses = (EditText) findViewById(R.id.edt_avg_mnthly_expenses);
         edt_latest_yearly_sales = (EditText) findViewById(R.id.edt_latest_yearly_sales);
         edt_EBITDA = (EditText) findViewById(R.id.edt_EBITDA_operating_profit_margin);
         edt_physical_assests_value = (EditText) findViewById(R.id.edt_phy_assests_value);
@@ -339,6 +340,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 str_business_all_prod_serv = edt_business_all_prod_serv.getText().toString();
                 str_business_facility_desc = edt_business_facility_desc.getText().toString();
                 str_avg_monthly_sales = edt_avg_monthly_sales.getText().toString();
+                str_avg_monthly_expenses = edt_monthly_expenses.getText().toString();
                 str_latest_yearly_sales = edt_latest_yearly_sales.getText().toString();
                 str_EBITDA = edt_EBITDA.getText().toString();
                 str_physical_assests_value = edt_physical_assests_value.getText().toString();
@@ -477,7 +479,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         TastyToast.makeText(getApplicationContext(), "Business Facility Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_avg_monthly_sales.equals("")) {
                         edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
-                        TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                        TastyToast.makeText(getApplicationContext(), "Average Monthly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_avg_monthly_expenses.equals("")) {
+                        edt_monthly_expenses.setError("Enter Average Monthly Expenses");
+                        TastyToast.makeText(getApplicationContext(), "Monthly Expenses Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_latest_yearly_sales.equals("")) {
                         edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
                         TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -1125,6 +1130,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("services", str_business_all_prod_serv);
                 params.put("business_facility", str_business_facility_desc);
                 params.put("monthly_expected_sales", str_avg_monthly_sales);
+                params.put("monthly_expenses_amount", str_avg_monthly_expenses);
                 params.put("yearly_expected_sales", str_latest_yearly_sales);
                 params.put("ebitda", str_EBITDA);
                 params.put("display", "");
@@ -1163,6 +1169,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("services" + str_business_all_prod_serv);
                 System.out.println("business_facility" + str_business_facility_desc);
                 System.out.println("monthly_expected_sales" + str_avg_monthly_sales);
+                System.out.println("monthly_expenses_amount" + str_avg_monthly_expenses);
                 System.out.println("yearly_expected_sales" + str_latest_yearly_sales);
                 System.out.println("ebitda" + str_EBITDA);
                 System.out.println("physical_assets" + str_physical_assests_value);

@@ -137,6 +137,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     public static final String TAG_BUISNESS_FACILITY = "buisness_facility";
     public static final String TAG_BUSINESS_ASSETS_REASON = "business_assets_reason";
     public static final String TAG_BUSINESS_MONTH_SALES = "business_month_sales";
+    public static final String TAG_BUSINESS_MONTH_EXPENSES = "business_month_expenses";
     public static final String TAG_BUSINESS_TENTATIVE_PRICE = "business_tentative_price";
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
     public static final String TAG_BUSINESS_CONTACT_DETAILS = "business_contact_details";
@@ -196,7 +197,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     // Strings To Post For JSON
     String str_name, str_company_name, str_mobile, str_official_email,
             str_business_established_year, str_no_of_permanent_employees, str_business_desc,
-            str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales,
+            str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales, str_monthly_expenses,
             str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
@@ -210,7 +211,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     edt_business_established_year,
             edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
-            edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_latest_yearly_sales,
+            edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_monthly_expenses, edt_latest_yearly_sales,
             edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
     CheckBox chb_companydetails, chb_contatdetails;
@@ -290,6 +291,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         edt_business_all_prod_serv = (EditText) findViewById(R.id.edt_list_product_services);
         edt_business_facility_desc = (EditText) findViewById(R.id.edt_facility_desc);
         edt_avg_monthly_sales = (EditText) findViewById(R.id.edt_avg_mnthly_sales);
+        edt_monthly_expenses = (EditText) findViewById(R.id.edt_avg_mnthly_expenses);
         edt_latest_yearly_sales = (EditText) findViewById(R.id.edt_latest_yearly_sales);
         edt_EBITDA = (EditText) findViewById(R.id.edt_EBITDA_operating_profit_margin);
         edt_physical_assests_value = (EditText) findViewById(R.id.edt_phy_assests_value);
@@ -418,6 +420,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 str_business_all_prod_serv = edt_business_all_prod_serv.getText().toString();
                 str_business_facility_desc = edt_business_facility_desc.getText().toString();
                 str_avg_monthly_sales = edt_avg_monthly_sales.getText().toString();
+                str_monthly_expenses = edt_monthly_expenses.getText().toString();
                 str_latest_yearly_sales = edt_latest_yearly_sales.getText().toString();
                 str_EBITDA = edt_EBITDA.getText().toString();
                 str_physical_assests_value = edt_physical_assests_value.getText().toString();
@@ -564,6 +567,9 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                         TastyToast.makeText(getApplicationContext(), "Business Facility Description Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_avg_monthly_sales.equals("")) {
                         edt_avg_monthly_sales.setError("Enter Average Monthly Sales");
+                        TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                    } else if (str_monthly_expenses.equals("")) {
+                        edt_monthly_expenses.setError("Enter Average Monthly Sales");
                         TastyToast.makeText(getApplicationContext(), "Average Monthly Sales   Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_latest_yearly_sales.equals("")) {
                         edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
@@ -1283,6 +1289,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String buisness_products_services = obj_data.getString(TAG_BUISNESS_PRODUCTS_SERVICES); // list all products & services
                             String buisness_facility = obj_data.getString(TAG_BUISNESS_FACILITY); // describe ur facility
                             String business_month_sales = obj_data.getString(TAG_BUSINESS_MONTH_SALES); // business average monthly sales
+                            String business_month_expenses = obj_data.getString(TAG_BUSINESS_MONTH_EXPENSES); // business  monthly expenses
                             String business_yearly_sales = obj_data.getString(TAG_BUSINESS_YEARLY_SALES); // latest yearly sales
 
                             String business_ebitda = obj_data.getString(TAG_BUSINESS_EBITDA); //EBITA operating profit margin
@@ -1297,7 +1304,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                             String business_sell_lease_price = obj_data.getString(TAG_BUSINESS_SELL_LEASE_PRICE); // what price u selling / leasing
                             String business_assets_reason = obj_data.getString(TAG_BUSINESS_ASSETS_REASON); //Reason for selling this asset
 
-                               String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE); // spn amount fixed for
+                            String business_sell_type = obj_data.getString(TAG_BUSINESS_SELL_TYPE); // spn amount fixed for
 
                             String business_sell_lease = obj_data.getString(TAG_BUSINESS_SELL_LEASE); // unknown -null -no need to set
                             String business_sell_lease_cost = obj_data.getString(TAG_BUSINESS_SELL_LEASE_COST); //unknown null -no need to set
@@ -1393,6 +1400,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 edt_business_all_prod_serv.setText("" + buisness_products_services);
                                 edt_business_facility_desc.setText("" + buisness_facility);
                                 edt_avg_monthly_sales.setText("" + business_month_sales);
+                                edt_monthly_expenses.setText("" + business_month_expenses);
                                 edt_latest_yearly_sales.setText("" + business_yearly_sales);
                                 edt_EBITDA.setText("" + business_ebitda);
                                 edt_physical_assests_value.setText("" + buisness_investment);
@@ -1591,6 +1599,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 params.put("services", str_business_all_prod_serv);
                 params.put("business_facility", str_business_facility_desc);
                 params.put("monthly_expected_sales", str_avg_monthly_sales);
+                params.put("monthly_expenses_amount", str_monthly_expenses);
                 params.put("yearly_expected_sales", str_latest_yearly_sales);
                 params.put("ebitda", str_EBITDA);
                 params.put("display", "");
@@ -1632,6 +1641,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 System.out.println("services" + str_business_all_prod_serv);
                 System.out.println("business_facility" + str_business_facility_desc);
                 System.out.println("monthly_expected_sales" + str_avg_monthly_sales);
+                System.out.println("monthly_expenses_amount" + str_monthly_expenses);
                 System.out.println("yearly_expected_sales" + str_latest_yearly_sales);
                 System.out.println("ebitda" + str_EBITDA);
                 System.out.println("physical_assets" + str_physical_assests_value);

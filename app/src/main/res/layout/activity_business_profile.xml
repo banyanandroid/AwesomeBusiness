@@ -450,6 +450,25 @@
 
                     </android.support.design.widget.TextInputLayout>
 
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/textColorPrimary"
+                        android:theme="@style/TextLabel">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/edt_avg_mnthly_expenses"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:hint="Monthly expenses at present"
+                            android:inputType="number"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
