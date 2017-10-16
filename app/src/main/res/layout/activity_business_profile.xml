@@ -332,7 +332,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
                             android:hint="No Of Permanent Employees"
-                            android:inputType="textEmailAddress"
+                            android:inputType="number"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 

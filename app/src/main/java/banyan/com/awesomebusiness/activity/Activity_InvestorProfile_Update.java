@@ -225,6 +225,9 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         edt_kind_business_interested = (EditText) findViewById(R.id.invest_prof_up_edt_investor_profile_business_interested);
         edt_company_about = (EditText) findViewById(R.id.invest_prof_up_edt_about_yourself);
 
+        //For Adding comma's inbetween numbers in edit text
+        edt_dealsize_minimum.addTextChangedListener(new NumberTextWatcherForThousand(edt_dealsize_minimum));
+        edt_dealsize_maximum.addTextChangedListener(new NumberTextWatcherForThousand(edt_dealsize_maximum));
 
         auto_headquaters = (AutoCompleteTextView) findViewById(R.id.invest_prof_up_edit_profile_edt_user_location);
 

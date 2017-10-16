@@ -198,7 +198,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     String str_name, str_company_name, str_mobile, str_official_email,
             str_business_established_year, str_no_of_permanent_employees, str_business_desc,
             str_business_highlights, str_business_all_prod_serv, str_business_facility_desc, str_avg_monthly_sales, str_monthly_expenses,
-            str_latest_yearly_sales, str_EBITDA, str_physical_assests_value,
+            str_latest_yearly_sales, str_cashflow_profit, str_physical_assests_value,
             str_tentative_selling_price, str_reason_for_sale, str_spn_business_legal_type = "";
 
 
@@ -212,7 +212,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
     edt_business_established_year,
             edt_no_of_permanent_employees, edt_business_des, edt_business_highlights,
             edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_monthly_expenses, edt_latest_yearly_sales,
-            edt_EBITDA, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
+            edt_cashflow_profit, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
     CheckBox chb_companydetails, chb_contatdetails;
 
@@ -293,10 +293,19 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         edt_avg_monthly_sales = (EditText) findViewById(R.id.edt_avg_mnthly_sales);
         edt_monthly_expenses = (EditText) findViewById(R.id.edt_avg_mnthly_expenses);
         edt_latest_yearly_sales = (EditText) findViewById(R.id.edt_latest_yearly_sales);
-        edt_EBITDA = (EditText) findViewById(R.id.edt_EBITDA_operating_profit_margin);
+        edt_cashflow_profit = (EditText) findViewById(R.id.edt_EBITDA_operating_profit_margin);
         edt_physical_assests_value = (EditText) findViewById(R.id.edt_phy_assests_value);
         edt_tentative_selling_price = (EditText) findViewById(R.id.edt_tentative_selling_price);
         edt_reason_for_sale = (EditText) findViewById(R.id.edt_reason_for_sale);
+
+        //For Adding comma's inbetween numbers in edit text
+        edt_no_of_permanent_employees.addTextChangedListener(new NumberTextWatcherForThousand(edt_no_of_permanent_employees));
+        edt_avg_monthly_sales.addTextChangedListener(new NumberTextWatcherForThousand(edt_avg_monthly_sales));
+        edt_monthly_expenses.addTextChangedListener(new NumberTextWatcherForThousand(edt_monthly_expenses));
+        edt_latest_yearly_sales.addTextChangedListener(new NumberTextWatcherForThousand(edt_latest_yearly_sales));
+        edt_cashflow_profit.addTextChangedListener(new NumberTextWatcherForThousand(edt_cashflow_profit));
+        edt_physical_assests_value.addTextChangedListener(new NumberTextWatcherForThousand(edt_physical_assests_value));
+        edt_tentative_selling_price.addTextChangedListener(new NumberTextWatcherForThousand(edt_tentative_selling_price));
 
         chb_companydetails = (CheckBox) findViewById(R.id.chbx_display_company_details);
         chb_contatdetails = (CheckBox) findViewById(R.id.chbx_display_contact_details);
@@ -422,7 +431,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 str_avg_monthly_sales = edt_avg_monthly_sales.getText().toString();
                 str_monthly_expenses = edt_monthly_expenses.getText().toString();
                 str_latest_yearly_sales = edt_latest_yearly_sales.getText().toString();
-                str_EBITDA = edt_EBITDA.getText().toString();
+                str_cashflow_profit = edt_cashflow_profit.getText().toString();
                 str_physical_assests_value = edt_physical_assests_value.getText().toString();
                 str_tentative_selling_price = edt_tentative_selling_price.getText().toString();
                 str_reason_for_sale = edt_reason_for_sale.getText().toString();
@@ -574,8 +583,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                     } else if (str_latest_yearly_sales.equals("")) {
                         edt_latest_yearly_sales.setError("Enter Latest Yearly Sales");
                         TastyToast.makeText(getApplicationContext(), "Yearly Sales Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                    } else if (str_EBITDA.equals("")) {
-                        edt_EBITDA.setError("Enter Monthly Cashflow/Profit");
+                    } else if (str_cashflow_profit.equals("")) {
+                        edt_cashflow_profit.setError("Enter Monthly Cashflow/Profit");
                         TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else if (str_physical_assests_value.equals("")) {
                         edt_physical_assests_value.setError("Please Enter Assets Value");
@@ -1402,7 +1411,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                                 edt_avg_monthly_sales.setText("" + business_month_sales);
                                 edt_monthly_expenses.setText("" + business_month_expenses);
                                 edt_latest_yearly_sales.setText("" + business_yearly_sales);
-                                edt_EBITDA.setText("" + business_ebitda);
+                                edt_cashflow_profit.setText("" + business_ebitda);
                                 edt_physical_assests_value.setText("" + buisness_investment);
                                 edt_tentative_selling_price.setText("" + business_tentative_price);
                                 edt_reason_for_sale.setText("" + business_reason);
@@ -1601,7 +1610,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 params.put("monthly_expected_sales", str_avg_monthly_sales);
                 params.put("monthly_expenses_amount", str_monthly_expenses);
                 params.put("yearly_expected_sales", str_latest_yearly_sales);
-                params.put("ebitda", str_EBITDA);
+                params.put("ebitda", str_cashflow_profit);
                 params.put("display", "");
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
@@ -1643,7 +1652,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 System.out.println("monthly_expected_sales" + str_avg_monthly_sales);
                 System.out.println("monthly_expenses_amount" + str_monthly_expenses);
                 System.out.println("yearly_expected_sales" + str_latest_yearly_sales);
-                System.out.println("ebitda" + str_EBITDA);
+                System.out.println("ebitda" + str_cashflow_profit);
                 System.out.println("physical_assets" + str_physical_assests_value);
                 System.out.println("tentative_price" + str_tentative_selling_price);
                 System.out.println("reason" + str_reason_for_sale);

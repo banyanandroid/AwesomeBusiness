@@ -507,6 +507,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_1 = (EditText) findViewById(R.id.edt_format_one_royalty_commission);
         edt_format_salespartner_monthly_revenue_1 = (EditText) findViewById(R.id.edt_format_one_avg_monthly_revenue);
         edt_format_operating_profitmargin_1 = (EditText) findViewById(R.id.edt_format_one_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_1));
+        edt_format_spaceneeded_maximum_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_1));
+        edt_format_investment_needed_minimum_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_1));
+        edt_format_investment_needed_maximum_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_1));
+        edt_format_brand_fee_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_1));
+        edt_format_staff_required_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_1));
+        edt_format_royalty_commission_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_1));
+        edt_format_salespartner_monthly_revenue_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_1));
+        edt_format_operating_profitmargin_1.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_1));
 
         ////FORMAT 2
         edt_format_name_2 = (EditText) findViewById(R.id.edt_format_two_format_name);
@@ -519,6 +529,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_2 = (EditText) findViewById(R.id.edt_format_two_royalty_commission);
         edt_format_salespartner_monthly_revenue_2 = (EditText) findViewById(R.id.edt_format_two_avg_monthly_revenue);
         edt_format_operating_profitmargin_2 = (EditText) findViewById(R.id.edt_format_two_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_2));
+        edt_format_spaceneeded_maximum_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_2));
+        edt_format_investment_needed_minimum_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_2));
+        edt_format_investment_needed_maximum_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_2));
+        edt_format_brand_fee_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_2));
+        edt_format_staff_required_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_2));
+        edt_format_royalty_commission_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_2));
+        edt_format_salespartner_monthly_revenue_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_2));
+        edt_format_operating_profitmargin_2.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_2));
 
         ////FORMAT 3
         edt_format_name_3 = (EditText) findViewById(R.id.edt_format_three_format_name);
@@ -531,6 +551,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_3 = (EditText) findViewById(R.id.edt_format_three_royalty_commission);
         edt_format_salespartner_monthly_revenue_3 = (EditText) findViewById(R.id.edt_format_three_avg_monthly_revenue);
         edt_format_operating_profitmargin_3 = (EditText) findViewById(R.id.edt_format_three_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_3));
+        edt_format_spaceneeded_maximum_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_3));
+        edt_format_investment_needed_minimum_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_3));
+        edt_format_investment_needed_maximum_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_3));
+        edt_format_brand_fee_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_3));
+        edt_format_staff_required_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_3));
+        edt_format_royalty_commission_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_3));
+        edt_format_salespartner_monthly_revenue_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_3));
+        edt_format_operating_profitmargin_3.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_3));
 
         ////FORMAT 4
         edt_format_name_4 = (EditText) findViewById(R.id.edt_format_four_format_name);
@@ -543,6 +573,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_4 = (EditText) findViewById(R.id.edt_format_four_royalty_commission);
         edt_format_salespartner_monthly_revenue_4 = (EditText) findViewById(R.id.edt_format_four_avg_monthly_revenue);
         edt_format_operating_profitmargin_4 = (EditText) findViewById(R.id.edt_format_four_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_4));
+        edt_format_spaceneeded_maximum_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_4));
+        edt_format_investment_needed_minimum_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_4));
+        edt_format_investment_needed_maximum_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_4));
+        edt_format_brand_fee_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_4));
+        edt_format_staff_required_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_4));
+        edt_format_royalty_commission_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_4));
+        edt_format_salespartner_monthly_revenue_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_4));
+        edt_format_operating_profitmargin_4.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_4));
 
         ////FORMAT 5
         edt_format_name_5 = (EditText) findViewById(R.id.edt_format_five_format_name);
@@ -555,6 +595,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_5 = (EditText) findViewById(R.id.edt_format_five_royalty_commission);
         edt_format_salespartner_monthly_revenue_5 = (EditText) findViewById(R.id.edt_format_five_avg_monthly_revenue);
         edt_format_operating_profitmargin_5 = (EditText) findViewById(R.id.edt_format_five_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_5));
+        edt_format_spaceneeded_maximum_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_5));
+        edt_format_investment_needed_minimum_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_5));
+        edt_format_investment_needed_maximum_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_5));
+        edt_format_brand_fee_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_5));
+        edt_format_staff_required_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_5));
+        edt_format_royalty_commission_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_5));
+        edt_format_salespartner_monthly_revenue_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_5));
+        edt_format_operating_profitmargin_5.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_5));
 
         ////FORMAT 6
         edt_format_name_6 = (EditText) findViewById(R.id.edt_format_six_format_name);
@@ -567,6 +617,16 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         edt_format_royalty_commission_6 = (EditText) findViewById(R.id.edt_format_six_royalty_commission);
         edt_format_salespartner_monthly_revenue_6 = (EditText) findViewById(R.id.edt_format_six_avg_monthly_revenue);
         edt_format_operating_profitmargin_6 = (EditText) findViewById(R.id.edt_format_six_avg_profit_margin);
+        //For Adding comma's inbetween numbers in edit text
+        edt_format_spaceneeded_minimum_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_minimum_6));
+        edt_format_spaceneeded_maximum_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_spaceneeded_maximum_6));
+        edt_format_investment_needed_minimum_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_minimum_6));
+        edt_format_investment_needed_maximum_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_investment_needed_maximum_6));
+        edt_format_brand_fee_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_brand_fee_6));
+        edt_format_staff_required_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_staff_required_6));
+        edt_format_royalty_commission_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_royalty_commission_6));
+        edt_format_salespartner_monthly_revenue_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_salespartner_monthly_revenue_6));
+        edt_format_operating_profitmargin_6.addTextChangedListener(new NumberTextWatcherForThousand(edt_format_operating_profitmargin_6));
 
 
         btn_add_faility_stores_pics = (Button) findViewById(R.id.btn_facility_photos);
