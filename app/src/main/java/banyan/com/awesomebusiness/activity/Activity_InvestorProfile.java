@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,25 +82,30 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
 
     Button btn_add_pic, btn_submit;
-    EditText edt_name, edt_mobile_number, edt_email, edt_dealsize_minimum, edt_dealsize_maximum,
-            edt_company_name, edt_designation, edt_wed_linkedin,
-            edt_company_sector, edt_kind_business_interested, edt_company_about;
+    EditText edt_name, edt_mobile_number, edt_email, edt_dealsize_minimum, edt_dealsize_maximum, edt_roi_minimum, edt_roi_maximum,
+            edt_kind_business_interested, edt_company_about;
 
     //Multi Auto Complete Textview
     MultiAutoCompleteTextView auto_busineeslist, auto_locationlist;
 
     //AUTOCOMPLETETEXTVIEW
-    AutoCompleteTextView auto_headquaters;
+    AutoCompleteTextView auto_headquaters, auto_company_sector;
+    //For headquaters (Autocomplete Single select)
     String str_select_item, str_final_headquaters = "";
+    //For company sector (Autocomplete Single select)
+    String str_selected_item, str_final_company_sector = "";
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
+    Spinner spn_business_stages;
+    String str_business_stages_selected_item, str_business_stages = "0";
+
     String str_final_business_sector, str_final_Business_Location = "";
 
-    String str_name, str_mobile, str_email, str_deal_minimum, str_deal_maximum, str_company_name,
-            str_designation, str_web_linkedin, str_company_sector, str_kindof_business_interested, str_company_about = "";
+    String str_name, str_mobile, str_email, str_deal_minimum, str_deal_maximum, str_roi_minimum, str_roi_maximum,
+            str_kindof_business_interested, str_company_about = "";
 
-    Integer int_deal_minimum, int_deal_maximum = 0;
+    Integer int_deal_minimum, int_deal_maximum, int_roi_minimum, int_roi_maximum = 0;
 
     public static final String TAG_ROLE_ID = "investor_an_id";
     public static final String TAG_ROLE_NAME = "investor_an_name";
@@ -234,10 +240,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
         edt_dealsize_minimum = (EditText) findViewById(R.id.edt_dealsize_minimum);
         edt_dealsize_maximum = (EditText) findViewById(R.id.edt_dealsize_maximum);
-        edt_company_name = (EditText) findViewById(R.id.edt_company_work_at);
-        edt_designation = (EditText) findViewById(R.id.edt_designation);
-        edt_wed_linkedin = (EditText) findViewById(R.id.edt_linkedin_profile);
-        edt_company_sector = (EditText) findViewById(R.id.edt_company_sector);
+        edt_roi_minimum = (EditText) findViewById(R.id.edt_roi_minimum);
+        edt_roi_maximum = (EditText) findViewById(R.id.edt_roi_maximum);
         edt_kind_business_interested = (EditText) findViewById(R.id.edt_investor_profile_business_interested);
         edt_company_about = (EditText) findViewById(R.id.edt_about_yourself);
 
@@ -246,6 +250,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         edt_dealsize_maximum.addTextChangedListener(new NumberTextWatcherForThousand(edt_dealsize_maximum));
 
         auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_profile_edt_user_location);
+        auto_company_sector = (AutoCompleteTextView) findViewById(R.id.investor_profile_edt_company_sector);
+
 
         edt_name.setText("" + str_get_user_name);
         edt_mobile_number.setText("" + str_get_user_mobile);
@@ -256,6 +262,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         spn_i_am.setTitle("Select Your Role");
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_spn_intersted);
         spn_interested_in.setTitle("Select Your Interest");
+
+        spn_business_stages = (Spinner) findViewById(R.id.spn_business_stages);
 
         btn_add_pic = (Button) findViewById(R.id.btn_add_photos);
         btn_add_pic.setOnClickListener(new View.OnClickListener() {
@@ -271,6 +279,42 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                str_business_stages_selected_item = spn_business_stages.getSelectedItem().toString();
+
+                if (str_business_stages_selected_item.equals("Select Stages In Business")) {
+                    spn_business_stages.setFocusable(true);
+                    spn_business_stages.setFocusableInTouchMode(true);
+                    spn_business_stages.requestFocus();
+                    spn_business_stages.performClick();
+                    TastyToast.makeText(getApplicationContext(), "Select Stages In Business", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
+                } else if (str_business_stages_selected_item.equals("Profitable")) {
+
+                    str_business_stages = "1";
+
+                } else if (str_business_stages_selected_item.equals("Breaking Even")) {
+
+                    str_business_stages = "2";
+
+                } else if (str_business_stages_selected_item.equals("Pre-Startup")) {
+
+                    str_business_stages = "3";
+
+                } else if (str_business_stages_selected_item.equals("Startup")) {
+
+                    str_business_stages = "4";
+
+                } else if (str_business_stages_selected_item.equals("Existing Business")) {
+
+                    str_business_stages = "5";
+
+                } else if (str_business_stages_selected_item.equals("Any")) {
+
+                    str_business_stages = "6";
+
+                }
 
                 String str_bus_list = auto_busineeslist.getText().toString();
                 String str_loc_list = auto_locationlist.getText().toString();
@@ -361,6 +405,17 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
                 str_final_headquaters = select_Headquaters_id + "-" + select_Headquaters_type;
 
+
+                ///////////////////////
+                ///////  FOR GETTING ENTERED COMPANY SECTOR TYPE AND ID
+                ///////////////////////
+
+                String str_Company_sector = auto_company_sector.getText().toString();
+                int Sector_position = Arraylist_sector_name.indexOf(str_Headquaters);
+                String select_Sector_id = Arraylist_sector_key.get(Sector_position + 1);
+                String select_Sector_type = Arraylist_sector_type.get(Sector_position + 1);
+                str_final_company_sector = select_Sector_id + "-" + select_Sector_type;
+
                 //GETTING STRING VALUES FROM NORMAL EDIT TEXT'S
                 str_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
@@ -369,14 +424,13 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 str_deal_minimum = edt_dealsize_minimum.getText().toString();
                 str_deal_maximum = edt_dealsize_maximum.getText().toString();
 
-                str_company_name = edt_company_name.getText().toString();
-                str_designation = edt_designation.getText().toString();
-                str_web_linkedin = edt_wed_linkedin.getText().toString();
-                str_company_sector = edt_company_sector.getText().toString();
+                str_roi_minimum = edt_roi_minimum.getText().toString();
+                str_roi_maximum = edt_roi_maximum.getText().toString();
+
                 str_kindof_business_interested = edt_kind_business_interested.getText().toString();
                 str_company_about = edt_company_about.getText().toString();
 
-                //CONVERTING DEAL SIZE MINIMUM & MAXIMUM VALUES TO INTEGER TO CHECK MAXIMUM IS GREATER THAN MINIMUM VALUES
+                //CONVERTING  MINIMUM & MAXIMUM VALUES TO INTEGER TO CHECK MAXIMUM IS GREATER THAN MINIMUM VALUES
 
                 if (str_deal_minimum.equals("")) {
                     edt_dealsize_minimum.setError("Enter Minimum Deal Size");
@@ -392,6 +446,23 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
                     int_deal_maximum = Integer.valueOf(str_deal_maximum);
+                }
+
+
+                if (str_roi_minimum.equals("")) {
+                    edt_roi_minimum.setError("Enter Minimum Return Of Interest");
+                    edt_roi_minimum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    int_roi_minimum = Integer.valueOf(str_roi_minimum);
+                }
+
+                if (str_roi_maximum.equals("")) {
+                    edt_roi_maximum.setError("Enter Maximum Return Of Interest");
+                    edt_roi_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else {
+                    int_roi_maximum = Integer.valueOf(str_roi_maximum);
                 }
 
 
@@ -425,26 +496,26 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_dealsize_maximum.setError("Invalid Value");
                     edt_dealsize_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Deal Size", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_roi_minimum.equals("")) {
+                    edt_roi_minimum.setError("Enter Minimum Return Of Interest");
+                    edt_roi_minimum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_roi_maximum.equals("")) {
+                    edt_roi_maximum.setError("Enter Maximum Return Of Interest");
+                    edt_roi_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (int_roi_maximum <= int_roi_minimum) {
+                    edt_roi_maximum.setError("Invalid Value");
+                    edt_roi_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Return Of Interest", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_final_headquaters.equals("")) {
                     auto_headquaters.setError("Enter Company Location");
                     auto_headquaters.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Company Location Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_company_name.equals("")) {
-                    edt_company_name.setError("Enter Company Name");
-                    edt_company_name.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Company Name Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_designation.equals("")) {
-                    edt_designation.setError("Enter Designation");
-                    edt_designation.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Designation Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_web_linkedin.equals("")) {
-                    edt_wed_linkedin.setError("Enter Link");
-                    edt_wed_linkedin.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_company_sector.equals("")) {
-                    edt_company_sector.setError("Enter Company's Sector");
-                    edt_company_sector.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Company's Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_final_company_sector.equals("")) {
+                    auto_company_sector.setError("Enter Company Sector");
+                    auto_company_sector.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "Company Sector Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else if (str_kindof_business_interested.equals("")) {
                     edt_kind_business_interested.setError("Enter the kind of business interested");
                     edt_kind_business_interested.requestFocus();
@@ -851,6 +922,31 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                                     .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                             auto_busineeslist.setThreshold(1);
 
+                            auto_company_sector.setAdapter(adapter_process);
+                            auto_company_sector.setThreshold(1);
+
+                            auto_company_sector.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                                    System.out.println("Position :::::::: " + position);
+
+
+                                    t1 = (TextView) view;
+                                    String str_location_key = t1.getText().toString();
+                                    int i = Arraylist_sector_name.indexOf(str_location_key);
+
+                                    String str_select_sector_key = Arraylist_sector_key.get(i);
+                                    String str_select_sector_type = Arraylist_sector_type.get(i);
+                                    str_selected_item = str_select_sector_key + "-" + str_select_sector_type;
+                                    System.out.println("FINAL Business Location :: " + str_selected_item);
+
+
+                                }
+                            });
+
+
                         } catch (Exception e) {
 
                         }
@@ -1165,11 +1261,15 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
                 params.put("location", str_final_headquaters);
 
-                params.put("com_y", str_company_name);
+              /*  params.put("com_y", str_company_name);
                 params.put("desig", str_designation);
                 params.put("linked", str_web_linkedin);
+*/
+                params.put("stages", str_business_stages);
+                params.put("roi", str_roi_minimum);
+                params.put("roi_to", str_roi_maximum);
 
-                params.put("com_s", str_company_sector);
+                params.put("com_s", str_final_company_sector);
                 params.put("busi_in", str_kindof_business_interested);
                 params.put("abt_you", str_company_about);
 
@@ -1192,10 +1292,15 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 System.out.println("invest_inr" + str_deal_minimum);
                 System.out.println("invest_to" + str_deal_maximum);
                 System.out.println("location" + str_final_headquaters);
-                System.out.println("com_y" + str_company_name);
-                System.out.println("desig" + str_designation);
-                System.out.println("linked" + str_web_linkedin);
-                System.out.println("com_s" + str_company_sector);
+
+                params.put("stages", str_business_stages);
+                params.put("roi", str_roi_minimum);
+                params.put("roi_to", str_roi_maximum);
+
+                System.out.println("stages" + str_kindof_business_interested);
+                System.out.println("roi_from" + str_kindof_business_interested);
+                System.out.println("roi_to" + str_kindof_business_interested);
+
                 System.out.println("busi_in" + str_kindof_business_interested);
                 System.out.println("abt_you" + str_company_about);
                 System.out.println("user_currency" + str_user_currency);

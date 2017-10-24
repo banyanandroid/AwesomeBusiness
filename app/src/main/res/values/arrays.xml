@@ -57,6 +57,17 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="spinner_business_stages">
+        <item>Select Stages In Business</item>
+        <item>Profitable</item>
+        <item>Breaking Even</item>
+        <item>Pre-Startup</item>
+        <item>Startup</item>
+        <item>Existing Business</item>
+        <item>Any</item>
+
+    </string-array>
+
     <string-array name="spinner_sale_type">
         <item>Above Amount Is Fixed For</item>
         <item>Asset Sale</item>

@@ -12,7 +12,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -169,12 +168,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
                         android:inputType="text"
-                        android:background="@drawable/bg_parent_rounded_corner"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,19 +188,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
                         android:ems="10"
                         android:inputType="text"
-                        android:background="@drawable/bg_parent_rounded_corner"
                         android:textColor="@color/black"
-                        android:textSize="16sp" >
-                    </MultiAutoCompleteTextView>
+                        android:textSize="16sp"></MultiAutoCompleteTextView>
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="Your Deal Size Range"
+                        android:text="Your Investment Range"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="16dp"
                         android:textStyle="normal" />
@@ -244,6 +241,49 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:text="Your Return Of Interest"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:id="@+id/edt_roi_minimum"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="Minimum"
+                            android:inputType="number"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/edt_roi_maximum"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_parent_rounded_corner"
+                            android:hint="Maximum"
+                            android:inputType="number"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="Your / Company's Current location"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="16dp"
@@ -251,6 +291,29 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/edit_profile_edt_user_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:hint="Enter location"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Your Company's Sector"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/investor_profile_edt_company_sector"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -346,6 +409,16 @@
                             android:textSize="16dp" />
 
                     </android.support.design.widget.TextInputLayout>
+
+                    <Spinner
+                        android:id="@+id/spn_business_stages"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/bg_parent_rounded_corner"
+                        android:entries="@array/spinner_business_stages">
+
+                    </Spinner>
 
 
                     <android.support.design.widget.TextInputLayout
