@@ -93,7 +93,7 @@
         <item>6</item>
     </string-array>
 
-    <string-array name="spinner_opportunities_offered">
+    <string-array name="spinner_opportunity_offered">
         <item>Select Opportunities</item>
         <item>Franchise</item>
         <item>Dealership</item>
@@ -101,6 +101,14 @@
         <item>Distributor</item>
         <item>Sales Partner</item>
 
+    </string-array>
+
+    <string-array name="spinner_advisor_type">
+        <item>--Select Type--</item>
+        <item>Advisor</item>
+        <item>Broker</item>
+        <item>Consultant</item>
+        <item>Any</item>
     </string-array>
 
     <string-array name="spinner_filter_main">

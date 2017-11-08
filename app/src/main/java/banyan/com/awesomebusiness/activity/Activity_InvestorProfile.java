@@ -448,7 +448,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     int_deal_maximum = Integer.valueOf(str_deal_maximum);
                 }
 
-
                 if (str_roi_minimum.equals("")) {
                     edt_roi_minimum.setError("Enter Minimum Return Of Interest");
                     edt_roi_minimum.requestFocus();

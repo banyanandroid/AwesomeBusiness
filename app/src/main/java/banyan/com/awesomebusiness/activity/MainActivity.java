@@ -236,8 +236,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
         if (id == R.id.action_add_advisor_profile) {
 
-            Toast.makeText(getApplicationContext(), "Advisor Profile", Toast.LENGTH_LONG).show();
-            return true;
+            Intent i = new Intent(getApplicationContext(), Activity_AdvisorProfile.class);
+            startActivity(i);
         }
         if (id == R.id.action_add_investor_profile) {
             Intent i = new Intent(getApplicationContext(), Activity_InvestorProfile.class);

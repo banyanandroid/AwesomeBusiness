@@ -191,7 +191,7 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:entries="@array/spinner_opportunities_offered">
+                        android:entries="@array/spinner_opportunity_offered">
 
                     </Spinner>
 

@@ -40,7 +40,6 @@ import banyan.com.awesomebusiness.global.SessionManager;
  */
 public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
     String str_user_name, str_user_id;
 
     public static RequestQueue queue;
@@ -89,7 +88,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
     public static final String TAG_BUSINESS_REASON = "business_reason";
     public static final String TAG_BUSINESS_STATUS = "business_status";
-
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -205,7 +203,6 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
 
                 String business_location_name = Business_profile_list.get(position).get(TAG_LOCATION_NAME);
                 String business_location_key = Business_profile_list.get(position).get(TAG_LOCATION_KEY);
-
 
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());

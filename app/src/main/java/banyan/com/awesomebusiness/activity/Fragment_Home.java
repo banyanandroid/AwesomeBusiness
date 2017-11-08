@@ -26,12 +26,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.aromajoin.actionsheet.ActionSheet;
@@ -42,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -446,8 +450,9 @@ public class Fragment_Home extends Fragment {
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
-                    int success = obj.getInt("status");
 
+
+                    int success = obj.getInt("status");
                     if (success == 1) {
 
                         JSONArray arr;

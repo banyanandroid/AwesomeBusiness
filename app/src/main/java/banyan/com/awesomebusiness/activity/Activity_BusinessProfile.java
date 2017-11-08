@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -141,6 +142,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             edt_business_all_prod_serv, edt_business_facility_desc, edt_avg_monthly_sales, edt_monthly_expenses, edt_latest_yearly_sales,
             edt_cashflow_profit, edt_physical_assests_value, edt_tentative_selling_price, edt_reason_for_sale;
 
+    TextView txt_display_details;
+    LinearLayout layout_display_details;
     CheckBox chb_companydetails, chb_contatdetails;
 
     SearchableSpinner spn_i_am, spn_interested_in;
@@ -255,6 +258,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         edt_physical_assests_value.addTextChangedListener(new NumberTextWatcherForThousand(edt_physical_assests_value));
         edt_tentative_selling_price.addTextChangedListener(new NumberTextWatcherForThousand(edt_tentative_selling_price));
 
+        txt_display_details = (TextView) findViewById(R.id.add_businessprofile_txt_displaydetails);
+        txt_display_details.setVisibility(View.GONE);
+        layout_display_details = (LinearLayout) findViewById(R.id.add_businessprofile_layout_displaydetails);
+        layout_display_details.setVisibility(View.GONE);
         chb_companydetails = (CheckBox) findViewById(R.id.chbx_display_company_details);
         chb_contatdetails = (CheckBox) findViewById(R.id.chbx_display_contact_details);
 
@@ -1126,29 +1133,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
+
                 params.put("user_name", str_name);
                 params.put("company_name", str_company_name);
                 params.put("mobile_no", str_mobile);
                 params.put("email", str_official_email);
-                params.put("user_contact", str_ch_contactdetails);
-                params.put("user_company", str_ch_companydetails);
                 params.put("role", str_selected_role_id);
                 params.put("interest_in", str_selected_interest_id);
-                params.put("year", str_business_established_year);
-                params.put("employee", str_no_of_permanent_employees);
-                params.put("entitys", str_spn_business_legal_type);
-                params.put("business_description", str_business_desc);
-                params.put("highlights", str_business_highlights);
-                params.put("services", str_business_all_prod_serv);
-                params.put("business_facility", str_business_facility_desc);
-                params.put("monthly_expected_sales", str_avg_monthly_sales);
-                params.put("monthly_expenses_amount", str_avg_monthly_expenses);
-                params.put("yearly_expected_sales", str_latest_yearly_sales);
-                params.put("ebitda", str_cashflow_profit);
-                params.put("display", "");
-                params.put("physical_assets", str_physical_assests_value);
-                params.put("tentative_price", str_tentative_selling_price);
-                params.put("reason", str_reason_for_sale);
                 params.put("assets_purchased", str_year_asset_purchased);
                 params.put("assets_description", str_asset_seeking_to_sell);
                 params.put("assets_features", str_asset_features);
@@ -1157,11 +1148,31 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("reasonassets", str_asset_selling_eason);
                 params.put("locations", str_final_location_update);
                 params.put("industry", str_final_industry_update);
-                params.put("images", listString);
-                params.put("documents", "documents");
-                params.put("documentstype", "documentstype");
+                params.put("year", str_business_established_year);
+                params.put("employee", str_no_of_permanent_employees);
+                params.put("entitys", str_spn_business_legal_type);
+                params.put("business_description", str_business_desc);
+                params.put("highlights", str_business_highlights);
+                params.put("services", str_business_all_prod_serv);
+                params.put("business_facility", str_business_facility_desc);
                 params.put("user_currency", str_user_currency);
+                params.put("monthly_expected_sales", str_avg_monthly_sales);
+                params.put("monthly_expenses_amount", str_avg_monthly_expenses);
+                params.put("yearly_expected_sales", str_latest_yearly_sales);
+                params.put("ebitda", str_cashflow_profit);
+                params.put("physical_assets", str_physical_assests_value);
+                params.put("tentative_price", str_tentative_selling_price);
+                params.put("reason", str_reason_for_sale);
+                params.put("images", listString);
                 params.put("user_id", str_user_id);
+                params.put("documents", "");
+                params.put("documentsname", "");
+                params.put("documentstype", "");
+                params.put("user_contact", "");
+                params.put("user_company", "");
+                params.put("yearly_sales_range", "");
+                params.put("display", "");
+
 
                 ////////////////
 

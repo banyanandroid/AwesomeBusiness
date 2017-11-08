@@ -35,7 +35,7 @@ public class Activity_Register extends AppCompatActivity {
     ProgressDialog pDialog;
     public static RequestQueue queue;
     String TAG = "reg";
-    static String url_register = "http://www.epictech.in/awesome/android/reg.php";
+    static String url_register = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

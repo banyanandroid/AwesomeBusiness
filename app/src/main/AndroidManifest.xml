@@ -59,7 +59,9 @@
         <activity android:name=".activity.Activity_Login"></activity>
         <activity android:name=".activity.Activity_BusinessProfile"></activity>
         <activity android:name=".activity.Activity_InvestorProfile"></activity>
+
         <activity android:name=".activity.Activity_FranchiseProfile"></activity>
+
         <activity
             android:name=".activity.Activity_UserProfile_Update"
             android:label="Update Profile"></activity>
@@ -81,6 +83,11 @@
         <activity
             android:name=".activity.Activity_InvestorProfile_Update"
             android:label="Update Investor Profile"></activity>
+
+        <activity
+            android:name=".activity.Activity_AdvisorProfile"
+            android:label="Contact Business"></activity>
+
 
         <activity
             android:name=".activity.Activity_DetailedView_Business_For_Sale"
