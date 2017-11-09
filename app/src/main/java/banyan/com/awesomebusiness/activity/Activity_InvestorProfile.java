@@ -1245,39 +1245,32 @@ public class Activity_InvestorProfile extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-
                 params.put("name_u", str_name);
                 params.put("mob_u", str_mobile);
                 params.put("email_u", str_email);
-
                 params.put("inter_u", str_selected_interest_id);
                 params.put("am_an", str_selected_role_id);
                 params.put("indust", str_final_industry_update);
                 params.put("location_u", str_final_location_update);
-
+                params.put("user_currency", str_user_currency);
                 params.put("invest_inr", str_deal_minimum);
                 params.put("invest_to", str_deal_maximum);
-
                 params.put("location", str_final_headquaters);
-
-              /*  params.put("com_y", str_company_name);
-                params.put("desig", str_designation);
-                params.put("linked", str_web_linkedin);
-*/
-                params.put("stages", str_business_stages);
-                params.put("roi", str_roi_minimum);
-                params.put("roi_to", str_roi_maximum);
-
                 params.put("com_s", str_final_company_sector);
                 params.put("busi_in", str_kindof_business_interested);
                 params.put("abt_you", str_company_about);
-
+                params.put("user_id", str_user_id);
+                params.put("roi", str_roi_minimum);
+                params.put("roi_to", str_roi_maximum);
+                params.put("stages", str_business_stages);
+                params.put("logo_file", listString);
                 params.put("profile_img", "IMAGEEEEEEEEEEE emptyyy");
                 params.put("profile_document", "DOCUMENTTTTTTT emptyyy");
-                params.put("logo_file", listString);
-
-                params.put("user_currency", str_user_currency);
-                params.put("user_id", str_user_id);
+                params.put("profile_docs", "PROFILE DOCS emptyyy");
+                params.put("documentsname", "DOCUMENTSNAME emptyyy");
+                params.put("com_y", "comyyyyy");
+                params.put("desig", "desigggggggggg");
+                params.put("linked", "linkedddddd");
 
                 //////////////////////////////
 
@@ -1291,15 +1284,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 System.out.println("invest_inr" + str_deal_minimum);
                 System.out.println("invest_to" + str_deal_maximum);
                 System.out.println("location" + str_final_headquaters);
-
-                params.put("stages", str_business_stages);
-                params.put("roi", str_roi_minimum);
-                params.put("roi_to", str_roi_maximum);
-
                 System.out.println("stages" + str_kindof_business_interested);
                 System.out.println("roi_from" + str_kindof_business_interested);
                 System.out.println("roi_to" + str_kindof_business_interested);
-
                 System.out.println("busi_in" + str_kindof_business_interested);
                 System.out.println("abt_you" + str_company_about);
                 System.out.println("user_currency" + str_user_currency);

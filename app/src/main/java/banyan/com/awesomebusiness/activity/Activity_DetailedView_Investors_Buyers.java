@@ -60,21 +60,22 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
     public static final String TAG_INVESTOR_USER_ROLE = "investor_user_role";
     public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
     public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
-    public static final String TAG_COUNTRY_CURRENCY = "country_currency";
     public static final String TAG_INVESTOR_CURRENCY = "investor_currency";
     public static final String TAG_INVESTOR_COMPANY_NAME = "investor_company_name";
     public static final String TAG_INVESTOR_DESIGNATION = "investor_designation";
-    public static final String TAG_INVESTO_PROFILE_URL = "investo_profile_url";
-    public static final String TAG_INVESTOR_LOGO = "investor_logo";
-    public static final String TAG_INVESTOR_SHORT_DESCRIPTION = "investor_short_description";
-    public static final String TAG_INVESTOR_ABOUT_USER = "investor_about_user";
     public static final String TAG_INVESTOR_AN_NAME = "investor_an_name";
     public static final String TAG_INVESTOR_INTEREST_NAME = "investor_interest_name";
     public static final String TAG_BUSINESS_KIND = "business_kind";
-
+    public static final String TAG_INVESTOR_SHORT_DESCRIPTION = "investor_short_description";
+    public static final String TAG_INVESTOR_ABOUT_USER = "investor_about_user";
+    public static final String TAG_INVESTOR_ROI_FROM = "investor_roi";
+    public static final String TAG_INVESTOR_ROI_TO = "investor_roi_to";
+    public static final String TAG_INVESTOR_STAGES = "investor_stages";
+    // public static final String TAG_COUNTRY_CURRENCY = "country_currency";
+    //  public static final String TAG_INVESTO_PROFILE_URL = "investo_profile_url";
+    // public static final String TAG_INVESTOR_LOGO = "investor_logo";
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
-
     public static final String TAG_INDUSTRY_NAME = "industry_name";
     public static final String TAG_INDUSTRY_KEY = "industry_key";
 
@@ -226,15 +227,20 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                             String investor_user_role = obj_data.getString(TAG_INVESTOR_USER_ROLE);
                             String investor_currency_from = obj_data.getString(TAG_INVESTOR_CURRENCY_FROM);
                             String investor_currency_to = obj_data.getString(TAG_INVESTOR_CURRENCY_TO);
-                            String country_currency = obj_data.getString(TAG_COUNTRY_CURRENCY);
                             String investor_currency = obj_data.getString(TAG_INVESTOR_CURRENCY);
                             String investor_company_name = obj_data.getString(TAG_INVESTOR_COMPANY_NAME);
                             String investor_designation = obj_data.getString(TAG_INVESTOR_DESIGNATION);
-                            String investo_profile_url = obj_data.getString(TAG_INVESTO_PROFILE_URL);
-                            String investor_logo = obj_data.getString(TAG_INVESTOR_LOGO);
                             String investor_short_description = obj_data.getString(TAG_INVESTOR_SHORT_DESCRIPTION);
                             String investor_about_user = obj_data.getString(TAG_INVESTOR_ABOUT_USER);
                             String investor_an_name = obj_data.getString(TAG_INVESTOR_AN_NAME);
+
+                            String roi_from = obj_data.getString(TAG_INVESTOR_ROI_FROM);
+
+                            String roi_to = obj_data.getString(TAG_INVESTOR_ROI_TO);
+
+                            String investor_stages = obj_data.getString(TAG_INVESTOR_STAGES);
+
+
                             String investor_interest_name = obj_data.getString(TAG_INVESTOR_INTEREST_NAME);
                             String business_kind = obj_data.getString(TAG_BUSINESS_KIND);
 
@@ -269,7 +275,6 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                             System.out.println("INDUSTRIES ::: " + str_final_industries);
 
-
                             try {
 
                                 txt_designation.setText("" + investor_designation);
@@ -286,10 +291,6 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
 
-                                Glide.with(getApplicationContext())
-                                        .load(investor_logo)
-                                        .placeholder(R.drawable.placeholder)
-                                        .into(img_investor);
 
                                 dialog.dismiss();
 

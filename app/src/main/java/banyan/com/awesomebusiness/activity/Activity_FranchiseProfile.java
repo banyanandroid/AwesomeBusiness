@@ -160,7 +160,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     String str_exp_return_minimum, str_exp_return_maximum,
             str_investment_needed_minimum, str_investment_needed_maximum = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -227,7 +226,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         //Image Upload
         Arraylist_image_encode = new ArrayList<String>();
 
-
         // ARRAYLIST , ARRAY ADAPTER , SEARCHABLE SPINNER  FOR -- THE YEAR COMPANY'S OPERATIONS START
         ArrayList<String> years = new ArrayList<String>();
         int CurerntYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -282,7 +280,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
-
         radioGroup = (RadioGroup) findViewById(R.id.add_franchiseprofile_radiogroup_franchise_type);
         // rdb_master_franchise = (RadioButton) findViewById(R.id.rdb_masterfranchise);
         // rdb_unite_franchise = (RadioButton) findViewById(R.id.rdb_unitfranchise);
@@ -311,7 +308,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
             }
         });
 
-
         btn_add_faility_stores_pics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -332,7 +328,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 /*****************************
                  * Get Multi Industry Details
@@ -362,7 +357,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
                 }
                 System.out.println("FINAL SELECTED INDUSTRYYYYYYYYYYYYY :: " + str_final_industry_update);
-
 
                 /*****************************
                  * Get Multi Location Details
@@ -394,7 +388,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 }
                 System.out.println("FINAL SELECTED LOCATIONNNNNNNNN :: " + str_final_location_update);
 
-
                 ///////////////////////
                 ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
                 ///////////////////////
@@ -409,7 +402,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 str_selected_opportunity = spn_opportunities_offered.getSelectedItem().toString();
 
                 System.out.println("OPPORTUNITIES OFFERED" + str_selected_opportunity);
-
 
                 switch (str_selected_opportunity) {
                     case "":
@@ -437,7 +429,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         break;
                 }
 
-
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED EDIT TEXT'S
                 str_auth_person_name = edt_name.getText().toString();
                 str_email = edt_email.getText().toString();
@@ -449,13 +440,11 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 str_ideal_candidate = edt_ideal_candidate.getText().toString();
                 str_year_company_opr_start = spn_years_company_opr_start.getSelectedItem().toString();
 
-
                 ///////// GETTING THE VALUES FOR THE STRING FROM THEIR RELATED NO OF FORMAT'S EDIT TEXT'S
                 str_exp_return_minimum = edt_exp_return_minimum.getText().toString();
                 str_exp_return_maximum = edt_exp_return_maximum.getText().toString();
                 str_investment_needed_minimum = edt_investment_needed_minimum.getText().toString();
                 str_investment_needed_maximum = edt_investment_needed_maximum.getText().toString();
-
 
                 if (str_auth_person_name.equals("")) {
                     edt_name.setError("Enter authorized person Name");
@@ -540,11 +529,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
 
     }
 
-
     /*****************************
      * To get  Business Industry List
      ***************************/
-
     public void Get_Business_industry() {
         String tag_json_obj = "json_obj_req";
         System.out.println("CAME 1");
@@ -588,7 +575,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                     .setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                             auto_franchise_business_industry.setThreshold(1);
 
-
                         } catch (Exception e) {
 
                         }
@@ -600,7 +586,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         } catch (Exception e) {
                             // TODO: handle exception
                         }
-
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -679,15 +664,12 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                     android.R.layout.simple_list_item_1, Arraylist_location_place);
                             auto_headquaters.setAdapter(adapter_location);
 
-
                             System.out.println("ARAAAAY :: " + 222222);
                             auto_headquaters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                                     System.out.println("Position :::::::: " + position);
-
 
                                     t1 = (TextView) view;
                                     String str_location_key = t1.getText().toString();
@@ -697,7 +679,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                                     String str_select_location_type = Arraylist_location_type.get(i);
                                     str_select_item = str_select_location_key + "-" + str_select_location_type;
                                     System.out.println("FINAL Business Location :: " + str_select_item);
-
 
                                 }
                             });
@@ -713,7 +694,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                         } catch (Exception e) {
                             // TODO: handle exception
                         }
-
 
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
@@ -783,7 +763,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                             Arraylist_expand_location_type.add(expand_location_type);
                         }
 
-
                         try {
 
                             System.out.println("ARAAAAY :: " + Arraylist_expand_location_place);
@@ -797,7 +776,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                             auto_franchise_business_expand_locations.setThreshold(1);
 
                             System.out.println("ARAAAAY :: " + 222222);
-
 
                         } catch (Exception e) {
 
@@ -836,7 +814,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         // Adding request to request queue
         queue.add(request);
     }
-
 
     /*******************************
      *  PIC UPLOADER
@@ -917,7 +894,6 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         listString = TextUtils.join("IMAGE:", Arraylist_image_encode);
     }
 
-
     public void ImagePicker1() {
         ImagePicker.create(this)
                 .folderMode(true) // set folder mode (false by default)
@@ -947,8 +923,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_PICKER1);
     }
 
-
-    /******************************************
+     /******************************************
      *    SUBMIT FRANCHISE PROFILE FORM
      * *******************************************/
 

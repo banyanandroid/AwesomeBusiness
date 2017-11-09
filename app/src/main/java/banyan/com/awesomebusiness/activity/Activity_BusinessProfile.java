@@ -72,6 +72,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     String listString = "";
     String encodedstring = "";
 
+    String image_type = "";
+
     private ArrayList<Image> images = new ArrayList<>();
 
     ArrayList<String> Arraylist_image_encode = null;
@@ -325,10 +327,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String str_test = edt_no_of_permanent_employees.getText().toString();
-                TastyToast.makeText(getApplicationContext(), "" + str_test, TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                //  ImagePicker();
-
+                image_type = "business and product photos";
+                ImagePicker();
             }
         });
 
@@ -960,7 +960,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
                         }
 
-
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
@@ -980,7 +979,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
 
             }
         }) {
-
 
             @Override
             protected Map<String, String> getParams() {
@@ -1085,7 +1083,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     /******************************************
      *    SUBMIT BUSINESS PROFILE FORM
      * *******************************************/
-
     private void Function_Submit_BusinessProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
@@ -1157,8 +1154,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("business_facility", str_business_facility_desc);
                 params.put("user_currency", str_user_currency);
                 params.put("monthly_expected_sales", str_avg_monthly_sales);
-                params.put("monthly_expenses_amount", str_avg_monthly_expenses);
                 params.put("yearly_expected_sales", str_latest_yearly_sales);
+                params.put("monthly_expenses_amount", str_avg_monthly_expenses);
                 params.put("ebitda", str_cashflow_profit);
                 params.put("physical_assets", str_physical_assests_value);
                 params.put("tentative_price", str_tentative_selling_price);
@@ -1172,7 +1169,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 params.put("user_company", "");
                 params.put("yearly_sales_range", "");
                 params.put("display", "");
-
 
                 ////////////////
 
