@@ -345,7 +345,6 @@ public class Fragment_Franchise extends Fragment {
             }
         });
 
-
         try {
             dialog = new SpotsDialog(getActivity());
             dialog.show();

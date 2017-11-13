@@ -46,6 +46,9 @@ public class AppConfig {
     public static String url_add_business_profile = BASE_URL + "/index.php?Apicontroller/addbusinessprofile";
     public static String url_add_franchise_profile = BASE_URL + "/index.php?Apicontroller/addfranchiseprofile";
     public static String url_investor_profile_add = BASE_URL + "/index.php?Apicontroller/addinvestorprofile";
+    public static String url_add_advisor_profile = BASE_URL + "/index.php?Apicontroller/addadvisorprofile";
+
+
 
     // Update Profiles
     public static String url_update_business_profile = BASE_URL + "/index.php?Apicontroller/updatebusinessprofile";

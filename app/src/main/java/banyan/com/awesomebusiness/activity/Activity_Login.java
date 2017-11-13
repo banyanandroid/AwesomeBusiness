@@ -190,7 +190,6 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                         System.out.println("FB Profile Pic : : : " + profile_image);
 
-
                         str_social_name = full_name;
                         str_social_image = profile_image;
                         str_social_type = "2";

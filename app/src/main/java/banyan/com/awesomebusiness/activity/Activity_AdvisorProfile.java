@@ -882,7 +882,7 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
     private void Function_Submit_FranchiseProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_franchise_profile, new Response.Listener<String>() {
+                AppConfig.url_add_advisor_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

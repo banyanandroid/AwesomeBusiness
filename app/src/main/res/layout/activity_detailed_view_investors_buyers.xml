@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ativity_investor_details_txt_designation"
+                android:id="@+id/activity_investor_details_txt_designation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
@@ -48,7 +48,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/ativity_investor_details_image_view"
+                    android:id="@+id/activity_investor_details_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="142dp"
                     android:layout_weight="1"
@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/ativity_investor_details_card_view_one"
+                android:id="@+id/activity_investor_details_card_view_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -79,7 +79,6 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:orientation="vertical">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,7 +97,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_name"
+                            android:id="@+id/activity_investor_details_name"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -129,7 +128,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_mobilenumber"
+                            android:id="@+id/activity_investor_details_mobilenumber"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -161,7 +160,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_email"
+                            android:id="@+id/activity_investor_details_email"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -192,7 +191,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_company"
+                            android:id="@+id/activity_investor_details_company"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -202,6 +201,67 @@
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Investor Interest"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_investor_interest"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="About Investor"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_about_investor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
@@ -223,7 +283,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_professionalsummary"
+                            android:id="@+id/activity_investor_details_professionalsummary"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -233,13 +293,11 @@
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -254,7 +312,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_transaction_preference"
+                            android:id="@+id/activity_investor_details_transaction_preference"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -264,13 +322,11 @@
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -293,7 +349,7 @@
                             android:weightSum="3">
 
                             <TextView
-                                android:id="@+id/ativity_investor_details_investment_size_from"
+                                android:id="@+id/activity_investor_details_investment_size_from"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:layout_gravity="end"
@@ -312,7 +368,7 @@
                                 android:textSize="16dp" />
 
                             <TextView
-                                android:id="@+id/ativity_investor_details_investment_size_to"
+                                android:id="@+id/activity_investor_details_investment_size_to"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:layout_gravity="end"
@@ -326,6 +382,64 @@
 
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Rate Of Interest"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp" />
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:id="@+id/activity_investor_details_roi_from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text="To"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/activity_investor_details_roi_to"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="end"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="16dp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -345,7 +459,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_prefered_locations"
+                            android:id="@+id/activity_investor_details_prefered_locations"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -376,7 +490,38 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_prefered_industries"
+                            android:id="@+id/activity_investor_details_prefered_industries"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Stages"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_investor_details_stages"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -407,7 +552,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_local_time"
+                            android:id="@+id/activity_investor_details_local_time"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -438,7 +583,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/ativity_investor_details_status"
+                            android:id="@+id/activity_investor_details_status"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -458,7 +603,7 @@
 
 
             <Button
-                android:id="@+id/btn_ativity_investor_details_contact_business"
+                android:id="@+id/btn_activity_investor_details_contact_business"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"

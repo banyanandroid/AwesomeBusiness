@@ -45,12 +45,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -249,6 +251,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
         edt_dealsize_minimum.addTextChangedListener(new NumberTextWatcherForThousand(edt_dealsize_minimum));
         edt_dealsize_maximum.addTextChangedListener(new NumberTextWatcherForThousand(edt_dealsize_maximum));
 
+        edt_roi_minimum.addTextChangedListener(new NumberTextWatcherForThousand(edt_roi_minimum));
+        edt_roi_maximum.addTextChangedListener(new NumberTextWatcherForThousand(edt_roi_maximum));
+
         auto_headquaters = (AutoCompleteTextView) findViewById(R.id.edit_profile_edt_user_location);
         auto_company_sector = (AutoCompleteTextView) findViewById(R.id.investor_profile_edt_company_sector);
 
@@ -437,6 +442,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_dealsize_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
+                    System.out.println("TESTTTTTTTTTTTTTTTT1111111 : " + NumberFormat.getNumberInstance(Locale.US).format(str_deal_minimum));
                     int_deal_minimum = Integer.valueOf(str_deal_minimum);
                 }
 
@@ -445,6 +451,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_dealsize_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
+
+                    System.out.println("TESTTTTTTTTTTTTTTTTT222222 : " + NumberFormat.getNumberInstance(Locale.US).format(str_deal_maximum));
                     int_deal_maximum = Integer.valueOf(str_deal_maximum);
                 }
 
@@ -453,6 +461,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_roi_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
+                    System.out.println("TESTTTTTTTTTTTTTTTT333333 : " + NumberFormat.getNumberInstance(Locale.US).format(str_roi_minimum));
                     int_roi_minimum = Integer.valueOf(str_roi_minimum);
                 }
 
@@ -461,6 +470,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     edt_roi_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
+                    System.out.println("TESTTTTTTTTTTTTTTTTT444444 : " + NumberFormat.getNumberInstance(Locale.US).format(str_roi_maximum));
                     int_roi_maximum = Integer.valueOf(str_roi_maximum);
                 }
 

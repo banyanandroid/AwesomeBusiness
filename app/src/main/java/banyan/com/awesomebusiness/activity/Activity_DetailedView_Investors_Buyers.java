@@ -87,7 +87,8 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
     ImageView img_investor;
 
-    TextView txt_designation, txt_name, txt_phone, txt_email, txt_company, txt_professonal_summary, txt_transaction_preference,
+    TextView txt_designation, txt_name, txt_phone, txt_email, txt_company, txt_investor_interest, txt_about_investor, txt_stages,
+            txt_roi_from, txt_roi_to, txt_professonal_summary, txt_transaction_preference,
             txt_investment_size_from, txt_investment_size_to, txt_locations, txt_industries, txt_local_time, txt_status;
 
     String str_final_location, str_final_industries = "";
@@ -137,23 +138,31 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
         Arraylist_update_industries = new ArrayList<String>();
 
 
-        img_investor = (ImageView) findViewById(R.id.ativity_details_image_view);
+        img_investor = (ImageView) findViewById(R.id.activity_investor_details_image_view);
 
-        txt_designation = (TextView) findViewById(R.id.ativity_investor_details_txt_designation);
-        txt_name = (TextView) findViewById(R.id.ativity_investor_details_name);
-        txt_phone = (TextView) findViewById(R.id.ativity_investor_details_mobilenumber);
-        txt_email = (TextView) findViewById(R.id.ativity_investor_details_email);
-        txt_company = (TextView) findViewById(R.id.ativity_investor_details_company);
-        txt_professonal_summary = (TextView) findViewById(R.id.ativity_investor_details_professionalsummary);
-        txt_transaction_preference = (TextView) findViewById(R.id.ativity_investor_details_transaction_preference);
-        txt_investment_size_from = (TextView) findViewById(R.id.ativity_investor_details_investment_size_from);
-        txt_investment_size_to = (TextView) findViewById(R.id.ativity_investor_details_investment_size_to);
-        txt_local_time = (TextView) findViewById(R.id.ativity_investor_details_local_time);
-        txt_status = (TextView) findViewById(R.id.ativity_investor_details_status);
-        txt_industries = (TextView) findViewById(R.id.ativity_investor_details_prefered_industries);
-        txt_locations = (TextView) findViewById(R.id.ativity_investor_details_prefered_locations);
+        txt_designation = (TextView) findViewById(R.id.activity_investor_details_txt_designation);
+        txt_name = (TextView) findViewById(R.id.activity_investor_details_name);
+        txt_phone = (TextView) findViewById(R.id.activity_investor_details_mobilenumber);
+        txt_email = (TextView) findViewById(R.id.activity_investor_details_email);
+        txt_company = (TextView) findViewById(R.id.activity_investor_details_company);
+        txt_investor_interest = (TextView) findViewById(R.id.activity_investor_interest);
 
-        btn_contact_business = (Button) findViewById(R.id.btn_ativity_investor_details_contact_business);
+        txt_professonal_summary = (TextView) findViewById(R.id.activity_investor_details_professionalsummary);
+        txt_transaction_preference = (TextView) findViewById(R.id.activity_investor_details_transaction_preference);
+        txt_investment_size_from = (TextView) findViewById(R.id.activity_investor_details_investment_size_from);
+        txt_investment_size_to = (TextView) findViewById(R.id.activity_investor_details_investment_size_to);
+        txt_local_time = (TextView) findViewById(R.id.activity_investor_details_local_time);
+        txt_status = (TextView) findViewById(R.id.activity_investor_details_status);
+        txt_industries = (TextView) findViewById(R.id.activity_investor_details_prefered_industries);
+        txt_locations = (TextView) findViewById(R.id.activity_investor_details_prefered_locations);
+
+        txt_about_investor = (TextView) findViewById(R.id.activity_about_investor);
+        txt_stages = (TextView) findViewById(R.id.activity_investor_details_stages);
+        txt_roi_from = (TextView) findViewById(R.id.activity_investor_details_roi_from);
+        txt_roi_to = (TextView) findViewById(R.id.activity_investor_details_roi_to);
+
+
+        btn_contact_business = (Button) findViewById(R.id.btn_activity_investor_details_contact_business);
 
         btn_contact_business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,9 +192,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
             // TODO: handle exception
         }
 
-
     }
-
 
     /*****************************
      * GET Details
@@ -229,18 +236,18 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                             String investor_currency_to = obj_data.getString(TAG_INVESTOR_CURRENCY_TO);
                             String investor_currency = obj_data.getString(TAG_INVESTOR_CURRENCY);
                             String investor_company_name = obj_data.getString(TAG_INVESTOR_COMPANY_NAME);
+                            String investor_interest = obj_data.getString(TAG_BUSINESS_KIND);
                             String investor_designation = obj_data.getString(TAG_INVESTOR_DESIGNATION);
                             String investor_short_description = obj_data.getString(TAG_INVESTOR_SHORT_DESCRIPTION);
-                            String investor_about_user = obj_data.getString(TAG_INVESTOR_ABOUT_USER);
                             String investor_an_name = obj_data.getString(TAG_INVESTOR_AN_NAME);
 
+                            String investor_about_user = obj_data.getString(TAG_INVESTOR_ABOUT_USER);
+                            String investor_roi_from = obj_data.getString(TAG_INVESTOR_ROI_FROM);
+                            String investor_roi_to = obj_data.getString(TAG_INVESTOR_ROI_TO);
                             String roi_from = obj_data.getString(TAG_INVESTOR_ROI_FROM);
-
                             String roi_to = obj_data.getString(TAG_INVESTOR_ROI_TO);
 
                             String investor_stages = obj_data.getString(TAG_INVESTOR_STAGES);
-
-
                             String investor_interest_name = obj_data.getString(TAG_INVESTOR_INTEREST_NAME);
                             String business_kind = obj_data.getString(TAG_BUSINESS_KIND);
 
@@ -282,6 +289,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                 txt_phone.setText("" + investor_confidential_mobile);
                                 txt_email.setText("" + investor_confidential_email);
                                 txt_company.setText("" + investor_company_name);
+                                txt_investor_interest.setText("" + investor_interest);
                                 txt_professonal_summary.setText("" + business_kind);
                                 txt_transaction_preference.setText("" + investor_interest_name);
                                 txt_investment_size_from.setText("" + investor_currency_from);
@@ -290,6 +298,11 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                                 // txt_status.setText("" + fgdgfdgdfgdfgdfgf);
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
+
+                                txt_about_investor.setText("" + investor_about_user);
+                                txt_stages.setText("" + investor_stages);
+                                txt_roi_from.setText("" + investor_roi_from);
+                                txt_roi_to.setText("" + investor_roi_to);
 
 
                                 dialog.dismiss();
