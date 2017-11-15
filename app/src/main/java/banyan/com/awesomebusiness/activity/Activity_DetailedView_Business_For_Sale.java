@@ -449,7 +449,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                                 txt_seeking_investment_currency_type.setText("" + country_currency);
                                 txt_seeking_investment_amount.setText("" + business_tentative_price);
                                 txt_reason.setText("" + business_reason);
-                                txt_business_overview.setText("" + buisness_products_services);
+                                txt_business_overview.setText("" + buisness_description);
                                 txt_products_services_overview.setText("" + buisness_products_services);
                                 txt_facilities_overview.setText("" + buisness_facility);
 

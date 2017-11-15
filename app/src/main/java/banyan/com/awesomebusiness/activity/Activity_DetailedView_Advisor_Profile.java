@@ -42,7 +42,7 @@ import dmax.dialog.SpotsDialog;
  * Created by Banyan on 9/26/2017.
  */
 
-public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
+public class Activity_DetailedView_Advisor_Profile extends AppCompatActivity {
 
     private Toolbar mToolbar;
     SpotsDialog dialog;
@@ -50,30 +50,17 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
     String TAG = "Auto_Res";
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
-    String str_user_currency, str_investor_key = "";
+    String str_user_currency, str_advisor_key = "";
 
-    public static final String TAG_INVESTOR_ID = "investor_id";
-    public static final String TAG_INVESTOR_KEY = "investor_key";
-    public static final String TAG_INVESTOR_NAME = "investor_name";
-    public static final String TAG_INVESTOR_CONFIDENTIAL_EMAIL = "investor_confidential_email";
-    public static final String TAG_INVESTOR_CONFIDENTIAL_MOBILE = "investor_confidential_mobile";
-    public static final String TAG_INVESTOR_USER_ROLE = "investor_user_role";
-    public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
-    public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
-    public static final String TAG_INVESTOR_CURRENCY = "investor_currency";
-    public static final String TAG_INVESTOR_COMPANY_NAME = "investor_company_name";
-    public static final String TAG_INVESTOR_DESIGNATION = "investor_designation";
-    public static final String TAG_INVESTOR_AN_NAME = "investor_an_name";
-    public static final String TAG_INVESTOR_INTEREST_NAME = "investor_interest_name";
-    public static final String TAG_BUSINESS_KIND = "business_kind";
-    public static final String TAG_INVESTOR_SHORT_DESCRIPTION = "investor_short_description";
-    public static final String TAG_INVESTOR_ABOUT_USER = "investor_about_user";
-    public static final String TAG_INVESTOR_ROI_FROM = "investor_roi";
-    public static final String TAG_INVESTOR_ROI_TO = "investor_roi_to";
-    public static final String TAG_INVESTOR_STAGES = "investor_stages";
-    // public static final String TAG_COUNTRY_CURRENCY = "country_currency";
-    //  public static final String TAG_INVESTO_PROFILE_URL = "investo_profile_url";
-    // public static final String TAG_INVESTOR_LOGO = "investor_logo";
+    public static final String TAG_ADVISOR_ID = "advisor_id";
+    public static final String TAG_ADVISOR_KEY = "advisor_key";
+    public static final String TAG_ADVISOR_NAME = "advisor_name";
+    public static final String TAG_ADVISOR_EMAIL = "advisor_email";
+    public static final String TAG_ADVISOR_PHONE = "advisor_mobile";
+    public static final String TAG_ADVISOR_COMPANY_NAME = "advisor_company_name";
+    public static final String TAG_ADVISOR_TYPE = "advisor_type";
+    public static final String TAG_ADVISOR_ABOUT_COMPANY = "advisor_about_company";
+
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
     public static final String TAG_INDUSTRY_NAME = "industry_name";
@@ -87,13 +74,11 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
     ImageView img_investor;
 
-    TextView txt_designation, txt_name, txt_phone, txt_email, txt_company, txt_investor_interest, txt_about_investor, txt_stages,
-            txt_roi_from, txt_roi_to, txt_professonal_summary, txt_transaction_preference,
-            txt_investment_size_from, txt_investment_size_to, txt_locations, txt_industries, txt_local_time, txt_status;
+    TextView txt_name, txt_phone, txt_email, txt_company, txt_advisor_type, txt_about_company, txt_locations, txt_industries;
 
     String str_final_location, str_final_industries = "";
 
-    String investor_id;
+    String advisor_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,41 +113,29 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-        str_investor_key = sharedPreferences.getString("investor_key", "investor_key");
+        str_advisor_key = sharedPreferences.getString("advisor_key", "advisor_key");
 
         System.out.println("USER_ID-----" + str_user_id);
-        System.out.println("INVESTOR KEY-----" + str_investor_key);
-        System.out.println("INVESTOR CURRENCY-----" + str_user_currency);
+        System.out.println("ADVISOR KEY-----" + str_advisor_key);
+        System.out.println("USER CURRENCY-----" + str_user_currency);
 
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
 
 
-        img_investor = (ImageView) findViewById(R.id.activity_investor_details_image_view);
+        img_investor = (ImageView) findViewById(R.id.activity_advisor_details_image_view);
 
-        txt_designation = (TextView) findViewById(R.id.activity_investor_details_txt_designation);
-        txt_name = (TextView) findViewById(R.id.activity_investor_details_name);
-        txt_phone = (TextView) findViewById(R.id.activity_investor_details_mobilenumber);
-        txt_email = (TextView) findViewById(R.id.activity_investor_details_email);
-        txt_company = (TextView) findViewById(R.id.activity_investor_details_company);
-        txt_investor_interest = (TextView) findViewById(R.id.activity_investor_interest);
-
-        txt_professonal_summary = (TextView) findViewById(R.id.activity_investor_details_professionalsummary);
-        txt_transaction_preference = (TextView) findViewById(R.id.activity_investor_details_transaction_preference);
-        txt_investment_size_from = (TextView) findViewById(R.id.activity_investor_details_investment_size_from);
-        txt_investment_size_to = (TextView) findViewById(R.id.activity_investor_details_investment_size_to);
-        txt_local_time = (TextView) findViewById(R.id.activity_investor_details_local_time);
-        txt_status = (TextView) findViewById(R.id.activity_investor_details_status);
-        txt_industries = (TextView) findViewById(R.id.activity_investor_details_prefered_industries);
-        txt_locations = (TextView) findViewById(R.id.activity_investor_details_prefered_locations);
-
-        txt_about_investor = (TextView) findViewById(R.id.activity_about_investor);
-        txt_stages = (TextView) findViewById(R.id.activity_investor_details_stages);
-        txt_roi_from = (TextView) findViewById(R.id.activity_investor_details_roi_from);
-        txt_roi_to = (TextView) findViewById(R.id.activity_investor_details_roi_to);
+        txt_name = (TextView) findViewById(R.id.activity_advisor_details_name);
+        txt_phone = (TextView) findViewById(R.id.activity_advisor_details_mobilenumber);
+        txt_email = (TextView) findViewById(R.id.activity_advisor_details_email);
+        txt_company = (TextView) findViewById(R.id.activity_advisor_details_company);
+        txt_advisor_type = (TextView) findViewById(R.id.activity_advisor_details_advisor_type);
+        txt_about_company = (TextView) findViewById(R.id.activity_advisor_details_about_company);
+        txt_industries = (TextView) findViewById(R.id.activity_advisor_details_prefered_industries);
+        txt_locations = (TextView) findViewById(R.id.activity_advisor_details_prefered_locations);
 
 
-        btn_contact_business = (Button) findViewById(R.id.btn_activity_investor_details_contact_business);
+        btn_contact_business = (Button) findViewById(R.id.btn_activity_advisor_details_contact_business);
 
         btn_contact_business.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +144,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("str_investor_id", investor_id);
+                editor.putString("str_advisor_id", advisor_id);
                 editor.commit();
 
                 Intent i = new Intent(getApplicationContext(), Activity_Contact_Business_Investors_Buyers.class);
@@ -183,7 +156,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
         });
 
         try {
-            dialog = new SpotsDialog(Activity_DetailedView_Investors_Buyers.this);
+            dialog = new SpotsDialog(Activity_DetailedView_Advisor_Profile.this);
             dialog.show();
             queue = Volley.newRequestQueue(getApplicationContext());
             Get_Details();
@@ -201,7 +174,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
     public void Get_Details() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_dashboard_search_result_investor_profile_detail, new Response.Listener<String>() {
+                AppConfig.url_dashboard_search_result_advisor_profile_detail, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
@@ -226,30 +199,14 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                             JSONObject obj_data = arr_data.getJSONObject(i);
 
                             //only this business_id string is declared above inorder to put it in shared preferences
-                            investor_id = obj_data.getString(TAG_INVESTOR_ID);
-                            String investor_key = obj_data.getString(TAG_INVESTOR_KEY);
-                            String investor_name = obj_data.getString(TAG_INVESTOR_NAME);
-                            String investor_confidential_email = obj_data.getString(TAG_INVESTOR_CONFIDENTIAL_EMAIL);
-                            String investor_confidential_mobile = obj_data.getString(TAG_INVESTOR_CONFIDENTIAL_MOBILE);
-                            String investor_user_role = obj_data.getString(TAG_INVESTOR_USER_ROLE);
-                            String investor_currency_from = obj_data.getString(TAG_INVESTOR_CURRENCY_FROM);
-                            String investor_currency_to = obj_data.getString(TAG_INVESTOR_CURRENCY_TO);
-                            String investor_currency = obj_data.getString(TAG_INVESTOR_CURRENCY);
-                            String investor_company_name = obj_data.getString(TAG_INVESTOR_COMPANY_NAME);
-                            String investor_interest = obj_data.getString(TAG_BUSINESS_KIND);
-                            String investor_designation = obj_data.getString(TAG_INVESTOR_DESIGNATION);
-                            String investor_short_description = obj_data.getString(TAG_INVESTOR_SHORT_DESCRIPTION);
-                            String investor_an_name = obj_data.getString(TAG_INVESTOR_AN_NAME);
-
-                            String investor_about_user = obj_data.getString(TAG_INVESTOR_ABOUT_USER);
-                            String investor_roi_from = obj_data.getString(TAG_INVESTOR_ROI_FROM);
-                            String investor_roi_to = obj_data.getString(TAG_INVESTOR_ROI_TO);
-                            String roi_from = obj_data.getString(TAG_INVESTOR_ROI_FROM);
-                            String roi_to = obj_data.getString(TAG_INVESTOR_ROI_TO);
-
-                            String investor_stages = obj_data.getString(TAG_INVESTOR_STAGES);
-                            String investor_interest_name = obj_data.getString(TAG_INVESTOR_INTEREST_NAME);
-                            String business_kind = obj_data.getString(TAG_BUSINESS_KIND);
+                            advisor_id = obj_data.getString(TAG_ADVISOR_ID);
+                            String advisor_key = obj_data.getString(TAG_ADVISOR_KEY);
+                            String advisor_name = obj_data.getString(TAG_ADVISOR_NAME);
+                            String advisor_email = obj_data.getString(TAG_ADVISOR_EMAIL);
+                            String advisor_phone = obj_data.getString(TAG_ADVISOR_PHONE);
+                            String advisor_company_name = obj_data.getString(TAG_ADVISOR_COMPANY_NAME);
+                            String advisor_type = obj_data.getString(TAG_ADVISOR_TYPE);
+                            String advisor_about_company = obj_data.getString(TAG_ADVISOR_ABOUT_COMPANY);
 
 
                             arr_location = obj_data.getJSONArray("location");
@@ -284,26 +241,14 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                             try {
 
-                                txt_designation.setText("" + investor_designation);
-                                txt_name.setText("" + investor_name);
-                                txt_phone.setText("" + investor_confidential_mobile);
-                                txt_email.setText("" + investor_confidential_email);
-                                txt_company.setText("" + investor_company_name);
-                                txt_investor_interest.setText("" + investor_interest);
-                                txt_professonal_summary.setText("" + business_kind);
-                                txt_transaction_preference.setText("" + investor_interest_name);
-                                txt_investment_size_from.setText("" + investor_currency_from);
-                                txt_investment_size_to.setText("" + investor_currency_to);
-                                //txt_local_time.setText(dt.toString());
-                                // txt_status.setText("" + fgdgfdgdfgdfgdfgf);
+                                txt_name.setText("" + advisor_name);
+                                txt_phone.setText("" + advisor_phone);
+                                txt_email.setText("" + advisor_email);
+                                txt_company.setText("" + advisor_company_name);
+                                txt_advisor_type.setText("" + advisor_type);
+                                txt_about_company.setText("" + advisor_about_company);
                                 txt_industries.setText("" + str_final_industries + ", ");
                                 txt_locations.setText("" + str_final_location + ", ");
-
-                                txt_about_investor.setText("" + investor_about_user);
-                                txt_stages.setText("" + investor_stages);
-                                txt_roi_from.setText("" + investor_roi_from);
-                                txt_roi_to.setText("" + investor_roi_to);
-
 
                                 dialog.dismiss();
 
@@ -319,7 +264,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
 
                         dialog.dismiss();
 
-                        Alerter.create(Activity_DetailedView_Investors_Buyers.this)
+                        Alerter.create(Activity_DetailedView_Advisor_Profile.this)
                                 .setTitle("WORLD BUSINESSES FOR SALE")
                                 .setText("Oops! Something went wrong :( \n Try Again")
                                 .setBackgroundColor(R.color.red)
@@ -339,7 +284,7 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 dialog.dismiss();
-                Alerter.create(Activity_DetailedView_Investors_Buyers.this)
+                Alerter.create(Activity_DetailedView_Advisor_Profile.this)
                         .setTitle("WORLD BUSINESSES FOR SALE")
                         .setText("Internal Error :(\n" + error.getMessage())
                         .setBackgroundColor(R.color.colorPrimaryDark)
@@ -352,12 +297,12 @@ public class Activity_DetailedView_Investors_Buyers extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("user_id", str_user_id);
-                params.put("investor_key", str_investor_key);
+                params.put("advisor_key", str_advisor_key);
                 params.put("currency", str_user_currency);
 
                 System.out.println("USER_ID ::: " + str_user_id);
-                System.out.println("INVESTOR KEY ::: " + str_investor_key);
-                System.out.println("INVESTOR CURRENCY ::: " + str_user_currency);
+                System.out.println("ADVISOR KEY ::: " + str_advisor_key);
+                System.out.println("ADVISOR CURRENCY ::: " + str_user_currency);
 
                 return params;
             }
