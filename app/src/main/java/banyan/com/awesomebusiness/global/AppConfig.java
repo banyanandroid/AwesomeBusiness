@@ -48,8 +48,6 @@ public class AppConfig {
     public static String url_investor_profile_add = BASE_URL + "/index.php?Apicontroller/addinvestorprofile";
     public static String url_add_advisor_profile = BASE_URL + "/index.php?Apicontroller/addadvisorprofile";
 
-
-
     // Update Profiles
     public static String url_update_business_profile = BASE_URL + "/index.php?Apicontroller/updatebusinessprofile";
     public static String url_update_investor_profile = BASE_URL + "/index.php?Apicontroller/updateinvestorprofile";
@@ -84,6 +82,10 @@ public class AppConfig {
     /*********  Investor Profile *********/
     public static String url_dashboard_search_result_investor_profile = BASE_URL + "/index.php?Apicontroller/listallinvestorprofile";
     public static String url_dashboard_search_result_investor_profile_detail = BASE_URL + "/index.php?Apicontroller/listsingleinvestorprofile";
+
+    /*********  Advisor Profile *********/
+    public static String url_dashboard_search_result_advisor_profile = BASE_URL + "/index.php?Apicontroller/listalladvisorprofile";
+    public static String url_dashboard_search_result_advisor_profile_detail = BASE_URL + "/index.php?Apicontroller/listsingleadvisorprofile";
 
 }
 

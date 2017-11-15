@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1057427412325",
-    "project_id": "awesomebusiness-171c2"
+    "project_number": "622805901370",
+    "project_id": "lexical-theory-185706"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1057427412325:android:7f33e98d26539be5",
+        "mobilesdk_app_id": "1:622805901370:android:7f33e98d26539be5",
         "android_client_info": {
           "package_name": "banyan.com.awesomebusiness"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1057427412325-7n8g7a24jl5c0nktlt8u406qvf3cdg35.apps.googleusercontent.com",
+          "client_id": "622805901370-2g5696c3e717voe8jf0rsld3cl4s9dee.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "1057427412325-r11ts7p27jqhh7fuh1af8mrnefjj1coq.apps.googleusercontent.com",
+          "client_id": "622805901370-opo0o925p0dpjo394tt6gidcoilm2nap.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "banyan.com.awesomebusiness",
-            "certificate_hash": "103127e37c2c41e36db807061258d93bf3a2745c"
+            "certificate_hash": "3ef7e29815a277fe1346b1e51022f182b802968a"
           }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCuRvCCPnRSwkT1nYtwlHtq_YVvCDNtFn8"
+          "current_key": "AIzaSyBWEX76Bi7MUYKxytcaR2fgEeFl4NKQfEU"
         }
       ],
       "services": {

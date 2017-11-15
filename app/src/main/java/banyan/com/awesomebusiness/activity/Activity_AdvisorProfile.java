@@ -397,7 +397,7 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                 str_business_minimum = edt_business_minimum.getText().toString();
                 str_business_maximum = edt_business_maximum.getText().toString();
 
-                if (str_business_minimum.equals("")) {
+           /*     if (str_business_minimum.equals("")) {
                     edt_business_minimum.setError("Enter Minimum Business");
                     edt_business_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -411,6 +411,18 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
                     int_business_maximum = Integer.valueOf(str_business_maximum);
+                }
+*/
+
+
+                if (str_business_minimum.equals("")) {
+                    edt_business_minimum.setError("Enter Minimum Business");
+                    edt_business_minimum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                } else if (str_business_maximum.equals("")) {
+                    edt_business_maximum.setError("Enter Maximum Deal Size");
+                    edt_business_maximum.requestFocus();
+                    TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 }
 
                 if (str_auth_person_name.equals("")) {
@@ -873,7 +885,6 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
         intent.putExtra(ImagePickerActivity.INTENT_EXTRA_IMAGE_DIRECTORY, "Camera");
         startActivityForResult(intent, REQUEST_CODE_PICKER1);
     }
-
 
     /******************************************
      *    SUBMIT FRANCHISE PROFILE FORM

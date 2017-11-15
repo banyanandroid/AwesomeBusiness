@@ -93,7 +93,7 @@ public class Fragment_Franchise extends Fragment {
     public static final String TAG_FRANCHISE_FORMAT = "franchise_format";
     public static final String TAG_FRANCHISE_LOGO = "franchise_logo";
     public static final String TAG_FRANCHISE_CURRENCY = "franchise_currency";
-    public static final String TAG_COUNTRY_CURRENCY = "country_currency";
+
     public static final String TAG_FRANCHISE_STATUS = "franchise_status";
 
     public static final String TAG_LOCATION_NAME = "location_name";
@@ -778,7 +778,6 @@ public class Fragment_Franchise extends Fragment {
                             String franchise_format = obj1.getString(TAG_FRANCHISE_FORMAT);
                             String franchise_logo = obj1.getString(TAG_FRANCHISE_LOGO);
                             String franchise_currency = obj1.getString(TAG_FRANCHISE_CURRENCY);
-                            String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -852,7 +851,7 @@ public class Fragment_Franchise extends Fragment {
                             map.put(TAG_FRANCHISE_FORMAT, franchise_format);
                             map.put(TAG_FRANCHISE_LOGO, franchise_logo);
                             map.put(TAG_FRANCHISE_CURRENCY, franchise_currency);
-                            map.put(TAG_COUNTRY_CURRENCY, country_currency);
+
 
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);

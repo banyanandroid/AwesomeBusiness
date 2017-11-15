@@ -624,7 +624,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     public void Get_Investor_Profile() {
         String tag_json_obj = "json_obj_req";
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
+                AppConfig.    url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
 
 
             @Override
