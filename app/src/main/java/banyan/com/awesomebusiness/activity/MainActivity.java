@@ -162,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 displayView_awesome(1);
             } else if (value.equals("Franchise Oppourtinites")) {
                 displayView_awesome(2);
+            } else if (value.equals("Advisors")) {
+                displayView_awesome(3);
             } else {
                 displayView_awesome(0);
             }
@@ -288,19 +290,26 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new Fragment_Franchise();
                 title = getString(R.string.title_franchies);
                 break;
+
             case 3:
+                Clear_SharedPref();
+                fragment = new Fragment_Messsage();
+                title = getString(R.string.title_advisor);
+                break;
+
+            case 4:
                 fragment = new Fragment_Messsage();
                 title = getString(R.string.title_message);
                 break;
-            case 4:
+            case 5:
                 fragment = new Fragment_How_To();
                 title = getString(R.string.title_howto);
                 break;
-            case 5:
+            case 6:
                 fragment = new Fragment_QA();
                 title = getString(R.string.title_qa);
                 break;
-            case 6:
+            case 7:
                 fragment = new Fragment_Company();
                 title = getString(R.string.title_company);
                 break;
@@ -337,17 +346,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 3:
                 fragment = new Fragment_Messsage();
-                title = getString(R.string.title_message);
+                title = getString(R.string.title_advisor);
                 break;
             case 4:
+                fragment = new Fragment_Messsage();
+                title = getString(R.string.title_message);
+                break;
+            case 5:
                 fragment = new Fragment_How_To();
                 title = getString(R.string.title_howto);
                 break;
-            case 5:
+            case 6:
                 fragment = new Fragment_QA();
                 title = getString(R.string.title_qa);
                 break;
-            case 6:
+            case 7:
                 fragment = new Fragment_Company();
                 title = getString(R.string.title_company);
                 break;

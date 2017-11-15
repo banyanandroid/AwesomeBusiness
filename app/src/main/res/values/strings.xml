@@ -12,6 +12,7 @@
     <string name="nav_item_home">Business for Sale</string>
     <string name="nav_item_investors_buyer">Inverstors &amp; Buyers</string>
     <string name="nav_item_franchies">Franchies</string>
+    <string name="nav_item_advisor">Advisors</string>
     <string name="nav_item_message">Messages</string>
     <string name="nav_item_howto">How To</string>
     <string name="nav_item_qa">Q &amp; A</string>
@@ -22,6 +23,7 @@
         <item>@string/nav_item_home</item>
         <item>@string/nav_item_investors_buyer</item>
         <item>@string/nav_item_franchies</item>
+        <item>@string/nav_item_advisor</item>
         <item>@string/nav_item_message</item>
         <item>@string/nav_item_howto</item>
         <item>@string/nav_item_qa</item>
@@ -31,6 +33,7 @@
     <string name="title_home">Business for Sale</string>
     <string name="title_investors">Investors and Buyers</string>
     <string name="title_franchies">Franchies</string>
+    <string name="title_advisor">Advisors</string>
     <string name="title_message">Message</string>
     <string name="title_howto">How To</string>
     <string name="title_qa">Q &amp; A</string>
