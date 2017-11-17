@@ -54,7 +54,6 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
     String str_user_currency, str_franchise_key = "";
 
-
     public static final String TAG_FRANCHISE_ID = "franchise_id";
     public static final String TAG_FRANCHISE_KEY = "franchise_key";
     public static final String TAG_FRANCHISE_USER_ID = "franchise_user_id";
@@ -148,11 +147,9 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
         System.out.println("FRANCHISE KEY-----" + str_franchise_key);
         System.out.println("CURRENCY-----" + str_user_currency);
 
-
         Arraylist_update_location = new ArrayList<String>();
         Arraylist_update_industries = new ArrayList<String>();
         Arraylist_update_images = new ArrayList<String>();
-
 
         txt_brand_name = (TextView) findViewById(R.id.activity_franchise_profile_details_txt_brandname);
         txt_name = (TextView) findViewById(R.id.activity_franchise_profile_details_name);
@@ -297,7 +294,6 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                 txt_email.setTextColor(getResources().getColor(R.color.colorAccent1));
                                 txt_company.setText("Availble after connect");
                                 txt_company.setTextColor(getResources().getColor(R.color.colorAccent1));
-
                                 txt_sales_partner_before_partnering.setText("" + brand_salepartner_before_partnering);
                                 txt_investment_size_from.setText("" + franchise_investment_from);
                                 txt_investment_size_to.setText("" + franchise_investment_to);
@@ -305,7 +301,6 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
                                 txt_revenue_to.setText("" + franchise_return_to);
                                 txt_headquaters.setText("" + franchise_brand_headquaters);
                                 txt_industries.setText("" + str_final_industries + ", ");
-
                                 txt_brand_name.setText("" + franchise_brand_name);
                                 txt_about_brand.setText("" + franchise_brand_company);
                                 txt_train_support.setText("" + franchise_brand_services);

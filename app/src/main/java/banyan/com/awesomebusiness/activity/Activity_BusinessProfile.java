@@ -161,7 +161,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     Spinner spn_amount_fixed_for;
 
     String str_year_asset_purchased, str_asset_seeking_to_sell, str_asset_features, str_asset_selling_leasing_price, str_asset_selling_eason,
-            str_industries_use_asset, str_asset_loation, str_amount_fixed_for;
+            str_industries_use_asset, str_asset_loation, str_amount_fixed_for = "";
 
     String str_final_industry_update, str_final_location_update = "";
 
@@ -377,6 +377,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 // Spinner Value to String
                 str_spn_business_legal_type = spn_business_legal_type.getSelectedItem().toString();
 
+
                 if (str_name.equals("")) {
                     edt_name.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Name Cannot be empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
@@ -518,10 +519,58 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         edt_reason_for_sale.setError("Please Enter Reason For Sale");
                         TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else {
+
+                        /*
                         dialog = new SpotsDialog(Activity_BusinessProfile.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
                         Function_Submit_BusinessProfile();
+                        */
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putString("prev_str_name", str_name);
+                        editor.putString("prev_str_company_name", str_company_name);
+                        editor.putString("prev_str_mobile", str_mobile);
+                        editor.putString("prev_str_official_email", str_official_email);
+                        editor.putString("prev_str_ch_companydetails", str_ch_companydetails);
+                        editor.putString("prev_str_ch_contactdetails", str_ch_contactdetails);
+                        editor.putString("prev_str_selected_role_name", str_selected_role_name);
+                        editor.putString("prev_str_selected_role_id", str_selected_role_id);
+                        editor.putString("prev_str_selected_interest_name", str_selected_interest_name);
+                        editor.putString("prev_str_selected_interest_id", str_selected_interest_id);
+                        editor.putString("prev_str_final_industry_update", str_final_industry_update);
+                        editor.putString("prev_str_final_location_update", str_final_location_update);
+                        editor.putString("prev_str_business_established_year", str_business_established_year);
+                        editor.putString("prev_str_no_of_permanent_employees", str_no_of_permanent_employees);
+                        editor.putString("prev_str_spn_business_legal_type", str_spn_business_legal_type);
+                        editor.putString("prev_str_business_desc", str_business_desc);
+                        editor.putString("prev_str_business_highlights", str_business_highlights);
+                        editor.putString("prev_str_business_all_prod_serv", str_business_all_prod_serv);
+                        editor.putString("prev_str_business_facility_desc", str_business_facility_desc);
+                        editor.putString("prev_str_avg_monthly_sales", str_avg_monthly_sales);
+                        editor.putString("prev_str_avg_monthly_expenses", str_avg_monthly_expenses);
+                        editor.putString("prev_str_latest_yearly_sales", str_latest_yearly_sales);
+                        editor.putString("prev_str_cashflow_profit", str_cashflow_profit);
+                        editor.putString("prev_str_physical_assests_value", str_physical_assests_value);
+                        editor.putString("prev_str_tentative_selling_price", str_tentative_selling_price);
+                        editor.putString("prev_str_reason_for_sale", str_reason_for_sale);
+                        editor.putString("prev_str_year_asset_purchased", str_year_asset_purchased);
+                        editor.putString("prev_str_asset_seeking_to_sell", str_asset_seeking_to_sell);
+                        editor.putString("prev_str_asset_industry_update", str_final_industry_update);
+                        editor.putString("prev_str_asset_location_update", str_final_location_update);
+                        editor.putString("prev_str_asset_features", str_asset_features);
+                        editor.putString("prev_str_asset_selling_leasing_price", str_asset_selling_leasing_price);
+                        editor.putString("prev_str_asset_selling_eason", str_asset_selling_eason);
+                        editor.putString("prev_str_amount_fixed_for", str_amount_fixed_for);
+                        editor.putString("prev_str_image", listString);
+
+                        editor.commit();
+
+                        Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile_Preview.class);
+                        startActivity(i);
+                        finish();
                     }
 
                 } else if (str_profile_type.equals("asset")) {
@@ -610,10 +659,14 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         if (str_user_currency.equals("str_selected_currency")) {
                             TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                         } else {
-                            dialog = new SpotsDialog(Activity_BusinessProfile.this);
+                          /*  dialog = new SpotsDialog(Activity_BusinessProfile.this);
                             dialog.show();
                             queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-                            Function_Submit_BusinessProfile();
+                            Function_Submit_BusinessProfile();*/
+                            Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile_Preview.class);
+                            startActivity(i);
+                            finish();
+
                         }
                     }
                 }
@@ -1130,7 +1183,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-
                 params.put("user_name", str_name);
                 params.put("company_name", str_company_name);
                 params.put("mobile_no", str_mobile);
@@ -1207,7 +1259,6 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 System.out.println("documentstype" + "documents typeee emptyyyyyyyy");
                 System.out.println("user_currency" + str_user_currency);
                 System.out.println("user_id" + str_user_id);
-
 
                 return checkParams(params);
             }

@@ -37,7 +37,6 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/windowBackground2">
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -45,7 +44,6 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:orientation="vertical">
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -133,7 +131,6 @@
                         android:text="Details displayed to introduced members"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
-
 
                     <LinearLayout
                         android:id="@+id/add_businessprofile_layout_displaydetails"

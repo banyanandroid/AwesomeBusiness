@@ -171,7 +171,6 @@
                             android:textColor="@color/black"
                             android:textSize="16dp" />
 
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -201,7 +200,6 @@
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
-
 
                     </LinearLayout>
 
@@ -263,7 +261,6 @@
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="16dp" />
-
 
                     </LinearLayout>
 

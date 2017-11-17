@@ -114,6 +114,11 @@
             android:label="Contact Business"></activity>
 
 
+        <activity
+            android:name=".activity.Activity_BusinessProfile_Preview"
+            android:label="Contact Business"></activity>
+
+
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
