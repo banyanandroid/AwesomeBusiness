@@ -10,8 +10,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        />
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -58,19 +57,19 @@
                         android:textStyle="bold" />
 
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorAccent"
                             android:textSize="16dp" />
 
 
@@ -91,13 +90,14 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Company Name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorAccent"
                             android:textSize="16dp" />
 
 
@@ -118,13 +118,14 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Mobile Number"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorAccent"
                             android:textSize="16dp" />
 
 
@@ -146,13 +147,14 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Email"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorAccent"
                             android:textSize="16dp" />
 
 
@@ -169,14 +171,13 @@
                     </LinearLayout>
 
 
-
                     <TextView
                         android:id="@+id/add_businessprofile_txt_displaydetails"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:text="Details Displayed"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:textColor="@color/black"
+                        android:text="Details Displayed"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <LinearLayout
@@ -184,6 +185,7 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <TextView
                             android:id="@+id/txt_display_contact_details"
                             android:layout_width="0dp"
@@ -191,7 +193,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Contact details"
-                            android:textColor="@color/black"
+                            android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
 
@@ -202,7 +204,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="Company details"
-                            android:textColor="@color/black"
+                            android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 
                     </LinearLayout>
@@ -250,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Your Role"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
 
@@ -269,7 +271,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Interested In"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
 
@@ -284,11 +286,12 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/txt_when_established_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Year Business Established/Assests Purchased"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
 
@@ -306,8 +309,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="Select Business Industry"
-                        android:textColor="@color/black"
+                        android:text="Business Industry"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -326,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Business Located At"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -345,7 +348,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="No Of Permanent Employees"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -362,7 +365,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Legal Entity Type"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -381,7 +384,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Business Description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -400,7 +403,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Highlights of the business"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -419,7 +422,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="List all products &amp; services of business"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -438,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Facility Description"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -457,7 +460,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Average monthly sales"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -476,7 +479,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Monthly expenses at present"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -494,7 +497,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Latest reported yearly sales"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -513,7 +516,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Average monthly Cashflow/Profit at present"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -532,7 +535,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Value of physical assets owned by business"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -550,7 +553,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Tentative Selling Price"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -569,7 +572,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Enter the Reason For Sale"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -587,7 +590,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Year this asset purchased"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -605,7 +608,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Industries that use this asset"
-                        android:textColor="@color/textColorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp"
                         android:textStyle="normal" />
 
@@ -624,7 +627,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Asset Located at"
-                        android:textColor="@color/textColorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp"
                         android:textStyle="normal" />
 
@@ -644,7 +647,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Asset you are seeking to sell"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -663,7 +666,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Features of the Asset"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -682,7 +685,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Price you are selling / leasing"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -701,7 +704,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Sale Type"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -719,7 +722,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Reason for selling these business assets"
-                        android:textColor="@color/black"
+                        android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
 
                     <TextView
@@ -753,7 +756,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>

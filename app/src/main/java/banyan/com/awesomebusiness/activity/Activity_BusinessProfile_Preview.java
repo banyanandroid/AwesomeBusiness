@@ -41,7 +41,6 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
     String TAG = "Auto_Res";
     String str_user_currency = "";
 
-
     SessionManager session;
     public static String str_user_id, str_user_name, str_user_email, str_user_photoo;
     public static String str_get_user_name, str_get_user_email, str_get_user_mobile, str_get_user_desigination, str_get_user_company;
@@ -52,20 +51,18 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
 
     TextView txt_name, txt_mobile, txt_company_name, txt_official_email,
             txt_business_established_year, txt_no_of_permanent_employees, txt_business_des, txt_business_highlights,
-            txt_business_all_prod_serv, txt_business_facility_desc, txt_avg_monthly_sales, txt_monthly_expenses, txt_latest_yearly_sales,
-            txt_cashflow_profit, txt_physical_assests_value, txt_tentative_selling_price, txt_reason_for_sale;
-
-    TextView txt_companydetails, txt_contatdetails;
-
-    TextView txt_i_am, txt_interested_in;
-    TextView txt_amount_fixed_for;
-    TextView txt_business_legal_type;
-
-    TextView txt_bus_busineeslist, txt_bus_locationlist, txt_industries_use_asset, txt_asset_loation;
+            txt_business_all_prod_serv, txt_business_facility_desc, txt_avg_monthly_sales, txt_monthly_expenses,
+            txt_latest_yearly_sales,txt_cashflow_profit, txt_physical_assests_value, txt_tentative_selling_price,
+            txt_reason_for_sale, txt_companydetails, txt_contatdetails, txt_i_am, txt_interested_in,txt_amount_fixed_for,
+            txt_business_legal_type,txt_bus_busineeslist, txt_bus_locationlist, txt_industries_use_asset, txt_asset_loation;
 
     //Selling or Leasing out business
-    TextView txt_year_asset_purchased, txt_asset_seeking_to_sell, txt_asset_features, txt_asset_selling_leasing_price, str_asset_selling_reason;
+    TextView txt_year_asset_purchased, txt_asset_seeking_to_sell, txt_asset_features, txt_asset_selling_leasing_price, txt_asset_selling_reason;
 
+    //Text view for Titles
+    TextView txt_title_business_established_year , txt_title_no_of_permanent_employees , txt_title_business_des ,
+            txt_title_business_highlights, txt_title_business_all_prod_serv , txt_title_business_facility_desc ,
+            txt_title_avg_monthly_sales , txt_title_latest_yearly_sales    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +130,8 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
         txt_asset_features = (TextView) findViewById(R.id.txt_asset_features);
         txt_asset_selling_leasing_price = (TextView) findViewById(R.id.txt_price_selling_leasing);
         txt_amount_fixed_for = (TextView) findViewById(R.id.txt_amount_for);
-        str_asset_selling_reason = (TextView) findViewById(R.id.txt_reason_for_sell_asset);
+        txt_asset_selling_reason = (TextView) findViewById(R.id.txt_reason_for_sell_asset);
+
 
         try {
 
@@ -151,7 +149,9 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
             String str_selected_interest_name = sharedPreferences.getString("prev_str_selected_interest_name", "prev_str_selected_interest_name");
             String str_selected_interest_id = sharedPreferences.getString("prev_str_selected_interest_id", "prev_str_selected_interest_id");
             String str_final_industry_update = sharedPreferences.getString("prev_str_final_industry_update", "prev_str_final_industry_update");
+            String str_industries_text = sharedPreferences.getString("prev_str_final_industry_names", "prev_str_final_industry_names");
             String str_final_location_update = sharedPreferences.getString("prev_str_final_location_update", "prev_str_final_location_update");
+            String str_locations_text = sharedPreferences.getString("prev_str_final_location_names", "prev_str_final_location_names");
             String str_business_established_year = sharedPreferences.getString("prev_str_business_established_year", "prev_str_business_established_year");
             String str_no_of_permanent_employees = sharedPreferences.getString("prev_str_no_of_permanent_employees", "prev_str_no_of_permanent_employees");
             String str_spn_business_legal_type = sharedPreferences.getString("prev_str_spn_business_legal_type", "prev_str_spn_business_legal_type");
@@ -184,8 +184,8 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
             txt_i_am.setText(str_selected_role_name);
             txt_interested_in.setText(str_selected_interest_name);
             txt_business_established_year.setText(str_business_established_year);
-            txt_bus_busineeslist.setText(str_final_industry_update);
-            txt_bus_locationlist.setText(str_final_location_update);
+            txt_bus_busineeslist.setText(str_industries_text);
+            txt_bus_locationlist.setText(str_locations_text);
             txt_no_of_permanent_employees.setText(str_no_of_permanent_employees);
             txt_business_legal_type.setText(str_spn_business_legal_type);
             txt_business_des.setText(str_business_desc);
@@ -200,13 +200,14 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
             txt_tentative_selling_price.setText(str_tentative_selling_price);
             txt_reason_for_sale.setText(str_reason_for_sale);
             txt_year_asset_purchased.setText(str_year_asset_purchased);
-            txt_industries_use_asset.setText(str_asset_industry);
-            txt_asset_loation.setText(str_asset_location);
+            txt_industries_use_asset.setText(str_industries_text);
+            txt_asset_loation.setText(str_locations_text);
             txt_asset_seeking_to_sell.setText(str_asset_seeking_to_sell);
             txt_asset_features.setText(str_asset_features);
             txt_asset_selling_leasing_price.setText(str_asset_selling_leasing_price);
             txt_amount_fixed_for.setText(str_amount_fixed_for);
-            str_asset_selling_reason.setText(str_asset_selling_eason);
+            txt_asset_selling_reason.setText(str_asset_selling_eason);
+
 
             if (str_ch_companydetails.equals("1")) {
                 txt_companydetails.setText("Company Details");
@@ -218,6 +219,14 @@ public class Activity_BusinessProfile_Preview extends AppCompatActivity {
                 txt_contatdetails.setText("Contact Details");
             } else {
                 txt_companydetails.setText("");
+            }
+
+
+            if (str_selected_interest_name.equals("Selling / Leasing  Assets")) {
+
+
+            } else if (str_selected_interest_name.equals("Businesses For Sale")) {
+
             }
 
 

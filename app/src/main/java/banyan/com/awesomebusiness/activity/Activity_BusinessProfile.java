@@ -412,7 +412,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     /*****************************
                      * Get Multi Sector Details
                      * ************************/
-
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    String str_industries_text = auto_bus_busineeslist.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_industries = auto_bus_busineeslist.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -442,7 +444,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     /*****************************
                      * Get Multi Location Details
                      * ************************/
-
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    String str_locations_text = auto_bus_locationlist.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_location = auto_bus_locationlist.getText().toString().split(", ");
 
                     Arraylist_fetched_location.clear();
@@ -542,6 +546,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         editor.putString("prev_str_selected_interest_id", str_selected_interest_id);
                         editor.putString("prev_str_final_industry_update", str_final_industry_update);
                         editor.putString("prev_str_final_location_update", str_final_location_update);
+                        editor.putString("prev_str_final_industry_names", str_industries_text);
+                        editor.putString("prev_str_final_location_names", str_locations_text);
                         editor.putString("prev_str_business_established_year", str_business_established_year);
                         editor.putString("prev_str_no_of_permanent_employees", str_no_of_permanent_employees);
                         editor.putString("prev_str_spn_business_legal_type", str_spn_business_legal_type);
@@ -578,6 +584,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                     /******************************
                      * Get Asset Multi Sector Details
                      * *************************/
+
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    String str_industries_text = auto_industries_use_asset.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_asset_industries = auto_industries_use_asset.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -608,6 +618,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                      * Get Asset Multi Location Details
                      * *************************/
 
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    String str_locations_text = auto_asset_loation.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_asset_location = auto_asset_loation.getText().toString().split(", ");
 
                     for (int i = 0; i < str_asset_location.length; i++) {
@@ -663,6 +676,51 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             dialog.show();
                             queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
                             Function_Submit_BusinessProfile();*/
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            editor.putString("prev_str_name", str_name);
+                            editor.putString("prev_str_company_name", str_company_name);
+                            editor.putString("prev_str_mobile", str_mobile);
+                            editor.putString("prev_str_official_email", str_official_email);
+                            editor.putString("prev_str_ch_companydetails", str_ch_companydetails);
+                            editor.putString("prev_str_ch_contactdetails", str_ch_contactdetails);
+                            editor.putString("prev_str_selected_role_name", str_selected_role_name);
+                            editor.putString("prev_str_selected_role_id", str_selected_role_id);
+                            editor.putString("prev_str_selected_interest_name", str_selected_interest_name);
+                            editor.putString("prev_str_selected_interest_id", str_selected_interest_id);
+                            editor.putString("prev_str_final_industry_update", str_final_industry_update);
+                            editor.putString("prev_str_final_location_update", str_final_location_update);
+                            editor.putString("prev_str_final_industry_names", str_industries_text);
+                            editor.putString("prev_str_final_location_names", str_locations_text);
+                            editor.putString("prev_str_business_established_year", str_business_established_year);
+                            editor.putString("prev_str_no_of_permanent_employees", str_no_of_permanent_employees);
+                            editor.putString("prev_str_spn_business_legal_type", str_spn_business_legal_type);
+                            editor.putString("prev_str_business_desc", str_business_desc);
+                            editor.putString("prev_str_business_highlights", str_business_highlights);
+                            editor.putString("prev_str_business_all_prod_serv", str_business_all_prod_serv);
+                            editor.putString("prev_str_business_facility_desc", str_business_facility_desc);
+                            editor.putString("prev_str_avg_monthly_sales", str_avg_monthly_sales);
+                            editor.putString("prev_str_avg_monthly_expenses", str_avg_monthly_expenses);
+                            editor.putString("prev_str_latest_yearly_sales", str_latest_yearly_sales);
+                            editor.putString("prev_str_cashflow_profit", str_cashflow_profit);
+                            editor.putString("prev_str_physical_assests_value", str_physical_assests_value);
+                            editor.putString("prev_str_tentative_selling_price", str_tentative_selling_price);
+                            editor.putString("prev_str_reason_for_sale", str_reason_for_sale);
+                            editor.putString("prev_str_year_asset_purchased", str_year_asset_purchased);
+                            editor.putString("prev_str_asset_seeking_to_sell", str_asset_seeking_to_sell);
+                            editor.putString("prev_str_asset_industry_update", str_final_industry_update);
+                            editor.putString("prev_str_asset_location_update", str_final_location_update);
+                            editor.putString("prev_str_asset_features", str_asset_features);
+                            editor.putString("prev_str_asset_selling_leasing_price", str_asset_selling_leasing_price);
+                            editor.putString("prev_str_asset_selling_eason", str_asset_selling_eason);
+                            editor.putString("prev_str_amount_fixed_for", str_amount_fixed_for);
+                            editor.putString("prev_str_image", listString);
+
+                            editor.commit();
+
+
                             Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile_Preview.class);
                             startActivity(i);
                             finish();
