@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             case 3:
                 Clear_SharedPref();
-                fragment = new Fragment_Messsage();
+                fragment = new Fragment_Advisor();
                 title = getString(R.string.title_advisor);
                 break;
 
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.title_franchies);
                 break;
             case 3:
-                fragment = new Fragment_Messsage();
+                fragment = new Fragment_Advisor();
                 title = getString(R.string.title_advisor);
                 break;
             case 4:
@@ -572,11 +572,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                         }
 
+                        dialog.dismiss();
+
                     } else if (success == 0) {
                         TastyToast.makeText(getApplicationContext(), "Something Went Wrong :(", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
 
                     dialog.dismiss();
+
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

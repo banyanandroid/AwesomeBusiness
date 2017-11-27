@@ -130,6 +130,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
     MultiAutoCompleteTextView auto_franchise_business_industry, auto_franchise_business_expand_locations;
     //Final location and industry and headquaters sring to post
     String str_final_headquaters, str_final_location_update, str_final_industry_update = "";
+    String str_Headquaters;
 
     // EDIT TEXT AND THEIR RELATED STRINGS
     EditText edt_name, edt_email, edt_mobile_num, edt_designation, edt_brand_name,
@@ -332,6 +333,11 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 /*****************************
                  * Get Multi Industry Details
                  * ************************/
+
+                //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                String str_industries_text = auto_franchise_business_industry.getText().toString();
+                //Here we are getting it in a string array to find the location id and location type to post in json
+
                 String[] str_industries = auto_franchise_business_industry.getText().toString().split(", ");
 
                 Arraylist_fetched_industries.clear();
@@ -361,7 +367,9 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 /*****************************
                  * Get Multi Location Details
                  * ************************/
-
+                //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                String str_locations_text = auto_franchise_business_expand_locations.getText().toString();
+                //Here we are getting it in a string array to find the location id and location type to post in json
                 String[] str_location = auto_franchise_business_expand_locations.getText().toString().split(", ");
 
                 Arraylist_fetched_location.clear();
@@ -392,7 +400,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                 ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
                 ///////////////////////
 
-                String str_Headquaters = auto_headquaters.getText().toString();
+                str_Headquaters = auto_headquaters.getText().toString();
                 int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
                 String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
                 String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
@@ -503,10 +511,47 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                 } else {
 
-                    dialog = new SpotsDialog(Activity_FranchiseProfile.this);
+                  /*  dialog = new SpotsDialog(Activity_FranchiseProfile.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(getApplicationContext());
-                    Function_Submit_FranchiseProfile();
+                    Function_Submit_FranchiseProfile(); */
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("prev_fran_str_auth_person_name", str_auth_person_name);
+                    editor.putString("prev_fran_str_email", str_email);
+                    editor.putString("prev_fran_str_mobile_num", str_mobile_num);
+                    editor.putString("prev_fran_str_designation", str_designation);
+                    editor.putString("prev_fran_str_brand_name", str_brand_name);
+                    editor.putString("prev_fran_str_opportunity_offered", str_opportunity_offered);
+                    editor.putString("prev_fran_str_opportunity_offered_text", str_selected_opportunity);
+                    editor.putString("prev_fran_str_final_industry_update", str_final_industry_update);
+                    editor.putString("prev_fran_str_final_industry_update_text", str_industries_text);
+                    editor.putString("prev_fran_str_about_company", str_about_company);
+                    editor.putString("prev_fran_str_train_support", str_train_support);
+                    editor.putString("prev_fran_str_year_company_opr_start", str_year_company_opr_start);
+                    editor.putString("prev_fran_str_final_headquaters", str_final_headquaters);
+                    editor.putString("prev_fran_str_final_headquaters_text", str_Headquaters);
+                    editor.putString("prev_fran_str_ideal_candidate", str_ideal_candidate);
+                    editor.putString("prev_fran_str_final_location_update", str_final_location_update);
+                    editor.putString("prev_fran_str_final_location_update_text", str_locations_text);
+                    editor.putString("prev_fran_str_investment_needed_minimum", str_investment_needed_minimum);
+                    editor.putString("prev_fran_str_investment_needed_maximum", str_investment_needed_maximum);
+                    editor.putString("prev_fran_str_exp_return_minimum", str_exp_return_minimum);
+                    editor.putString("prev_fran_str_exp_return_maximum", str_exp_return_maximum);
+                    editor.putString("prev_fran_encoded_logo", encoded_logo);
+                    editor.putString("prev_fran_listString", listString);
+                    editor.putString("prev_fran_str_franchise_type", str_franchise_type);
+
+
+                    editor.commit();
+
+                    Intent i = new Intent(getApplicationContext(), Activity_FranchiseProfile_Preview.class);
+                    startActivity(i);
+                    finish();
+
 
                 }
 
@@ -923,7 +968,7 @@ public class Activity_FranchiseProfile extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_PICKER1);
     }
 
-     /******************************************
+    /******************************************
      *    SUBMIT FRANCHISE PROFILE FORM
      * *******************************************/
 

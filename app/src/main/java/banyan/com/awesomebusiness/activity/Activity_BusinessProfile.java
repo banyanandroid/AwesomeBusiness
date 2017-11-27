@@ -148,7 +148,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
     LinearLayout layout_display_details;
     CheckBox chb_companydetails, chb_contatdetails;
 
-    SearchableSpinner spn_i_am, spn_interested_in;
+    SearchableSpinner spn_i_am;
+    SearchableSpinner spn_interested_in;
 
     //Multi Auto Complete Textview
     MultiAutoCompleteTextView auto_bus_busineeslist, auto_bus_locationlist, auto_industries_use_asset, auto_asset_loation;
@@ -229,8 +230,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
         // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
         spn_i_am.setTitle("Select Your Role");
+        spn_i_am.setVisibility(View.GONE);
         spn_interested_in = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_intersted);
         spn_interested_in.setTitle("Select Your Interest");
+
         // Common Edittext
         edt_name = (EditText) findViewById(R.id.edt_name);
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_number);
@@ -390,13 +393,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                 } else if (str_official_email.equals("")) {
                     edt_official_email.setFocusable(true);
                     TastyToast.makeText(getApplicationContext(), "Email Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_selected_role_id == null || str_selected_role_id.isEmpty()) {
+                } /*else if (str_selected_role_id == null || str_selected_role_id.isEmpty()) {
                     spn_i_am.setFocusable(true);
                     spn_i_am.setFocusableInTouchMode(true);
                     spn_i_am.requestFocus();
                     spn_i_am.performClick();
                     TastyToast.makeText(getApplicationContext(), "Select Your Role", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_selected_interest_id == null || str_selected_interest_id.isEmpty()) {
+                }*/ else if (str_selected_interest_id == null || str_selected_interest_id.isEmpty()) {
                     spn_interested_in.setFocusable(true);
                     spn_interested_in.setFocusableInTouchMode(true);
                     spn_interested_in.requestFocus();
@@ -524,12 +527,10 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         TastyToast.makeText(getApplicationContext(), "Reason For Sale Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else {
 
-                        /*
-                        dialog = new SpotsDialog(Activity_BusinessProfile.this);
+                     /*   dialog = new SpotsDialog(Activity_BusinessProfile.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-                        Function_Submit_BusinessProfile();
-                        */
+                        Function_Submit_BusinessProfile();*/
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -540,8 +541,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         editor.putString("prev_str_official_email", str_official_email);
                         editor.putString("prev_str_ch_companydetails", str_ch_companydetails);
                         editor.putString("prev_str_ch_contactdetails", str_ch_contactdetails);
-                        editor.putString("prev_str_selected_role_name", str_selected_role_name);
-                        editor.putString("prev_str_selected_role_id", str_selected_role_id);
+                        editor.putString("prev_str_selected_role_name", "");
+                        editor.putString("prev_str_selected_role_id", "");
                         editor.putString("prev_str_selected_interest_name", str_selected_interest_name);
                         editor.putString("prev_str_selected_interest_id", str_selected_interest_id);
                         editor.putString("prev_str_final_industry_update", str_final_industry_update);
@@ -577,6 +578,9 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile_Preview.class);
                         startActivity(i);
                         finish();
+
+
+
                     }
 
                 } else if (str_profile_type.equals("asset")) {
@@ -672,10 +676,13 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                         if (str_user_currency.equals("str_selected_currency")) {
                             TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                         } else {
-                          /*  dialog = new SpotsDialog(Activity_BusinessProfile.this);
+
+                         /*   dialog = new SpotsDialog(Activity_BusinessProfile.this);
                             dialog.show();
                             queue = Volley.newRequestQueue(Activity_BusinessProfile.this);
-                            Function_Submit_BusinessProfile();*/
+                            Function_Submit_BusinessProfile();
+*/
+
 
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -686,8 +693,8 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             editor.putString("prev_str_official_email", str_official_email);
                             editor.putString("prev_str_ch_companydetails", str_ch_companydetails);
                             editor.putString("prev_str_ch_contactdetails", str_ch_contactdetails);
-                            editor.putString("prev_str_selected_role_name", str_selected_role_name);
-                            editor.putString("prev_str_selected_role_id", str_selected_role_id);
+                            editor.putString("prev_str_selected_role_name", "");
+                            editor.putString("prev_str_selected_role_id", "");
                             editor.putString("prev_str_selected_interest_name", str_selected_interest_name);
                             editor.putString("prev_str_selected_interest_id", str_selected_interest_id);
                             editor.putString("prev_str_final_industry_update", str_final_industry_update);
@@ -717,9 +724,7 @@ public class Activity_BusinessProfile extends AppCompatActivity {
                             editor.putString("prev_str_asset_selling_eason", str_asset_selling_eason);
                             editor.putString("prev_str_amount_fixed_for", str_amount_fixed_for);
                             editor.putString("prev_str_image", listString);
-
                             editor.commit();
-
 
                             Intent i = new Intent(getApplicationContext(), Activity_BusinessProfile_Preview.class);
                             startActivity(i);

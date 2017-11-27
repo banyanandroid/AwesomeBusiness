@@ -253,7 +253,8 @@
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="Your Role"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16dp" />
+                        android:textSize="16dp"
+                        android:visibility="gone" />
 
 
                     <TextView
@@ -264,7 +265,8 @@
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:text="Business Advisor"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -344,6 +346,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_permanant_employees_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -380,6 +383,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_business_desc_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -399,6 +403,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_business_highlights_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -418,6 +423,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_list_product_services_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -437,6 +443,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_facility_desc_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -456,6 +463,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_avg_mnthly_sales_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -475,6 +483,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_avg_mnthly_expenses_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -493,6 +502,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/txt_latest_yearly_sales_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -512,6 +522,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_avg_mnthly_cashflow_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -531,6 +542,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_phy_assests_value_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -549,6 +561,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/txt_tentative_selling_price_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -568,6 +581,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_reason_for_sale_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -586,6 +600,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/txt_year_asset_purchased_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -643,6 +658,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_wt_asset_sell_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -662,6 +678,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_asset_features_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -681,6 +698,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_price_selling_leasing_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -700,6 +718,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_amount_for_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -718,6 +737,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/txt_reason_for_sell_asset_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"

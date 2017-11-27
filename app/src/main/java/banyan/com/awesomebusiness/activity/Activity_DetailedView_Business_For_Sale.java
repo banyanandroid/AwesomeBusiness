@@ -245,6 +245,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     System.out.println("RESPONSE::: " + response);
                     int success = obj.getInt("status");
+
                     if (success == 1) {
                         dialog.dismiss();
                         Alerter.create(Activity_DetailedView_Business_For_Sale.this)
@@ -254,6 +255,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                                 .show();
                         btn_bookmark_business.setText("Bookmarked");
                         btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
+
                     } else if (success == 2) {
                         dialog.dismiss();
                         Alerter.create(Activity_DetailedView_Business_For_Sale.this)
@@ -263,6 +265,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
                                 .show();
                         btn_bookmark_business.setText("Bookmarked");
                         btn_bookmark_business.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
+
                     } else {
                         dialog.dismiss();
                         TastyToast.makeText(getApplicationContext(), "Unable to Bookmark", TastyToast.LENGTH_LONG, TastyToast.ERROR);

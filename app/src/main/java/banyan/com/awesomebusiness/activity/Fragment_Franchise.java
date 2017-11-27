@@ -455,7 +455,7 @@ public class Fragment_Franchise extends Fragment {
 
 
     /*****************************
-     * To get  Interested in  Details
+     * To get  Search Details
      ***************************/
 
     public void Get_Search_Autofil() {
@@ -730,7 +730,7 @@ public class Fragment_Franchise extends Fragment {
     }
 
     /*****************************
-     * To get Business Profiles
+     * To get Franchise Profiles
      ***************************/
 
     public void Get_Franchise_Profile() {

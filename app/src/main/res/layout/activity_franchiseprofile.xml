@@ -359,7 +359,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:hint="Ideal Candidate"
-                            android:inputType="number"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp" />
 

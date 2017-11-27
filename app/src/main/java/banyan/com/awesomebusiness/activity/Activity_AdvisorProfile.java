@@ -137,6 +137,7 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
     //Final location and industry and headquaters sring to post
     String str_final_headquaters, str_final_geo_area_location_update, str_final_specialized_industry_update, str_final_user_location_update = "";
 
+    String str_locations_text, str_industries_text, str_user_locations_text;
     // EDIT TEXT AND THEIR RELATED STRINGS
     EditText edt_name, edt_email, edt_mobile_num, edt_company_name, edt_address_line_one, edt_address_line_two,
             edt_zipcode, edt_phone_number, edt_summary, edt_business_minimum, edt_business_maximum;
@@ -270,6 +271,9 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                 /*****************************
                  * Get specialized sector Details
                  * ************************/
+                //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                str_industries_text = auto_advisor_specialized_sector.getText().toString();
+                //Here we are getting it in a string array to find the location id and location type to post in json
                 String[] str_industries = auto_advisor_specialized_sector.getText().toString().split(", ");
 
                 Arraylist_specialized_sector_fetched_industries.clear();
@@ -296,9 +300,13 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                 }
                 System.out.println("FINAL SELECTED INDUSTRYYYYYYYYYYYYY :: " + str_final_specialized_industry_update);
 
+
                 /*****************************
                  * Get geo area locations Details
                  * ************************/
+                //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                str_locations_text = auto_advisor_geo_area_locations.getText().toString();
+                //Here we are getting it in a string array to find the location id and location type to post in json
                 String[] str_location = auto_advisor_geo_area_locations.getText().toString().split(", ");
 
                 Arraylist_geo_area_fetched_location.clear();
@@ -328,6 +336,9 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                 /*****************************
                  * Get  USER Location Details
                  * ************************/
+                //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                str_user_locations_text = auto_user_location.getText().toString();
+                //Here we are getting it in a string array to find the location id and location type to post in json
                 String[] str_user_location = auto_user_location.getText().toString().split(", ");
 
                 Arraylist_fetched_user_location.clear();
@@ -397,23 +408,22 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                 str_business_minimum = edt_business_minimum.getText().toString();
                 str_business_maximum = edt_business_maximum.getText().toString();
 
-           /*     if (str_business_minimum.equals("")) {
+                if (str_business_minimum.equals("")) {
                     edt_business_minimum.setError("Enter Minimum Business");
                     edt_business_minimum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else {
+                } /*else {
                     int_business_minimum = Integer.valueOf(str_business_minimum);
-                }
+                }*/
 
                 if (str_business_maximum.equals("")) {
                     edt_business_maximum.setError("Enter Maximum Deal Size");
                     edt_business_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "This Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else {
+                } /*else {
                     int_business_maximum = Integer.valueOf(str_business_maximum);
                 }
 */
-
 
                 if (str_business_minimum.equals("")) {
                     edt_business_minimum.setError("Enter Minimum Business");
@@ -461,20 +471,49 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
                     edt_summary.setError("Enter Summary");
                     edt_summary.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Summary Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (int_business_maximum <= int_business_minimum) {
+                } /*else if (int_business_maximum <= int_business_minimum) {
                     edt_business_maximum.setError("Invalid Value");
                     edt_business_maximum.requestFocus();
                     TastyToast.makeText(getApplicationContext(), "Should be greater than Minimum Business Value", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else if (str_final_specialized_industry_update.equals("")) {
-                    auto_advisor_specialized_sector.setError("Enter Industries");
-                    auto_advisor_specialized_sector.requestFocus();
-                    TastyToast.makeText(getApplicationContext(), "Industries Cannot be Empty", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                } else {
+                }*/ else {
 
-                    dialog = new SpotsDialog(Activity_AdvisorProfile.this);
+                   /* dialog = new SpotsDialog(Activity_AdvisorProfile.this);
                     dialog.show();
                     queue = Volley.newRequestQueue(getApplicationContext());
-                    Function_Submit_FranchiseProfile();
+                    Function_Submit_AdvisorProfile(); */
+
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("prev_adv_prof_str_auth_person_name", str_auth_person_name);
+                    editor.putString("prev_adv_prof_str_email", str_email);
+                    editor.putString("prev_adv_prof_str_mobile_num", str_mobile_num);
+                    editor.putString("prev_adv_prof_str_company_name", str_company_name);
+                    editor.putString("prev_adv_prof_str_advisor_type", str_advisor_type);
+                    editor.putString("prev_adv_prof_str_advisor_type_text", str_selected_advisor_type);
+                    editor.putString("prev_adv_prof_str_address_line_one", str_address_line_one);
+                    editor.putString("prev_adv_prof_str_address_line_two", str_address_line_two);
+                    editor.putString("prev_adv_prof_str_final_user_location_update", str_final_user_location_update);
+                    editor.putString("prev_adv_prof_str_final_user_location_update_text", str_user_locations_text);
+                    editor.putString("prev_adv_prof_str_zipcode", str_zipcode);
+                    editor.putString("prev_adv_prof_str_phone_number", str_phone_number);
+                    editor.putString("prev_adv_prof_str_summary", str_summary);
+                    editor.putString("prev_adv_prof_str_business_minimum", str_business_minimum);
+                    editor.putString("prev_adv_prof_str_business_maximum", str_business_maximum);
+                    editor.putString("prev_adv_prof_str_final_geo_area_location_update", str_final_geo_area_location_update);
+                    editor.putString("prev_adv_prof_str_final_geo_area_text", str_locations_text);
+                    editor.putString("prev_adv_prof_str_final_specialized_industry_update", str_final_specialized_industry_update);
+                    editor.putString("prev_adv_prof_str_final_specialized_industry_text", str_industries_text);
+                    editor.putString("prev_adv_prof_encoded_logo", encoded_logo);
+
+
+                    editor.commit();
+
+                    Intent i = new Intent(getApplicationContext(), Activity_AdvisorProfile_Preview.class);
+                    startActivity(i);
+                    finish();
+
 
                 }
 
@@ -887,10 +926,10 @@ public class Activity_AdvisorProfile extends AppCompatActivity {
     }
 
     /******************************************
-     *    SUBMIT FRANCHISE PROFILE FORM
+     *    SUBMIT ADVISOR PROFILE FORM
      * *******************************************/
 
-    private void Function_Submit_FranchiseProfile() {
+    private void Function_Submit_AdvisorProfile() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_add_advisor_profile, new Response.Listener<String>() {

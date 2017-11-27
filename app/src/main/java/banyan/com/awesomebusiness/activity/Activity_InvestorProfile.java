@@ -161,6 +161,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     String str_selected_interest_id, str_selected_interest_name = "";
 
     String str_final_industry_update, str_final_location_update = "";
+    String str_industries_text, str_locations_text;
+    String str_Company_sector, str_Headquaters;
 
     //test purpose (for posting parameters empty) delete later
     String empty = "";
@@ -333,6 +335,10 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     /******************************
                      * Get Multi Sector Details
                      * *************************/
+
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    str_industries_text = auto_busineeslist.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_industries = auto_busineeslist.getText().toString().split(", ");
 
                     Arraylist_fetched_industries.clear();
@@ -368,7 +374,9 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     /******************************
                      * Get Multi Location Details
                      * *************************/
-
+                    //Here we are getting it in a string to put it in shared preferences and get and show in the preview screen
+                    str_locations_text = auto_locationlist.getText().toString();
+                    //Here we are getting it in a string array to find the location id and location type to post in json
                     String[] str_location = auto_locationlist.getText().toString().split(", ");
 
                     Arraylist_fetched_location.clear();
@@ -404,7 +412,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 ///////  FOR GETTING ENTERED BUSINESS HEADQUATERS TYPE AND ID
                 ///////////////////////
 
-                String str_Headquaters = auto_headquaters.getText().toString();
+                str_Headquaters = auto_headquaters.getText().toString();
                 int Headquaters_position = Arraylist_location_place.indexOf(str_Headquaters);
                 String select_Headquaters_id = Arraylist_location_key.get(Headquaters_position + 1);
                 String select_Headquaters_type = Arraylist_location_type.get(Headquaters_position + 1);
@@ -415,8 +423,8 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                 ///////  FOR GETTING ENTERED COMPANY SECTOR TYPE AND ID
                 ///////////////////////
 
-                String str_Company_sector = auto_company_sector.getText().toString();
-                int Sector_position = Arraylist_sector_name.indexOf(str_Headquaters);
+                str_Company_sector = auto_company_sector.getText().toString();
+                int Sector_position = Arraylist_sector_name.indexOf(str_Company_sector);
                 String select_Sector_id = Arraylist_sector_key.get(Sector_position + 1);
                 String select_Sector_type = Arraylist_sector_type.get(Sector_position + 1);
                 str_final_company_sector = select_Sector_id + "-" + select_Sector_type;
@@ -434,7 +442,6 @@ public class Activity_InvestorProfile extends AppCompatActivity {
 
                 str_kindof_business_interested = edt_kind_business_interested.getText().toString();
                 str_company_about = edt_company_about.getText().toString();
-
 
 
                 //CONVERTING  MINIMUM & MAXIMUM VALUES TO INTEGER TO CHECK MAXIMUM IS GREATER THAN MINIMUM VALUES
@@ -540,10 +547,48 @@ public class Activity_InvestorProfile extends AppCompatActivity {
                     if (str_user_currency.equals("str_selected_currency")) {
                         TastyToast.makeText(getApplicationContext(), "Please Update your profile Before Post", TastyToast.LENGTH_LONG, TastyToast.WARNING);
                     } else {
-                        dialog = new SpotsDialog(Activity_InvestorProfile.this);
+
+
+                      /*  dialog = new SpotsDialog(Activity_InvestorProfile.this);
                         dialog.show();
                         queue = Volley.newRequestQueue(Activity_InvestorProfile.this);
-                        Function_Submit_InvestorProfile();
+                        Function_Submit_InvestorProfile();*/
+
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putString("prev_inv_str_name", str_name);
+                        editor.putString("prev_inv_str_mobile", str_mobile);
+                        editor.putString("prev_inv_str_email", str_email);
+                        editor.putString("prev_inv_str_selected_interest_id", str_selected_interest_id);
+                        editor.putString("prev_inv_str_selected_interest_name", str_selected_interest_name);
+                        editor.putString("prev_inv_str_selected_role_id", str_selected_role_id);
+                        editor.putString("prev_inv_str_selected_role_name", str_selected_role_name);
+                        editor.putString("prev_inv_str_final_industry_update", str_final_industry_update);
+                        editor.putString("prev_str_final_industry_names", str_industries_text);
+                        editor.putString("prev_inv_str_final_location_update", str_final_location_update);
+                        editor.putString("prev_str_final_location_names", str_locations_text);
+                        editor.putString("prev_inv_str_inv_range_minimum", str_deal_minimum);
+                        editor.putString("prev_inv_str_inv_range_maximum", str_deal_maximum);
+                        editor.putString("prev_inv_str_roi_minimum", str_roi_minimum);
+                        editor.putString("prev_inv_str_roi_maximum", str_roi_maximum);
+                        editor.putString("prev_inv_str_company_location_text", str_Company_sector);
+                        editor.putString("prev_inv_str_company_sector_text", str_Headquaters);
+                        editor.putString("prev_inv_str_company_location_id", str_final_headquaters);
+                        editor.putString("prev_inv_str_company_sector_id", str_final_company_sector);
+                        editor.putString("prev_inv_str_kind_of_business_interested", str_kindof_business_interested);
+                        editor.putString("prev_inv_str_business_stages", str_business_stages);
+                        editor.putString("prev_inv_str_about", str_company_about);
+                        editor.putString("prev_inv_str_images", listString);
+
+                        editor.commit();
+
+                        Intent i = new Intent(getApplicationContext(), Activity_InvestorProfile_Preview.class);
+                        startActivity(i);
+                        finish();
+
+
                     }
 
                 }
@@ -1202,7 +1247,7 @@ public class Activity_InvestorProfile extends AppCompatActivity {
     }
 
     /******************************************
-     *    SUBMIT BUSINESS PROFILE FORM
+     *    SUBMIT INVESTOR PROFILE FORM
      * *******************************************/
 
     private void Function_Submit_InvestorProfile() {

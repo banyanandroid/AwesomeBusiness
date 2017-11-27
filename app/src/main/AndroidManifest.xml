@@ -56,12 +56,14 @@
         <activity
             android:name=".activity.Activity_Notifications"
             android:label="Notifications"></activity>
+
         <activity android:name=".activity.Activity_Login"></activity>
         <activity android:name=".activity.Activity_BusinessProfile"></activity>
         <activity android:name=".activity.Activity_InvestorProfile"></activity>
-
         <activity android:name=".activity.Activity_FranchiseProfile"></activity>
+        <activity android:name=".activity.Activity_AdvisorProfile"></activity>
 
+        //User Profile
         <activity
             android:name=".activity.Activity_UserProfile_Update"
             android:label="Update Profile"></activity>
@@ -72,51 +74,58 @@
             android:name=".activity.Activity_User_Profiles"
             android:label="My Profiles"></activity>
 
+
+        //Business For Sale Profile
         <activity
             android:name=".activity.Activity_BusinessProfile_Update"
             android:label="Update Business Profile"></activity>
-
         <activity
-            android:name=".activity.Activity_FranchiseProfile_Update"
-            android:label="Update Franchise Profile"></activity>
-
-        <activity
-            android:name=".activity.Activity_InvestorProfile_Update"
-            android:label="Update Investor Profile"></activity>
-
-        <activity
-            android:name=".activity.Activity_AdvisorProfile"
+            android:name=".activity.Activity_BusinessProfile_Preview"
             android:label="Contact Business"></activity>
-
-
         <activity
             android:name=".activity.Activity_DetailedView_Business_For_Sale"
             android:label="Business Details"></activity>
-
-        <activity
-            android:name=".activity.Activity_DetailedView_Investors_Buyers"
-            android:label="Investor Buyer Details"></activity>
-
-        <activity
-            android:name=".activity.Activity_DetailedView_Franchise"
-            android:label="Franchise Details"></activity>
-
         <activity
             android:name=".activity.Activity_Contact_Business_For_Sale"
             android:label="Contact Business"></activity>
 
+
+        //Investors and Buyers Profile
+        <activity
+            android:name=".activity.Activity_InvestorProfile_Update"
+            android:label="Update Investor Profile"></activity>
+        <activity
+            android:name=".activity.Activity_InvestorProfile_Preview"
+            android:label="Preview"></activity>
+        <activity
+            android:name=".activity.Activity_DetailedView_Investors_Buyers"
+            android:label="Investor Buyer Details"></activity>
         <activity
             android:name=".activity.Activity_Contact_Business_Investors_Buyers"
             android:label="Contact Business"></activity>
 
+
+        //Franchise Profile
+        <activity
+            android:name=".activity.Activity_FranchiseProfile_Update"
+            android:label="Update Franchise Profile"></activity>
+        <activity
+            android:name=".activity.Activity_FranchiseProfile_Preview"
+            android:label="Franchise Details"></activity>
+        <activity
+            android:name=".activity.Activity_DetailedView_Franchise"
+            android:label="Franchise Details"></activity>
         <activity
             android:name=".activity.Activity_Contact_Business_Franchise"
             android:label="Contact Business"></activity>
 
-
+        //Advisor Profile
         <activity
-            android:name=".activity.Activity_BusinessProfile_Preview"
-            android:label="Contact Business"></activity>
+            android:name=".activity.Activity_AdvisorProfile_Preview"
+            android:label="Preview"></activity>
+        <activity
+            android:name=".activity.Activity_DetailedView_Advisor_Profile"
+            android:label="Preview"></activity>
 
 
         <receiver
