@@ -176,7 +176,7 @@
                         android:layout_marginRight="5dp"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="EBITDA Margin : "
+                        android:text="CashFlow/Profit: "
                         android:textColor="@color/txt_black"
                         android:textSize="12sp" />
 

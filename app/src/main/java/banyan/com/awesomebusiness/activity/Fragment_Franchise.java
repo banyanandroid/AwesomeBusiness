@@ -741,6 +741,7 @@ public class Fragment_Franchise extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
+
                 try {
                     JSONObject obj = new JSONObject(response);
 

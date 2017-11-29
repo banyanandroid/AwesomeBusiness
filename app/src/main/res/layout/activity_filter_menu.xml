@@ -30,120 +30,6 @@
 
 
             <LinearLayout
-                android:id="@+id/layout_business_for_sale_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/ic_transaction" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="Transaction Types"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_transtype"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/planets"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary"
-                        app:hintText="Select Transaction type" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_investor_buyer_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/ic_transaction" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="Transaction Types"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_investor_buyer_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/planets"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary"
-                        app:hintText="Select Transaction type" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/layout_franchise_headquaters_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -176,7 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Business Headquaters Locations"
+                            android:text="Business Locations"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp"
                             android:textStyle="bold" />
@@ -184,7 +69,7 @@
                     </LinearLayout>
 
                     <MultiAutoCompleteTextView
-                        android:id="@+id/filter_profile_multi_businesheadquaters__location"
+                        android:id="@+id/filter_multi_business_locations"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -193,63 +78,6 @@
                         android:inputType="text"
                         android:textColor="@color/black"
                         android:textSize="16sp"></MultiAutoCompleteTextView>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_interested_business_locations"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/ic_location" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="Interested Business Locations"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <MultiAutoCompleteTextView
-                        android:id="@+id/business_profile_multi_business_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp">
-
-                    </MultiAutoCompleteTextView>
 
                 </LinearLayout>
 
@@ -286,14 +114,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="Industry"
+                            android:text="Business Industries"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="16dp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <MultiAutoCompleteTextView
-                        android:id="@+id/business_profile_multi_business_industry"
+                        android:id="@+id/filter_multi_business_industries"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -318,7 +146,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/layout_slider_investment_size"
+                    android:id="@+id/layout_slider_selling_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -343,7 +171,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/activity_filter_investment_minValue"
+                            android:id="@+id/activity_filter_selling_price_minValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -359,7 +187,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/activity_filter_investment_maxValue"
+                            android:id="@+id/activity_filter_selling_price_maxValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
@@ -386,74 +214,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_slider_asset_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:gravity="left"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                            android:text="Asset price"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/activity_filter_assetprice_minValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                            android:text="min"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:text=" To "
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/activity_filter_assetprice_maxValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:text="max"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                    </LinearLayout>
-
-                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                        android:id="@+id/activity_filter_assetprice_range_slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        app:bar_color="@color/txt_grey"
-                        app:bar_highlight_color="@color/colorAccent1"
-                        app:corner_radius="10"
-                        app:left_thumb_color="@color/colorPrimary"
-                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
-                        app:right_thumb_color="@color/colorPrimary"
-                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
-                        app:steps="10" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_slider_run_rate_sales"
+                    android:id="@+id/layout_slider_yr_rev"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -477,7 +238,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/activity_filter_runratesales_minValue"
+                            android:id="@+id/activity_filter_yr_rev_minValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -493,7 +254,7 @@
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/activity_filter_runratesales_maxValue"
+                            android:id="@+id/activity_filter_yr_rev_maxValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
@@ -723,355 +484,412 @@
 
                 </LinearLayout>
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_checkboxes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="Legal Entity Type"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-
                 <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="12">
-
-                    <CheckBox
-                        android:id="@+id/chbx_Limited_Liability_Company"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Limited Liability Company"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <CheckBox
-                        android:id="@+id/chbx_Public_Limited_Company"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Public Limited Company"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="12">
-
-                    <CheckBox
-                        android:id="@+id/chbx_Partnership"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Partnership"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <CheckBox
-                        android:id="@+id/chbx_SCorporation"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="S Corporation"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="12">
-
-                    <CheckBox
-                        android:id="@+id/chbx_private_limited_company"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Private Limited Company"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <CheckBox
-                        android:id="@+id/chbx_sole_proprietorship"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Sole Proprietorship"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="12">
-
-                    <CheckBox
-                        android:id="@+id/chbx_C_Corporation"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="C Corporation"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <CheckBox
-                        android:id="@+id/chbx_others"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Others"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="12">
-
-                    <CheckBox
-                        android:id="@+id/chbx_Limited_Liability_Partnership"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5"
-                        android:text="Limited Liability Partnership"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <View
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="5" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:id="@+id/layout_investor_buyer_investor_location"
+                    android:id="@+id/layout_slider_investment_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/ic_location" />
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="Investment Size"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/activity_filter_inv_size_minValue"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="Investor Location"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_inv_size_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
-                    <MultiAutoCompleteTextView
-                        android:id="@+id/filter_profile_multi_auto_investor_location"
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_inv_size_range_slider"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:background="@drawable/bg_parent_rounded_corner"
-                        android:ems="10"
-                        android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp">
-
-                    </MultiAutoCompleteTextView>
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_investor_buyer_investor_interested_in"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/bg_parent_rounded_corner"
-                android:orientation="vertical">
-
                 <LinearLayout
+                    android:id="@+id/layout_slider_roi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:text="Interested In"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="Return Of Investment"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_roi_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_roi_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spn_filter_investor_interested"
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_roi_range_slider"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="left"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:layout_weight="0.2"
-                        android:entries="@array/spinner_filter_main"
-                        android:gravity="left|center_vertical"
-                        android:text="Industry"
-                        android:textColor="@color/textColorPrimary"
-                        app:hintText="Select Your Interest" />
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/layout_slider_fran_inv_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="Investment Size"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_fran_inv_size_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_fran_inv_size_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_fran_inv_size_range_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_slider_fran_established"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="Established"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_fran_established_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_fran_established_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_fran_established_range_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_slider_expec_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="Expected Return"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_expec_return_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_expec_return_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_expec_return_range_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_slider_adv_inv_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="0000000"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_adv_inv_size_minValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:text="min"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text=" To "
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/activity_filter_adv_inv_size_maxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="max"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/activity_filter_assetprice_range_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        app:bar_color="@color/txt_grey"
+                        app:bar_highlight_color="@color/colorAccent1"
+                        app:corner_radius="10"
+                        app:left_thumb_color="@color/colorPrimary"
+                        app:left_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:right_thumb_color="@color/colorPrimary"
+                        app:right_thumb_color_pressed="@color/colorPrimaryDark"
+                        app:steps="10" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:text="AWESOME\nBUSINESSES"
+        android:text="WORLD BUSINESSES \n FOR SALE "
+        android:textAlignment="center"
         android:textColor="@color/textColorlight"
         android:textSize="30dp"
         android:textStyle="bold" />

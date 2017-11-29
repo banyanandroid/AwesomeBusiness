@@ -235,7 +235,7 @@ public class Activity_DetailedView_Business_For_Sale extends AppCompatActivity {
     private void Function_Bookmark() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_add_bookmark, new Response.Listener<String>() {
+                AppConfig.url_add_bookmark_BusinessProfile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

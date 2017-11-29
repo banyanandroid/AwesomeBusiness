@@ -19,7 +19,9 @@ public class AppConfig {
     public static String url_popup_contact_business_again = BASE_URL + "/index.php?apicontroller/contactbusinessagain";
 
     /*********  Bookmark activities *********/
-    public static String url_add_bookmark = BASE_URL + "/index.php?Apicontroller/add_bookmarks";
+    public static String url_add_bookmark_BusinessProfile = BASE_URL + "/index.php?Apicontroller/add_bookmarks";
+    public static String url_add_bookmark_InvestorProfile = BASE_URL + "/index.php?Apicontroller/add_investor_bookmarks";
+    public static String url_add_bookmark_FranchiseProfile = BASE_URL + "/index.php?Apicontroller/add_franchise_bookmarks";
     public static String url_list_bookmarks = BASE_URL + "/index.php?Apicontroller/list_bookmarks";
 
     // Notification Deatails..

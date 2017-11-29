@@ -305,14 +305,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new Fragment_How_To();
                 title = getString(R.string.title_howto);
                 break;
-            case 6:
-                fragment = new Fragment_QA();
-                title = getString(R.string.title_qa);
-                break;
-            case 7:
-                fragment = new Fragment_Company();
-                title = getString(R.string.title_company);
-                break;
+
             default:
                 break;
         }
@@ -355,14 +348,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 5:
                 fragment = new Fragment_How_To();
                 title = getString(R.string.title_howto);
-                break;
-            case 6:
-                fragment = new Fragment_QA();
-                title = getString(R.string.title_qa);
-                break;
-            case 7:
-                fragment = new Fragment_Company();
-                title = getString(R.string.title_company);
                 break;
             default:
                 break;

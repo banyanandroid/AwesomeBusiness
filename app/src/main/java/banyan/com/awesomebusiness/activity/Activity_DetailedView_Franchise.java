@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
@@ -98,7 +101,7 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
             txt_headquaters, txt_train_support,
             txt_preferred_locations, txt_industries;
 
-    Button btn_contact_franchise;
+    Button btn_contact_franchise, btn_bookmark_franchise;
 
     ImageView img_franchise_logo;
 
@@ -172,6 +175,8 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
 
         btn_contact_franchise = (Button) findViewById(R.id.btn_activity_franchise_profile_details_contact_franchise);
 
+        btn_bookmark_franchise = (Button) findViewById(R.id.btn_activity_franchise_profile_details_bookmark);
+
         btn_contact_franchise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,6 +194,20 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
             }
 
         });
+
+
+        btn_bookmark_franchise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog = new SpotsDialog(Activity_DetailedView_Franchise.this);
+                dialog.show();
+                queue = Volley.newRequestQueue(getApplicationContext());
+                Function_Bookmark();
+
+            }
+        });
+
 
         try {
             dialog = new SpotsDialog(Activity_DetailedView_Franchise.this);
@@ -391,6 +410,101 @@ public class Activity_DetailedView_Franchise extends AppCompatActivity {
 
         };
 
+        // Adding request to request queue
+        queue.add(request);
+    }
+
+
+    /*****************************
+     * Bookmark Franchise
+     ***************************/
+
+    private void Function_Bookmark() {
+
+        StringRequest request = new StringRequest(Request.Method.POST,
+                AppConfig.url_add_bookmark_FranchiseProfile, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    System.out.println("RESPONSE::: " + response);
+                    int success = obj.getInt("status");
+
+                    if (success == 1) {
+                        dialog.dismiss();
+                        Alerter.create(Activity_DetailedView_Franchise.this)
+                                .setTitle("Success")
+                                .setText("Business Bookmarked")
+                                .setBackgroundColor(R.color.colorAccent)
+                                .show();
+                        btn_bookmark_franchise.setText("Bookmarked");
+                        btn_bookmark_franchise.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
+
+                    } else if (success == 2) {
+                        dialog.dismiss();
+                        Alerter.create(Activity_DetailedView_Franchise.this)
+                                .setTitle("Already Exists")
+                                .setText("Franchise Already Bookmarked")
+                                .setBackgroundColor(R.color.Alert_Warning)
+                                .show();
+                        btn_bookmark_franchise.setText("Bookmarked");
+                        btn_bookmark_franchise.setBackgroundColor(getResources().getColor(R.color.Alert_Success));
+
+                    } else {
+                        dialog.dismiss();
+                        TastyToast.makeText(getApplicationContext(), "Unable to Bookmark", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    }
+
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                dialog.dismiss();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", str_user_id);
+                params.put("franchise_id", franchise_id);
+
+                ////////////////
+
+                System.out.println("user_id" + str_user_id);
+                System.out.println("franchise_id" + franchise_id);
+
+                return checkParams(params);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> map) {
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
+            }
+        };
+
+        int socketTimeout = 60000;//30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
         // Adding request to request queue
         queue.add(request);
     }
