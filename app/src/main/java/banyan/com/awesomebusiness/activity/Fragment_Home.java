@@ -115,14 +115,13 @@ public class Fragment_Home extends Fragment {
     String str_user_currency = "";
     String str_sort_by = "";
 
-    String str_filter_sale_transaction_type, str_filter_interested_business_locations, str_filter_interested_industries,
-            str_filter_investment_size_minimum, str_filter_investment_size_maximum, str_filter_runrate_sales_minimum,
-            str_filter_runrate_sales_maximum, str_filter_ebitda_minimum, str_filter_ebitda_maximum, str_filter_established_minimum,
-            str_filter_established_maximum, str_filter_limited_liability_company, str_filter_public_limited_company, str_filter_partnership,
-            str_filter_S_corporation, str_filter_private_limited_company, str_filter_C_corporation, str_filter_limited_liability_partnership,
-            str_filter_sole_proprietorship, str_filter_others = "";
+    String str_filter_location, str_filter_industry,
+            str_filter_sellingprice_minimum, str_filter_sellingprice_maximum, str_filter_year_revenue_minimum,
+            str_filter_year_revenue_maximum, str_filter_established_minimum,
+            str_filter_established_maximum, str_filter_monthly_cashflow_minimum,
+            str_filter_monthly_cashflow_maximum = "";
 
-    String str_con_investment, str_con_runrate_sales, str_con_ebitda, str_con_established = "";
+    String str_con_sellingprice, str_con_yearly_revenue, str_con_monthly_cashflow, str_con_established = "";
 
     static ArrayList<HashMap<String, String>> Business_profile_list;
 
@@ -165,36 +164,26 @@ public class Fragment_Home extends Fragment {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         str_user_currency = sharedPreferences.getString("str_selected_currency", "str_selected_currency");
-        str_filter_sale_transaction_type = sharedPreferences.getString("str_business_for_sale_transaction_type", "str_business_for_sale_transaction_type");
-        str_filter_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
-        str_filter_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
+        str_filter_location = sharedPreferences.getString("str_filter_location", "str_filter_location");
+        str_filter_industry = sharedPreferences.getString("str_filter_industry", "str_filter_industry");
 
         //Fragment Transition
         str_final_search = sharedPreferences.getString("search_id", "search_id");
         str_search_txt = sharedPreferences.getString("search_key", "search_key");
 
         // From Filter
-        str_filter_investment_size_minimum = sharedPreferences.getString("str_investment_size_minimum", "str_investment_size_minimum");
-        str_filter_investment_size_maximum = sharedPreferences.getString("str_investment_size_maximum", "str_investment_size_maximum");
-        str_filter_runrate_sales_minimum = sharedPreferences.getString("str_runrate_sales_minimum", "str_runrate_sales_minimum");
-        str_filter_runrate_sales_maximum = sharedPreferences.getString("str_runrate_sales_maximum", "str_runrate_sales_maximum");
-        str_filter_ebitda_minimum = sharedPreferences.getString("str_ebitda_minimum", "str_ebitda_minimum");
-        str_filter_ebitda_maximum = sharedPreferences.getString("str_ebitda_maximum", "str_ebitda_maximum");
+        str_filter_sellingprice_minimum = sharedPreferences.getString("str_selling_price_minimum", "str_selling_price_minimum");
+        str_filter_sellingprice_maximum = sharedPreferences.getString("str_selling_price_maximum", "str_selling_price_maximum");
+        str_filter_year_revenue_minimum = sharedPreferences.getString("str_yearly_revenue_minimum", "str_yearly_revenue_minimum");
+        str_filter_year_revenue_maximum = sharedPreferences.getString("str_yearly_revenue_maximum", "str_yearly_revenue_maximum");
         str_filter_established_minimum = sharedPreferences.getString("str_established_minimum", "str_established_minimum");
         str_filter_established_maximum = sharedPreferences.getString("str_established_maximum", "str_established_maximum");
-        str_filter_limited_liability_company = sharedPreferences.getString("str_limited_liability_company", "str_limited_liability_company");
-        str_filter_public_limited_company = sharedPreferences.getString("str_public_limited_company", "str_public_limited_company");
-        str_filter_partnership = sharedPreferences.getString("str_partnership", "str_partnership");
-        str_filter_S_corporation = sharedPreferences.getString("str_S_corporation", "str_S_corporation");
-        str_filter_private_limited_company = sharedPreferences.getString("str_private_limited_company", "str_private_limited_company");
-        str_filter_C_corporation = sharedPreferences.getString("str_C_corporation", "str_C_corporation");
-        str_filter_limited_liability_partnership = sharedPreferences.getString("str_limited_liability_partnership", "str_limited_liability_partnership");
-        str_filter_sole_proprietorship = sharedPreferences.getString("str_sole_proprietorship", "str_sole_proprietorship");
-        str_filter_others = sharedPreferences.getString("str_others", "str_others");
+        str_filter_monthly_cashflow_minimum = sharedPreferences.getString("str_monthly_cashflow_minimum", "str_monthly_cashflow_minimum");
+        str_filter_monthly_cashflow_maximum = sharedPreferences.getString("str_monthly_cashflow_maximum", "str_monthly_cashflow_maximum");
 
-        str_con_investment = str_filter_investment_size_minimum + "," + str_filter_investment_size_maximum;
-        str_con_runrate_sales = str_filter_runrate_sales_minimum + "," + str_filter_runrate_sales_maximum;
-        str_con_ebitda = str_filter_ebitda_minimum + "," + str_filter_ebitda_maximum;
+        str_con_sellingprice = str_filter_sellingprice_minimum + "," + str_filter_sellingprice_maximum;
+        str_con_yearly_revenue = str_filter_year_revenue_minimum + "," + str_filter_year_revenue_maximum;
+        str_con_monthly_cashflow = str_filter_monthly_cashflow_minimum + "," + str_filter_monthly_cashflow_maximum;
         str_con_established = str_filter_established_minimum + "," + str_filter_established_maximum;
 
         try {
@@ -313,7 +302,18 @@ public class Fragment_Home extends Fragment {
                             i.putExtra("type", "Franchise Oppourtinites");
                             startActivity(i);
 
-                        } else {
+                        } else if (str_search_title.equals("Advisors")) {
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("str_main_filter_type", "Advisors");
+                            editor.putString("search_key", str_search_txt);
+                            editor.putString("search_id", str_final_search);
+                            editor.commit();
+
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            i.putExtra("type", "Advisors");
+                            startActivity(i);
 
                         }
                     }
@@ -352,7 +352,7 @@ public class Fragment_Home extends Fragment {
                 actionSheet.dismiss();
             }
         });
-        actionSheet.addAction("Established Year(oldest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -360,7 +360,7 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        actionSheet.addAction("Established Year(newest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -368,7 +368,7 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        actionSheet.addAction("EBITDA", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -376,7 +376,7 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -384,7 +384,15 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size( high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Profit(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Profit(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -399,16 +407,18 @@ public class Fragment_Home extends Fragment {
 
         if (title.equals("Recently Listed")) {
             str_sort_by = "1";
-        } else if (title.equals("Established Year(oldest first)")) {
+        } else if (title.equals("Selling Price(low to high)")) {
             str_sort_by = "2";
-        } else if (title.equals("Established Year(newest first)")) {
+        } else if (title.equals("Selling Price(high to low)")) {
             str_sort_by = "3";
-        } else if (title.equals("EBITDA")) {
+        } else if (title.equals("Revenue(low to high)")) {
             str_sort_by = "4";
-        } else if (title.equals("Investment size(low to high)")) {
+        } else if (title.equals("Revenue(high to low)")) {
             str_sort_by = "5";
-        } else if (title.equals("Investment size( high to low)")) {
+        } else if (title.equals("Profit(low to high)")) {
             str_sort_by = "6";
+        } else if (title.equals("Profit(high to low)")) {
+            str_sort_by = "7";
         } else {
             str_sort_by = "";
         }
@@ -554,66 +564,60 @@ public class Fragment_Home extends Fragment {
 
     private void Params_check() {
 
-        if (str_filter_C_corporation.equals("str_C_corporation")) {
-            str_filter_C_corporation = "";
+
+        if (str_filter_sellingprice_minimum.equals("str_selling_price_minimum")) {
+            str_filter_sellingprice_minimum = "";
+        } else {
+        }
+
+        if (str_filter_sellingprice_maximum.equals("str_selling_price_maximum")) {
+            str_filter_sellingprice_maximum = "";
+        } else {
+        }
+
+        if (str_filter_year_revenue_minimum.equals("str_yearly_revenue_minimum")) {
+            str_filter_year_revenue_minimum = "";
+        } else {
+        }
+
+        if (str_filter_year_revenue_maximum.equals("str_yearly_revenue_maximum")) {
+            str_filter_year_revenue_maximum = "";
+        } else {
+        }
+
+        if (str_filter_established_minimum.equals("str_established_minimum")) {
+            str_filter_established_minimum = "";
+        } else {
+        }
+
+        if (str_filter_established_maximum.equals("str_established_maximum")) {
+            str_filter_established_maximum = "";
+        } else {
+        }
+
+        if (str_filter_monthly_cashflow_minimum.equals("str_monthly_cashflow_minimum")) {
+            str_filter_monthly_cashflow_minimum = "";
+        } else {
+        }
+
+        if (str_filter_monthly_cashflow_maximum.equals("str_monthly_cashflow_maximum")) {
+            str_filter_monthly_cashflow_maximum = "";
+        } else {
+        }
+
+
+        if (str_con_sellingprice.equals("str_selling_price_minimum,str_selling_price_maximum")) {
+            str_con_sellingprice = "";
         } else {
 
         }
-        if (str_filter_public_limited_company.equals("str_public_limited_company")) {
-            str_filter_public_limited_company = "";
+        if (str_con_yearly_revenue.equals("str_yearly_revenue_minimum,str_yearly_revenue_maximum")) {
+            str_con_yearly_revenue = "";
         } else {
 
         }
-        if (str_filter_others.equals("str_others")) {
-            str_filter_others = "";
-        }
-        if (str_filter_limited_liability_partnership.equals("str_limited_liability_partnership")) {
-            str_filter_limited_liability_partnership = "";
-        } else {
-
-        }
-        if (str_filter_sole_proprietorship.equals("str_sole_proprietorship")) {
-            str_filter_sole_proprietorship = "";
-        } else {
-
-        }
-        if (str_filter_S_corporation.equals("str_S_corporation")) {
-            str_filter_S_corporation = "";
-        } else {
-
-        }
-        if (str_filter_partnership.equals("str_partnership")) {
-            str_filter_partnership = "";
-        } else {
-
-        }
-        if (str_filter_private_limited_company.equals("str_private_limited_company")) {
-            str_filter_private_limited_company = "";
-        } else {
-
-        }
-        if (str_filter_limited_liability_company.equals("str_limited_liability_company")) {
-            str_filter_limited_liability_company = "";
-        } else {
-
-        }
-        if (str_filter_sale_transaction_type.equals("str_business_for_sale_transaction_type")) {
-            str_filter_sale_transaction_type = "";
-        } else {
-
-        }
-        if (str_con_investment.equals("str_investment_size_minimum,str_investment_size_maximum")) {
-            str_con_investment = "";
-        } else {
-
-        }
-        if (str_con_runrate_sales.equals("str_runrate_sales_minimum,str_runrate_sales_maximum")) {
-            str_con_runrate_sales = "";
-        } else {
-
-        }
-        if (str_con_ebitda.equals("str_ebitda_minimum,str_ebitda_maximum")) {
-            str_con_ebitda = "";
+        if (str_con_monthly_cashflow.equals("str_monthly_cashflow_minimum,str_monthly_cashflow_maximum")) {
+            str_con_monthly_cashflow = "";
         } else {
 
         }
@@ -622,13 +626,13 @@ public class Fragment_Home extends Fragment {
         } else {
 
         }
-        if (str_filter_interested_industries.equals("str_interested_industries")) {
-            str_filter_interested_industries = "";
+        if (str_filter_industry.equals("str_filter_industry")) {
+            str_filter_industry = "";
         } else {
 
         }
-        if (str_filter_interested_business_locations.equals("str_interested_business_locations")) {
-            str_filter_interested_business_locations = "";
+        if (str_filter_location.equals("str_filter_location")) {
+            str_filter_location = "";
         } else {
 
         }
@@ -643,23 +647,13 @@ public class Fragment_Home extends Fragment {
 
         }
 
-        System.out.println("CC" + str_filter_C_corporation);
-        System.out.println("plc" + str_filter_public_limited_company);
-        System.out.println("Other" + str_filter_others);
-        System.out.println("llp" + str_filter_limited_liability_partnership);
-        System.out.println("sp" + str_filter_sole_proprietorship);
-        System.out.println("sc" + str_filter_S_corporation);
-        System.out.println("partner" + str_filter_partnership);
-        System.out.println("plp" + str_filter_private_limited_company);
-        System.out.println("llc" + str_filter_limited_liability_company);
-        System.out.println("transactions" + str_filter_sale_transaction_type);
-        System.out.println("investment" + str_con_investment);
-        System.out.println("run_rate_sales" + str_con_runrate_sales);
-        System.out.println("EBITDA" + str_con_ebitda);
+        System.out.println("investment" + str_con_sellingprice);
+        System.out.println("run_rate_sales" + str_con_yearly_revenue);
+        System.out.println("EBITDA" + str_con_monthly_cashflow);
         System.out.println("established" + str_con_established);
-        System.out.println("industries" + str_filter_interested_industries);
+        System.out.println("industries" + str_filter_industry);
         System.out.println("keyword" + str_final_search);
-        System.out.println("locations" + str_filter_interested_business_locations);
+        System.out.println("locations" + str_filter_location);
         System.out.println("purchased" + "");
         System.out.println("asset_investment" + "");
         System.out.println("sort_by" + str_sort_by);
@@ -682,11 +676,16 @@ public class Fragment_Home extends Fragment {
     public void Get_Business_Profile() {
         String tag_json_obj = "json_obj_req";
         System.out.println("PRINT 111");
+        System.out.println("URLLLLL :: " + AppConfig.url_dashboard_search_result_business_profile);
+
+
         StringRequest request = new StringRequest(Request.Method.POST,
                 AppConfig.url_dashboard_search_result_business_profile, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
+                System.out.println("CAMEEEEEEEEEEEEEEEE @@@@@@@");
+                Log.e("ERRRRRRORRRRRRRRR", response.toString());
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
@@ -821,48 +820,30 @@ public class Fragment_Home extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("CC", str_filter_C_corporation);
-                params.put("plc", str_filter_public_limited_company);
-                params.put("Other", str_filter_others);
-                params.put("llp", str_filter_limited_liability_partnership);
-                params.put("sp", str_filter_sole_proprietorship);
-                params.put("sc", str_filter_S_corporation);
-                params.put("partner", str_filter_partnership);
-                params.put("plp", str_filter_private_limited_company);
-                params.put("llc", str_filter_limited_liability_company);
-                params.put("transactions", str_filter_sale_transaction_type);
-                params.put("investment", str_con_investment);
-                params.put("run_rate_sales", str_con_runrate_sales);
-                params.put("EBITDA", str_con_ebitda);
-                params.put("established", str_con_established);
-                params.put("industries", str_filter_interested_industries);
-                params.put("keyword", str_final_search);
-                params.put("locations", str_filter_interested_business_locations);
-                params.put("purchased", "");
-                params.put("asset_investment", "");
-                params.put("sort_by", str_sort_by);
+                params.put("revenue_from", str_filter_year_revenue_minimum);
+                params.put("revenue_to", str_filter_year_revenue_maximum);
+                params.put("investment_from", str_filter_sellingprice_minimum);
+                params.put("investment_to", str_filter_sellingprice_maximum);
+                params.put("profit_from", str_filter_monthly_cashflow_minimum);
+                params.put("profit_to", str_filter_monthly_cashflow_maximum);
+                params.put("established_from", str_filter_established_minimum);
+                params.put("established_to", str_filter_established_maximum);
+                params.put("industries", str_filter_industry);
+                params.put("location", str_filter_location);
+                params.put("sortby", str_sort_by);
                 params.put("currency", str_user_currency);
 
-                System.out.println("CC" + str_filter_C_corporation);
-                System.out.println("plc" + str_filter_public_limited_company);
-                System.out.println("Other" + str_filter_others);
-                System.out.println("llp" + str_filter_limited_liability_partnership);
-                System.out.println("sp" + str_filter_sole_proprietorship);
-                System.out.println("sc" + str_filter_S_corporation);
-                System.out.println("partner" + str_filter_partnership);
-                System.out.println("plp" + str_filter_private_limited_company);
-                System.out.println("llc" + str_filter_limited_liability_company);
-                System.out.println("transactions" + str_filter_sale_transaction_type);
-                System.out.println("investment" + str_con_investment);
-                System.out.println("run_rate_sales" + str_con_runrate_sales);
-                System.out.println("EBITDA" + str_con_ebitda);
-                System.out.println("established" + str_con_established);
-                System.out.println("industries" + str_filter_interested_industries);
-                System.out.println("keyword" + str_final_search);
-                System.out.println("locations" + str_filter_interested_business_locations);
-                System.out.println("purchased" + "");
-                System.out.println("asset_investment" + "");
-                System.out.println("sort_by" + str_sort_by);
+                System.out.println("revenue_from" + str_filter_year_revenue_minimum);
+                System.out.println("revenue_to" + str_filter_year_revenue_maximum);
+                System.out.println("investment_from" + str_filter_sellingprice_minimum);
+                System.out.println("investment_to" + str_filter_sellingprice_maximum);
+                System.out.println("profit_from" + str_filter_monthly_cashflow_minimum);
+                System.out.println("profit_to" + str_filter_monthly_cashflow_maximum);
+                System.out.println("established_from" + str_filter_established_minimum);
+                System.out.println("established_to" + str_filter_established_maximum);
+                System.out.println("industries" + str_filter_industry);
+                System.out.println("location" + str_filter_location);
+                System.out.println("sortby" + str_sort_by);
                 System.out.println("currency" + str_user_currency);
 
                 return checkParams(params);

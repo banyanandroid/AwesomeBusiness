@@ -62,8 +62,6 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_INVESTOR_CONFIDENTIAL_EMAIL = "investor_confidential_email";
     public static final String TAG_INVESTOR_CONFIDENTIAL_MOBILE = "investor_confidential_mobile";
     public static final String TAG_INVESTOR_USER_ROLE = "investor_user_role";
-    public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
-    public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
     public static final String TAG_INVESTOR_CURRENCY = "investor_currency";
     public static final String TAG_INVESTOR_COMPANY_NAME = "investor_company_name";
     public static final String TAG_INVESTOR_DESIGNATION = "investor_designation";
@@ -73,6 +71,13 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_INVESTOR_AN_NAME = "investor_an_name";
     public static final String TAG_INVESTOR_INTEREST_NAME = "investor_interest_name";
     public static final String TAG_INVESTOR_STATUS = "investor_status";
+
+    public static final String TAG_EXPIRY = "expiry";
+    public static final String TAG_EXPIRED_ON = "expired_on";
+    public static final String TAG_INVESTOR_VIEW = "invstor_view";
+    public static final String TAG_INVESTOR_CONTACT = "investor_contact";
+    public static final String TAG_INVESTOR_BOOKMARKS = "investor_bookmarks";
+    public static final String TAG_INVESTOR_APPEARED = "investor_apperance";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -162,9 +167,9 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                 String investor_confidential_email = Investor_profile_list.get(position).get(TAG_INVESTOR_CONFIDENTIAL_EMAIL);
                 String investor_confidential_mobile = Investor_profile_list.get(position).get(TAG_INVESTOR_CONFIDENTIAL_MOBILE);
                 String investor_user_role = Investor_profile_list.get(position).get(TAG_INVESTOR_USER_ROLE);
-                String investor_currency_from = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY_FROM);
-                String investor_currency_to = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY_TO);
+
                 String investor_currency = Investor_profile_list.get(position).get(TAG_INVESTOR_CURRENCY);
+
                 String investor_company_name = Investor_profile_list.get(position).get(TAG_INVESTOR_COMPANY_NAME);
                 String investor_designation = Investor_profile_list.get(position).get(TAG_INVESTOR_DESIGNATION);
                 String investo_profile_url = Investor_profile_list.get(position).get(TAG_INVESTO_PROFILE_URL);
@@ -172,6 +177,11 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                 String investor_about_user = Investor_profile_list.get(position).get(TAG_INVESTOR_ABOUT_USER);
                 String investor_an_name = Investor_profile_list.get(position).get(TAG_INVESTOR_AN_NAME);
                 String investor_interest_name = Investor_profile_list.get(position).get(TAG_INVESTOR_INTEREST_NAME);
+
+                String invstor_view = Investor_profile_list.get(position).get(TAG_INVESTOR_VIEW);
+                String investor_contact = Investor_profile_list.get(position).get(TAG_INVESTOR_CONTACT);
+                String investor_bookmarks = Investor_profile_list.get(position).get(TAG_INVESTOR_BOOKMARKS);
+                String investor_apperance = Investor_profile_list.get(position).get(TAG_INVESTOR_APPEARED);
 
 
                 SharedPreferences sharedPreferences = PreferenceManager
@@ -184,8 +194,6 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                 editor.putString("investor_confidential_email", investor_confidential_email);
                 editor.putString("investor_confidential_mobile", investor_confidential_mobile);
                 editor.putString("investor_user_role", investor_user_role);
-                editor.putString("investor_currency_from", investor_currency_from);
-                editor.putString("investor_currency_to", investor_currency_to);
                 editor.putString("investor_currency", investor_currency);
                 editor.putString("investor_company_name", investor_company_name);
                 editor.putString("investor_designation", investor_designation);
@@ -194,6 +202,11 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                 editor.putString("investor_about_user", investor_about_user);
                 editor.putString("investor_an_name", investor_an_name);
                 editor.putString("investor_interest_name", investor_interest_name);
+
+                editor.putString("invstor_view", invstor_view);
+                editor.putString("investor_contact", investor_contact);
+                editor.putString("investor_bookmarks", investor_bookmarks);
+                editor.putString("investor_apperance", investor_apperance);
 
                 editor.commit();
 
@@ -256,8 +269,6 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             String investor_confidential_email = obj1.getString(TAG_INVESTOR_CONFIDENTIAL_EMAIL);
                             String investor_confidential_mobile = obj1.getString(TAG_INVESTOR_CONFIDENTIAL_MOBILE);
                             String investor_user_role = obj1.getString(TAG_INVESTOR_USER_ROLE);
-                            String investor_currency_from = obj1.getString(TAG_INVESTOR_CURRENCY_FROM);
-                            String investor_currency_to = obj1.getString(TAG_INVESTOR_CURRENCY_TO);
                             String investor_currency = obj1.getString(TAG_INVESTOR_CURRENCY);
                             String investor_company_name = obj1.getString(TAG_INVESTOR_COMPANY_NAME);
                             String investor_designation = obj1.getString(TAG_INVESTOR_DESIGNATION);
@@ -267,6 +278,11 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             String investor_an_name = obj1.getString(TAG_INVESTOR_AN_NAME);
                             String investor_interest_name = obj1.getString(TAG_INVESTOR_INTEREST_NAME);
                             String investor_status = obj1.getString(TAG_INVESTOR_STATUS);
+
+                            String invstor_view = obj1.getString(TAG_INVESTOR_VIEW);
+                            String investor_contact = obj1.getString(TAG_INVESTOR_CONTACT);
+                            String investor_bookmarks = obj1.getString(TAG_INVESTOR_BOOKMARKS);
+                            String investor_apperance = obj1.getString(TAG_INVESTOR_APPEARED);
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -326,8 +342,6 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_INVESTOR_CONFIDENTIAL_EMAIL, investor_confidential_email);
                             map.put(TAG_INVESTOR_CONFIDENTIAL_MOBILE, investor_confidential_mobile);
                             map.put(TAG_INVESTOR_USER_ROLE, investor_user_role);
-                            map.put(TAG_INVESTOR_CURRENCY_FROM, investor_currency_from);
-                            map.put(TAG_INVESTOR_CURRENCY_TO, investor_currency_to);
                             map.put(TAG_INVESTOR_CURRENCY, investor_currency);
                             map.put(TAG_INVESTOR_COMPANY_NAME, investor_company_name);
                             map.put(TAG_INVESTOR_DESIGNATION, investor_designation);
@@ -342,15 +356,17 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
                             map.put(TAG_IMAGE_PATH, str_final_image);
 
+                            map.put(TAG_INVESTOR_VIEW, invstor_view);
+                            map.put(TAG_INVESTOR_CONTACT, investor_contact);
+                            map.put(TAG_INVESTOR_BOOKMARKS, investor_bookmarks);
+                            map.put(TAG_INVESTOR_APPEARED, investor_apperance);
+
 
                             Investor_profile_list.add(map);
-
-                            System.out.println("woooooooooooow ARRAY" + Investor_profile_list);
-
-
                             adapter = new InvestorProfiles_Adapter(getActivity(),
                                     Investor_profile_list);
                             List.setAdapter(adapter);
+                            System.out.println("INVESTOR HASHMAP ARRAY" + Investor_profile_list);
 
                         }
 

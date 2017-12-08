@@ -64,6 +64,12 @@ public class BusinessProfiles_Adapter extends BaseAdapter {
         TextView bus_status = (TextView) v.findViewById(R.id.list_bus_status);
         ImageView prod_img = (ImageView) v.findViewById(R.id.list_business_profile);
 
+        TextView bus_viewed = (TextView) v.findViewById(R.id.list_bus_viewed);
+        TextView bus_contacted = (TextView) v.findViewById(R.id.list_bus_contacted);
+        TextView bus_bookmarked = (TextView) v.findViewById(R.id.list_bus_bookmarked);
+        TextView bus_appeared = (TextView) v.findViewById(R.id.list_bus_appear);
+
+
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
@@ -72,10 +78,20 @@ public class BusinessProfiles_Adapter extends BaseAdapter {
         String str_bus_location = result.get(Tab_Business_Profile.TAG_LOCATION_NAME);
         String str_bus_status = result.get(Tab_Business_Profile.TAG_BUSINESS_STATUS);
 
+        String str_bus_viewed = result.get(Tab_Business_Profile.TAG_BUSINESS_VIEW);
+        String str_bus_contacted = result.get(Tab_Business_Profile.TAG_BUSINESS_CONTACT);
+        String str_bus_bookmarked = result.get(Tab_Business_Profile.TAG_BUSINESS_BOOKMARKS);
+        String str_bus_appeared = result.get(Tab_Business_Profile.TAG_BUSINESS_APPEARED);
+
         bus_desc.setText(str_bus_name);
         bus_type.setText(str_bus_type);
         bus_location.setText(str_bus_location);
         bus_status.setText(str_bus_status);
+
+        bus_viewed.setText(str_bus_viewed);
+        bus_contacted.setText(str_bus_contacted);
+        bus_bookmarked.setText(str_bus_bookmarked);
+        bus_appeared.setText(str_bus_appeared);
 
         String impath = result.get(Tab_Business_Profile.TAG_IMAGE_PATH);
 

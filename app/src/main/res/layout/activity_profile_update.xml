@@ -127,7 +127,7 @@
                         android:layout_height="40dp"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:background="@drawable/bg_parent_rounded_corner"
-                        android:hint="Headquaters Location"
+                        android:hint="Current Location"
                         android:inputType="text"
                         android:paddingLeft="10dp"
                         android:textColor="@color/black"

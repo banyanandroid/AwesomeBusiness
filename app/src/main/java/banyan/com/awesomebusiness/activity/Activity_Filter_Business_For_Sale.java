@@ -44,7 +44,7 @@ import banyan.com.awesomebusiness.global.AppConfig;
 import dmax.dialog.SpotsDialog;
 
 /**
- * Created by SJR on 21-Jul-17.
+ * Created by chandru on 21-Jul-17.
  */
 
 public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
@@ -59,12 +59,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
     Button btn_done, btn_clear_all;
 
-    public static final String TAG_BUSINESS_INTEREST_ID = "business_interest_id";
-    public static final String TAG_BUSINESS_INTEREST_NAME = "business_interest_name";
-
-    public static final String TAG_INVESTOR_BUYER_TYPE_ID = "investor_an_id";
-    public static final String TAG_INVESTOR_BUYER_TYPE_NAME = "investor_an_name";
-
     public static final String TAG_SECTOR_NAME = "name";
     public static final String TAG_SECTOR_KEY = "key";
     public static final String TAG_SECTOR_TYPE = "type";
@@ -73,29 +67,35 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     public static final String TAG_LOC_KEY = "key";
     public static final String TAG_LOC_TYPE = "type";
 
-    public static final String TAG_INTEREST_ID = "investor_interest_id";
-    public static final String TAG_INTEREST_NAME = "investor_interest_name";
-
-    public static final String TAG_MIN_BUISNESS_INVESTMENT = "min_buisness_investment";
-    public static final String TAG_MAX_BUISNESS_INVESTMENT = "max_buisness_investment";
-    public static final String TAG_MIN_BUSINESS_EBITDA = "min_business_ebitda";
-    public static final String TAG_MAX_BUSINESS_EBITDA = "max_business_ebitda";
+    public static final String TAG_BUSINESS_MONTH_SALES_MIN = "business_month_sales_min";
+    public static final String TAG_BUSINESS_MONTH_SALES_MAX = "business_month_sales_max";
+    public static final String TAG_BUSINESS_TENTATIVE_PRICE_MIN = "business_tentative_price_min";
+    public static final String TAG_BUSINESS_TENTATIVE_PRICE_MAX = "business_tentative_price_max";
+    public static final String TAG_BUSINESS_YEARLY_SALES_MIN = "business_yearly_sales_min";
+    public static final String TAG_BUSINESS_YEARLY_SALES_MAX = "business_yearly_sales_max";
     public static final String TAG_MIN_USER_ESTABLISHED = "min_user_established";
     public static final String TAG_MAX_USER_ESTABLISHED = "max_user_established";
     public static final String TAG_MIN_ASSETS_PURCHASED = "min_assets_purchased";
     public static final String TAG_MAX_ASSETS_PURCHASED = "max_assets_purchased";
     public static final String TAG_MIN_SELL_LEASE_PRICE = "min_sell_lease_price";
     public static final String TAG_MAX_SELL_LEASE_PRICE = "max_sell_lease_price";
-    public static final String TAG_MIN_SALES = "min_sales";
-    public static final String TAG_MAX_SALES = "max_sales";
+    public static final String TAG_BUSINESS_MONTH_EXPENSE_MIN = "business_month_expense_min";
+    public static final String TAG_BUSINESS_MONTH_EXPENSE_MAX = "business_month_expense_max";
+    public static final String TAG_BUSINESS_MONTH_CASHFLOW_MIN = "business_month_cashflow_min";
+    public static final String TAG_BUSINESS_MONTH_CASHFLOW_MAX = "business_month_cashflow_max";
     public static final String TAG_INVESTOR_CURRENCY_FROM = "investor_currency_from";
     public static final String TAG_INVESTOR_CURRENCY_TO = "investor_currency_to";
+    public static final String TAG_INVESTOR_ROI_MIN = "investor_roi_min";
+    public static final String TAG_INVESTOR_ROI_MAX = "investor_roi_max";
     public static final String TAG_FRANCHISE_MIN_INVESTMENT = "franchise_min_investment";
     public static final String TAG_FRANCHISE_MAX_INVESTMENT = "franchise_max_investment";
-    public static final String TAG_FRANCHISE_MIN_REVENUE = "franchise_min_revenue";
-    public static final String TAG_FRANCHISE_MAX_REVENUE = "franchise_max_revenue";
     public static final String TAG_FRANCHISE_MIN_ESTABLISHED = "franchise_min_established";
     public static final String TAG_FRANCHISE_MAX_ESTABLISHED = "franchise_max_established";
+    public static final String TAG_FRANCHISE_MIN_REVENUES = "franchise_min_revenues";
+    public static final String TAG_FRANCHISE_MAX_REVENUES = "franchise_max_revenues";
+    public static final String TAG_ADVISOR_MIN_INVESTMENT = "advisor_min_investment";
+    public static final String TAG_ADVISOR_MAX_INVESTMENT = "advisor_max_investment";
+
 
     ArrayList<String> Arraylist_sector_name = null;
     ArrayList<String> Arraylist_sector_key = null;
@@ -109,15 +109,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     ArrayList<String> Arraylist_location_key = null;
     ArrayList<String> Arraylist_location_type = null;
 
-    ArrayList<String> Arraylist_business_interest_id = null;
-    ArrayList<String> Arraylist_business_interest_name = null;
-
-    ArrayList<String> Arraylist_investor_buyer_id = null;
-    ArrayList<String> Arraylist_investor_buyer_name = null;
-
-    ArrayList<String> Arraylist_investor_interest_id = null;
-    ArrayList<String> Arraylist_investor_interest_name = null;
-
     /* Arralist fetched Location list */
     ArrayList<String> Arraylist_fetched_location = null;
     ArrayList<String> Arraylist_selected_final_location = null;
@@ -130,27 +121,33 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
     private ArrayAdapter<String> adapter_investor_buyer_type;
     private ArrayAdapter<String> adapter_interested;
 
-
     String str_main_filter = "";
-
-    MultiAutoCompleteTextView auto_business_sectorlist, auto_bus_locationlist;
 
     String str_final_business_sector, str_final_Business_Location = "";
     String str_final_industry_update, str_final_location_update, str_Investor_location, str_franchise_headquaters_location = "";
 
-    LinearLayout LL_business_for_sale_type, LL_investor_buyer_type, LL_franchise_headquaters_location,
-            LL_interested_business_locations, LL_interested_industry_sectors, LL_Slider_Investment_size,
-            LL_Slider_Asset_price, LL_Slider_Run_Rate_Sales, LL_Slider_EBITA, LL_Slider_Established, LL_Slider_MonthlySales,
-            LL_Checkboxes, LL_Investor_Buyer_Investor_Location, LL_Investor_Buyer_Investor_Interested_In;
+    MultiAutoCompleteTextView auto_business_sectorlist, auto_bus_locationlist;
 
-    CrystalRangeSeekbar seekbar_selling_price, seekbar_asset_price,
-            seekbar_yearly_revenue, seekbar_monthly_sales, seekbar_monthly_cashflow, seekbar_established;
+    LinearLayout LL_Slider_Selling_Price, LL_Slider_Yearly_Revenue,
+            LL_Slider_Monthly_Cashflow, LL_Slider_Established, LL_Slider_Investment_size,
+            LL_Slider_Return_Of_Investment, LL_Slider_Fran_Investment_size, LL_Slider_Fran_Established,
+            LL_Slider_Expected_Return, LL_Advisor_Investment_Size;
 
+    CrystalRangeSeekbar Seekbar_Selling_Price, Seekbar_Yearly_Revenue,
+            Seekbar_Monthly_Cashflow, Seekbar_Established, Seekbar_Investment_size,
+            Seekbar_Return_Of_Investment, Seekbar_Fran_Investment_size, Seekbar_Fran_Established,
+            Seekbar_Expected_Return, Seekbar_Advisor_Investment;
 
-    TextView txt_selling_price_minimum, txt_selling_price_maximum, txt_asset_yr_rev_minimum, txt_asset_yr_rev_maximum,
-            txt_runrate_sales_minimum, txt_runrate_sales_maximum, txt_monthly_sales_minimum, txt_monthly_sales_maximum,
-            txt_ebitda_minimum, txt_ebitda_maximum,
-            txt_established_minimum, txt_established_maximum;
+    TextView txt_selling_price_minimum, txt_yearly_revenue_minimum,
+            txt_monthly_cashflow_minimum, txt_established_minimum, txt_investment_size_minimum,
+            txt_return_of_investment_minimum, txt_fran_investment_size_minimum, txt_fran_established_minimum,
+            txt_expected_return_minimum, txt_adv_inves_size_minimum;
+
+    TextView txt_selling_price_maximum, txt_yearly_revenue_maximum,
+            txt_monthly_cashflow_maximum, txt_established_maximum, txt_investment_size_maximum,
+            txt_return_of_investment_maximum, txt_fran_investment_size_maximum, txt_fran_established_maximum,
+            txt_expected_return_maximum, txt_adv_inves_size_maximum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +156,7 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Filters");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_close));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -183,43 +181,51 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         System.out.println(" FILTER TYPE:::::::  " + str_main_filter);
         System.out.println(" USER CURRENCY TYPE:::::::  " + str_user_currency);
 
-
         txt_selling_price_minimum = (TextView) findViewById(R.id.activity_filter_selling_price_minValue);
         txt_selling_price_maximum = (TextView) findViewById(R.id.activity_filter_selling_price_maxValue);
-        txt_asset_yr_rev_minimum = (TextView) findViewById(R.id.activity_filter_yr_rev_minValue);
-        txt_asset_yr_rev_maximum = (TextView) findViewById(R.id.activity_filter_yr_rev_maxValue);
-        txt_runrate_sales_minimum = (TextView) findViewById(R.id.activity_filter_runratesales_minValue);
-        txt_runrate_sales_maximum = (TextView) findViewById(R.id.activity_filter_runratesales_maxValue);
-        txt_monthly_sales_minimum = (TextView) findViewById(R.id.activity_filter_monthlysales_minValue);
-        txt_monthly_sales_maximum = (TextView) findViewById(R.id.activity_filter_monthlysales_maxValue);
-        txt_ebitda_minimum = (TextView) findViewById(R.id.activity_filter_ebitda_minValue);
-        txt_ebitda_maximum = (TextView) findViewById(R.id.activity_filter_ebitda_maxValue);
+        txt_yearly_revenue_minimum = (TextView) findViewById(R.id.activity_filter_yr_rev_minValue);
+        txt_yearly_revenue_maximum = (TextView) findViewById(R.id.activity_filter_yr_rev_maxValue);
+
+        txt_monthly_cashflow_minimum = (TextView) findViewById(R.id.activity_filter_monthly_cash_minValue);
+        txt_monthly_cashflow_maximum = (TextView) findViewById(R.id.activity_filter_monthly_cash_maxValue);
         txt_established_minimum = (TextView) findViewById(R.id.activity_filter_established_minValue);
         txt_established_maximum = (TextView) findViewById(R.id.activity_filter_established_maxValue);
+        txt_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_inv_size_minValue);
+        txt_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_inv_size_maxValue);
+        txt_return_of_investment_minimum = (TextView) findViewById(R.id.activity_filter_roi_minValue);
+        txt_return_of_investment_maximum = (TextView) findViewById(R.id.activity_filter_roi_maxValue);
+        txt_fran_investment_size_minimum = (TextView) findViewById(R.id.activity_filter_fran_inv_size_minValue);
+        txt_fran_investment_size_maximum = (TextView) findViewById(R.id.activity_filter_fran_inv_size_maxValue);
+        txt_fran_established_minimum = (TextView) findViewById(R.id.activity_filter_fran_established_minValue);
+        txt_fran_established_maximum = (TextView) findViewById(R.id.activity_filter_fran_established_maxValue);
+        txt_expected_return_minimum = (TextView) findViewById(R.id.activity_filter_expec_return_minValue);
+        txt_expected_return_maximum = (TextView) findViewById(R.id.activity_filter_expec_return_maxValue);
+        txt_adv_inves_size_minimum = (TextView) findViewById(R.id.activity_filter_adv_business_size_minValue);
+        txt_adv_inves_size_maximum = (TextView) findViewById(R.id.activity_filter_adv_business_size_maxValue);
 
-        LL_franchise_headquaters_location = (LinearLayout) findViewById(R.id.layout_franchise_headquaters_location);
-        LL_interested_industry_sectors = (LinearLayout) findViewById(R.id.layout_interested_business_industries);
-        LL_Slider_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_investment_size);
-        LL_Slider_Asset_price = (LinearLayout) findViewById(R.id.layout_slider_asset_price);
-        LL_Slider_Run_Rate_Sales = (LinearLayout) findViewById(R.id.layout_slider_run_rate_sales);
-        LL_Slider_EBITA = (LinearLayout) findViewById(R.id.layout_slider_EBITDA);
+        LL_Slider_Selling_Price = (LinearLayout) findViewById(R.id.layout_slider_selling_price);
+        LL_Slider_Yearly_Revenue = (LinearLayout) findViewById(R.id.layout_slider_yr_rev);
+        LL_Slider_Monthly_Cashflow = (LinearLayout) findViewById(R.id.layout_slider_monthly_cashflow);
+
         LL_Slider_Established = (LinearLayout) findViewById(R.id.layout_slider_established);
-        LL_Slider_MonthlySales = (LinearLayout) findViewById(R.id.layout_slider_monthly_sales);
+        LL_Slider_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_investment_size);
+        LL_Slider_Return_Of_Investment = (LinearLayout) findViewById(R.id.layout_slider_roi);
+        LL_Slider_Fran_Investment_size = (LinearLayout) findViewById(R.id.layout_slider_fran_inv_size);
+        LL_Slider_Fran_Established = (LinearLayout) findViewById(R.id.layout_slider_fran_established);
+        LL_Slider_Expected_Return = (LinearLayout) findViewById(R.id.layout_slider_expec_return);
+        LL_Advisor_Investment_Size = (LinearLayout) findViewById(R.id.layout_slider_adv_business_size);
 
-        LL_business_for_sale_type.setVisibility(View.GONE);
-        LL_interested_business_locations.setVisibility(View.GONE);
-        LL_interested_industry_sectors.setVisibility(View.GONE);
-        LL_Slider_Investment_size.setVisibility(View.GONE);
-        LL_Slider_Asset_price.setVisibility(View.GONE);
-        LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-        LL_Slider_EBITA.setVisibility(View.GONE);
+
+        LL_Slider_Selling_Price.setVisibility(View.GONE);
+        LL_Slider_Yearly_Revenue.setVisibility(View.GONE);
+        LL_Slider_Monthly_Cashflow.setVisibility(View.GONE);
         LL_Slider_Established.setVisibility(View.GONE);
-        LL_Checkboxes.setVisibility(View.GONE);
-        LL_Slider_MonthlySales.setVisibility(View.GONE);
-        LL_investor_buyer_type.setVisibility(View.GONE);
-        LL_franchise_headquaters_location.setVisibility(View.GONE);
-        LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-        LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+        LL_Slider_Investment_size.setVisibility(View.GONE);
+        LL_Slider_Return_Of_Investment.setVisibility(View.GONE);
+        LL_Slider_Fran_Investment_size.setVisibility(View.GONE);
+        LL_Slider_Fran_Established.setVisibility(View.GONE);
+        LL_Slider_Expected_Return.setVisibility(View.GONE);
+        LL_Advisor_Investment_Size.setVisibility(View.GONE);
 
         auto_bus_locationlist = (MultiAutoCompleteTextView) findViewById(R.id.filter_multi_business_locations);
         auto_business_sectorlist = (MultiAutoCompleteTextView) findViewById(R.id.filter_multi_business_industries);
@@ -227,12 +233,17 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         btn_clear_all = (Button) findViewById(R.id.btn_filter_clear);
         btn_done = (Button) findViewById(R.id.btn_filter_done);
 
-        seekbar_selling_price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_selling_price_slider);
-        seekbar_asset_price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_assetprice_range_slider);
-        seekbar_yearly_revenue = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_yearly_revenue_slider);
-        seekbar_monthly_sales = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthlysales_range_slider);
-        seekbar_monthly_cashflow = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthly_cashflow_slider);
-        seekbar_established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
+        Seekbar_Selling_Price = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_selling_price_slider);
+        Seekbar_Yearly_Revenue = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_yearly_revenue_slider);
+        Seekbar_Monthly_Cashflow = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_monthly_cashflow_slider);
+        Seekbar_Established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_established_range_slider);
+        Seekbar_Investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_inv_size_range_slider);
+        Seekbar_Return_Of_Investment = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_roi_range_slider);
+        Seekbar_Fran_Investment_size = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_fran_inv_size_range_slider);
+        Seekbar_Fran_Established = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_fran_established_range_slider);
+        Seekbar_Expected_Return = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_expec_return_range_slider);
+        Seekbar_Advisor_Investment = (CrystalRangeSeekbar) findViewById(R.id.activity_filter_adv_business_size_slider);
+
 
         Arraylist_sector_name = new ArrayList<String>();
         Arraylist_sector_key = new ArrayList<String>();
@@ -245,15 +256,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
         Arraylist_location_key = new ArrayList<String>();
         Arraylist_location_type = new ArrayList<String>();
 
-        Arraylist_business_interest_id = new ArrayList<String>();
-        Arraylist_business_interest_name = new ArrayList<String>();
-
-        Arraylist_investor_buyer_id = new ArrayList<String>();
-        Arraylist_investor_buyer_name = new ArrayList<String>();
-
-        Arraylist_investor_interest_id = new ArrayList<String>();
-        Arraylist_investor_interest_name = new ArrayList<String>();
-
         Arraylist_fetched_location = new ArrayList<String>();
         Arraylist_selected_final_location = new ArrayList<String>();
 
@@ -263,58 +265,62 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
         try {
             if (str_main_filter.equals("Business For sale")) {
-                LL_business_for_sale_type.setVisibility(View.VISIBLE);
-                LL_interested_business_locations.setVisibility(View.VISIBLE);
-                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                LL_Slider_Asset_price.setVisibility(View.VISIBLE);
-                LL_Slider_Run_Rate_Sales.setVisibility(View.VISIBLE);
-                LL_Slider_EBITA.setVisibility(View.VISIBLE);
-                LL_Slider_Established.setVisibility(View.VISIBLE);
-                LL_Checkboxes.setVisibility(View.VISIBLE);
 
-                LL_Slider_MonthlySales.setVisibility(View.GONE);
-                LL_investor_buyer_type.setVisibility(View.GONE);
-                LL_franchise_headquaters_location.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+                LL_Slider_Selling_Price.setVisibility(View.VISIBLE);
+                LL_Slider_Yearly_Revenue.setVisibility(View.VISIBLE);
+                LL_Slider_Monthly_Cashflow.setVisibility(View.VISIBLE);
+                LL_Slider_Established.setVisibility(View.VISIBLE);
+
+                LL_Slider_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Return_Of_Investment.setVisibility(View.GONE);
+                LL_Slider_Fran_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Fran_Established.setVisibility(View.GONE);
+                LL_Slider_Expected_Return.setVisibility(View.GONE);
+                LL_Advisor_Investment_Size.setVisibility(View.GONE);
 
 
             } else if (str_main_filter.equals("Investment Oppourtinites")) {
-                LL_investor_buyer_type.setVisibility(View.VISIBLE);
-                LL_interested_business_locations.setVisibility(View.VISIBLE);
-                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                LL_Investor_Buyer_Investor_Location.setVisibility(View.VISIBLE);
-                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.VISIBLE);
 
-                LL_business_for_sale_type.setVisibility(View.GONE);
-                LL_Slider_Asset_price.setVisibility(View.GONE);
-                LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                LL_Slider_EBITA.setVisibility(View.GONE);
-                LL_Slider_MonthlySales.setVisibility(View.GONE);
-                LL_franchise_headquaters_location.setVisibility(View.GONE);
+                LL_Slider_Selling_Price.setVisibility(View.GONE);
+                LL_Slider_Yearly_Revenue.setVisibility(View.GONE);
+                LL_Slider_Monthly_Cashflow.setVisibility(View.GONE);
                 LL_Slider_Established.setVisibility(View.GONE);
-                LL_Checkboxes.setVisibility(View.GONE);
 
+                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
+                LL_Slider_Return_Of_Investment.setVisibility(View.VISIBLE);
+
+                LL_Slider_Fran_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Fran_Established.setVisibility(View.GONE);
+                LL_Slider_Expected_Return.setVisibility(View.GONE);
+                LL_Advisor_Investment_Size.setVisibility(View.GONE);
 
             } else if (str_main_filter.equals("Franchise Oppourtinites")) {
-                LL_franchise_headquaters_location.setVisibility(View.VISIBLE);
-                LL_interested_business_locations.setVisibility(View.VISIBLE);
-                LL_interested_industry_sectors.setVisibility(View.VISIBLE);
-                LL_Slider_MonthlySales.setVisibility(View.VISIBLE);
-                LL_Slider_Investment_size.setVisibility(View.VISIBLE);
-                LL_Slider_Established.setVisibility(View.VISIBLE);
-                LL_Checkboxes.setVisibility(View.VISIBLE);
 
-                LL_business_for_sale_type.setVisibility(View.GONE);
-                LL_investor_buyer_type.setVisibility(View.GONE);
-                LL_Slider_Asset_price.setVisibility(View.GONE);
-                LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                LL_Slider_EBITA.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
+                LL_Slider_Selling_Price.setVisibility(View.GONE);
+                LL_Slider_Yearly_Revenue.setVisibility(View.GONE);
+                LL_Slider_Monthly_Cashflow.setVisibility(View.GONE);
+                LL_Slider_Established.setVisibility(View.GONE);
+                LL_Slider_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Return_Of_Investment.setVisibility(View.GONE);
 
+                LL_Slider_Fran_Investment_size.setVisibility(View.VISIBLE);
+                LL_Slider_Fran_Established.setVisibility(View.VISIBLE);
+                LL_Slider_Expected_Return.setVisibility(View.VISIBLE);
+
+                LL_Advisor_Investment_Size.setVisibility(View.GONE);
+            } else if (str_main_filter.equals("Advisors")) {
+
+                LL_Slider_Selling_Price.setVisibility(View.GONE);
+                LL_Slider_Yearly_Revenue.setVisibility(View.GONE);
+                LL_Slider_Monthly_Cashflow.setVisibility(View.GONE);
+                LL_Slider_Established.setVisibility(View.GONE);
+                LL_Slider_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Return_Of_Investment.setVisibility(View.GONE);
+                LL_Slider_Fran_Investment_size.setVisibility(View.GONE);
+                LL_Slider_Fran_Established.setVisibility(View.GONE);
+                LL_Slider_Expected_Return.setVisibility(View.GONE);
+
+                LL_Advisor_Investment_Size.setVisibility(View.VISIBLE);
             }
 
         } catch (Exception e) {
@@ -325,20 +331,6 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                LL_business_for_sale_type.setVisibility(View.GONE);
-                LL_interested_business_locations.setVisibility(View.GONE);
-                LL_interested_industry_sectors.setVisibility(View.GONE);
-                LL_Slider_Investment_size.setVisibility(View.GONE);
-                LL_Slider_Asset_price.setVisibility(View.GONE);
-                LL_Slider_Run_Rate_Sales.setVisibility(View.GONE);
-                LL_Slider_EBITA.setVisibility(View.GONE);
-                LL_Slider_Established.setVisibility(View.GONE);
-                LL_Checkboxes.setVisibility(View.GONE);
-                LL_Slider_MonthlySales.setVisibility(View.GONE);
-                LL_investor_buyer_type.setVisibility(View.GONE);
-                LL_franchise_headquaters_location.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Location.setVisibility(View.GONE);
-                LL_Investor_Buyer_Investor_Interested_In.setVisibility(View.GONE);
 
             }
         });
@@ -417,21 +409,21 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     System.out.println("FINAL SELECTED INDUSTRY :: " + str_final_industry_update);
 
 
-                } else {
-
                 }
 
                 //IF STATEMENT TO POST VALUES ACCORING TO MAIN FILTER TYPE
                 if (str_main_filter.equals("Business For sale")) {
 
-
                     //SEEKBAR VALUES TO STRING
-                    String str_investment_size_minimum = txt_selling_price_minimum.getText().toString();
-                    String str_investment_size_maximum = txt_selling_price_maximum.getText().toString();
-                    String str_runrate_sales_minimum = txt_runrate_sales_minimum.getText().toString();
-                    String str_runrate_sales_maximum = txt_runrate_sales_maximum.getText().toString();
-                    String str_ebitda_minimum = txt_ebitda_minimum.getText().toString();
-                    String str_ebitda_maximum = txt_ebitda_maximum.getText().toString();
+                    String str_selling_price_minimum = txt_selling_price_minimum.getText().toString();
+                    String str_selling_price_maximum = txt_selling_price_maximum.getText().toString();
+
+                    String str_yearly_revenue_minimum = txt_yearly_revenue_minimum.getText().toString();
+                    String str_yearly_revenue_maximum = txt_yearly_revenue_maximum.getText().toString();
+
+                    String str_monthly_cashflow_minimum = txt_monthly_cashflow_minimum.getText().toString();
+                    String str_monthly_cashflow_maximum = txt_monthly_cashflow_maximum.getText().toString();
+
                     String str_established_minimum = txt_established_minimum.getText().toString();
                     String str_established_maximum = txt_established_maximum.getText().toString();
 
@@ -440,30 +432,19 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
                     editor_filter.putString("str_main_filter_type", str_main_filter);
-
-                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
-                    editor_filter.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_filter_location", str_final_location_update);
+                    editor_filter.putString("str_filter_industry", str_final_industry_update);
                     //SEEKBAR VALUES
-                    editor_filter.putString("str_investment_size_minimum", str_investment_size_minimum);
-                    editor_filter.putString("str_investment_size_maximum", str_investment_size_maximum);
-                    editor_filter.putString("str_runrate_sales_minimum", str_runrate_sales_minimum);
-                    editor_filter.putString("str_runrate_sales_maximum", str_runrate_sales_maximum);
-                    editor_filter.putString("str_ebitda_minimum", str_ebitda_minimum);
-                    editor_filter.putString("str_ebitda_maximum", str_ebitda_maximum);
+                    editor_filter.putString("str_selling_price_minimum", str_selling_price_minimum);
+                    editor_filter.putString("str_selling_price_maximum", str_selling_price_maximum);
+                    editor_filter.putString("str_yearly_revenue_minimum", str_yearly_revenue_minimum);
+                    editor_filter.putString("str_yearly_revenue_maximum", str_yearly_revenue_maximum);
+                    editor_filter.putString("str_monthly_cashflow_minimum", str_monthly_cashflow_minimum);
+                    editor_filter.putString("str_monthly_cashflow_maximum", str_monthly_cashflow_maximum);
                     editor_filter.putString("str_established_minimum", str_established_minimum);
                     editor_filter.putString("str_established_maximum", str_established_maximum);
-                    //LEGAL ENTITY TYPE
+
                     editor_filter.commit();
-
-                    System.out.println("investment_size_minimum :: " + str_investment_size_minimum);
-                    System.out.println("investment_size_maximum :: " + str_investment_size_maximum);
-                    System.out.println("runrate_sales_minimum :: " + str_runrate_sales_minimum);
-                    System.out.println("runrate_sales_maximum :: " + str_runrate_sales_maximum);
-                    System.out.println("ebitda_minimum :: " + str_ebitda_minimum);
-                    System.out.println("ebitda_maximum :: " + str_ebitda_maximum);
-                    System.out.println("established_minimum :: " + str_established_minimum);
-                    System.out.println("established_maximum :: " + str_established_maximum);
-
 
                     Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                     i.putExtra("type", str_main_filter);
@@ -474,66 +455,26 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                 } else if (str_main_filter.equals("Investment Oppourtinites")) {
 
                     //SEEKBAR VALUES TO STRING
-                    String str_investor_investment_size_minimum = txt_selling_price_minimum.getText().toString();
-                    String str_investor_investment_size_maximum = txt_selling_price_maximum.getText().toString();
+                    String str_investor_investment_size_minimum = txt_investment_size_minimum.getText().toString();
+                    String str_investor_investment_size_maximum = txt_investment_size_maximum.getText().toString();
 
-
-                    /********************************************************
-                     * Get Multiple Location Details From Searchable Spinner
-                     * ******************************************************/
-
-                    String[] str_Investor_loccations = auto_bus_locationlist.getText().toString().split(", ");
-
-                    if (!str_valid_industries.equals("") && str_valid_industries == null) {
-
-                        String[] str_investor_loccations = auto_bus_locationlist.getText().toString().split(", ");
-                        Arraylist_fetched_location.clear();
-                        for (int i = 0; i < str_investor_loccations.length; i++) {
-                            Arraylist_fetched_location.add(str_investor_loccations[i]);
-                        }
-                        System.out.println("array : " + Arraylist_fetched_location);
-                        Arraylist_selected_final_location.clear();
-                        for (int i = 0; i < Arraylist_fetched_location.size(); i++) {
-
-                            String get_location = Arraylist_fetched_location.get(i);
-                            get_location = get_location.trim();
-                            System.out.println("get_location : " + get_location);
-                            int location_position = Arraylist_location_place.indexOf(get_location);
-                            String select_location_id = Arraylist_location_key.get(location_position);
-                            String select_location_type = Arraylist_location_type.get(location_position);
-                            String location = select_location_id + "-" + select_location_type;
-                            Arraylist_selected_final_location.add(location);
-                            str_Investor_location = TextUtils.join(", ", Arraylist_selected_final_location);
-
-                        }
-
-                    } else {
-
-                    }
-
-
-                    System.out.println("FINAL SELECTED LOCATION :: " + str_Investor_location);
-
+                    String str_return_of_investment_minimum = txt_return_of_investment_minimum.getText().toString();
+                    String str_return_of_investment_maximum = txt_return_of_investment_maximum.getText().toString();
 
                     //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
                     SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
                     editor_filter.putString("str_main_filter_type", str_main_filter);
-                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
-                    editor_filter.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_filter_location", str_final_location_update);
+                    editor_filter.putString("str_filter_industry", str_final_industry_update);
                     //SEEKBAR VALUES
                     editor_filter.putString("str_investor_investment_size_minimum", str_investor_investment_size_minimum);
                     editor_filter.putString("str_investor_investment_size_maximum", str_investor_investment_size_maximum);
-                    editor_filter.putString("str_investor_location", str_Investor_location);
-                    editor_filter.commit();
+                    editor_filter.putString("str_return_of_investment_minimum", str_return_of_investment_minimum);
+                    editor_filter.putString("str_return_of_investment_maximum", str_return_of_investment_maximum);
 
-                    System.out.println("str_main_filter_type" + str_main_filter);
-                    System.out.println("str_final_location_update" + str_final_location_update);
-                    System.out.println("str_final_industry_update" + str_final_industry_update);
-                    System.out.println("str_investor_investment_size_minimum" + str_investor_investment_size_minimum);
-                    System.out.println("str_investor_investment_size_maximum" + str_investor_investment_size_maximum);
-                    System.out.println("str_Investor_location" + str_Investor_location);
+                    editor_filter.commit();
 
                     Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                     i.putExtra("type", str_main_filter);
@@ -547,44 +488,31 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     System.out.println(" Button Clicked & Came inside Franchises ");
 
                     //SEEKBAR VALUES TO STRING
-                    String str_franchise_investment_size_minimum = txt_selling_price_minimum.getText().toString();
-                    String str_franchise_investment_size_maximum = txt_selling_price_maximum.getText().toString();
+                    String str_franchise_investment_size_minimum = txt_fran_investment_size_minimum.getText().toString();
+                    String str_franchise_investment_size_maximum = txt_fran_investment_size_maximum.getText().toString();
 
-                    String str_franchise_monthly_sales_minimum = txt_monthly_sales_minimum.getText().toString();
-                    String str_franchise_monthly_sales_maximum = txt_monthly_sales_maximum.getText().toString();
+                    String str_franchise_established_minimum = txt_fran_established_minimum.getText().toString();
+                    String str_franchise_established_maximum = txt_fran_established_maximum.getText().toString();
 
-                    String str_franchise_established_minimum = txt_established_minimum.getText().toString();
-                    String str_franchise_established_maximum = txt_established_maximum.getText().toString();
-
+                    String str_franchise_expected_return_minimum = txt_expected_return_minimum.getText().toString();
+                    String str_franchise_expected_return_maximum = txt_expected_return_maximum.getText().toString();
 
                     //PUTTING THE FILTER VALUES IN SHARED PREFERENCES
                     SharedPreferences sharedPreferences_filter = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor_filter = sharedPreferences_filter.edit();
                     //FILTER TYPE AND MULTISELECT LOCATION AND INDUSTRY VALUES
                     editor_filter.putString("str_main_filter_type", str_main_filter);
-                    editor_filter.putString("str_franchise_headquaters_location", str_franchise_headquaters_location);
-                    editor_filter.putString("str_interested_business_locations", str_final_location_update);
-                    editor_filter.putString("str_interested_industries", str_final_industry_update);
+                    editor_filter.putString("str_filter_location", str_final_location_update);
+                    editor_filter.putString("str_filter_industry", str_final_industry_update);
                     //SEEKBAR VALUES
                     editor_filter.putString("str_franchise_investment_size_minimum", str_franchise_investment_size_minimum);
                     editor_filter.putString("str_franchise_investment_size_maximum", str_franchise_investment_size_maximum);
-                    editor_filter.putString("str_franchise_monthly_sales_minimum", str_franchise_monthly_sales_minimum);
-                    editor_filter.putString("str_franchise_monthly_sales_maximum", str_franchise_monthly_sales_maximum);
                     editor_filter.putString("str_franchise_established_minimum", str_franchise_established_minimum);
                     editor_filter.putString("str_franchise_established_maximum", str_franchise_established_maximum);
+                    editor_filter.putString("str_franchise_expected_return_minimum", str_franchise_expected_return_minimum);
+                    editor_filter.putString("str_franchise_expected_return_maximum", str_franchise_expected_return_maximum);
 
                     editor_filter.commit();
-
-                    System.out.println("str_main_filter_type" + str_main_filter);
-                    System.out.println("str_franchise_headquaters_location" + str_franchise_headquaters_location);
-                    System.out.println("str_final_location_update" + str_final_location_update);
-                    System.out.println("str_final_industry_update" + str_final_industry_update);
-                    System.out.println("str_franchise_investment_size_minimum :: " + str_franchise_investment_size_minimum);
-                    System.out.println("str_franchise_investment_size_maximum :: " + str_franchise_investment_size_maximum);
-                    System.out.println("str_franchise_monthly_sales_minimum :: " + str_franchise_monthly_sales_minimum);
-                    System.out.println("str_franchise_monthly_sales_maximum :: " + str_franchise_monthly_sales_maximum);
-                    System.out.println("str_franchise_established_minimum :: " + str_franchise_established_minimum);
-                    System.out.println("str_franchise_established_maximum :: " + str_franchise_established_maximum);
 
                     Intent i = new Intent(Activity_Filter_Business_For_Sale.this, MainActivity.class);
                     i.putExtra("type", str_main_filter);
@@ -803,56 +731,77 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                     if (success == 1) {
 
                         JSONObject obj1 = obj.getJSONObject("data");
-                        String min_buisness_investment = obj1.getString(TAG_MIN_BUISNESS_INVESTMENT);
-                        String max_buisness_investment = obj1.getString(TAG_MAX_BUISNESS_INVESTMENT);
-                        String min_business_ebitda = obj1.getString(TAG_MIN_BUSINESS_EBITDA);
-                        String max_business_ebitda = obj1.getString(TAG_MAX_BUSINESS_EBITDA);
+
+
+                        String business_month_sales_min = obj1.getString(TAG_BUSINESS_MONTH_SALES_MIN);
+                        String business_month_sales_max = obj1.getString(TAG_BUSINESS_MONTH_SALES_MAX);
+                        String business_tentative_price_min = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE_MIN);
+                        String business_tentative_price_max = obj1.getString(TAG_BUSINESS_TENTATIVE_PRICE_MAX);
+                        String business_yearly_sales_min = obj1.getString(TAG_BUSINESS_YEARLY_SALES_MIN);
+                        String business_yearly_sales_max = obj1.getString(TAG_BUSINESS_YEARLY_SALES_MAX);
                         String min_user_established = obj1.getString(TAG_MIN_USER_ESTABLISHED);
                         String max_user_established = obj1.getString(TAG_MAX_USER_ESTABLISHED);
                         String min_assets_purchased = obj1.getString(TAG_MIN_ASSETS_PURCHASED);
                         String max_assets_purchased = obj1.getString(TAG_MAX_ASSETS_PURCHASED);
                         String min_sell_lease_price = obj1.getString(TAG_MIN_SELL_LEASE_PRICE);
                         String max_sell_lease_price = obj1.getString(TAG_MAX_SELL_LEASE_PRICE);
-                        String min_sales = obj1.getString(TAG_MIN_SALES);
-                        String max_sales = obj1.getString(TAG_MAX_SALES);
+                        String business_month_expense_min = obj1.getString(TAG_BUSINESS_MONTH_EXPENSE_MIN);
+                        String business_month_expense_max = obj1.getString(TAG_BUSINESS_MONTH_EXPENSE_MAX);
+                        String business_month_cashflow_min = obj1.getString(TAG_BUSINESS_MONTH_CASHFLOW_MIN);
+                        String business_month_cashflow_max = obj1.getString(TAG_BUSINESS_MONTH_CASHFLOW_MAX);
                         String investor_currency_from = obj1.getString(TAG_INVESTOR_CURRENCY_FROM);
                         String investor_currency_to = obj1.getString(TAG_INVESTOR_CURRENCY_TO);
+                        String investor_roi_min = obj1.getString(TAG_INVESTOR_ROI_MIN);
+                        String investor_roi_max = obj1.getString(TAG_INVESTOR_ROI_MAX);
                         String franchise_min_investment = obj1.getString(TAG_FRANCHISE_MIN_INVESTMENT);
                         String franchise_max_investment = obj1.getString(TAG_FRANCHISE_MAX_INVESTMENT);
-                        String franchise_min_revenue = obj1.getString(TAG_FRANCHISE_MIN_REVENUE);
-                        String franchise_max_revenue = obj1.getString(TAG_FRANCHISE_MAX_REVENUE);
                         String franchise_min_established = obj1.getString(TAG_FRANCHISE_MIN_ESTABLISHED);
                         String franchise_max_established = obj1.getString(TAG_FRANCHISE_MAX_ESTABLISHED);
+                        String franchise_min_revenues = obj1.getString(TAG_FRANCHISE_MIN_REVENUES);
+                        String franchise_max_revenues = obj1.getString(TAG_FRANCHISE_MAX_REVENUES);
+                        //   String advisor_min_investment = obj1.getString(TAG_ADVISOR_MIN_INVESTMENT);
+                        //   String advisor_max_investment = obj1.getString(TAG_ADVISOR_MAX_INVESTMENT);
 
-                        float flt_min_buisness_investment = Float.parseFloat(min_buisness_investment);
-                        float flt_max_buisness_investment = Float.parseFloat(max_buisness_investment);
-                        float flt_min_business_ebitda = Float.parseFloat(min_business_ebitda);
-                        float flt_max_business_ebitda = Float.parseFloat(max_business_ebitda);
+
+                        float flt_business_month_sales_min = Float.parseFloat(business_month_sales_min);
+                        float flt_business_month_sales_max = Float.parseFloat(business_month_sales_max);
+                        float flt_business_tentative_price_min = Float.parseFloat(business_tentative_price_min);
+                        float flt_business_tentative_price_max = Float.parseFloat(business_tentative_price_max);
+                        float flt_business_yearly_sales_min = Float.parseFloat(business_yearly_sales_min);
+                        float flt_business_yearly_sales_max = Float.parseFloat(business_yearly_sales_max);
                         float flt_min_user_established = Float.parseFloat(min_user_established);
                         float flt_max_user_established = Float.parseFloat(max_user_established);
                         float flt_min_assets_purchased = Float.parseFloat(min_assets_purchased);
                         float flt_max_assets_purchased = Float.parseFloat(max_assets_purchased);
                         float flt_min_sell_lease_price = Float.parseFloat(min_sell_lease_price);
                         float flt_max_sell_lease_price = Float.parseFloat(max_sell_lease_price);
-                        float flt_min_sales = Float.parseFloat(min_sales);
-                        float flt_max_sales = Float.parseFloat(max_sales);
+                        float flt_business_month_expense_min = Float.parseFloat(business_month_expense_min);
+                        float flt_business_month_expense_max = Float.parseFloat(business_month_expense_max);
+                        float flt_business_month_cashflow_min = Float.parseFloat(business_month_cashflow_min);
+                        float flt_business_month_cashflow_max = Float.parseFloat(business_month_cashflow_max);
                         float flt_investor_currency_from = Float.parseFloat(investor_currency_from);
                         float flt_investor_currency_to = Float.parseFloat(investor_currency_to);
+                        float flt_investor_roi_min = Float.parseFloat(investor_roi_min);
+                        float flt_investor_roi_max = Float.parseFloat(investor_roi_max);
                         float flt_franchise_min_investment = Float.parseFloat(franchise_min_investment);
                         float flt_franchise_max_investment = Float.parseFloat(franchise_max_investment);
-                        float flt_franchise_min_revenue = Float.parseFloat(franchise_min_revenue);
-                        float flt_franchise_max_revenue = Float.parseFloat(franchise_max_revenue);
                         float flt_franchise_min_established = Float.parseFloat(franchise_min_established);
                         float flt_franchise_max_established = Float.parseFloat(franchise_max_established);
+                        float flt_franchise_min_revenues = Float.parseFloat(franchise_min_revenues);
+                        float flt_franchise_max_revenues = Float.parseFloat(franchise_max_revenues);
+
+                        //   float flt_advisor_min_investment = Float.parseFloat(advisor_min_investment);
+                        //   float flt_advisor_max_investment = Float.parseFloat(advisor_max_investment);
+
 
                         if (str_main_filter.equals("Business For sale")) {
 
 
-                            // Investment Size
-                            seekbar_selling_price.setSteps(10);
-                            seekbar_selling_price.setMinStartValue(flt_min_buisness_investment);
-                            seekbar_selling_price.setMaxValue(flt_max_buisness_investment);
-                            seekbar_selling_price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            // SELLING_PRICE
+                            Seekbar_Selling_Price.setSteps(1);
+                            Seekbar_Selling_Price.setMinStartValue(flt_business_tentative_price_min);
+                            Seekbar_Selling_Price.setMaxValue(flt_business_tentative_price_max);
+                            Seekbar_Selling_Price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
                                     txt_selling_price_minimum.setText(String.valueOf(minValue));
@@ -860,32 +809,35 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
                                 }
                             });
 
-                            // Runrate Sales
-                            seekbar_yearly_revenue.setMinStartValue(flt_min_sales);
-                            seekbar_yearly_revenue.setMaxValue(flt_max_sales);
-                            seekbar_yearly_revenue.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            // YEARLY_REVENUE
+                            Seekbar_Yearly_Revenue.setSteps(1);
+                            Seekbar_Yearly_Revenue.setMinStartValue(flt_business_month_sales_min);
+                            Seekbar_Yearly_Revenue.setMaxValue(flt_business_month_sales_max);
+                            Seekbar_Yearly_Revenue.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_runrate_sales_minimum.setText(String.valueOf(minValue));
-                                    txt_runrate_sales_maximum.setText(String.valueOf(maxValue));
+                                    txt_yearly_revenue_minimum.setText(String.valueOf(minValue));
+                                    txt_yearly_revenue_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
 
-                            // EBITA
-                            seekbar_monthly_cashflow.setMinStartValue(flt_min_business_ebitda);
-                            seekbar_monthly_cashflow.setMaxValue(flt_max_business_ebitda);
-                            seekbar_monthly_cashflow.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            // MONTHLY_CASHFLOW
+                            Seekbar_Monthly_Cashflow.setSteps(1);
+                            Seekbar_Monthly_Cashflow.setMinStartValue(flt_business_month_cashflow_min);
+                            Seekbar_Monthly_Cashflow.setMaxValue(flt_business_month_cashflow_max);
+                            Seekbar_Monthly_Cashflow.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_ebitda_minimum.setText(String.valueOf(minValue));
-                                    txt_ebitda_maximum.setText(String.valueOf(maxValue));
+                                    txt_monthly_cashflow_minimum.setText(String.valueOf(minValue));
+                                    txt_monthly_cashflow_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
 
                             // ESTABLISED
-                            seekbar_established.setMinStartValue(flt_min_user_established);
-                            seekbar_established.setMaxValue(flt_max_user_established);
-                            seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            Seekbar_Established.setSteps(1);
+                            Seekbar_Established.setMinValue(flt_min_user_established);
+                            Seekbar_Established.setMaxValue(flt_max_user_established);
+                            Seekbar_Established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
                                     txt_established_minimum.setText(String.valueOf(minValue));
@@ -895,54 +847,90 @@ public class Activity_Filter_Business_For_Sale extends AppCompatActivity {
 
                         } else if (str_main_filter.equals("Investment Oppourtinites")) {
 
-                            // Investment Size
-                            seekbar_selling_price.setMinStartValue(flt_investor_currency_from);
-                            seekbar_selling_price.setMaxValue(flt_investor_currency_to);
-                            seekbar_selling_price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+
+                            // INVESTMENT SIZE
+                            Seekbar_Investment_size.setSteps(1);
+                            Seekbar_Investment_size.setMinStartValue(flt_investor_currency_from);
+                            Seekbar_Investment_size.setMaxValue(flt_investor_currency_to);
+                            Seekbar_Investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_selling_price_minimum.setText(String.valueOf(minValue));
-                                    txt_selling_price_maximum.setText(String.valueOf(maxValue));
+                                    txt_investment_size_minimum.setText(String.valueOf(minValue));
+                                    txt_investment_size_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
+
+                            // RETURN_OF_INVESTMENT
+                            Seekbar_Return_Of_Investment.setSteps(1);
+                            Seekbar_Return_Of_Investment.setMinStartValue(flt_investor_roi_min);
+                            Seekbar_Return_Of_Investment.setMaxValue(flt_investor_roi_max);
+                            Seekbar_Return_Of_Investment.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_return_of_investment_minimum.setText(String.valueOf(minValue));
+                                    txt_return_of_investment_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
+
 
                         } else if (str_main_filter.equals("Franchise Oppourtinites")) {
 
                             System.out.println("CAME Inside Franchises");
 
-                            // Investment Size
-                            seekbar_selling_price.setSteps(10);
-                            seekbar_selling_price.setMinStartValue(flt_franchise_min_investment);
-                            seekbar_selling_price.setMaxValue(flt_franchise_max_investment);
-                            seekbar_selling_price.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+
+                            //FRANCHISE INVESTMENT SIZE
+                            Seekbar_Fran_Investment_size.setSteps(1);
+                            Seekbar_Fran_Investment_size.setMinStartValue(flt_franchise_min_investment);
+                            Seekbar_Fran_Investment_size.setMaxValue(flt_franchise_max_investment);
+                            Seekbar_Fran_Investment_size.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_selling_price_minimum.setText(String.valueOf(minValue));
-                                    txt_selling_price_maximum.setText(String.valueOf(maxValue));
+                                    txt_fran_investment_size_minimum.setText(String.valueOf(minValue));
+                                    txt_fran_investment_size_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
 
-                            // MONTHLY SALES
-                            seekbar_monthly_sales.setMinStartValue(flt_franchise_min_revenue);
-                            seekbar_monthly_sales.setMaxValue(flt_franchise_max_revenue);
-                            seekbar_monthly_sales.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            // FRANCHISE ESTABLISHED
+                            Seekbar_Fran_Established.setSteps(1);
+                            Seekbar_Fran_Established.setMinValue(flt_franchise_min_established);
+                            Seekbar_Fran_Established.setMaxValue(flt_franchise_max_established);
+                            Seekbar_Fran_Established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_monthly_sales_minimum.setText(String.valueOf(minValue));
-                                    txt_monthly_sales_maximum.setText(String.valueOf(maxValue));
+                                    txt_fran_established_minimum.setText(String.valueOf(minValue));
+                                    txt_fran_established_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
 
-                            // ESTABLISED
-                            seekbar_established.setMinStartValue(flt_franchise_min_established);
-                            seekbar_established.setMaxValue(flt_franchise_max_established);
-                            seekbar_established.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                            // EXPECTED_RETURN
+                            Seekbar_Fran_Investment_size.setSteps(1);
+                            Seekbar_Expected_Return.setMinStartValue(flt_franchise_min_revenues);
+                            Seekbar_Expected_Return.setMaxValue(flt_franchise_max_revenues);
+                            Seekbar_Expected_Return.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                                 @Override
                                 public void valueChanged(Number minValue, Number maxValue) {
-                                    txt_established_minimum.setText(String.valueOf(minValue));
-                                    txt_established_maximum.setText(String.valueOf(maxValue));
+                                    txt_expected_return_minimum.setText(String.valueOf(minValue));
+                                    txt_expected_return_maximum.setText(String.valueOf(maxValue));
                                 }
                             });
+
+                        } else if (str_main_filter.equals("Advisors")) {
+
+                            System.out.println("CAME Inside Franchises");
+
+                         /*
+                            // ADVISOR INVESTMENT
+                            Seekbar_Advisor_Investment.setSteps(1);
+                            Seekbar_Advisor_Investment.setMinStartValue(flt_advisor_min_investment);
+                            Seekbar_Advisor_Investment.setMaxValue(flt_advisor_max_investment);
+                            Seekbar_Advisor_Investment.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                                @Override
+                                public void valueChanged(Number minValue, Number maxValue) {
+                                    txt_adv_inves_size_minimum.setText(String.valueOf(minValue));
+                                    txt_adv_inves_size_maximum.setText(String.valueOf(maxValue));
+                                }
+                            });
+*/
 
                         }
 

@@ -88,7 +88,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     TextView t1;
 
-    CardView Cardview_spn_others, Cardview_spn_selling_leasing;
+    CardView Cardview_spn_others, Cardview_spn_selling_leasing, Cardview_user_profiles;
 
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
@@ -251,7 +251,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Business Profile");
+        getSupportActionBar().setTitle("Update Business Profile");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -329,6 +329,7 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         Cardview_spn_others = (CardView) findViewById(R.id.card_view_three);
         Cardview_spn_selling_leasing = (CardView) findViewById(R.id.card_view_interested_leasing_business);
+        Cardview_user_profiles = (CardView) findViewById(R.id.card_view_profiles_viewed);
 
         Cardview_spn_others.setVisibility(View.GONE);
         Cardview_spn_selling_leasing.setVisibility(View.GONE);
@@ -400,6 +401,18 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
                 ImagePicker();
             }
         });
+
+        Cardview_user_profiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_List_Bookmark_View.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
 
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override

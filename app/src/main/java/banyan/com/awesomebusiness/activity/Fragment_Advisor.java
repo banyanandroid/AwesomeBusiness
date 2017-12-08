@@ -223,7 +223,7 @@ public class Fragment_Advisor extends Fragment {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("profile_type_from", "Franchise Oppourtinites");
+                editor.putString("profile_type_from", "Advisors");
                 editor.commit();
 
                 Intent i = new Intent(getActivity(), Activity_Filter_Business_For_Sale.class);
@@ -348,7 +348,7 @@ public class Fragment_Advisor extends Fragment {
                 actionSheet.dismiss();
             }
         });
-        actionSheet.addAction("Established Year(oldest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -356,7 +356,7 @@ public class Fragment_Advisor extends Fragment {
             }
         });
 
-        actionSheet.addAction("Established Year(newest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -364,7 +364,7 @@ public class Fragment_Advisor extends Fragment {
             }
         });
 
-        actionSheet.addAction("EBITDA", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -372,7 +372,7 @@ public class Fragment_Advisor extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -380,7 +380,15 @@ public class Fragment_Advisor extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size( high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Profit(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Profit(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -395,19 +403,22 @@ public class Fragment_Advisor extends Fragment {
 
         if (title.equals("Recently Listed")) {
             str_sort_by = "1";
-        } else if (title.equals("Established Year(oldest first)")) {
+        } else if (title.equals("Selling Price(low to high)")) {
             str_sort_by = "2";
-        } else if (title.equals("Established Year(newest first)")) {
+        } else if (title.equals("Selling Price(high to low)")) {
             str_sort_by = "3";
-        } else if (title.equals("EBITDA")) {
+        } else if (title.equals("Revenue(low to high)")) {
             str_sort_by = "4";
-        } else if (title.equals("Investment size(low to high)")) {
+        } else if (title.equals("Revenue(high to low)")) {
             str_sort_by = "5";
-        } else if (title.equals("Investment size( high to low)")) {
+        } else if (title.equals("Profit(low to high)")) {
             str_sort_by = "6";
+        } else if (title.equals("Profit(high to low)")) {
+            str_sort_by = "7";
         } else {
             str_sort_by = "";
         }
+
 
         Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
         try {

@@ -10,18 +10,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
 import banyan.com.awesomebusiness.R;
 
 /**
- * Created by SJR on 04-09-17.
+ * Created by Banyan on 07-Dec-17.
  */
 
-public class Activity_User_Profiles extends AppCompatActivity {
+public class Activity_List_Bookmark_View extends AppCompatActivity {
 
     private Toolbar mToolbar;
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 4 ;
+    public static int int_items = 3;
 
 
     @Override
@@ -48,7 +49,7 @@ public class Activity_User_Profiles extends AppCompatActivity {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new Activity_List_Bookmark_View.MyAdapter(getSupportFragmentManager()));
 
         /**
          * Now , this is a workaround ,
@@ -77,13 +78,15 @@ public class Activity_User_Profiles extends AppCompatActivity {
          */
 
         @Override
-        public Fragment getItem(int position)
-        {
-            switch (position){
-                case 0 : return new Tab_Business_Profile();
-                case 1 : return new Tab_Investor_Profile();
-                case 2 : return new Tab_Franchises_Profile();
-                case 3 : return new Tab_Advisor_Profile();
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new Tab_User_Profile_Bookmarked();
+                case 1:
+                    return new Tab_User_Profile_Viewed();
+                case 2:
+                    return new Tab_User_Profile_Contacted();
+
             }
             return null;
         }
@@ -102,16 +105,14 @@ public class Activity_User_Profiles extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            switch (position){
+            switch (position) {
 
-                case 0 :
-                    return "Busineses\nProfile";
-                case 1 :
-                    return "Investor\nProfile";
-                case 2 :
-                    return "Franchises\nProfile";
-                case 3 :
-                    return "Advisor\nProfile";
+                case 0:
+                    return "Bookmarked";
+                case 1:
+                    return "Viewed";
+                case 2:
+                    return "Contacted";
 
             }
             return null;

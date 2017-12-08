@@ -78,6 +78,11 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
     public static final String TAG_COUNTRY_CURRENCY = "country_currency";
     public static final String TAG_FRANCHISE_STATUS = "franchise_status";
 
+    public static final String TAG_FRANCHISE_VIEW = "franchise_view";
+    public static final String TAG_FRANCHISE_CONTACT = "franchise_contact";
+    public static final String TAG_FRANCHISE_BOOKMARKS = "franchise_bookmarks";
+    public static final String TAG_FRANCHISE_APPEARED = "franchise_appearence";
+
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
 
@@ -201,6 +206,11 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                 String franchise_currency = Franchise_profile_list.get(position).get(TAG_FRANCHISE_CURRENCY);
                 String country_currency = Franchise_profile_list.get(position).get(TAG_COUNTRY_CURRENCY);
 
+                String franchise_view = Franchise_profile_list.get(position).get(TAG_FRANCHISE_VIEW);
+                String franchise_contact = Franchise_profile_list.get(position).get(TAG_FRANCHISE_CONTACT);
+                String franchise_bookmarks = Franchise_profile_list.get(position).get(TAG_FRANCHISE_BOOKMARKS);
+                String franchise_appearence = Franchise_profile_list.get(position).get(TAG_FRANCHISE_APPEARED);
+
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -225,6 +235,12 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                 editor.putString("franchise_logo", franchise_logo);
                 editor.putString("franchise_currency", franchise_currency);
                 editor.putString("country_currency", country_currency);
+
+                editor.putString("franchise_view", franchise_view);
+                editor.putString("franchise_contact", franchise_contact);
+                editor.putString("franchise_bookmarks", franchise_bookmarks);
+                editor.putString("franchise_appearence", franchise_appearence);
+
 
                 editor.commit();
 
@@ -305,6 +321,12 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             String franchise_currency = obj1.getString(TAG_FRANCHISE_CURRENCY);
                             String country_currency = obj1.getString(TAG_COUNTRY_CURRENCY);
                             String franchise_status = obj1.getString(TAG_FRANCHISE_STATUS);
+
+                            String franchise_view = obj1.getString(TAG_FRANCHISE_VIEW);
+                            String franchise_contact = obj1.getString(TAG_FRANCHISE_CONTACT);
+                            String franchise_bookmarks = obj1.getString(TAG_FRANCHISE_BOOKMARKS);
+                            String franchise_appearence = obj1.getString(TAG_FRANCHISE_APPEARED);
+
 
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
@@ -405,6 +427,11 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
                             map.put(TAG_IMAGE_PATH, str_final_image);
+
+                            map.put(TAG_FRANCHISE_VIEW, franchise_view);
+                            map.put(TAG_FRANCHISE_CONTACT, franchise_contact);
+                            map.put(TAG_FRANCHISE_BOOKMARKS, franchise_bookmarks);
+                            map.put(TAG_FRANCHISE_APPEARED, franchise_appearence);
 
                             /*
                             map.put(TAG_LOCATION_NAME, location_name);

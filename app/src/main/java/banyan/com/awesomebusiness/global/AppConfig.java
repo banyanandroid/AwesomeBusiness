@@ -4,7 +4,9 @@ public class AppConfig {
 
     //public static String BASE_URL = "http://www.epictech.in/api_awesome";
 
-    public static String BASE_URL = "http://awesomebusinesses.com/api";
+    public static String BASE_URL = "http://awesomebusinesses.com/apitest";
+
+    //  public static String BASE_URL = "http://awesomebusinesses.com/api";
 
     public static String url_ip_registration = BASE_URL + "/index.php?Apicontroller/";
 
@@ -59,6 +61,7 @@ public class AppConfig {
     public static String url_user_business_profiles = BASE_URL + "/index.php?Apicontroller/listuserbusinessprofile";
     public static String url_user_investor_profiles = BASE_URL + "/index.php?Apicontroller/listuserinvestorprofile";
     public static String url_user_franchise_profiles = BASE_URL + "/index.php?Apicontroller/listuserfranchiseprofile";
+    public static String url_user_advisor_profiles = BASE_URL + "/index.php?Apicontroller/listuseradvisorprofile";
 
     //User Profiles Detailed view
     public static String url_user_business_profile_update = BASE_URL + "/index.php?Apicontroller/listusersinglebusinessprofileedit";
@@ -88,6 +91,13 @@ public class AppConfig {
     /*********  Advisor Profile *********/
     public static String url_dashboard_search_result_advisor_profile = BASE_URL + "/index.php?Apicontroller/listalladvisorprofile";
     public static String url_dashboard_search_result_advisor_profile_detail = BASE_URL + "/index.php?Apicontroller/listsingleadvisorprofile";
+
+    //////*********URL's For Seeing Who viewed , bookmarked , contacted our profiles *********//////
+
+    /*********  Business Profile *********/
+    public static String url_bookmarks_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusiness_bookmarkviewed";
+    public static String url_viewed_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusinessviewed";
+    public static String url_contacted_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusinesscontact";
 
 }
 

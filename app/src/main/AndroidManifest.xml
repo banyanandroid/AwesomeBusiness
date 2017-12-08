@@ -127,6 +127,9 @@
             android:name=".activity.Activity_DetailedView_Advisor_Profile"
             android:label="Preview"></activity>
 
+        <activity android:name=".activity.Activity_List_Bookmark_View"
+            android:label="User Connect"></activity>
+
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

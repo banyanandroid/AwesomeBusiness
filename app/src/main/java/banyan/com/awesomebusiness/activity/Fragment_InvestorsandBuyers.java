@@ -122,11 +122,12 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             str_filter_sole_proprietorship, str_filter_others = "";
 */
 
-    String str_main_filter_type, str_investor_buyer_role_type, str_interested_business_locations,
-            str_interested_industries, str_investor_investment_size_minimum,
-            str_investor_investment_size_maximum, str_investor_location, str_investor_interested_in;
+    String str_main_filter_type, str_filter_location,
+            str_filter_industry, str_investor_investment_size_minimum,
+            str_investor_investment_size_maximum, str_return_of_investment_minimum,
+            str_return_of_investment_maximum;
 
-    String str_con_investment = "";
+    String str_con_investment, str_con_roi = "";
 
     static ArrayList<HashMap<String, String>> Investor_profile_list;
 
@@ -174,18 +175,19 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         System.out.println("SHARED Search str_final_search : " + str_final_search);
         System.out.println("SHARED Search str_search_txt : " + str_search_txt);
 
+
         // From Filter
         str_main_filter_type = sharedPreferences.getString("str_main_filter_type", "str_main_filter_type");
-        str_investor_buyer_role_type = sharedPreferences.getString("str_investor_buyer_role_type", "str_investor_buyer_role_type");
-        str_interested_business_locations = sharedPreferences.getString("str_interested_business_locations", "str_interested_business_locations");
-        str_interested_industries = sharedPreferences.getString("str_interested_industries", "str_interested_industries");
+        str_filter_location = sharedPreferences.getString("str_filter_location", "str_filter_location");
+        str_filter_industry = sharedPreferences.getString("str_filter_industry", "str_filter_industry");
         str_investor_investment_size_minimum = sharedPreferences.getString("str_investor_investment_size_minimum", "str_investor_investment_size_minimum");
         str_investor_investment_size_maximum = sharedPreferences.getString("str_investor_investment_size_maximum", "str_investor_investment_size_maximum");
-        str_investor_location = sharedPreferences.getString("str_investor_location", "str_investor_location");
-        str_investor_interested_in = sharedPreferences.getString("str_investor_interested_in", "str_investor_interested_in");
+        str_return_of_investment_minimum = sharedPreferences.getString("str_return_of_investment_minimum", "str_return_of_investment_minimum");
+        str_return_of_investment_maximum = sharedPreferences.getString("str_return_of_investment_maximum", "str_return_of_investment_maximum");
 
 
         str_con_investment = str_investor_investment_size_minimum + "," + str_investor_investment_size_maximum;
+        str_con_roi = str_return_of_investment_minimum + "," + str_return_of_investment_maximum;
 
 
         try {
@@ -314,7 +316,18 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                             i.putExtra("type", "Franchise Oppourtinites");
                             startActivity(i);
 
-                        } else {
+                        } else if (str_search_title.equals("Advisors")) {
+
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("str_main_filter_type", "Advisors");
+                            editor.putString("search_key", str_search_txt);
+                            editor.putString("search_id", str_final_search);
+                            editor.commit();
+
+                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            i.putExtra("type", "Advisors");
+                            startActivity(i);
 
                         }
                     }
@@ -354,7 +367,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
                 actionSheet.dismiss();
             }
         });
-        actionSheet.addAction("Established Year(oldest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -362,7 +375,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             }
         });
 
-        actionSheet.addAction("Established Year(newest first)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Selling Price(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -370,7 +383,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             }
         });
 
-        actionSheet.addAction("EBITDA", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -378,7 +391,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Revenue(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -386,7 +399,15 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             }
         });
 
-        actionSheet.addAction("Investment size( high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+        actionSheet.addAction("Profit(low to high)", ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override
+            public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                actionSheet.dismiss();
+            }
+        });
+
+        actionSheet.addAction("Profit(high to low)", ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override
             public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -401,19 +422,22 @@ public class Fragment_InvestorsandBuyers extends Fragment {
 
         if (title.equals("Recently Listed")) {
             str_sort_by = "1";
-        } else if (title.equals("Established Year(oldest first)")) {
+        } else if (title.equals("Selling Price(low to high)")) {
             str_sort_by = "2";
-        } else if (title.equals("Established Year(newest first)")) {
+        } else if (title.equals("Selling Price(high to low)")) {
             str_sort_by = "3";
-        } else if (title.equals("EBITDA")) {
+        } else if (title.equals("Revenue(low to high)")) {
             str_sort_by = "4";
-        } else if (title.equals("Investment size(low to high)")) {
+        } else if (title.equals("Revenue(high to low)")) {
             str_sort_by = "5";
-        } else if (title.equals("Investment size( high to low)")) {
+        } else if (title.equals("Profit(low to high)")) {
             str_sort_by = "6";
+        } else if (title.equals("Profit(high to low)")) {
+            str_sort_by = "7";
         } else {
             str_sort_by = "";
         }
+
 
         Toast.makeText(getActivity(), "Sort By " + title, Toast.LENGTH_LONG).show();
         try {
@@ -561,33 +585,44 @@ public class Fragment_InvestorsandBuyers extends Fragment {
         } else {
 
         }
-        if (str_investor_buyer_role_type.equals("str_investor_buyer_role_type")) {
-            str_investor_buyer_role_type = "";
-        } else {
 
-        }
-        if (str_interested_business_locations.equals("str_interested_business_locations")) {
-            str_interested_business_locations = "";
+        if (str_con_roi.equals("str_return_of_investment_minimum,str_return_of_investment_maximum")) {
+            str_con_roi = "";
         } else {
 
         }
 
-        if (str_interested_industries.equals("str_interested_industries")) {
-            str_interested_industries = "";
+        if (str_filter_location.equals("str_filter_location")) {
+            str_filter_location = "";
         } else {
-
         }
 
-        if (str_investor_location.equals("str_investor_location")) {
-            str_investor_location = "";
+        if (str_filter_industry.equals("str_filter_industry")) {
+            str_filter_industry = "";
         } else {
-
         }
 
-        if (str_investor_interested_in.equals("str_investor_interested_in")) {
-            str_investor_interested_in = "";
+        if (str_investor_investment_size_minimum.equals("str_investor_investment_size_minimum")) {
+            str_investor_investment_size_minimum = "";
         } else {
+        }
 
+
+        if (str_investor_investment_size_maximum.equals("str_investor_investment_size_maximum")) {
+            str_investor_investment_size_maximum = "";
+        } else {
+        }
+
+
+        if (str_return_of_investment_minimum.equals("str_return_of_investment_minimum")) {
+            str_return_of_investment_minimum = "";
+        } else {
+        }
+
+
+        if (str_return_of_investment_maximum.equals("str_return_of_investment_maximum")) {
+            str_return_of_investment_maximum = "";
+        } else {
         }
 
         if (str_final_search.equals("search_id")) {
@@ -624,7 +659,7 @@ public class Fragment_InvestorsandBuyers extends Fragment {
     public void Get_Investor_Profile() {
         String tag_json_obj = "json_obj_req";
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.    url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
+                AppConfig.url_dashboard_search_result_investor_profile, new Response.Listener<String>() {
 
 
             @Override
@@ -770,22 +805,14 @@ public class Fragment_InvestorsandBuyers extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("investor_current_locations", str_investor_location);
+          //      params.put("investor_current_locations", str_investor_location);
                 params.put("investment", str_con_investment);
-                params.put("interest", str_investor_interested_in);
-                params.put("transactions", str_investor_buyer_role_type);
-                params.put("industries", str_interested_industries);
-                params.put("locations", str_interested_business_locations);
+
                 params.put("keyword", str_final_search);
                 params.put("currency", str_user_currency);
 
 
-                System.out.println("investor_current_locations" + str_investor_location);
                 System.out.println("investment" + str_con_investment);
-                System.out.println("interest" + str_investor_interested_in);
-                System.out.println("transactions" + str_investor_buyer_role_type);
-                System.out.println("industries" + str_interested_industries);
-                System.out.println("locations" + str_interested_business_locations);
                 System.out.println("keyword" + str_final_search);
                 System.out.println("currency" + str_user_currency);
 

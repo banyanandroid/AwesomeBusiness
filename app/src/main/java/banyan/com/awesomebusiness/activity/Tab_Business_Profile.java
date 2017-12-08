@@ -52,6 +52,7 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     private ListView List;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+
     public static final String TAG_BUSINESS_ID = "business_id";
     public static final String TAG_BUSINESS_KEY = "business_key";
     public static final String TAG_BUSINESS_SHORT_DES = "buisness_short_description";
@@ -88,6 +89,13 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
     public static final String TAG_BUSINESS_LEGAL_ENTITY_TYPE = "business_legal_entity_type";
     public static final String TAG_BUSINESS_REASON = "business_reason";
     public static final String TAG_BUSINESS_STATUS = "business_status";
+
+    public static final String TAG_EXPIRY = "expiry";
+    public static final String TAG_EXPIRED_ON = "expired_on";
+    public static final String TAG_BUSINESS_VIEW = "business_view";
+    public static final String TAG_BUSINESS_CONTACT = "business_contact";
+    public static final String TAG_BUSINESS_BOOKMARKS = "business_bookmarks";
+    public static final String TAG_BUSINESS_APPEARED = "business_appearence";
 
     public static final String TAG_LOCATION_NAME = "location_name";
     public static final String TAG_LOCATION_KEY = "location_key";
@@ -200,9 +208,16 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 String business_month_sales = Business_profile_list.get(position).get(TAG_BUSINESS_MONTH_SALES);
                 String business_tentative_price = Business_profile_list.get(position).get(TAG_BUSINESS_TENTATIVE_PRICE);
                 String business_legal_entity_type = Business_profile_list.get(position).get(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
+                String business_viewed = Business_profile_list.get(position).get(TAG_BUSINESS_VIEW);
+                String business_contacted = Business_profile_list.get(position).get(TAG_BUSINESS_CONTACT);
+                String business_bookmarked = Business_profile_list.get(position).get(TAG_BUSINESS_BOOKMARKS);
+                String business_appeared = Business_profile_list.get(position).get(TAG_BUSINESS_APPEARED);
 
                 String business_location_name = Business_profile_list.get(position).get(TAG_LOCATION_NAME);
                 String business_location_key = Business_profile_list.get(position).get(TAG_LOCATION_KEY);
+
+                String business_industry_name = Business_profile_list.get(position).get(TAG_INDUSTRY_NAME);
+                String business_industry_key = Business_profile_list.get(position).get(TAG_INDUSTRY_KEY);
 
                 SharedPreferences sharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
@@ -243,8 +258,15 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                 editor.putString("business_month_sales", business_month_sales);
                 editor.putString("business_tentative_price", business_tentative_price);
                 editor.putString("business_legal_entity_type", business_legal_entity_type);
+                editor.putString("business_viewed", business_viewed);
+                editor.putString("business_contacted", business_contacted);
+                editor.putString("business_bookmarked", business_bookmarked);
+                editor.putString("business_appeared", business_appeared);
                 editor.putString("business_location_name", business_location_name);
                 editor.putString("business_location_key", business_location_key);
+                editor.putString("business_industry_name", business_industry_name);
+                editor.putString("business_industry_key", business_industry_key);
+
                 editor.commit();
 
                 Intent i = new Intent(getActivity(), Activity_BusinessProfile_Update.class);
@@ -336,6 +358,11 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             String business_legal_entity_type = obj1.getString(TAG_BUSINESS_LEGAL_ENTITY_TYPE);
                             String business_status = obj1.getString(TAG_BUSINESS_STATUS);
 
+                            String business_viewed = obj1.getString(TAG_BUSINESS_VIEW);
+                            String business_contacted = obj1.getString(TAG_BUSINESS_CONTACT);
+                            String business_bookmarked = obj1.getString(TAG_BUSINESS_BOOKMARKS);
+                            String business_appeared = obj1.getString(TAG_BUSINESS_APPEARED);
+
                             arr_location = obj1.getJSONArray("location");
                             if (arr_location != null) {
                                 Arraylist_update_location.clear();
@@ -424,6 +451,11 @@ public class Tab_Business_Profile extends Fragment implements SwipeRefreshLayout
                             map.put(TAG_LOCATION_NAME, str_final_location);
                             map.put(TAG_INDUSTRY_NAME, str_final_industry);
                             map.put(TAG_IMAGE_PATH, str_final_image);
+
+                            map.put(TAG_BUSINESS_VIEW, business_viewed);
+                            map.put(TAG_BUSINESS_CONTACT, business_contacted);
+                            map.put(TAG_BUSINESS_BOOKMARKS, business_bookmarked);
+                            map.put(TAG_BUSINESS_APPEARED, business_appeared);
 
 
                             Business_profile_list.add(map);

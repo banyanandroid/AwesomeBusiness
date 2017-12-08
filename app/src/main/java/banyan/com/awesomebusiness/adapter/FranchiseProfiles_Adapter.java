@@ -64,6 +64,12 @@ public class FranchiseProfiles_Adapter extends BaseAdapter {
         TextView bus_type = (TextView) v.findViewById(R.id.list_franchise_interest_type);
         TextView bus_location = (TextView) v.findViewById(R.id.list_franchise_location);
         TextView bus_status = (TextView) v.findViewById(R.id.list_franchise_status);
+
+        TextView bus_viewed = (TextView) v.findViewById(R.id.list_fran_viewed);
+        TextView bus_contacted = (TextView) v.findViewById(R.id.list_fran_contacted);
+        TextView bus_bookmarked = (TextView) v.findViewById(R.id.list_fran_bookmarked);
+        TextView bus_appeared = (TextView) v.findViewById(R.id.list_fran_appear);
+
         ImageView prod_img = (ImageView) v.findViewById(R.id.list_franchise_profile);
 
         HashMap<String, String> result = new HashMap<String, String>();
@@ -74,10 +80,20 @@ public class FranchiseProfiles_Adapter extends BaseAdapter {
         String str_bus_location = result.get(Tab_Franchises_Profile.TAG_LOCATION_NAME);
         String str_bus_status = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_STATUS);
 
+        String str_fran_viewed = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_VIEW);
+        String str_fran_contacted = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_CONTACT);
+        String str_fran_bookmarked = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_BOOKMARKS);
+        String str_fran_appeared = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_APPEARED);
+
         bus_desc.setText(str_bus_name);
         bus_type.setText(str_bus_type);
         bus_location.setText(str_bus_location);
         bus_status.setText(str_bus_status);
+
+        bus_viewed.setText(str_fran_viewed);
+        bus_contacted.setText(str_fran_contacted);
+        bus_bookmarked.setText(str_fran_bookmarked);
+        bus_appeared.setText(str_fran_appeared);
 
         String impath = result.get(Tab_Franchises_Profile.TAG_FRANCHISE_LOGO);
 
