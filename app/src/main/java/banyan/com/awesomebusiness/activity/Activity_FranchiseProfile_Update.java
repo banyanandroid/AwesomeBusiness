@@ -272,6 +272,10 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
     Spinner spn_no_of_salespartner_formats;
     String str_no_of_formats = "";
 
+    CardView Cardview_user_profiles;
+
+    Button btn_viewed, btn_bookmarked, btn_contacted, btn_appeared;
+
     // STRING & SEARCHABLE SPINNER  FOR -- THE YEAR COMPANY'S OPERATIONS START
     Spinner spn_years_company_opr_start;
     String str_year_company_opr_start = "";
@@ -454,6 +458,7 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
             spn_years_company_opr_start.setSelection(spinnerPosition);
         }
 
+        Cardview_user_profiles = (CardView) findViewById(R.id.card_view_franchise_profiles_viewed);
 
         cv_format_one = (CardView) findViewById(R.id.card_view_format_one);
         cv_format_one.setVisibility(View.GONE);
@@ -633,6 +638,11 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
         btn_add_brand_logo_pic = (Button) findViewById(R.id.btn_brand_logo);
         btn_submit = (Button) findViewById(R.id.btn_submit);
 
+        btn_viewed = (Button) findViewById(R.id.edt_franchise_prof_btn_viewed);
+        btn_bookmarked = (Button) findViewById(R.id.edt_franchise_prof_btn_bookmarked);
+        btn_contacted = (Button) findViewById(R.id.edt_franchise_prof_btn_contacted);
+        btn_appeared = (Button) findViewById(R.id.edt_franchise_prof_btn_appeared);
+
         // Recycler View
         recyclerView = (RecyclerView) findViewById(R.id.franchise_recycler_view_img);
         mAdapter = new Franchise_Image_Adapter(getApplicationContext(), movieList);
@@ -669,6 +679,61 @@ public class Activity_FranchiseProfile_Update extends AppCompatActivity {
             public void onClick(View view) {
                 image_type = "logo";
                 ImagePicker1();
+            }
+        });
+
+        Cardview_user_profiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_FranchiseProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_viewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_FranchiseProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_bookmarked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_FranchiseProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_contacted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_FranchiseProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_appeared.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_FranchiseProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
             }
         });
 

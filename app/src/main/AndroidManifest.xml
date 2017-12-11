@@ -127,9 +127,17 @@
             android:name=".activity.Activity_DetailedView_Advisor_Profile"
             android:label="Preview"></activity>
 
-        <activity android:name=".activity.Activity_List_Bookmark_View"
+        <activity
+            android:name=".activity.Activity_User_BusinessProfile_Bookmark_View_Contact"
             android:label="User Connect"></activity>
 
+        <activity
+            android:name=".activity.Activity_User_InvestorProfile_Bookmark_View_Contact"
+            android:label="User Connect"></activity>
+
+        <activity
+            android:name=".activity.Activity_User_FranchiseProfile_Bookmark_View_Contact"
+            android:label="User Connect"></activity>
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

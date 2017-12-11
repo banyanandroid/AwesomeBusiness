@@ -90,6 +90,8 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
     CardView Cardview_spn_others, Cardview_spn_selling_leasing, Cardview_user_profiles;
 
+    Button btn_viewed, btn_bookmarked, btn_contacted, btn_appeared;
+
     public static final String TAG_ROLE_ID = "business_role_id";
     public static final String TAG_ROLE_NAME = "business_role_name";
 
@@ -269,6 +271,11 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
 
         btn_update = (Button) findViewById(R.id.bus_prof_update_btn_submit);
 
+        btn_viewed = (Button) findViewById(R.id.edt_business_prof_btn_viewed);
+        btn_bookmarked = (Button) findViewById(R.id.edt_business_prof_btn_bookmarked);
+        btn_contacted = (Button) findViewById(R.id.edt_business_prof_btn_contacted);
+        btn_appeared = (Button) findViewById(R.id.edt_business_prof_btn_appeared);
+
         // AutoCompleteTextView
         spn_i_am = (SearchableSpinner) findViewById(R.id.business_profile_autocomp_i_am);
         spn_i_am.setTitle("Select Yourr Role");
@@ -406,13 +413,56 @@ public class Activity_BusinessProfile_Update extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), Activity_List_Bookmark_View.class);
+                Intent i = new Intent(getApplicationContext(), Activity_User_BusinessProfile_Bookmark_View_Contact.class);
                 startActivity(i);
                 finish();
 
             }
         });
 
+        btn_viewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_BusinessProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_bookmarked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_BusinessProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_contacted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_BusinessProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_appeared.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_BusinessProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
 
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override

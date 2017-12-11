@@ -92,12 +92,25 @@ public class AppConfig {
     public static String url_dashboard_search_result_advisor_profile = BASE_URL + "/index.php?Apicontroller/listalladvisorprofile";
     public static String url_dashboard_search_result_advisor_profile_detail = BASE_URL + "/index.php?Apicontroller/listsingleadvisorprofile";
 
-    //////*********URL's For Seeing Who viewed , bookmarked , contacted our profiles *********//////
-
+    //////*********//////
+    //////URL's For Seeing Who viewed , bookmarked , contacted a particular user's profiles //////
+    //////*********//////
     /*********  Business Profile *********/
-    public static String url_bookmarks_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusiness_bookmarkviewed";
-    public static String url_viewed_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusinessviewed";
-    public static String url_contacted_user_business_profile = BASE_URL + "/index.php?Apicontroller/listbusinesscontact";
+    //////// VALUES POSTED IN THIS URL'S ARE STATIC - CHANGE THEM TO DYNAMIC
+    public static String url_user_businessprofile_bookmarked = BASE_URL + "/index.php?Apicontroller/listbusiness_bookmarkviewed";
+    public static String url_user_businessprofile_viewed = BASE_URL + "/index.php?Apicontroller/listbusinessviewed";
+    public static String url_user_businessprofile_contacted = BASE_URL + "/index.php?Apicontroller/listbusinesscontact";
+    /*********  Investor Profile *********/
+    //////// VALUES POSTED IN THIS URL'S ARE STATIC - CHANGE THEM TO DYNAMIC
+    public static String url_user_investorprofile_bookmarked = BASE_URL + "/index.php?Apicontroller/listinvestor_bookmarkviewed";
+    public static String url_user_investorprofile_viewed = BASE_URL + "/index.php?Apicontroller/listinvestorviewed";
+    public static String url_user_investorprofile_contacted = BASE_URL + "/index.php?Apicontroller/listinvestorcontact";
+    /*********  Franchise Profile *********/
+    //////// VALUES POSTED IN THIS URL'S ARE STATIC - CHANGE THEM TO DYNAMIC
+    public static String url_user_franchiseprofile_bookmarked = BASE_URL + "/index.php?Apicontroller/listfranchise_bookmarkviewed";
+    public static String url_user_franchiseprofile_viewed = BASE_URL + "/index.php?Apicontroller/listfranchiseviewed";
+    public static String url_user_franchiseprofile_contacted = BASE_URL + "/index.php?Apicontroller/listfranchisecontact";
+
 
 }
 

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -85,6 +86,10 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
     MultiAutoCompleteTextView auto_busineeslist, auto_locationlist;
 
     TextView txt_role, txt_interested;
+
+    CardView Cardview_user_profiles;
+
+    Button btn_viewed, btn_bookmarked, btn_contacted, btn_appeared;
 
     SearchableSpinner spn_i_am, spn_interested_in;
 
@@ -237,11 +242,74 @@ public class Activity_InvestorProfile_Update extends AppCompatActivity {
         txt_role = (TextView) findViewById(R.id.invest_prof_upd_txt_your_role);
         txt_interested = (TextView) findViewById(R.id.invest_prof_upd_txt_your_interest);
 
+        Cardview_user_profiles = (CardView) findViewById(R.id.card_view_investor_profiles_viewed);
+
+        btn_viewed = (Button) findViewById(R.id.edt_investor_prof_btn_viewed);
+        btn_bookmarked = (Button) findViewById(R.id.edt_investor_prof_btn_bookmarked);
+        btn_contacted = (Button) findViewById(R.id.edt_investor_prof_btn_contacted);
+        btn_appeared = (Button) findViewById(R.id.edt_investor_prof_btn_appeared);
+
+
         // Searchable Spinner
         spn_i_am = (SearchableSpinner) findViewById(R.id.invest_prof_up_spn_i_am);
         spn_i_am.setTitle("Select Your Role");
         spn_interested_in = (SearchableSpinner) findViewById(R.id.invest_prof_up_spn_intersted);
         spn_interested_in.setTitle("Select Your Interest");
+
+        Cardview_user_profiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_InvestorProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_viewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_InvestorProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_bookmarked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_InvestorProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_contacted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_InvestorProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
+        btn_appeared.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getApplicationContext(), Activity_User_InvestorProfile_Bookmark_View_Contact.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
 
         btn_add_pic = (Button) findViewById(R.id.invest_prof_up_btn_add_photos);
         btn_add_pic.setOnClickListener(new View.OnClickListener() {

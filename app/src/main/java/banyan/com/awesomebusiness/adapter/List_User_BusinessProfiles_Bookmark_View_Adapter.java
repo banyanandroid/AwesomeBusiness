@@ -13,15 +13,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.activity.Tab_Profile_Bookmarks;
-import banyan.com.awesomebusiness.activity.Tab_Profile_Contacted;
-import banyan.com.awesomebusiness.activity.Tab_User_Profile_Contacted;
+import banyan.com.awesomebusiness.activity.Tab_User_BusinessProfile_Bookmarked;
+import banyan.com.awesomebusiness.activity.Tab_User_InvestorProfile_Bookmarked;
 
 /**
  * Created by Banyan on 07-Dec-17.
  */
 
-public class List_UserProfiles_Contacted_Adapter extends BaseAdapter {
+public class List_User_BusinessProfiles_Bookmark_View_Adapter extends BaseAdapter {
     private Activity activity;
     private Context context;
     private LinearLayout singleMessageContainer;
@@ -31,7 +30,7 @@ public class List_UserProfiles_Contacted_Adapter extends BaseAdapter {
 
     private String[] bgColors;
 
-    public List_UserProfiles_Contacted_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
+    public List_User_BusinessProfiles_Bookmark_View_Adapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
         data = d;
         bgColors = activity.getApplicationContext().getResources().getStringArray(R.array.movie_serial_bg);
@@ -55,22 +54,19 @@ public class List_UserProfiles_Contacted_Adapter extends BaseAdapter {
         if (convertView == null)
 
             ///////////
-            v = inflater.inflate(R.layout.list_userprofiles_contacted, null);
+            v = inflater.inflate(R.layout.list_userprofiles_bookmarks_view, null);
 
         ///////////
-        TextView user_name = (TextView) v.findViewById(R.id.txt_user_name);
-        TextView user_about = (TextView) v.findViewById(R.id.txt_user_about);
+        TextView txt_username = (TextView) v.findViewById(R.id.txt_user_name);
 
         HashMap<String, String> result = new HashMap<String, String>();
         result = data.get(position);
 
         ///////////
-        String str_user_name = result.get(Tab_User_Profile_Contacted.TAG_NAME);
-        String str_user_about = result.get(Tab_User_Profile_Contacted.TAG_ABOUT);
+        String str_username = result.get(Tab_User_InvestorProfile_Bookmarked.TAG_USER_NAME);
 
         /////////////
-        user_name.setText(str_user_name);
-        user_about.setText(str_user_about);
+        txt_username.setText(str_username);
 
 
         return v;

@@ -1,9 +1,6 @@
 package banyan.com.awesomebusiness.activity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -30,19 +27,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.adapter.List_UserProfiles_Bookmarks_View_Adapter;
+import banyan.com.awesomebusiness.adapter.List_User_FranchiseProfiles_Bookmark_View_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * Created by Banyan on 07-Dec-17.
+ * Created by Banyan on 09-Dec-17.
  */
 
-public class Tab_User_Profile_Bookmarked extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class Tab_User_FranchiseProfile_Bookmarked extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public Tab_User_Profile_Bookmarked() {
+    public Tab_User_FranchiseProfile_Bookmarked() {
         // Required empty public constructor
     }
 
@@ -63,7 +60,7 @@ public class Tab_User_Profile_Bookmarked extends Fragment implements SwipeRefres
     static ArrayList<HashMap<String, String>> User_Bookmarks_List;
 
     // private ListView List;
-    public List_UserProfiles_Bookmarks_View_Adapter adapter;
+    public List_User_FranchiseProfiles_Bookmark_View_Adapter adapter;
 
 
     @Override
@@ -145,7 +142,7 @@ public class Tab_User_Profile_Bookmarked extends Fragment implements SwipeRefres
     public void Get_Bookmarks() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_bookmarks_user_business_profile, new Response.Listener<String>() {
+                AppConfig.url_user_franchiseprofile_bookmarked, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
@@ -175,7 +172,7 @@ public class Tab_User_Profile_Bookmarked extends Fragment implements SwipeRefres
 
                             User_Bookmarks_List.add(map);
 
-                            adapter = new List_UserProfiles_Bookmarks_View_Adapter(getActivity(),
+                            adapter = new List_User_FranchiseProfiles_Bookmark_View_Adapter(getActivity(),
                                     User_Bookmarks_List);
                             List.setAdapter(adapter);
 
@@ -215,8 +212,8 @@ public class Tab_User_Profile_Bookmarked extends Fragment implements SwipeRefres
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("user_id", "60");
-                params.put("business_id", "4");
+                params.put("user_id", "165");
+                params.put("franchise_id", "2");
 
                 return params;
             }

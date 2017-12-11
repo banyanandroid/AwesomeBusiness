@@ -17,7 +17,7 @@ import banyan.com.awesomebusiness.R;
  * Created by Banyan on 07-Dec-17.
  */
 
-public class Activity_List_Bookmark_View extends AppCompatActivity {
+public class Activity_User_BusinessProfile_Bookmark_View_Contact extends AppCompatActivity {
 
     private Toolbar mToolbar;
     public static TabLayout tabLayout;
@@ -49,7 +49,7 @@ public class Activity_List_Bookmark_View extends AppCompatActivity {
         /**
          *Set an Apater for the View Pager
          */
-        viewPager.setAdapter(new Activity_List_Bookmark_View.MyAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new Activity_User_BusinessProfile_Bookmark_View_Contact.MyAdapter(getSupportFragmentManager()));
 
         /**
          * Now , this is a workaround ,
@@ -81,11 +81,11 @@ public class Activity_List_Bookmark_View extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new Tab_User_Profile_Bookmarked();
+                    return new Tab_User_BusinessProfile_Bookmarked();
                 case 1:
-                    return new Tab_User_Profile_Viewed();
+                    return new Tab_User_BusinessProfile_Viewed();
                 case 2:
-                    return new Tab_User_Profile_Contacted();
+                    return new Tab_User_BusinessProfile_Contacted();
 
             }
             return null;

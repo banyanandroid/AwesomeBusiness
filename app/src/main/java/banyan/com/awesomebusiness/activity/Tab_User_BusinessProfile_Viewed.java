@@ -1,7 +1,5 @@
 package banyan.com.awesomebusiness.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,19 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.sdsmdg.tastytoast.TastyToast;
 import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
@@ -31,16 +24,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import banyan.com.awesomebusiness.R;
-import banyan.com.awesomebusiness.adapter.List_Recent_Contacted_Adapter;
-import banyan.com.awesomebusiness.adapter.List_UserProfiles_Bookmarks_View_Adapter;
-import banyan.com.awesomebusiness.adapter.List_UserProfiles_Contacted_Adapter;
+import banyan.com.awesomebusiness.adapter.List_User_BusinessProfiles_Bookmark_View_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
-import dmax.dialog.SpotsDialog;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -48,19 +37,20 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by Banyan on 07-Dec-17.
  */
 
-public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class Tab_User_BusinessProfile_Viewed extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public Tab_User_Profile_Contacted() {
+    public Tab_User_BusinessProfile_Viewed() {
         // Required empty public constructor
     }
 
-    SpotsDialog dialog1;
-    SpotsDialog dialog2;
     String TAG = "";
-
     public static final String TAG_BRANDNAME = "brandname";
-    public static final String TAG_NAME = "name";
-    public static final String TAG_ABOUT = "about";
+    public static final String TAG_USER_NAME = "user_name";
+    public static final String TAG_USER_ID = "user_id";
+
+    public static final String TAG_USER_EMAIL = "user_email";
+    public static final String TAG_USER_TYPE = "user_type";
+    public static final String TAG_USER_CONNECT = "connect";
 
 
     public static RequestQueue queue;
@@ -74,8 +64,7 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
     static ArrayList<HashMap<String, String>> User_Viewed_List;
 
     // private ListView List;
-    public List_UserProfiles_Contacted_Adapter adapter;
-
+    public List_User_BusinessProfiles_Bookmark_View_Adapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +75,7 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootview = inflater.inflate(R.layout.tab_profile_contacted, container, false);
+        View rootview = inflater.inflate(R.layout.tab_profile_viewed, container, false);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -97,11 +86,10 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
         str_user_photoo = user.get(SessionManager.KEY_USER_PHOTO);
         str_user_id = user.get(SessionManager.KEY_USER_ID);
 
-        List = (ListView) rootview.findViewById(R.id.tab_profile_contacted_list);
-        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.tab_prof_contacted_swipe);
+        List = (ListView) rootview.findViewById(R.id.tab_profile_viewed_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.tab_prof_view_swipe);
 
         User_Viewed_List = new ArrayList<HashMap<String, String>>();
-
 
         List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -109,15 +97,18 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                String str_user_name = User_Viewed_List.get(position).get(TAG_NAME);
-                String  str_user_about = User_Viewed_List.get(position).get(TAG_ABOUT);
+                String str_viewed_user_name = User_Viewed_List.get(position).get(TAG_USER_NAME);
+                String str_viewed_user_id = User_Viewed_List.get(position).get(TAG_USER_ID);
+
+                System.out.println("LIST CLICKEDDDDDDDDDDDDDD 11111");
+                System.out.println("LIST CLICKEDDDDDDDDDDDDDD 11111");
 
             }
 
         });
 
-
         swipeRefreshLayout.setOnRefreshListener(this);
+
         swipeRefreshLayout.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -125,7 +116,7 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
 
                                         try {
                                             queue = Volley.newRequestQueue(getActivity());
-                                            Get_Contacted_Activities();
+                                            Get_Viewed_Users();
                                         } catch (Exception e) {
                                             // TODO: handle exceptions
                                         }
@@ -142,21 +133,20 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
         try {
             User_Viewed_List.clear();
             queue = Volley.newRequestQueue(getActivity());
-            Get_Contacted_Activities();
+            Get_Viewed_Users();
         } catch (Exception e) {
             // TODO: handle exception
         }
     }
 
-
     /*****************************
-     * GET Contacted Activities
+     * GET Viewed Users
      ***************************/
 
-    public void Get_Contacted_Activities() {
+    public void Get_Viewed_Users() {
 
         StringRequest request = new StringRequest(Request.Method.POST,
-                AppConfig.url_contacted_user_business_profile, new Response.Listener<String>() {
+                AppConfig.url_user_businessprofile_viewed, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, response.toString());
@@ -164,62 +154,42 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
                     JSONObject obj = new JSONObject(response);
                     int success = obj.getInt("status");
 
-                    System.out.println("CAMEEEE  ::::: 11111111111" + success);
-
-                    System.out.println("CAMEEEE  ::::: 11111111111");
-
-/*
-
-                    {
-                        "status": 1,
-                            "data": {
-                        "brandname": "Australian Cafe For Sale",
-                                "contacts": [
-                        {
-                            "name": "Anonymous",
-                                "about": "test"
-                        }
-        ]
-                    },
-                        "count": 1
-                    }
-*/
-
                     if (success == 1) {
 
-                        System.out.println("CAMEEEE  ::::: 2222222222");
 
                         JSONObject data = obj.getJSONObject("data");
 
-                        System.out.println("CAMEEEE  ::::: 2222222222" + data);
+                        String brand_name = data.getString("brandname");
 
-                        String brand_name = data.getString(TAG_BRANDNAME);
+                        String business_key = data.getString("business_key");
 
-                        System.out.println("CAMEEEE  ::::: 333333" + brand_name);
+                        String type = data.getString("type");
 
                         JSONArray arr;
-                        arr = data.getJSONArray("contacts");
-
-                        System.out.println("CAMEEEE  ::::: 444444444" + arr);
+                        arr = data.getJSONArray("viewed");
 
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj_data = arr.getJSONObject(i);
 
-                            System.out.println("CAMEEEE  ::::: 55555555");
+                            String user_name = obj_data.getString(TAG_USER_NAME);
+                            String user_id = obj_data.getString(TAG_USER_ID);
 
-                            System.out.println("CAMEEEE  ::::: 55555555" + obj_data);
-
-                            String user_name = obj_data.getString(TAG_NAME);
-                            String user_about = obj_data.getString(TAG_ABOUT);
+                            String user_email = obj_data.getString(TAG_USER_EMAIL);
+                            String user_type = obj_data.getString(TAG_USER_TYPE);
+                            String user_connect = obj_data.getString(TAG_USER_CONNECT);
 
                             HashMap<String, String> map = new HashMap<String, String>();
 
-                            map.put(TAG_NAME, user_name);
-                            map.put(TAG_ABOUT, user_about);
+                            map.put(TAG_USER_NAME, user_name);
+                            map.put(TAG_USER_ID, user_id);
+
+                            map.put(TAG_USER_EMAIL, user_email);
+                            map.put(TAG_USER_TYPE, user_type);
+                            map.put(TAG_USER_CONNECT, user_connect);
 
                             User_Viewed_List.add(map);
 
-                            adapter = new List_UserProfiles_Contacted_Adapter(getActivity(),
+                            adapter = new List_User_BusinessProfiles_Bookmark_View_Adapter(getActivity(),
                                     User_Viewed_List);
                             List.setAdapter(adapter);
 
@@ -270,6 +240,5 @@ public class Tab_User_Profile_Contacted extends Fragment implements SwipeRefresh
         // Adding request to request queue
         queue.add(request);
     }
-
 
 }

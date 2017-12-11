@@ -684,12 +684,13 @@ public class Fragment_Home extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                System.out.println("CAMEEEEEEEEEEEEEEEE @@@@@@@");
+                System.out.println("CAMEEEEEEEEEEEEEEEE 111111111");
                 Log.e("ERRRRRRORRRRRRRRR", response.toString());
                 Log.d(TAG, response.toString());
                 try {
                     JSONObject obj = new JSONObject(response);
                     System.out.println("RESPONSE OBJ : " + obj);
+
                     int success = obj.getInt("status");
 
                     if (success == 1) {
@@ -699,9 +700,8 @@ public class Fragment_Home extends Fragment {
                         JSONArray arr_industry;
                         JSONArray arr_images;
 
-                        System.out.println("PRINT 555");
-
                         arr = obj.getJSONArray("data");
+
                         for (int i = 0; arr.length() > i; i++) {
                             JSONObject obj1 = arr.getJSONObject(i);
 

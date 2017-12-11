@@ -26,8 +26,8 @@
         <item>@string/nav_item_advisor</item>
         <item>@string/nav_item_message</item>
         <item>@string/nav_item_howto</item>
-        <item>@string/nav_item_qa</item>
-        <item>@string/nav_item_company</item>
+       <!-- <item>@string/nav_item_qa</item>
+        <item>@string/nav_item_company</item>-->
     </string-array>
 
     <string name="title_home">Business for Sale</string>
