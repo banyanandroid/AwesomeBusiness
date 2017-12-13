@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -45,7 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import banyan.com.awesomebusiness.Activity_Register;
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
 import dmax.dialog.SpotsDialog;
@@ -371,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         str_previous_selected_currency = sharedPreferences.getString("currency_position", "currency_position");
 
         LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.popup_custom, null);
+        View promptsView = li.inflate(R.layout.popup_custom_country_currency, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);

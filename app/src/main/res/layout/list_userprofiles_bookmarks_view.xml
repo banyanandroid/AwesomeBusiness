@@ -42,14 +42,15 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/txt_user_connect_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Tap To Connect"
+                    android:text="status text"
                     android:textColor="@color/txt_grey"
-                    android:textSize="16dp" />
+                    android:textSize="10dp" />
 
 
             </LinearLayout>

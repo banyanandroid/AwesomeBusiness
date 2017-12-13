@@ -111,6 +111,10 @@ public class AppConfig {
     public static String url_user_franchiseprofile_viewed = BASE_URL + "/index.php?Apicontroller/listfranchiseviewed";
     public static String url_user_franchiseprofile_contacted = BASE_URL + "/index.php?Apicontroller/listfranchisecontact";
 
+    /*********  URL For User Connect *********/
+    public static String url_user_request_connection = BASE_URL + "/index.php?Apicontroller/notifyconnect";
+    public static String url_user_approve_connection_request = BASE_URL + "/index.php?Apicontroller/Approveconnect";
+
 
 }
 
