@@ -48,6 +48,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -68,10 +69,12 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import banyan.com.awesomebusiness.Activity_Register;
 import banyan.com.awesomebusiness.R;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
 import dmax.dialog.SpotsDialog;
+import retrofit.http.GET;
 
 
 /**
@@ -90,6 +93,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
     LoginButton loginButton;
     EditText edt_singin_email, edt_signin_pass, edt_singup_email, edt_signup_pass, edt_signup_repeat_pass;
     TextView txt_forgot_pwd;
+    String GcmId = null;
+    String str_login_flag = "";
 
     // POPUP
     final Context context = this;
@@ -292,7 +297,7 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                 signin_email = edt_singin_email.getText().toString();
                 signin_pass = edt_signin_pass.getText().toString();
-
+                str_login_flag = "normal";
                 if (signin_email.equals("")) {
                     TastyToast.makeText(getApplicationContext(), "Enter Email ID", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_singin_email.setError("Please Enter Email ID");
@@ -300,14 +305,13 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                     TastyToast.makeText(getApplicationContext(), "Enter Password", TastyToast.LENGTH_SHORT, TastyToast.WARNING);
                     edt_signin_pass.setError("Please Enter Password");
                 } else {
+                    try {
+                        Get_GCMID();
+                    }catch (Exception e){
 
-                    dialog = new SpotsDialog(Activity_Login.this);
-                    dialog.show();
-                    queue = Volley.newRequestQueue(Activity_Login.this);
-                    Function_Login();
+                    }
 
                 }
-
 
             }
         });
@@ -339,11 +343,9 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
 
                     try {
+                        str_login_flag = "facebook";
                         str_social_type = "2";
-                        dialog = new SpotsDialog(Activity_Login.this);
-                        dialog.show();
-                        queue = Volley.newRequestQueue(Activity_Login.this);
-                        Function_Social_Login();
+                        Get_GCMID();
                     } catch (Exception e) {
 
                     }
@@ -389,11 +391,8 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 str_social_name = personName;
                 str_social_email = email;
                 str_social_type = "1";
-
-                dialog = new SpotsDialog(Activity_Login.this);
-                dialog.show();
-                queue = Volley.newRequestQueue(Activity_Login.this);
-                Function_Social_Login();
+                str_login_flag = "google";
+                Get_GCMID();
             } catch (Exception e) {
 
             }
@@ -403,6 +402,88 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
             Toast.makeText(getApplicationContext(), "Oops..! Something Wrong....", Toast.LENGTH_LONG).show();
 
+        }
+    }
+
+    /********************************************
+     * Get GCM ID
+     * *********************************************/
+
+    private void Get_GCMID() {
+        GcmId = GCMRegistrar.getRegistrationId(Activity_Login.this);
+
+        if (GcmId.isEmpty()) {
+
+            try {
+                System.out.println("IaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD Empty");
+                GCMRegistrar.register(Activity_Login.this, "272035965940");
+
+                GcmId = GCMRegistrar.getRegistrationId(this);
+                System.out.println("IaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD Empty" + GcmId);
+
+                TastyToast.makeText(getApplicationContext(), "Oops...! Press Sign in Again ", TastyToast.LENGTH_LONG, TastyToast.INFO);
+            } catch (Exception e) {
+
+            }
+
+        } else {
+           /* Toast.makeText(getApplicationContext(), GcmId, Toast.LENGTH_LONG)
+                    .show();*/
+            System.out.println("neeeeeeeeeeeeeeeeeeeeeeeeeeeeewwwwwww" + GcmId);
+
+            if (str_login_flag != null && !str_login_flag.isEmpty() && !str_login_flag.equals("null")){
+
+                if (str_login_flag.equals("normal")){
+
+                    try {
+                        dialog = new SpotsDialog(Activity_Login.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_Login.this);
+                        Function_Login();
+                    }catch (Exception e) {
+
+                    }
+
+                }else if (str_login_flag.equals("google")){
+
+                    try {
+                        dialog = new SpotsDialog(Activity_Login.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_Login.this);
+                        Function_Social_Login();
+                    }catch (Exception e) {
+
+                    }
+
+                }else if (str_login_flag.equals("facebook")){
+
+                    try {
+                        dialog = new SpotsDialog(Activity_Login.this);
+                        dialog.show();
+                        queue = Volley.newRequestQueue(Activity_Login.this);
+                        Function_Social_Login();
+
+                    }catch (Exception e){
+
+                    }
+
+                }
+
+            }else {
+                TastyToast.makeText(getApplicationContext(), "Oops...! Try Again", TastyToast.LENGTH_LONG, TastyToast.INFO);
+            }
+
+           /* pDialog = new ProgressDialog(Activity_Register.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.show();
+            pDialog.setCancelable(false);
+            queue = Volley.newRequestQueue(Activity_Register.this);
+            Function_Register();*/
+
+            if (GCMRegistrar.isRegisteredOnServer(Activity_Login.this)) {
+                // Skips registration.
+
+            }
         }
     }
 
@@ -538,9 +619,11 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
 
                 params.put("user_email", signin_email);
                 params.put("password", signin_pass);
+                params.put("gcm_id", GcmId);
 
                 System.out.println("User_Email" + signin_email);
                 System.out.println("Password" + signin_pass);
+                System.out.println("gcm_id" + GcmId);
 
                 return params;
             }
@@ -624,11 +707,13 @@ public class Activity_Login extends AppCompatActivity implements View.OnClickLis
                 params.put("user_photo", str_social_image);
                 params.put("user_name", str_social_name);
                 params.put("sociallogin", str_social_type);
+                params.put("gcm_id", GcmId);
 
                 System.out.println("User_Email" + str_social_email);
                 System.out.println("user_photo" + str_social_image);
                 System.out.println("user_name" + str_social_name);
                 System.out.println("sociallogin" + str_social_type);
+                System.out.println("gcm_id" + GcmId);
 
                 return checkParams(params);
             }

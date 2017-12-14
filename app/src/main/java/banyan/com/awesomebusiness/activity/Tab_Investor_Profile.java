@@ -38,7 +38,6 @@ import banyan.com.awesomebusiness.adapter.BusinessProfiles_Adapter;
 import banyan.com.awesomebusiness.adapter.InvestorProfiles_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
-import butterknife.ButterKnife;
 
 /**
  * Created by Jo on 9/4/2017.
@@ -115,7 +114,6 @@ public class Tab_Investor_Profile extends Fragment implements SwipeRefreshLayout
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.tab_investor_profile, container, false);
-        ButterKnife.bind(getActivity());
 
         session = new SessionManager(getActivity());
 

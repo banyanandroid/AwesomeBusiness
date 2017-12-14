@@ -35,7 +35,6 @@ import banyan.com.awesomebusiness.adapter.BusinessProfiles_Adapter;
 import banyan.com.awesomebusiness.adapter.FranchiseProfiles_Adapter;
 import banyan.com.awesomebusiness.global.AppConfig;
 import banyan.com.awesomebusiness.global.SessionManager;
-import butterknife.ButterKnife;
 
 /**
  * Created by Jo on 9/4/2017.
@@ -136,7 +135,6 @@ public class Tab_Franchises_Profile extends Fragment implements SwipeRefreshLayo
 
 
         View rootview = inflater.inflate(R.layout.tab_franchises, container, false);
-        ButterKnife.bind(getActivity());
 
         session = new SessionManager(getActivity());
 
